@@ -3,7 +3,5 @@
     /// <summary>
     /// Marker class for commands.
     /// </summary>
-    public class CommandAssemblyMarker
-    {
-    }
+    public class CommandAssemblyMarker { }
 }

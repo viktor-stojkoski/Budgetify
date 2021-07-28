@@ -27,7 +27,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error executing command {CommandType} - ({@Command})",
-                    command.GetType().FullName, command);
+                    command.GetType().Name, command);
                 throw;
             }
         }
