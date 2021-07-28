@@ -1,11 +1,15 @@
 ﻿namespace Budgetify.Api.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using Budgetify.Common.Commands;
+    using Budgetify.Services.Test;
+
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     [ApiController]
     [Route("[controller]")]
@@ -17,16 +21,18 @@
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ICommandDispatcher _commandDispatcher;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ICommandDispatcher commandDispatcher)
         {
             _logger = logger;
+            _commandDispatcher = commandDispatcher;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            var rng = new Random();
+            Random? rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
@@ -34,6 +40,14 @@
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpPost("test")]
+        public async Task<IActionResult> Test()
+        {
+            CommandResult<string> result = await _commandDispatcher.ExecuteAsync(new TestCommand("zdravo"));
+
+            return Ok(result);
         }
     }
 }
