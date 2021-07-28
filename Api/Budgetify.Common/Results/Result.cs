@@ -1,4 +1,4 @@
-﻿namespace Budgetify.Common.Contracts.Results
+﻿namespace Budgetify.Common.Results
 {
     using System;
     using System.Collections.Generic;
