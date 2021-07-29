@@ -29,7 +29,8 @@ namespace Budgetify.Api
             });
 
             services
-                .RegisterCommands();
+                .RegisterCommands()
+                .RegisterQueries();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

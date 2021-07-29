@@ -8,5 +8,9 @@
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Budgetify.Common\Budgetify.Common.csproj" />
+  </ItemGroup>
   
 </Project>

@@ -6,6 +6,8 @@
     using System.Threading.Tasks;
 
     using Budgetify.Common.Commands;
+    using Budgetify.Common.Queries;
+    using Budgetify.Queries;
     using Budgetify.Services.Test;
 
     using Microsoft.AspNetCore.Mvc;
@@ -22,11 +24,13 @@
 
         private readonly ILogger<WeatherForecastController> _logger;
         private readonly ICommandDispatcher _commandDispatcher;
+        private readonly IQueryDispatcher _queryDispatcher;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, ICommandDispatcher commandDispatcher)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ICommandDispatcher commandDispatcher, IQueryDispatcher queryDispatcher)
         {
             _logger = logger;
             _commandDispatcher = commandDispatcher;
+            _queryDispatcher = queryDispatcher;
         }
 
         [HttpGet]
@@ -46,6 +50,14 @@
         public async Task<IActionResult> Test()
         {
             CommandResult<string> result = await _commandDispatcher.ExecuteAsync(new TestCommand("zdravo"));
+
+            return Ok(result);
+        }
+
+        [HttpPost("test-query")]
+        public async Task<IActionResult> TestQuery()
+        {
+            QueryResult<string> result = await _queryDispatcher.ExecuteAsync(new TestQuery("test"));
 
             return Ok(result);
         }

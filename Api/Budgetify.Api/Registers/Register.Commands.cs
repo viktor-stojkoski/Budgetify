@@ -10,7 +10,7 @@
         public static IServiceCollection RegisterCommands(this IServiceCollection services)
         {
             services.Scan(scan => scan
-                .FromAssemblies(typeof(CommandAssemblyMarker).Assembly)
+                .FromAssemblies(typeof(CommandsAssemblyMarker).Assembly)
                 .AddClasses(classes => classes.AssignableTo(typeof(ICommandHandler<,>)))
                 .AsImplementedInterfaces()
                 .WithTransientLifetime());
