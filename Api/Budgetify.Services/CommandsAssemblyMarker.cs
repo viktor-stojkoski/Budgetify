@@ -3,5 +3,8 @@
     /// <summary>
     /// Marker class for commands.
     /// </summary>
-    public class CommandAssemblyMarker { }
+    public sealed class CommandsAssemblyMarker
+    {
+        private CommandsAssemblyMarker() { }
+    }
 }

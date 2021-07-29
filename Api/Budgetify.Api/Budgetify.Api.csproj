@@ -20,6 +20,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\Budgetify.Common\Budgetify.Common.csproj" />
+    <ProjectReference Include="..\Budgetify.Queries\Budgetify.Queries.csproj" />
     <ProjectReference Include="..\Budgetify.Services\Budgetify.Services.csproj" />
   </ItemGroup>
 
