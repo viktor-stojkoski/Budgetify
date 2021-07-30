@@ -62,4 +62,7 @@
   <ItemGroup>
     <Build Include="Budgetify\Budgetify.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Budgetify.Database.publish.xml" />
+  </ItemGroup>
 </Project>

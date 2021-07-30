@@ -1,7 +1,6 @@
-﻿namespace Budgetify.Storage
+﻿#nullable disable
+namespace Budgetify.Storage
 {
-    using System;
-
     public class Class1
     {
     }
