@@ -23,7 +23,7 @@
 
             if (result.IsFailure)
             {
-                _logger.LogWarning("Command {CommandType} failed with error {Error} - ({@Command})",
+                _logger.LogWarning("Command {CommandName} failed with error {Error} - ({@Command})",
                     command.GetType().Name, result.Message, command);
             }
 

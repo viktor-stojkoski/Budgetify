@@ -13,7 +13,7 @@
 
     using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly IBudgetifyDbContext _budgetifyDbContext;
         private readonly IMediator _mediator;
