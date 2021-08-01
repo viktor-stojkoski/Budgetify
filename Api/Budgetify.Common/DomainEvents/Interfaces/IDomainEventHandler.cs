@@ -13,6 +13,7 @@
         /// Handles domain event.
         /// </summary>
         /// <param name="event">The event to be handled.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns></returns>
         Task HandleAsync(TDomainEvent @event, CancellationToken cancellationToken);
     }

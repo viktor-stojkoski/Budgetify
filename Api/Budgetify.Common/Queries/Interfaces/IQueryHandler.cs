@@ -2,6 +2,11 @@
 {
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Defines a handler for query.
+    /// </summary>
+    /// <typeparam name="TQuery">Type of the query to be executed.</typeparam>
+    /// <typeparam name="TResult">Query return type.</typeparam>
     public interface IQueryHandler<in TQuery, TResult> where TQuery : IQuery<TResult>
     {
         /// <summary>
