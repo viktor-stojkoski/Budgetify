@@ -7,7 +7,7 @@
 
     using Microsoft.EntityFrameworkCore;
 
-    internal class Repository<TAggregate> where TAggregate : AggregateRoot
+    public class Repository<TAggregate> where TAggregate : AggregateRoot
     {
         protected readonly IBudgetifyDbContext _budgetifyDbContext;
 
