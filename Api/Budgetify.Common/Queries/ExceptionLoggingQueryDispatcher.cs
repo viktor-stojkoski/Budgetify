@@ -26,7 +26,7 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error executing query {QueryType} - (@{Query})",
+                _logger.LogError(ex, "Error executing query {QueryName} - (@{Query})",
                     query.GetType().Name, query);
 
                 return new QueryResultBuilder<TResult>().FailWith(ex.Message);

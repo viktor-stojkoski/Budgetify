@@ -58,8 +58,20 @@
     <Folder Include="Properties" />
     <Folder Include="Budgetify" />
     <Folder Include="Budgetify\Tables" />
+    <Folder Include="Budgetify\Tables\Test" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Budgetify\Budgetify.sql" />
+    <Build Include="Budgetify\Tables\Test\Test.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Budgetify.Database.publish.xml" />
+    <None Include="Budgetify\Tables\Test\Test.Seed.sql" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PostDeploy Include="Script.PostDeployment.Debug.sql" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PostDeploy Include="Script.PostDeployment.Release.sql" />
   </ItemGroup>
 </Project>

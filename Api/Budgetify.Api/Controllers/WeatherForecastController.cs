@@ -9,6 +9,7 @@
     using Budgetify.Common.Queries;
     using Budgetify.Queries;
     using Budgetify.Services.Test;
+    using Budgetify.Storage.Test.Entities;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
@@ -46,18 +47,19 @@
             .ToArray();
         }
 
-        [HttpPost("test")]
-        public async Task<IActionResult> Test()
+        [HttpPost("test/{testUid:guid}")]
+        public async Task<IActionResult> Test(Guid testUid)
         {
-            CommandResult<string> result = await _commandDispatcher.ExecuteAsync(new TestCommand("zdravo"));
+            CommandResult<Test> result = await _commandDispatcher.ExecuteAsync(new TestCommand(testUid));
 
             return Ok(result);
         }
 
-        [HttpPost("test-query")]
-        public async Task<IActionResult> TestQuery()
+        [HttpPost("test-query/{uid:guid}")]
+        public async Task<IActionResult> TestQuery(Guid uid)
         {
-            QueryResult<string> result = await _queryDispatcher.ExecuteAsync(new TestQuery("test"));
+            QueryResult<Queries.Test.Entities.Test> result =
+                await _queryDispatcher.ExecuteAsync(new TestQuery(uid));
 
             return Ok(result);
         }

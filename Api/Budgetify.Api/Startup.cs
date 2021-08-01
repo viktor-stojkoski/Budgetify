@@ -1,6 +1,7 @@
 namespace Budgetify.Api
 {
     using Budgetify.Api.Registers;
+    using Budgetify.Storage.Test.Repositories;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -21,7 +22,7 @@ namespace Budgetify.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -29,8 +30,12 @@ namespace Budgetify.Api
             });
 
             services
+                .RegisterDatabase(Configuration)
                 .RegisterCommands()
-                .RegisterQueries();
+                .RegisterQueries()
+                .RegisterDomainEvents();
+
+            services.AddScoped<ITestRepository, TestRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +51,8 @@ namespace Budgetify.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("AllowAll");
 
             app.UseAuthorization();
 
