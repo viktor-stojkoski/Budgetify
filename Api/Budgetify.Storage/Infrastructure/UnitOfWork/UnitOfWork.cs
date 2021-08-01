@@ -5,23 +5,24 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Budgetify.Common.DomainEvents;
     using Budgetify.Contracts.Infrastructure.Storage;
     using Budgetify.Storage.Common.Entities;
     using Budgetify.Storage.Infrastructure.Context;
-
-    using MediatR;
 
     using Microsoft.EntityFrameworkCore.ChangeTracking;
 
     public class UnitOfWork : IUnitOfWork
     {
         private readonly IBudgetifyDbContext _budgetifyDbContext;
-        private readonly IMediator _mediator;
+        private readonly IDomainEventDispatcher _domainEventDispatcher;
 
-        public UnitOfWork(IBudgetifyDbContext budgetifyDbContext, IMediator mediator)
+        public UnitOfWork(
+            IBudgetifyDbContext budgetifyDbContext,
+            IDomainEventDispatcher domainEventDispatcher)
         {
             _budgetifyDbContext = budgetifyDbContext;
-            _mediator = mediator;
+            _domainEventDispatcher = domainEventDispatcher;
         }
 
         public async Task SaveAsync()
@@ -37,7 +38,7 @@
                 _budgetifyDbContext.ChangeTracker.Entries<Entity>()
                     .Where(x => x.Entity.DomainEvents is not null && x.Entity.DomainEvents.Any());
 
-            INotification[] domainEvents =
+            IDomainEvent[] domainEvents =
                 domainEntities.SelectMany(x => x.Entity.DomainEvents).ToArray();
 
             foreach (EntityEntry<Entity> domainEntity in domainEntities)
@@ -45,9 +46,9 @@
                 domainEntity.Entity.ClearDomainEvents();
             }
 
-            foreach (INotification domainEvent in domainEvents)
+            foreach (IDomainEvent domainEvent in domainEvents)
             {
-                await _mediator.Publish(domainEvent);
+                await _domainEventDispatcher.ExecuteAsync(domainEvent);
             }
         }
 

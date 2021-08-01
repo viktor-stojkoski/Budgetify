@@ -2,13 +2,13 @@
 {
     using System.Collections.Generic;
 
-    using MediatR;
+    using Budgetify.Common.DomainEvents;
 
     public class AggregateRoot : Entity
     {
         protected AggregateRoot() { }
 
-        protected AggregateRoot(IEnumerable<INotification> domainEvents)
+        protected AggregateRoot(IEnumerable<IDomainEvent> domainEvents)
             : base(domainEvents) { }
     }
 }

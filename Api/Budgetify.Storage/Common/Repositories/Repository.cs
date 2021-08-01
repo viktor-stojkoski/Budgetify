@@ -53,6 +53,7 @@
         /// </summary>
         protected void AttachOrUpdate<TEntity>(TEntity entity, EntityState entityState) where TEntity : Entity
         {
+            //TODO: Bug => .Local is empty !
             TEntity? existingEntity =
                 _budgetifyDbContext.Set<TEntity>().Local.SingleOrDefault(x => x.Id == entity.Id);
 

@@ -1,7 +1,7 @@
-﻿namespace Budgetify.Storage.Infrastructure.Configuration
+﻿namespace Budgetify.Queries.Infrastructure.Configuration
 {
-    using Budgetify.Storage.Common.Configuration;
-    using Budgetify.Storage.Test.Entities;
+    using Budgetify.Queries.Common.Configuration;
+    using Budgetify.Queries.Test.Entities;
 
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;

@@ -10,13 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.8" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Budgetify.Common\Budgetify.Common.csproj" />
     <ProjectReference Include="..\Budgetify.Contracts\Budgetify.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Test\Factories\" />
   </ItemGroup>
   
 </Project>

@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Budgetify.Common\Budgetify.Common.csproj" />
+    <ProjectReference Include="..\Budgetify.Storage\Budgetify.Storage.csproj" />
   </ItemGroup>
   
 </Project>

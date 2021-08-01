@@ -1,24 +1,42 @@
 ﻿namespace Budgetify.Queries
 {
+    using System;
     using System.Threading.Tasks;
 
     using Budgetify.Common.Queries;
+    using Budgetify.Queries.Infrastructure.Context;
 
-    public record TestQuery(string Value) : IQuery<string>;
+    using Microsoft.EntityFrameworkCore;
 
-    public class TestQueryHandler : IQueryHandler<TestQuery, string>
+    using TestEntity = Test.Entities.Test;
+
+    public record TestQuery(Guid Uid) : IQuery<TestEntity>;
+
+    public class TestQueryHandler : IQueryHandler<TestQuery, TestEntity>
     {
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public async Task<QueryResult<string>> ExecuteAsync(TestQuery query)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        private readonly IBudgetifyReadonlyDbContext _budgetifyReadonlyDbContext;
+
+        public TestQueryHandler(IBudgetifyReadonlyDbContext budgetifyReadonlyDbContext)
         {
-            QueryResultBuilder<string> result = new();
+            _budgetifyReadonlyDbContext = budgetifyReadonlyDbContext;
+        }
 
-            return result.FailWith("ERROR QUERY");
+        public async Task<QueryResult<TestEntity>> ExecuteAsync(TestQuery query)
+        {
+            QueryResultBuilder<TestEntity> result = new();
 
-            //result.SetValue(query.Value);
+            TestEntity test = await _budgetifyReadonlyDbContext
+                .AllNoTrackedOf<TestEntity>()
+                .SingleOrDefaultAsync(x => x.Uid == query.Uid);
 
-            //return result.Build();
+            if (test is null)
+            {
+                return result.FailWith("ERROR");
+            }
+
+            result.SetValue(test);
+
+            return result.Build();
         }
     }
 }

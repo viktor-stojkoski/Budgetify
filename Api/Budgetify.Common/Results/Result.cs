@@ -145,7 +145,7 @@
                     throw new ArgumentException("There should be no error message for success.", nameof(message));
                 }
 
-                if (resultType is ResultType.Ok)
+                if (resultType is not ResultType.Ok)
                 {
                     throw new ArgumentException("There should be no error type for success.", nameof(resultType));
                 }

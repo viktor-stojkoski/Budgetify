@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Budgetify.Common\Budgetify.Common.csproj" />
     <ProjectReference Include="..\Budgetify.Contracts\Budgetify.Contracts.csproj" />
+    <ProjectReference Include="..\Budgetify.Entities\Budgetify.Entities.csproj" />
     <ProjectReference Include="..\Budgetify.Queries\Budgetify.Queries.csproj" />
     <ProjectReference Include="..\Budgetify.Services\Budgetify.Services.csproj" />
     <ProjectReference Include="..\Budgetify.Storage\Budgetify.Storage.csproj" />

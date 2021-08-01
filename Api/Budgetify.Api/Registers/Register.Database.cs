@@ -24,8 +24,8 @@
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddDbContext<IBudgetifyDbContext, BudgetifyDbContext>();
-            services.AddDbContext<IBudgetifyReadonlyDbContext, BudgetifyReadonlyDbContext>();
+            services.AddScoped<IBudgetifyReadonlyDbContext, BudgetifyReadonlyDbContext>();
+            services.AddScoped<IBudgetifyDbContext, BudgetifyDbContext>();
 
             services.AddDbContext<BudgetifyDbContext>(options =>
             {
