@@ -33,9 +33,11 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Budgetify.Database", "Datab
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Budgetify.Common", "Api\Budgetify.Common\Budgetify.Common.csproj", "{3C0FA670-CBF4-4B14-9D44-1DFB7DB0C774}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgetify.Common.Tests", "Tests\Api\Budgetify.Common.Tests\Budgetify.Common.Tests.csproj", "{886BC97F-E527-4789-9D42-2BC20FC03E72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Budgetify.Common.Tests", "Tests\Api\Budgetify.Common.Tests\Budgetify.Common.Tests.csproj", "{886BC97F-E527-4789-9D42-2BC20FC03E72}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{109158A2-9F2F-4CA9-8EF0-1E2C3028269A}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Budgetify.Hangfire.Database", "Databases\Budgetify.Hangfire.Database\Budgetify.Hangfire.Database.sqlproj", "{9FC144A1-7755-468E-BB21-B1AA50BE666D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +99,12 @@ Global
 		{886BC97F-E527-4789-9D42-2BC20FC03E72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{886BC97F-E527-4789-9D42-2BC20FC03E72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{886BC97F-E527-4789-9D42-2BC20FC03E72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FC144A1-7755-468E-BB21-B1AA50BE666D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FC144A1-7755-468E-BB21-B1AA50BE666D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FC144A1-7755-468E-BB21-B1AA50BE666D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9FC144A1-7755-468E-BB21-B1AA50BE666D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FC144A1-7755-468E-BB21-B1AA50BE666D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FC144A1-7755-468E-BB21-B1AA50BE666D}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,6 +124,7 @@ Global
 		{3C0FA670-CBF4-4B14-9D44-1DFB7DB0C774} = {959A7A78-AF76-4CC6-AD6F-DE9B9822E746}
 		{886BC97F-E527-4789-9D42-2BC20FC03E72} = {109158A2-9F2F-4CA9-8EF0-1E2C3028269A}
 		{109158A2-9F2F-4CA9-8EF0-1E2C3028269A} = {9A392BEA-9540-4D72-960B-507AE734B038}
+		{9FC144A1-7755-468E-BB21-B1AA50BE666D} = {9FAC2DA2-5C96-46F2-A27A-FCBBE0B68219}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {18E0B8AE-0C6E-4062-9A42-40239D948E64}

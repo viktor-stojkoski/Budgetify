@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
 
     using Budgetify.Common.Commands;
+    using Budgetify.Common.Jobs;
     using Budgetify.Common.Queries;
     using Budgetify.Queries;
     using Budgetify.Services.Test;
@@ -26,12 +27,18 @@
         private readonly ILogger<WeatherForecastController> _logger;
         private readonly ICommandDispatcher _commandDispatcher;
         private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IJobService _jobService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, ICommandDispatcher commandDispatcher, IQueryDispatcher queryDispatcher)
+        public WeatherForecastController(
+            ILogger<WeatherForecastController> logger,
+            ICommandDispatcher commandDispatcher,
+            IQueryDispatcher queryDispatcher,
+            IJobService jobService)
         {
             _logger = logger;
             _commandDispatcher = commandDispatcher;
             _queryDispatcher = queryDispatcher;
+            _jobService = jobService;
         }
 
         [HttpGet]
@@ -62,6 +69,12 @@
                 await _queryDispatcher.ExecuteAsync(new TestQuery(uid));
 
             return Ok(result);
+        }
+
+        [HttpPost("test-command/{testUid:guid}")]
+        public void TestCommand(Guid testUid)
+        {
+            _jobService.Enqueue(() => _commandDispatcher.ExecuteAsync(new TestCommand(testUid)));
         }
     }
 }

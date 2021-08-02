@@ -13,7 +13,7 @@
         /// or if value contains only whitespace characters.
         /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsEmpty(this string value) => string.IsNullOrWhiteSpace(value);
+        public static bool IsEmpty(this string? value) => string.IsNullOrWhiteSpace(value);
 
         /// <summary>
         /// Indicates whether a specified string is not null, 
@@ -25,6 +25,6 @@
         /// or if value does not contain only whitespace characters.
         /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool HasValue(this string value) => !value.IsEmpty();
+        public static bool HasValue(this string? value) => !value.IsEmpty();
     }
 }
