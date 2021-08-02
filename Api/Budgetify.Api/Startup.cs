@@ -30,10 +30,12 @@ namespace Budgetify.Api
             });
 
             services
+                .RegisterSettings()
                 .RegisterDatabase(Configuration)
                 .RegisterCommands()
                 .RegisterQueries()
-                .RegisterDomainEvents();
+                .RegisterDomainEvents()
+                .RegisterHangfire(Configuration);
 
             services.AddScoped<ITestRepository, TestRepository>();
         }
@@ -60,6 +62,8 @@ namespace Budgetify.Api
             {
                 endpoints.MapControllers();
             });
+
+            app.UseHangfire();
         }
     }
 }
