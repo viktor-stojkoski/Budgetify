@@ -11,6 +11,7 @@
         {
             services.AddSingleton<IConnectionStringSettings, ConnectionStringSettings>();
             services.AddSingleton<IJobSettings, JobSettings>();
+            services.AddSingleton<ILoggerSettings, LoggerSettings>();
 
             return services;
         }
