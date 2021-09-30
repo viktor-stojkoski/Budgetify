@@ -98,7 +98,7 @@
             return blob.GenerateSasUri(sasBuilder);
         }
 
-        public async Task UploadAsync(string containerId, string fileId, byte[] content, string contentType)
+        public async Task<UploadedFileResponse> UploadAsync(string containerId, string fileId, byte[] content, string contentType)
         {
             BlobContainerClient container = await GetContainerAsync(containerId);
 
@@ -111,6 +111,10 @@
             BlobHttpHeaders blobHttpHeader = GetBlobHttpHeaders(contentType);
 
             await blob.UploadAsync(fileStream, blobHttpHeader);
+
+            return new UploadedFileResponse(
+                FileUri: blob.Uri,
+                FileName: fileName);
         }
 
         /// <summary>

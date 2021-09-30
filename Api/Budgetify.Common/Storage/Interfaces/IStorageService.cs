@@ -13,8 +13,8 @@
         /// <param name="fileId">Name of the file.</param>
         /// <param name="content">Byte array of the content.</param>
         /// <param name="contentType">Type of the content.</param>
-        /// <returns></returns>
-        Task UploadAsync(string containerId, string fileId, byte[] content, string contentType);
+        /// <returns>Uploaded file</returns>
+        Task<UploadedFileResponse> UploadAsync(string containerId, string fileId, byte[] content, string contentType);
 
         /// <summary>
         /// Downloads file from storage as stream.
