@@ -10,8 +10,8 @@
     using Budgetify.Common.Queries;
     using Budgetify.Queries;
     using Budgetify.Services.Test;
-    using Budgetify.Storage.Test.Entities;
 
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
 
@@ -54,13 +54,13 @@
             .ToArray();
         }
 
-        [HttpPost("test/{testUid:guid}")]
-        public async Task<IActionResult> Test(Guid testUid)
-        {
-            CommandResult<Test> result = await _commandDispatcher.ExecuteAsync(new TestCommand(testUid));
+        //[HttpPost("test/{testUid:guid}")]
+        //public async Task<IActionResult> Test(Guid testUid)
+        //{
+        //    CommandResult<Test> result = await _commandDispatcher.ExecuteAsync(new TestCommand(testUid));
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
         [HttpPost("test-query/{uid:guid}")]
         public async Task<IActionResult> TestQuery(Guid uid)
@@ -71,10 +71,10 @@
             return Ok(result);
         }
 
-        [HttpPost("test-command/{testUid:guid}")]
-        public void TestCommand(Guid testUid)
+        [HttpPost("test-command")]
+        public async Task<IActionResult> TestCommand([FromForm] IFormFile file)
         {
-            _jobService.Enqueue(() => _commandDispatcher.ExecuteAsync(new TestCommand(testUid)));
+            return Ok(await _commandDispatcher.ExecuteAsync(new TestCommand(Guid.NewGuid(), file)));
         }
     }
 }

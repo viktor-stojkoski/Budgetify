@@ -31,6 +31,7 @@ namespace Budgetify.Api
 
             services
                 .RegisterSettings()
+                .RegisterStorage()
                 .RegisterDatabase(Configuration)
                 .RegisterCommands()
                 .RegisterQueries()
