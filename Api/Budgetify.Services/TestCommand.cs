@@ -54,11 +54,11 @@
 
             //Uri fileUri = await _storageService.GetSignedUrlAsync(_storageSettings.ContainerName, command.File.FileName, DateTime.UtcNow.AddDays(1));
 
-            //Stream stream = await _storageService.DownloadAsync(_storageSettings.ContainerName, command.File.FileName);
+            Stream stream = await _storageService.DownloadAsync("", command.File.FileName);
 
             //await _storageService.DeleteFileAsync(_storageSettings.ContainerName, command.File.FileName);
 
-            await _storageService.DeleteDirectoryAsync(_storageSettings.ContainerName, "test");
+            //await _storageService.DeleteDirectoryAsync(_storageSettings.ContainerName, "test");
 
             //byte[] bytes = await stream.ToArrayAsync();
 

@@ -12,6 +12,8 @@
     using Azure.Storage.Blobs.Specialized;
     using Azure.Storage.Sas;
 
+    using Budgetify.Common.Extensions;
+
     public class AzureStorageService : IStorageService
     {
         private readonly BlobServiceClient _blobServiceClient;
@@ -23,6 +25,9 @@
 
         public async Task DeleteDirectoryAsync(string containerId, string directory)
         {
+            CheckStringArgument(containerId, nameof(containerId));
+            CheckStringArgument(directory, nameof(directory));
+
             BlobContainerClient container = await GetContainerAsync(containerId);
 
             IAsyncEnumerator<BlobHierarchyItem> blobEnumerator =
@@ -46,6 +51,9 @@
 
         public async Task DeleteFileAsync(string containerId, string fileId)
         {
+            CheckStringArgument(containerId, nameof(containerId));
+            CheckStringArgument(fileId, nameof(fileId));
+
             BlobContainerClient container = await GetContainerAsync(containerId);
 
             BlobClient blob = container.GetBlobClient(fileId);
@@ -55,6 +63,9 @@
 
         public async Task<Stream> DownloadAsync(string containerId, string fileId)
         {
+            CheckStringArgument(containerId, nameof(containerId));
+            CheckStringArgument(fileId, nameof(fileId));
+
             BlobContainerClient container = await GetContainerAsync(containerId);
 
             BlobClient blob = container.GetBlobClient(fileId);
@@ -71,6 +82,10 @@
 
         public async Task<Uri> GetSignedUrlAsync(string containerId, string fileId, DateTime expiresOn)
         {
+            CheckStringArgument(containerId, nameof(containerId));
+            CheckStringArgument(fileId, nameof(fileId));
+            CheckExpiresOnArgument(expiresOn, nameof(expiresOn));
+
             BlobContainerClient container = await GetContainerAsync(containerId);
 
             BlobClient blob = container.GetBlobClient(fileId);
@@ -100,6 +115,11 @@
 
         public async Task<UploadedFileResponse> UploadAsync(string containerId, string fileId, byte[] content, string contentType)
         {
+            CheckStringArgument(containerId, nameof(containerId));
+            CheckStringArgument(fileId, nameof(fileId));
+            CheckContentArgument(content, nameof(content));
+            CheckStringArgument(contentType, nameof(contentType));
+
             BlobContainerClient container = await GetContainerAsync(containerId);
 
             string fileName = RemoveUnsupportedCharacters(fileId);
@@ -155,6 +175,30 @@
             blobHttpHeaders.ContentType = contentType;
 
             return blobHttpHeaders;
+        }
+
+        private static void CheckStringArgument(string argumentValue, string argumentName)
+        {
+            if (argumentValue.IsEmpty())
+            {
+                throw new ArgumentException($"Argument {argumentName} is required.");
+            }
+        }
+
+        private static void CheckContentArgument<T>(T argumentValue, string argumentName)
+        {
+            if (Equals(argumentValue, default(T)))
+            {
+                throw new ArgumentException($"Argument {argumentName} is required.");
+            }
+        }
+
+        private static void CheckExpiresOnArgument(DateTime expiresOn, string argumentName)
+        {
+            if (expiresOn.Kind is not DateTimeKind.Utc || expiresOn < DateTime.UtcNow)
+            {
+                throw new ArgumentException($"Argument {argumentName} must be UTC kind and reference moment in the future.");
+            }
         }
     }
 }
