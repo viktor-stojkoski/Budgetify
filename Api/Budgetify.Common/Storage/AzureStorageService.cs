@@ -23,12 +23,12 @@
             _blobServiceClient = new BlobServiceClient(connectionString);
         }
 
-        public async Task DeleteDirectoryAsync(string containerId, string directory)
+        public async Task DeleteDirectoryAsync(string containerName, string directory)
         {
-            CheckStringArgument(containerId, nameof(containerId));
+            CheckStringArgument(containerName, nameof(containerName));
             CheckStringArgument(directory, nameof(directory));
 
-            BlobContainerClient container = await GetContainerAsync(containerId);
+            BlobContainerClient container = await GetContainerAsync(containerName);
 
             IAsyncEnumerator<BlobHierarchyItem> blobEnumerator =
                 container.GetBlobsByHierarchyAsync(prefix: directory).GetAsyncEnumerator();
@@ -49,30 +49,30 @@
             }
         }
 
-        public async Task DeleteFileAsync(string containerId, string fileId)
+        public async Task DeleteFileAsync(string containerName, string fileName)
         {
-            CheckStringArgument(containerId, nameof(containerId));
-            CheckStringArgument(fileId, nameof(fileId));
+            CheckStringArgument(containerName, nameof(containerName));
+            CheckStringArgument(fileName, nameof(fileName));
 
-            BlobContainerClient container = await GetContainerAsync(containerId);
+            BlobContainerClient container = await GetContainerAsync(containerName);
 
-            BlobClient blob = container.GetBlobClient(fileId);
+            BlobClient blob = container.GetBlobClient(fileName);
 
             await blob.DeleteIfExistsAsync();
         }
 
-        public async Task<Stream> DownloadAsync(string containerId, string fileId)
+        public async Task<Stream> DownloadAsync(string containerName, string fileName)
         {
-            CheckStringArgument(containerId, nameof(containerId));
-            CheckStringArgument(fileId, nameof(fileId));
+            CheckStringArgument(containerName, nameof(containerName));
+            CheckStringArgument(fileName, nameof(fileName));
 
-            BlobContainerClient container = await GetContainerAsync(containerId);
+            BlobContainerClient container = await GetContainerAsync(containerName);
 
-            BlobClient blob = container.GetBlobClient(fileId);
+            BlobClient blob = container.GetBlobClient(fileName);
 
             if (!await blob.ExistsAsync())
             {
-                throw new FileNotFoundException($"File with name {fileId} does not exist.");
+                throw new FileNotFoundException($"File with name {fileName} does not exist.");
             }
 
             Response<BlobDownloadResult> stream = await blob.DownloadContentAsync();
@@ -80,19 +80,19 @@
             return stream.Value.Content.ToStream();
         }
 
-        public async Task<Uri> GetSignedUrlAsync(string containerId, string fileId, DateTime expiresOn)
+        public async Task<Uri> GetSignedUrlAsync(string containerName, string fileName, DateTime expiresOn)
         {
-            CheckStringArgument(containerId, nameof(containerId));
-            CheckStringArgument(fileId, nameof(fileId));
+            CheckStringArgument(containerName, nameof(containerName));
+            CheckStringArgument(fileName, nameof(fileName));
             CheckExpiresOnArgument(expiresOn, nameof(expiresOn));
 
-            BlobContainerClient container = await GetContainerAsync(containerId);
+            BlobContainerClient container = await GetContainerAsync(containerName);
 
-            BlobClient blob = container.GetBlobClient(fileId);
+            BlobClient blob = container.GetBlobClient(fileName);
 
             if (!await blob.ExistsAsync())
             {
-                throw new FileNotFoundException($"File with name {fileId} does not exist.");
+                throw new FileNotFoundException($"File with name {fileName} does not exist.");
             }
 
             if (!blob.CanGenerateSasUri)
@@ -113,18 +113,18 @@
             return blob.GenerateSasUri(sasBuilder);
         }
 
-        public async Task<UploadedFileResponse> UploadAsync(string containerId, string fileId, byte[] content, string contentType)
+        public async Task<UploadedFileResponse> UploadAsync(string containerName, string fileName, byte[] content, string contentType)
         {
-            CheckStringArgument(containerId, nameof(containerId));
-            CheckStringArgument(fileId, nameof(fileId));
+            CheckStringArgument(containerName, nameof(containerName));
+            CheckStringArgument(fileName, nameof(fileName));
             CheckContentArgument(content, nameof(content));
             CheckStringArgument(contentType, nameof(contentType));
 
-            BlobContainerClient container = await GetContainerAsync(containerId);
+            BlobContainerClient container = await GetContainerAsync(containerName);
 
-            string fileName = RemoveUnsupportedCharacters(fileId);
+            string fileId = RemoveUnsupportedCharacters(fileName);
 
-            BlobClient blob = container.GetBlobClient(fileName);
+            BlobClient blob = container.GetBlobClient(fileId);
 
             using Stream fileStream = new MemoryStream(content);
 
@@ -134,20 +134,20 @@
 
             return new UploadedFileResponse(
                 FileUri: blob.Uri,
-                FileName: fileName);
+                FileName: fileId);
         }
 
         /// <summary>
         /// Returns the blob container client if found.
         /// </summary>
-        private async Task<BlobContainerClient> GetContainerAsync(string containerId)
+        private async Task<BlobContainerClient> GetContainerAsync(string containerName)
         {
             BlobContainerClient container =
-                _blobServiceClient.GetBlobContainerClient(containerId);
+                _blobServiceClient.GetBlobContainerClient(containerName);
 
             if (!await container.ExistsAsync())
             {
-                throw new DirectoryNotFoundException($"Container with name {containerId} does not exist.");
+                throw new DirectoryNotFoundException($"Container with name {containerName} does not exist.");
             }
 
             return container;
