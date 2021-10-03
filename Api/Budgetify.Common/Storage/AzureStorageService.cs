@@ -177,6 +177,9 @@
             return blobHttpHeaders;
         }
 
+        /// <summary>
+        /// Checks and throws exception if string argument is null or empty string.
+        /// </summary>
         private static void CheckStringArgument(string argumentValue, string argumentName)
         {
             if (argumentValue.IsEmpty())
@@ -185,6 +188,9 @@
             }
         }
 
+        /// <summary>
+        /// Checks and throws exception if argument of type T is null or empty.
+        /// </summary>
         private static void CheckContentArgument<T>(T argumentValue, string argumentName)
         {
             if (Equals(argumentValue, default(T)))
@@ -193,6 +199,9 @@
             }
         }
 
+        /// <summary>
+        /// Checks and throws exception if date argument is not UTC and references moment in the past.
+        /// </summary>
         private static void CheckExpiresOnArgument(DateTime expiresOn, string argumentName)
         {
             if (expiresOn.Kind is not DateTimeKind.Utc || expiresOn < DateTime.UtcNow)
