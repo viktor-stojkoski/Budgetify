@@ -47,7 +47,7 @@
             return services;
         }
 
-        public static void UseHangfire(this IApplicationBuilder app)
+        public static IApplicationBuilder UseHangfire(this IApplicationBuilder app)
         {
             using IServiceScope serviceScope = app.ApplicationServices.CreateScope();
 
@@ -70,6 +70,8 @@
             };
 
             app.UseHangfireDashboard(jobSettings.Endpoint, options);
+
+            return app;
         }
     }
 }

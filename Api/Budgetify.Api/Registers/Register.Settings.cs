@@ -13,6 +13,7 @@
             services.AddSingleton<IJobSettings, JobSettings>();
             services.AddSingleton<ILoggerSettings, LoggerSettings>();
             services.AddSingleton<IStorageSettings, StorageSettings>();
+            services.AddSingleton<ISwaggerSettings, SwaggerSettings>();
 
             return services;
         }
