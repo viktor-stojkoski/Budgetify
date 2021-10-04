@@ -37,7 +37,8 @@ namespace Budgetify.Api
                 .RegisterQueries()
                 .RegisterDomainEvents()
                 .RegisterHangfire(Configuration)
-                .RegisterLogging();
+                .RegisterLogging()
+                .RegisterHealthChecks(Configuration);
 
             services.AddScoped<ITestRepository, TestRepository>();
         }
@@ -66,6 +67,8 @@ namespace Budgetify.Api
             });
 
             app.UseHangfire();
+
+            app.UseHealthChecks();
         }
     }
 }
