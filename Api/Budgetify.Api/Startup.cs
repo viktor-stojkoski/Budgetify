@@ -48,34 +48,34 @@ namespace Budgetify.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwagger();
+            //app.UseSwagger();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
-            app.UseRouting();
+            //app.UseRouting();
 
-            app.UseCors("AllowAll");
+            //app.UseCors("AllowAll");
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //});
 
-            app.UseHangfire();
+            //app.UseHangfire();
 
-            app.UseHealthChecks();
+            //app.UseHealthChecks();
 
-            //app
-            //    .UseSwagger()
-            //    .UseHttpsRedirection()
-            //    .UseRouting()
-            //    .UseCors("AllowAll")
-            //    .UseAuthentication()
-            //    .UseEndpoints(endpoints => endpoints.MapControllers())
-            //    .UseHangfire()
-            //    .UseHealthChecks();
+            app
+                .UseSwagger()
+                .UseHttpsRedirection()
+                .UseRouting()
+                .UseCors("AllowAll")
+                .UseAuthentication()
+                .UseEndpoints(endpoints => endpoints.MapControllers())
+                .UseHangfire()
+                .UseHealthChecks();
         }
     }
 }

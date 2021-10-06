@@ -21,10 +21,5 @@
         /// Swagger's version 1.0 docs schema endpoint.
         /// </summary>
         string Version1_0_JsonEndpointUrl { get; }
-
-        ///// <summary>
-        ///// Swagger's application name.
-        ///// </summary>
-        //string ApplicationName { get; }
     }
 }
