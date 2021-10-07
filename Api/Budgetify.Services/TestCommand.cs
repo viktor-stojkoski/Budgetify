@@ -54,7 +54,7 @@
 
             //Uri fileUri = await _storageService.GetSignedUrlAsync(_storageSettings.ContainerName, command.File.FileName, DateTime.UtcNow.AddDays(1));
 
-            Stream stream = await _storageService.DownloadAsync("", command.File.FileName);
+            _ = await _storageService.DownloadAsync("", command.File.FileName);
 
             //await _storageService.DeleteFileAsync(_storageSettings.ContainerName, command.File.FileName);
 
@@ -68,9 +68,7 @@
             _logger.LogException(new Exception(), "test");
             _logger.LogInformation("TEST321321321", new { test = "test321" });
 
-#pragma warning disable CS8604 // Possible null reference argument.
             //_testRepository.Update(testResult.Value);
-#pragma warning restore CS8604 // Possible null reference argument.
 
             //Result<Test> testResult2 = await _testRepository.GetTestAsync(Guid.Parse("fad55626-9765-4576-9ef5-e5df4aaae5a3"));
 
@@ -93,13 +91,13 @@
 
         public static async Task<byte[]> ToArrayAsync(this Stream stream)
         {
-            if (stream.Length > int.MaxValue)
-            {
-                throw new ArgumentOutOfRangeException("Cannot convert stream larger than max value of signed integer (2 147 483 647) to array");
-            }
+            //if (stream.Length > int.MaxValue)
+            //{
+            //    throw new ArgumentOutOfRangeException("Cannot convert stream larger than max value of signed integer (2 147 483 647) to array");
+            //}
 
             byte[]? array = new byte[stream.Length];
-            await stream.ReadAsync(array, 0, (int)stream.Length);
+            await stream.ReadAsync(array.AsMemory(0, (int)stream.Length));
             return array;
         }
     }
