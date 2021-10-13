@@ -4,6 +4,8 @@
 
     public abstract class Entity
     {
+        protected Entity() { }
+
         /// <summary>
         /// Entity's database id.
         /// </summary>
@@ -23,7 +25,5 @@
         /// Entity's date and time of deletion.
         /// </summary>
         public DateTime? DeletedOn { get; set; }
-
-        protected Entity() { }
     }
 }

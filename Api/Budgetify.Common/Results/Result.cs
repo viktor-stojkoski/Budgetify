@@ -93,15 +93,13 @@
 
     public abstract class ResultBase
     {
-        private readonly string _message;
-
         public bool IsFailure { get; }
+
+        public string Message { get; }
 
         public bool IsSuccess => !IsFailure;
 
         public bool IsNotFound => IsFailure && HttpStatusCode is HttpStatusCode.NotFound;
-
-        public string Message => _message;
 
         public ResultType ResultType { get; }
 
@@ -153,7 +151,7 @@
 
             ResultType = resultType;
             IsFailure = isFailure;
-            _message = message;
+            Message = message;
         }
     }
 }

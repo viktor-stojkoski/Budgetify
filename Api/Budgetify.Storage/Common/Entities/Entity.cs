@@ -8,6 +8,18 @@
 
     public abstract class Entity
     {
+        protected Entity() { }
+
+        protected Entity(IEnumerable<IDomainEvent> domainEvents)
+        {
+            if (domainEvents is null)
+            {
+                throw new ArgumentNullException(nameof(domainEvents), "Domain events cannot be null.");
+            }
+
+            _domainEvents.AddRange(domainEvents);
+        }
+
         private readonly List<IDomainEvent> _domainEvents = new();
 
         /// <summary>
@@ -34,18 +46,6 @@
         /// Entity's date and time of deletion.
         /// </summary>
         public DateTime? DeletedOn { get; protected internal set; }
-
-        protected Entity() { }
-
-        protected Entity(IEnumerable<IDomainEvent> domainEvents)
-        {
-            if (domainEvents is null)
-            {
-                throw new ArgumentNullException(nameof(domainEvents), "Domain events cannot be null.");
-            }
-
-            _domainEvents.AddRange(domainEvents);
-        }
 
         internal void ClearDomainEvents() => _domainEvents.Clear();
     }
