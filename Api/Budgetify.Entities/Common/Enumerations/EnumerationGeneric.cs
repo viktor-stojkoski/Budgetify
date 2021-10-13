@@ -68,20 +68,3 @@
         }
     }
 }
-
-//FieldInfo[] fields = typeof(T).GetFields(
-//    BindingFlags.Public |
-//    BindingFlags.Static |
-//    BindingFlags.DeclaredOnly);
-
-//foreach (FieldInfo fieldInfo in fields)
-//{
-//    T instance = new();
-
-//    T? locatedValue = fieldInfo.GetValue(instance) as T;
-
-//    if (locatedValue is not null)
-//    {
-//        yield return locatedValue;
-//    }
-//}
