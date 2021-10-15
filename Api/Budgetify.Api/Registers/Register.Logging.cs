@@ -42,23 +42,23 @@
 
             Serilog.Core.Logger logger =
                 new LoggerConfiguration()
-                .MinimumLevel.Verbose()
-                .Enrich.FromLogContext()
-                .Enrich.WithExceptionDetails()
-                .Enrich.WithProperty(nameof(LoggerSettings.ApplicationName), LoggerSettings.ApplicationName)
-                .WriteTo.Console()
-                .WriteTo.File(
-                    path: Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt"),
-                    rollingInterval: RollingInterval.Day,
-                    retainedFileCountLimit: 3,
-                    fileSizeLimitBytes: 1000000,
-                    shared: true,
-                    flushToDiskInterval: TimeSpan.FromSeconds(1))
-                .WriteTo.ApplicationInsights(
-                    instrumentationKey: LoggerSettings.ApplicationInsightsKey,
-                    telemetryConverter: TelemetryConverter.Traces)
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
+                    .MinimumLevel.Verbose()
+                    .Enrich.FromLogContext()
+                    .Enrich.WithExceptionDetails()
+                    .Enrich.WithProperty(nameof(LoggerSettings.ApplicationName), LoggerSettings.ApplicationName)
+                    .WriteTo.Console()
+                    .WriteTo.File(
+                        path: Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt"),
+                        rollingInterval: RollingInterval.Day,
+                        retainedFileCountLimit: 3,
+                        fileSizeLimitBytes: 1000000,
+                        shared: true,
+                        flushToDiskInterval: TimeSpan.FromSeconds(1))
+                    .WriteTo.ApplicationInsights(
+                        instrumentationKey: LoggerSettings.ApplicationInsightsKey,
+                        telemetryConverter: TelemetryConverter.Traces)
+                    .ReadFrom.Configuration(configuration)
+                    .CreateLogger();
 
             Log.Logger = logger;
         }
