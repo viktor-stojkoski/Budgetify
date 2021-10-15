@@ -34,6 +34,7 @@ namespace Budgetify.Api
                 .RegisterDomainEvents()
                 .RegisterHangfire(Configuration)
                 .RegisterLogging()
+                .RegisterLoggingServices()
                 .RegisterHealthChecks(Configuration)
                 .RegisterSwagger(Configuration);
 
