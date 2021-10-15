@@ -47,6 +47,9 @@
         /// </summary>
         public DateTime? DeletedOn { get; protected internal set; }
 
+        /// <summary>
+        /// Removes all domain events.
+        /// </summary>
         internal void ClearDomainEvents() => _domainEvents.Clear();
     }
 }
