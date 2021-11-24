@@ -1,0 +1,50 @@
+############################################
+### Budgetify - PR Build .NET Validation ###
+############################################
+
+pool:
+  name: Azure Pipelines
+  demands: msbuild
+  vmImage: 'windows-latest'
+
+pr:
+  branches:
+    include:
+      - master
+
+variables:
+  BuildConfiguration: Release
+
+jobs:
+  - job: job_build_test_backend
+    displayName: 'Budgetify .NET Build & Test'
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: '.NET Restore'
+      inputs:
+        command: restore
+        projects: '**/*.csproj'
+        noCache: true
+  
+    - task: DotNetCoreCLI@2
+      displayName: '.NET Build'
+      inputs:
+        projects: '**/*.csproj'
+        arguments: '--configuration $(BuildConfiguration) --no-restore'
+  
+    - task: DotNetCoreCLI@2
+      displayName: '.NET Test'
+      inputs:
+        command: test
+        projects: '**/*.Tests.csproj'
+        arguments: '--configuration $(BuildConfiguration) --no-restore --no-build'
+  
+  - job: job_build_database
+    displayName: 'Budgetify Build Database'
+    steps:
+      - task: MSBuild@1
+        displayName: 'Database Build'
+        inputs:
+          solution: 'Databases/Budgetify.Database/Budgetify.Database.sqlproj'
+          configuration: '$(BuildConfiguration)'
+          clean: true
