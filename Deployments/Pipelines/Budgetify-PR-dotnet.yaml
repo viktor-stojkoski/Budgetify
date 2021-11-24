@@ -5,6 +5,7 @@
 pool:
   name: Azure Pipelines
   demands: msbuild
+  vmImage: 'windows-latest'
 
 pr:
   branches:
@@ -22,15 +23,13 @@ jobs:
       displayName: '.NET Restore'
       inputs:
         command: restore
-        #projects: '**/*.csproj'
-        projects: '$(Build.SourcesDirectory)/Budgetify.sln' # Check if it will fail on other projects
-        # noCache: true # check this as well
+        projects: '**/*.csproj'
+        noCache: true
   
     - task: DotNetCoreCLI@2
       displayName: '.NET Build'
       inputs:
-        #projects: '**/*.csproj'
-        projects: '$(Build.SourcesDirectory)/Budgetify.sln'
+        projects: '**/*.csproj'
         arguments: '--configuration $(BuildConfiguration) --no-restore'
   
     - task: DotNetCoreCLI@2
