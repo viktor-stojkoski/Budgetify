@@ -22,15 +22,15 @@ jobs:
       displayName: '.NET Restore'
       inputs:
         command: restore
-        #projects: '**/*.csproj'
-        projects: '$(Build.SourcesDirectory)/Budgetify.sln' # Check if it will fail on other projects
+        projects: '**/*.csproj'
+        # projects: '$(Build.SourcesDirectory)/Budgetify.sln' # Check if it will fail on other projects
         # noCache: true # check this as well
   
     - task: DotNetCoreCLI@2
       displayName: '.NET Build'
       inputs:
-        #projects: '**/*.csproj'
-        projects: '$(Build.SourcesDirectory)/Budgetify.sln'
+        projects: '**/*.csproj'
+        # projects: '$(Build.SourcesDirectory)/Budgetify.sln'
         arguments: '--configuration $(BuildConfiguration) --no-restore'
   
     - task: DotNetCoreCLI@2
