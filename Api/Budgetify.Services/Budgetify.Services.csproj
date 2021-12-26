@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="VS.Commands" Version="2021.12.14.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Budgetify.Common\Budgetify.Common.csproj" />
     <ProjectReference Include="..\Budgetify.Storage\Budgetify.Storage.csproj" />
   </ItemGroup>
