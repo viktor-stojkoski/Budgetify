@@ -12,10 +12,14 @@ trigger: none
 pr:
   branches:
     include:
-      - master
+    - master
 
 variables:
-  BuildConfiguration: Release
+- name: buildConfiguration
+  value: Release
+- group: Github
+- name: feedApiKey
+  value: $(GithubFeedApiKey)
 
 jobs:
   - job: job_build_test_backend
@@ -26,6 +30,7 @@ jobs:
       inputs:
         feedsToUse: config
         nugetConfigPath: NuGet/nuget.config
+        externalFeedCredentials: $(feedApiKey)
         command: restore
         projects: '**/*.csproj'
         noCache: true
@@ -34,14 +39,14 @@ jobs:
       displayName: '.NET Build'
       inputs:
         projects: '**/*.csproj'
-        arguments: '--configuration $(BuildConfiguration) --no-restore'
+        arguments: '--configuration $(buildConfiguration) --no-restore'
   
     - task: DotNetCoreCLI@2
       displayName: '.NET Test'
       inputs:
         command: test
         projects: '**/*.Tests.csproj'
-        arguments: '--configuration $(BuildConfiguration) --no-restore --no-build'
+        arguments: '--configuration $(buildConfiguration) --no-restore --no-build'
   
   - job: job_build_database
     displayName: 'Budgetify Build Database'
@@ -50,5 +55,5 @@ jobs:
         displayName: 'Database Build'
         inputs:
           solution: 'Databases/Budgetify.Database/Budgetify.Database.sqlproj'
-          configuration: '$(BuildConfiguration)'
+          configuration: '$(buildConfiguration)'
           clean: true
