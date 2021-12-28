@@ -17,6 +17,8 @@ pr:
 variables:
 - name: buildConfiguration
   value: Release
+- name: githubServiceConnection
+  value: github
 
 jobs:
   - job: job_build_test_backend
@@ -30,6 +32,8 @@ jobs:
         command: restore
         projects: '**/*.csproj'
         noCache: true
+        nuGetFeedType: external
+        publishFeedCredentials: $(githubServiceConnection)
   
     - task: DotNetCoreCLI@2
       displayName: '.NET Build'
