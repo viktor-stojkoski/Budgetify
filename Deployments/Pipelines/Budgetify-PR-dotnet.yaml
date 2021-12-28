@@ -26,6 +26,11 @@ jobs:
 - job: job_build_test_backend
   displayName: 'Budgetify .NET Build & Test'
   steps:
+  - task: NuGetAuthenticate@0
+    displayName: 'NuGet Authenticate'
+    inputs:
+      nuGetServiceConnections: GithubNugetFeed
+  
   - task: NuGetCommand@2
     displayName: '.NET Restore'
     inputs:
