@@ -78,6 +78,17 @@ jobs:
       noCache: true
       restoreSolution: $(solution)
     continueOnError: true
+    
+  - task: NuGetCommand@2
+    displayName: .NET Restore
+    inputs:
+      command: restore
+      feedsToUse: config
+      publishFeedCredentials: GithubNugetFeed
+      nugetConfigPath: NuGet/nuget.config
+      noCache: true
+      restoreSolution: $(solution)
+    continueOnError: true
       
   - task: NuGetCommand@2
     displayName: .NET Restore
