@@ -18,41 +18,43 @@ variables:
 - name: buildConfiguration
   value: Release
 - name: githubServiceConnection
-  value: github
+  value: GithubNugetFeed
+- name: solution
+  value: '*.sln'
 
 jobs:
-  - job: job_build_test_backend
-    displayName: 'Budgetify .NET Build & Test'
-    steps:
-    - task: DotNetCoreCLI@2
-      displayName: '.NET Restore'
+- job: job_build_test_backend
+  displayName: 'Budgetify .NET Build & Test'
+  steps:
+  - task: NuGetCommand@2
+    displayName: '.NET Restore'
+    inputs:
+      command: restore
+      feedsToUse: config
+      nugetConfigPath: NuGet/nuget.config
+      noCache: true
+      externalFeedCredentials: $(githubServiceConnection)
+      restoreSolution: $(solution)
+
+  - task: DotNetCoreCLI@2
+    displayName: '.NET Build'
+    inputs:
+      projects: '**/*.csproj'
+      arguments: '--configuration $(buildConfiguration) --no-restore'
+
+  - task: DotNetCoreCLI@2
+    displayName: '.NET Test'
+    inputs:
+      command: test
+      projects: '**/*.Tests.csproj'
+      arguments: '--configuration $(buildConfiguration) --no-restore --no-build'
+
+- job: job_build_database
+  displayName: 'Budgetify Build Database'
+  steps:
+    - task: MSBuild@1
+      displayName: 'Database Build'
       inputs:
-        feedsToUse: config
-        nugetConfigPath: NuGet/nuget.config
-        command: restore
-        projects: '**/*.csproj'
-        noCache: true
-        externalFeedCredentials: Test
-  
-    - task: DotNetCoreCLI@2
-      displayName: '.NET Build'
-      inputs:
-        projects: '**/*.csproj'
-        arguments: '--configuration $(buildConfiguration) --no-restore'
-  
-    - task: DotNetCoreCLI@2
-      displayName: '.NET Test'
-      inputs:
-        command: test
-        projects: '**/*.Tests.csproj'
-        arguments: '--configuration $(buildConfiguration) --no-restore --no-build'
-  
-  - job: job_build_database
-    displayName: 'Budgetify Build Database'
-    steps:
-      - task: MSBuild@1
-        displayName: 'Database Build'
-        inputs:
-          solution: 'Databases/Budgetify.Database/Budgetify.Database.sqlproj'
-          configuration: '$(buildConfiguration)'
-          clean: true
+        solution: 'Databases/Budgetify.Database/Budgetify.Database.sqlproj'
+        configuration: '$(buildConfiguration)'
+        clean: true
