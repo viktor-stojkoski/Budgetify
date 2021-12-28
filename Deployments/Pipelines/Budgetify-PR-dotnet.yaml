@@ -32,7 +32,7 @@ jobs:
         command: restore
         projects: '**/*.csproj'
         noCache: true
-        publishFeedCredentials: $(githubServiceConnection)
+        externalFeedCredentials: Test
   
     - task: DotNetCoreCLI@2
       displayName: '.NET Build'
