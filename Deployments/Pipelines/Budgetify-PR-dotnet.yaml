@@ -20,7 +20,7 @@ variables:
 - name: githubServiceConnection
   value: GithubNugetFeed
 - name: solution
-  value: '*.sln'
+  value: '**/*.sln'
 - group: Github
 - name: feedApiKey
   value: $(GithubFeedApiKey)
@@ -41,6 +41,7 @@ jobs:
       script: |
         dotnet nuget list source
         dotnet restore $(solution) --no-cache --force --configfile "NuGet/nuget.config"
+    continueOnError: true
 
   - task: DotNetCoreCLI@2
     displayName: .NET Restore
@@ -52,6 +53,14 @@ jobs:
       projects: '**/*.csproj'
     continueOnError: true
   
+  - task: DotNetCoreCLI@2
+    displayName: .NET Restore
+    inputs:
+      command: restore
+      noCache: true
+      projects: '**/*.csproj'
+    continueOnError: true
+
   - task: NuGetCommand@2
     displayName: .NET Restore
     inputs:
