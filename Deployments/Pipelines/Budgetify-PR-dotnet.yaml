@@ -33,10 +33,7 @@ jobs:
     displayName: .NET Add Github nuget feed
     inputs:
       script: |
-        dotnet nuget add source "https://nuget.pkg.github.com/viktor-stojkoski/index.json" \
-          --name "github" \
-          --username "viktor.98@hotmail.com" \
-          --password $(feedApiKey)
+        dotnet nuget add source "https://nuget.pkg.github.com/viktor-stojkoski/index.json" --name "github" --username "viktor.98@hotmail.com" --password $(feedApiKey)
 
   - task: DotNetCoreCLI@2
     displayName: .NET Restore
