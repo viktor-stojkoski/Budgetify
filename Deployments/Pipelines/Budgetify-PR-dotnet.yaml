@@ -33,8 +33,9 @@ jobs:
       feedsToUse: config
       nugetConfigPath: NuGet/nuget.config
       noCache: true
-      externalFeedCredentials: $(githubServiceConnection)
+      externalFeedCredentials: GithubNugetFeed
       restoreSolution: $(solution)
+      includeNuGetOrg: true
 
   - task: DotNetCoreCLI@2
     displayName: '.NET Build'
