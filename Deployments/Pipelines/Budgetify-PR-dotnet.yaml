@@ -40,7 +40,7 @@ jobs:
     inputs:
       script: |
         dotnet nuget list source
-        dotnet restore '**/*.csproj' --no-cache --force --configfile "NuGet/nuget.config"
+        dotnet restore "$(System.DefaultWorkingDirectory)/Budgetify.sln" --no-cache --force --configfile "NuGet/nuget.config"
     continueOnError: true
   
   # - task: CmdLine@2
