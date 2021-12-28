@@ -23,7 +23,7 @@ variables:
   value: '**/*.sln'
 - group: Github
 - name: feedApiKey
-  value: $(GithubFeedApiKey)
+  value: $(Test)
 
 jobs:
 - job: job_build_test_backend
@@ -89,13 +89,6 @@ jobs:
       noCache: true
       restoreSolution: $(solution)
     continueOnError: true
-      
-  - task: NuGetCommand@2
-    displayName: .NET Restore
-    inputs:
-      command: restore
-      noCache: true
-      restoreSolution: $(solution)
 
   - task: DotNetCoreCLI@2
     displayName: '.NET Build'
