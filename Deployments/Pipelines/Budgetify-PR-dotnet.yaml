@@ -17,9 +17,6 @@ pr:
 variables:
 - name: buildConfiguration
   value: Release
-- group: Github
-- name: feedApiKey
-  value: $(GithubFeedApiKey)
 
 jobs:
   - job: job_build_test_backend
@@ -30,7 +27,6 @@ jobs:
       inputs:
         feedsToUse: config
         nugetConfigPath: NuGet/nuget.config
-        externalFeedCredentials: $(feedApiKey)
         command: restore
         projects: '**/*.csproj'
         noCache: true
