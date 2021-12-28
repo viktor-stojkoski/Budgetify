@@ -42,6 +42,14 @@ jobs:
         dotnet nuget list source
         dotnet restore '**/*.csproj' --no-cache --force --configfile "NuGet/nuget.config"
     continueOnError: true
+  
+  # - task: CmdLine@2
+  #   displayName: .NET Restore
+  #   inputs:
+  #     script: |
+  #       nuget setapikey
+  #       dotnet nuget list source
+  #   continueOnError: true
 
   - task: DotNetCoreCLI@2
     displayName: .NET Restore
@@ -68,7 +76,14 @@ jobs:
       feedsToUse: config
       nugetConfigPath: NuGet/nuget.config
       noCache: true
-      externalFeedCredentials: GithubNugetFeed
+      restoreSolution: $(solution)
+    continueOnError: true
+      
+  - task: NuGetCommand@2
+    displayName: .NET Restore
+    inputs:
+      command: restore
+      noCache: true
       restoreSolution: $(solution)
 
   - task: DotNetCoreCLI@2
