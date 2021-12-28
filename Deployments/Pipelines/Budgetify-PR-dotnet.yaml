@@ -35,7 +35,7 @@ jobs:
       script: |
         dotnet nuget add source "https://nuget.pkg.github.com/viktor-stojkoski/index.json" \
           --name "github" \
-          --username "viktor.98@hotmail.com"
+          --username "viktor.98@hotmail.com" \
           --password $(feedApiKey)
 
   - task: DotNetCoreCLI@2
