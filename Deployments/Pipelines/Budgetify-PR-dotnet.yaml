@@ -33,7 +33,14 @@ jobs:
     displayName: .NET Add Github nuget feed
     inputs:
       script: |
-        dotnet nuget add source "https://nuget.pkg.github.com/viktor-stojkoski/index.json" --name "github" --username "viktor.98@hotmail.com" --password $(feedApiKey)
+        dotnet nuget add source "https://nuget.pkg.github.com/viktor-stojkoski/index.json" --name "github" --username "viktor.98@hotmail.com" --password $(feedApiKey) --store-password-in-clear-text
+
+  - task: CmdLine@2
+    displayName: .NET Restore
+    inputs:
+      script: |
+        dotnet nuget list source
+        dotnet restore $(solution) --no-cache --force --configfile "NuGet/nuget.config"
 
   - task: DotNetCoreCLI@2
     displayName: .NET Restore
@@ -68,12 +75,12 @@ jobs:
       projects: '**/*.Tests.csproj'
       arguments: '--configuration $(buildConfiguration) --no-restore --no-build'
 
-- job: job_build_database
-  displayName: 'Budgetify Build Database'
-  steps:
-    - task: MSBuild@1
-      displayName: 'Database Build'
-      inputs:
-        solution: 'Databases/Budgetify.Database/Budgetify.Database.sqlproj'
-        configuration: '$(buildConfiguration)'
-        clean: true
+# - job: job_build_database
+#   displayName: 'Budgetify Build Database'
+#   steps:
+#     - task: MSBuild@1
+#       displayName: 'Database Build'
+#       inputs:
+#         solution: 'Databases/Budgetify.Database/Budgetify.Database.sqlproj'
+#         configuration: '$(buildConfiguration)'
+#         clean: true
