@@ -32,7 +32,6 @@ jobs:
         command: restore
         projects: '**/*.csproj'
         noCache: true
-        nuGetFeedType: external
         publishFeedCredentials: $(githubServiceConnection)
   
     - task: DotNetCoreCLI@2
