@@ -21,18 +21,35 @@ variables:
   value: GithubNugetFeed
 - name: solution
   value: '*.sln'
+- group: Github
+- name: feedApiKey
+  value: $(GithubFeedApiKey)
 
 jobs:
 - job: job_build_test_backend
   displayName: 'Budgetify .NET Build & Test'
   steps:
-  - task: NuGetAuthenticate@0
-    displayName: 'NuGet Authenticate'
+  - task: CmdLine@2
+    displayName: .NET Add Github nuget feed
     inputs:
-      nuGetServiceConnections: GithubNugetFeed
+      script: |
+        dotnet nuget add source "https://nuget.pkg.github.com/viktor-stojkoski/index.json" \
+          --name "github" \
+          --username "viktor.98@hotmail.com"
+          --password $(feedApiKey)
+
+  - task: DotNetCoreCLI@2
+    displayName: .NET Restore
+    inputs:
+      command: restore
+      feedsToUse: config
+      nugetConfigPath: NuGet/nuget.config
+      noCache: true
+      projects: '**/*.csproj'
+    continueOnError: true
   
   - task: NuGetCommand@2
-    displayName: '.NET Restore'
+    displayName: .NET Restore
     inputs:
       command: restore
       feedsToUse: config
@@ -40,7 +57,6 @@ jobs:
       noCache: true
       externalFeedCredentials: GithubNugetFeed
       restoreSolution: $(solution)
-      includeNuGetOrg: true
 
   - task: DotNetCoreCLI@2
     displayName: '.NET Build'
