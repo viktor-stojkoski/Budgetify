@@ -40,7 +40,7 @@ jobs:
     inputs:
       script: |
         dotnet nuget list source
-        dotnet restore $(solution) --no-cache --force --configfile "NuGet/nuget.config"
+        dotnet restore '**/*.csproj' --no-cache --force --configfile "NuGet/nuget.config"
     continueOnError: true
 
   - task: DotNetCoreCLI@2
