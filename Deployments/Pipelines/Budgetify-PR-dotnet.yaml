@@ -24,6 +24,8 @@ jobs:
     - task: DotNetCoreCLI@2
       displayName: '.NET Restore'
       inputs:
+        feedsToUse: config
+        nugetConfigPath: NuGet/nuget.config
         command: restore
         projects: '**/*.csproj'
         noCache: true
