@@ -77,7 +77,10 @@ jobs:
   #     noCache: true
   #     restoreSolution: $(solution)
   #   continueOnError: true
-    
+  - task: NuGetToolInstaller@1
+    inputs:
+      versionSpec: 6.0.0
+
   - task: NuGetCommand@2
     displayName: .NET Restore
     inputs:
