@@ -33,7 +33,8 @@ jobs:
     displayName: .NET Add Github nuget feed
     inputs:
       script: |
-        dotnet nuget add source "https://nuget.pkg.github.com/viktor-stojkoski/index.json" --username "viktor.98@hotmail.com" --password "$(feedApiKey)" --configfile "NuGet/nuget.config" --store-password-in-clear-text --valid-authentication-types "basic"
+        dotnet nuget update source "github" --username "viktor.98@hotmail.com" --password "$(feedApiKey)" --configfile "NuGet/nuget.config" --store-password-in-clear-text --valid-authentication-types "basic"
+        # dotnet nuget add source "https://nuget.pkg.github.com/viktor-stojkoski/index.json" --username "viktor.98@hotmail.com" --password "$(feedApiKey)" --configfile "NuGet/nuget.config" --store-password-in-clear-text --valid-authentication-types "basic"
 
   - task: CmdLine@2
     displayName: .NET Restore
