@@ -29,11 +29,11 @@ jobs:
 - job: job_build_test_backend
   displayName: 'Budgetify .NET Build & Test'
   steps:
-  - task: CmdLine@2
-    displayName: .NET Add Github nuget feed
-    inputs:
-      script: |
-        dotnet nuget update source "github" --username "viktor.98@hotmail.com" --password "$(feedApiKey)" --configfile "NuGet/nuget.config"
+  # - task: CmdLine@2
+  #   displayName: .NET Add Github nuget feed
+  #   inputs:
+  #     script: |
+  #       dotnet nuget update source "github" --username "viktor.98@hotmail.com" --password "$(feedApiKey)" --configfile "NuGet/nuget.config"
 
   # - task: CmdLine@2
   #   displayName: .NET Restore
