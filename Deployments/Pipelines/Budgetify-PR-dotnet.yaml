@@ -51,11 +51,6 @@ jobs:
   #       dotnet nuget list source
   #   continueOnError: true
 
-  - task: NuGetAuthenticate@0
-    displayName: Nuget Authenticate
-    inputs:
-      nuGetServiceConnections: GithubNugetFeed
-
   - task: DotNetCoreCLI@2
     displayName: .NET Restore
     inputs:
@@ -83,9 +78,15 @@ jobs:
   #     noCache: true
   #     restoreSolution: $(solution)
   #   continueOnError: true
-  - task: NuGetToolInstaller@1
+  - task: NuGetCommand@2
     inputs:
-      versionSpec: 6.0.0
+      command: 'restore'
+      feedsToUse: config
+      nugetConfigPath: ./NuGet/nuget.config
+      restoreSolution: '**/*.sln'
+      externalFeedCredentials: 'GithubNugetFeeds'
+      noCache: true
+    continueOnError: true
 
   - task: NuGetCommand@2
     displayName: .NET Restore
