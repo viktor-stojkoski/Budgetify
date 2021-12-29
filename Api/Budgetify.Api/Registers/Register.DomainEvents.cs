@@ -1,27 +1,24 @@
 ﻿namespace Budgetify.Api.Registers
 {
-    using Budgetify.Common.DomainEvents;
     using Budgetify.Entities;
     using Budgetify.Services;
 
     using Microsoft.Extensions.DependencyInjection;
 
+    using VS.DomainEvents;
+
     public static partial class Register
     {
         public static IServiceCollection RegisterDomainEvents(this IServiceCollection services)
         {
-            services.Scan(scan => scan
-                .FromAssemblies(
+            return services.AddDomainEvents(new DomainEventsOptions
+            {
+                Assemblies = new[]
+                {
                     typeof(EntitiesAssemblyMarker).Assembly,
-                    typeof(CommandsAssemblyMarker).Assembly)
-                .AddClasses(classes => classes.AssignableTo(typeof(IDomainEventHandler<>)))
-                .AsImplementedInterfaces()
-                .WithTransientLifetime());
-
-            services.AddTransient<IDomainEventDispatcher, DomainEventDispatcher>()
-                .Decorate<IDomainEventDispatcher, ExceptionLoggingDomainEventDispatcher>();
-
-            return services;
+                    typeof(CommandsAssemblyMarker).Assembly
+                }
+            });
         }
     }
 }

@@ -4,8 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Budgetify.Common.DomainEvents;
     using Budgetify.Entities.Common.Enumerations;
+
+    using VS.DomainEvents;
 
     public abstract class Entity
     {

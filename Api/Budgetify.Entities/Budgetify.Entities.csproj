@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="VS.DomainEvents" Version="2021.12.26.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Budgetify.Common\Budgetify.Common.csproj" />
   </ItemGroup>
   
