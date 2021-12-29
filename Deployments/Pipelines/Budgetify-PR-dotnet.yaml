@@ -59,7 +59,7 @@ jobs:
       nugetConfigPath: NuGet/nuget.config
       noCache: true
       projects: '**/*.csproj'
-  
+    continueOnError: true
   # - task: DotNetCoreCLI@2
   #   displayName: .NET Restore
   #   inputs:
