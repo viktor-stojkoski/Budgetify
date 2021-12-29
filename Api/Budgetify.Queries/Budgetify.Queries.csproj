@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.8" />
+    <PackageReference Include="VS.Queries" Version="2021.12.23.2" />
   </ItemGroup>
 
   <ItemGroup>

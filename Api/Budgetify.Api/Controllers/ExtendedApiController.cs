@@ -1,11 +1,11 @@
 ﻿namespace Budgetify.Api.Controllers
 {
-    using Budgetify.Common.Queries;
     using Budgetify.Common.Results;
 
     using Microsoft.AspNetCore.Mvc;
 
     using VS.Commands;
+    using VS.Queries;
 
     [ApiController]
     public class ExtendedApiController : ControllerBase

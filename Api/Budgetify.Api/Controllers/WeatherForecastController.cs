@@ -6,7 +6,6 @@
     using System.Threading.Tasks;
 
     using Budgetify.Common.Jobs;
-    using Budgetify.Common.Queries;
     using Budgetify.Queries;
     using Budgetify.Services.Test;
 
@@ -15,6 +14,7 @@
     using Microsoft.Extensions.Logging;
 
     using VS.Commands;
+    using VS.Queries;
 
     [ApiController]
     [Route("[controller]")]
