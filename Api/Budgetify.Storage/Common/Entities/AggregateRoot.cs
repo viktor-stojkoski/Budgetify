@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using Budgetify.Common.DomainEvents;
+    using VS.DomainEvents;
 
     public class AggregateRoot : Entity
     {

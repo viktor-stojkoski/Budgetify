@@ -5,12 +5,13 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Budgetify.Common.DomainEvents;
     using Budgetify.Contracts.Infrastructure.Storage;
     using Budgetify.Storage.Common.Entities;
     using Budgetify.Storage.Infrastructure.Context;
 
     using Microsoft.EntityFrameworkCore.ChangeTracking;
+
+    using VS.DomainEvents;
 
     public class UnitOfWork : IUnitOfWork
     {
