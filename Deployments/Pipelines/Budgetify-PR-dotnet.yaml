@@ -51,6 +51,11 @@ jobs:
   #       dotnet nuget list source
   #   continueOnError: true
 
+  - task: NuGetAuthenticate@0
+    displayName: Nuget Authenticate
+    inputs:
+      nuGetServiceConnections: GithubNugetFeed
+
   - task: DotNetCoreCLI@2
     displayName: .NET Restore
     inputs:
