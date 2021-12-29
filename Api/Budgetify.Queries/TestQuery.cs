@@ -3,10 +3,11 @@
     using System;
     using System.Threading.Tasks;
 
-    using Budgetify.Common.Queries;
     using Budgetify.Queries.Infrastructure.Context;
 
     using Microsoft.EntityFrameworkCore;
+
+    using VS.Queries;
 
     using TestEntity = Test.Entities.Test;
 
