@@ -35,6 +35,7 @@ jobs:
       externalFeedCredentials: $(githubNugetServiceConnection)
       noCache: true
       projects: $(projects)
+      verbosityRestore: Quiet
 
   - task: DotNetCoreCLI@2
     displayName: .NET Build
