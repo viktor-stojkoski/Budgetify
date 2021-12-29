@@ -33,15 +33,15 @@ jobs:
     displayName: .NET Add Github nuget feed
     inputs:
       script: |
-        dotnet nuget update source "github" --username "viktor.98@hotmail.com" --password "$(feedApiKey)" --configfile "NuGet/nuget.config" --store-password-in-clear-text --valid-authentication-types "basic"
+        dotnet nuget update source "github" --password "$(feedApiKey)" --configfile "NuGet/nuget.config"
 
-  - task: CmdLine@2
-    displayName: .NET Restore
-    inputs:
-      script: |
-        dotnet nuget list source
-        dotnet restore "$(System.DefaultWorkingDirectory)/Budgetify.sln" --no-cache --force-evaluate --configfile "NuGet/nuget.config"
-    continueOnError: true
+  # - task: CmdLine@2
+  #   displayName: .NET Restore
+  #   inputs:
+  #     script: |
+  #       dotnet nuget list source
+  #       dotnet restore "$(System.DefaultWorkingDirectory)/Budgetify.sln" --no-cache --force-evaluate --configfile "NuGet/nuget.config"
+  #   continueOnError: true
   
   # - task: CmdLine@2
   #   displayName: .NET Restore
@@ -59,36 +59,35 @@ jobs:
       nugetConfigPath: NuGet/nuget.config
       noCache: true
       projects: '**/*.csproj'
-    continueOnError: true
   
-  - task: DotNetCoreCLI@2
-    displayName: .NET Restore
-    inputs:
-      command: restore
-      noCache: true
-      projects: '**/*.csproj'
-    continueOnError: true
+  # - task: DotNetCoreCLI@2
+  #   displayName: .NET Restore
+  #   inputs:
+  #     command: restore
+  #     noCache: true
+  #     projects: '**/*.csproj'
+  #   continueOnError: true
 
-  - task: NuGetCommand@2
-    displayName: .NET Restore
-    inputs:
-      command: restore
-      feedsToUse: config
-      nugetConfigPath: NuGet/nuget.config
-      noCache: true
-      restoreSolution: $(solution)
-    continueOnError: true
+  # - task: NuGetCommand@2
+  #   displayName: .NET Restore
+  #   inputs:
+  #     command: restore
+  #     feedsToUse: config
+  #     nugetConfigPath: NuGet/nuget.config
+  #     noCache: true
+  #     restoreSolution: $(solution)
+  #   continueOnError: true
     
-  - task: NuGetCommand@2
-    displayName: .NET Restore
-    inputs:
-      command: restore
-      feedsToUse: config
-      publishFeedCredentials: GithubNugetFeed
-      nugetConfigPath: NuGet/nuget.config
-      noCache: true
-      restoreSolution: $(solution)
-    continueOnError: true
+  # - task: NuGetCommand@2
+  #   displayName: .NET Restore
+  #   inputs:
+  #     command: restore
+  #     feedsToUse: config
+  #     publishFeedCredentials: GithubNugetFeed
+  #     nugetConfigPath: NuGet/nuget.config
+  #     noCache: true
+  #     restoreSolution: $(solution)
+  #   continueOnError: true
 
   - task: DotNetCoreCLI@2
     displayName: '.NET Build'
