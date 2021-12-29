@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Budgetify.Common.Commands;
     using Budgetify.Common.Jobs;
     using Budgetify.Common.Queries;
     using Budgetify.Queries;
@@ -14,6 +13,8 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
+
+    using VS.Commands;
 
     [ApiController]
     [Route("[controller]")]

@@ -1,27 +1,22 @@
 ﻿namespace Budgetify.Api.Registers
 {
-    using Budgetify.Common.Commands;
     using Budgetify.Services;
 
     using Microsoft.Extensions.DependencyInjection;
+
+    using VS.Commands;
 
     public static partial class Register
     {
         public static IServiceCollection RegisterCommands(this IServiceCollection services)
         {
-            services.Scan(scan => scan
-                .FromAssemblies(typeof(CommandsAssemblyMarker).Assembly)
-                .AddClasses(classes => classes.AssignableTo(typeof(ICommandHandler<,>)))
-                .AsImplementedInterfaces()
-                .WithTransientLifetime());
-
-            services.AddTransient<ICommandDispatcher, CommandDispatcher>()
-                .Decorate<ICommandDispatcher, FailureLoggingCommandDispatcher>()
-                .Decorate<ICommandDispatcher, ExceptionLoggingCommandDispatcher>();
-
-            services.AddTransient<ISyncCommandDispatcher, SyncCommandDispatcher>();
-
-            return services;
+            return services.AddCommands(new CommandOptions
+            {
+                Assemblies = new[]
+                {
+                    typeof(CommandsAssemblyMarker).Assembly
+                }
+            });
         }
     }
 }

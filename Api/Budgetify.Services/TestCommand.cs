@@ -4,7 +4,6 @@
     using System.IO;
     using System.Threading.Tasks;
 
-    using Budgetify.Common.Commands;
     using Budgetify.Common.Storage;
     using Budgetify.Contracts.Infrastructure.Logger;
     using Budgetify.Contracts.Infrastructure.Storage;
@@ -13,6 +12,8 @@
     using Budgetify.Storage.Test.Repositories;
 
     using Microsoft.AspNetCore.Http;
+
+    using VS.Commands;
 
     public record TestCommand(Guid TestUid, IFormFile File) : ICommand<Test>;
 
