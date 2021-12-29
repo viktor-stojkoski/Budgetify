@@ -86,11 +86,10 @@ jobs:
     inputs:
       command: restore
       feedsToUse: config
-      publishFeedCredentials: GithubNugetFeed
+      externalFeedCredentials: GithubNugetFeed
       nugetConfigPath: NuGet/nuget.config
       noCache: true
       restoreSolution: $(solution)
-    continueOnError: true
 
   - task: DotNetCoreCLI@2
     displayName: '.NET Build'
