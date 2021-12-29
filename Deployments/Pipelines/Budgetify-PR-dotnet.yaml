@@ -57,6 +57,7 @@ jobs:
       command: restore
       feedsToUse: config
       nugetConfigPath: NuGet/nuget.config
+      externalFeedCredentials: 'GithubNugetFeed'
       noCache: true
       projects: '**/*.csproj'
     continueOnError: true
@@ -86,7 +87,7 @@ jobs:
     inputs:
       command: restore
       feedsToUse: config
-      externalFeedCredentials: GithubNugetFeed
+      externalFeedCredentials: 'GithubNugetFeed'
       nugetConfigPath: NuGet/nuget.config
       noCache: true
       restoreSolution: $(solution)
