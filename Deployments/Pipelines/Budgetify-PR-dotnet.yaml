@@ -5,7 +5,7 @@
 pool:
   name: Azure Pipelines
   demands: msbuild
-  vmImage: 'windows-latest'
+  vmImage: windows-latest
 
 trigger: none
 
@@ -17,106 +17,44 @@ pr:
 variables:
 - name: buildConfiguration
   value: Release
-- name: githubServiceConnection
+- name: githubNugetServiceConnection
   value: GithubNugetFeed
-- name: solution
-  value: '**/*.sln'
-- group: Github
-- name: feedApiKey
-  value: $(Test)
+- name: projects
+  value: '**/*.csproj'
 
 jobs:
 - job: job_build_test_backend
-  displayName: 'Budgetify .NET Build & Test'
+  displayName: Budgetify .NET Build & Test
   steps:
-  # - task: CmdLine@2
-  #   displayName: .NET Add Github nuget feed
-  #   inputs:
-  #     script: |
-  #       dotnet nuget update source "github" --username "viktor.98@hotmail.com" --password "$(feedApiKey)" --configfile "NuGet/nuget.config"
-
-  # - task: CmdLine@2
-  #   displayName: .NET Restore
-  #   inputs:
-  #     script: |
-  #       dotnet nuget list source
-  #       dotnet restore "$(System.DefaultWorkingDirectory)/Budgetify.sln" --no-cache --force-evaluate --configfile "NuGet/nuget.config"
-  #   continueOnError: true
-  
-  # - task: CmdLine@2
-  #   displayName: .NET Restore
-  #   inputs:
-  #     script: |
-  #       nuget setapikey
-  #       dotnet nuget list source
-  #   continueOnError: true
-
   - task: DotNetCoreCLI@2
     displayName: .NET Restore
     inputs:
       command: restore
       feedsToUse: config
       nugetConfigPath: NuGet/nuget.config
-      externalFeedCredentials: 'GithubNugetFeeds'
+      externalFeedCredentials: $(githubNugetServiceConnection)
       noCache: true
-      projects: '**/*.csproj'
-    continueOnError: true
-  # - task: DotNetCoreCLI@2
-  #   displayName: .NET Restore
-  #   inputs:
-  #     command: restore
-  #     noCache: true
-  #     projects: '**/*.csproj'
-  #   continueOnError: true
-
-  # - task: NuGetCommand@2
-  #   displayName: .NET Restore
-  #   inputs:
-  #     command: restore
-  #     feedsToUse: config
-  #     nugetConfigPath: NuGet/nuget.config
-  #     noCache: true
-  #     restoreSolution: $(solution)
-  #   continueOnError: true
-  - task: NuGetCommand@2
-    inputs:
-      command: 'restore'
-      feedsToUse: config
-      nugetConfigPath: ./NuGet/nuget.config
-      restoreSolution: '**/*.sln'
-      externalFeedCredentials: 'GithubNugetFeeds'
-      noCache: true
-    continueOnError: true
-
-  - task: NuGetCommand@2
-    displayName: .NET Restore
-    inputs:
-      command: restore
-      feedsToUse: config
-      nugetConfigPath: ./NuGet/nuget.config
-      externalFeedCredentials: 'GithubNugetFeed'
-      noCache: true
-      restoreSolution: $(solution)
+      projects: $(projects)
 
   - task: DotNetCoreCLI@2
-    displayName: '.NET Build'
+    displayName: .NET Build
     inputs:
-      projects: '**/*.csproj'
-      arguments: '--configuration $(buildConfiguration) --no-restore'
+      projects: $(projects)
+      arguments: --configuration $(buildConfiguration) --no-restore
 
   - task: DotNetCoreCLI@2
-    displayName: '.NET Test'
+    displayName: .NET Test
     inputs:
       command: test
       projects: '**/*.Tests.csproj'
-      arguments: '--configuration $(buildConfiguration) --no-restore --no-build'
+      arguments: --configuration $(buildConfiguration) --no-restore --no-build
 
-# - job: job_build_database
-#   displayName: 'Budgetify Build Database'
-#   steps:
-#     - task: MSBuild@1
-#       displayName: 'Database Build'
-#       inputs:
-#         solution: 'Databases/Budgetify.Database/Budgetify.Database.sqlproj'
-#         configuration: '$(buildConfiguration)'
-#         clean: true
+- job: job_build_database
+  displayName: Budgetify Build Database
+  steps:
+    - task: MSBuild@1
+      displayName: Database Build
+      inputs:
+        solution: Databases/Budgetify.Database/Budgetify.Database.sqlproj
+        configuration: $(buildConfiguration)
+        clean: true
