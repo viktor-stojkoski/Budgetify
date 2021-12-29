@@ -33,14 +33,14 @@ jobs:
     displayName: .NET Add Github nuget feed
     inputs:
       script: |
-        dotnet nuget add source "https://nuget.pkg.github.com/viktor-stojkoski/index.json" --name "github" --username "viktor.98@hotmail.com" --password "$(feedApiKey)" --configfile "NuGet/nuget.config" --store-password-in-clear-text --valid-authentication-types "basic"
+        dotnet nuget add source "https://nuget.pkg.github.com/viktor-stojkoski/index.json" --username "viktor.98@hotmail.com" --password "$(feedApiKey)" --configfile "NuGet/nuget.config" --store-password-in-clear-text --valid-authentication-types "basic"
 
   - task: CmdLine@2
     displayName: .NET Restore
     inputs:
       script: |
         dotnet nuget list source
-        dotnet restore "$(System.DefaultWorkingDirectory)/Budgetify.sln" --no-cache --force --configfile "NuGet/nuget.config"
+        dotnet restore "$(System.DefaultWorkingDirectory)/Budgetify.sln" --no-cache --force-evaluate --configfile "NuGet/nuget.config"
     continueOnError: true
   
   # - task: CmdLine@2
