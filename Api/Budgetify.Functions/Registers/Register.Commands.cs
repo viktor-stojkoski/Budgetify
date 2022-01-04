@@ -1,21 +1,22 @@
-﻿namespace Budgetify.Functions.Registers;
-
-using Budgetify.Services;
-
-using Microsoft.Extensions.DependencyInjection;
-
-using VS.Commands;
-
-public static partial class Register
+﻿namespace Budgetify.Functions.Registers
 {
-    public static IServiceCollection RegisterCommands(this IServiceCollection services)
+    using Budgetify.Services;
+
+    using Microsoft.Extensions.DependencyInjection;
+
+    using VS.Commands;
+
+    public static partial class Register
     {
-        return services.AddCommands(new CommandOptions
+        public static IServiceCollection RegisterCommands(this IServiceCollection services)
         {
-            Assemblies = new[]
+            return services.AddCommands(new CommandOptions
             {
+                Assemblies = new[]
+                {
                 typeof(CommandsAssemblyMarker).Assembly
             }
-        });
+            });
+        }
     }
 }

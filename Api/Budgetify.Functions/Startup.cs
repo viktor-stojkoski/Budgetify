@@ -1,34 +1,34 @@
 ﻿[assembly: Microsoft.Azure.Functions.Extensions.DependencyInjection.FunctionsStartup(typeof(Budgetify.Functions.Startup))]
-namespace Budgetify.Functions;
-
-using System.IO;
-
-using Budgetify.Functions.Registers;
-
-using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-
-public class Startup : FunctionsStartup
+namespace Budgetify.Functions
 {
-    public override void Configure(IFunctionsHostBuilder builder)
+    using System.IO;
+
+    using Budgetify.Functions.Registers;
+
+    using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Configuration;
+
+    public class Startup : FunctionsStartup
     {
-        //FunctionsHostBuilderContext context = builder.GetContext();
+        public override void Configure(IFunctionsHostBuilder builder)
+        {
+            //FunctionsHostBuilderContext context = builder.GetContext();
 
-        builder.Services
-            .RegisterCommands();
-    }
+            builder.Services
+                .RegisterCommands();
+        }
 
-    public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
-    {
-        base.ConfigureAppConfiguration(builder);
+        public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
+        {
+            base.ConfigureAppConfiguration(builder);
 
-        FunctionsHostBuilderContext context = builder.GetContext();
+            FunctionsHostBuilderContext context = builder.GetContext();
 
-        builder.ConfigurationBuilder
-            .AddJsonFile(
-                path: Path.Combine(context.ApplicationRootPath, "appsettings.json"),
-                optional: false,
-                reloadOnChange: true);
+            builder.ConfigurationBuilder
+                .AddJsonFile(
+                    path: Path.Combine(context.ApplicationRootPath, "appsettings.json"),
+                    optional: false,
+                    reloadOnChange: true);
+        }
     }
 }
-
