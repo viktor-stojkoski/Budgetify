@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31515.178
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{959A7A78-AF76-4CC6-AD6F-DE9B9822E746}"
 EndProject
@@ -38,6 +38,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{109158A2-9F2F-4CA9-8EF0-1E2C3028269A}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Budgetify.Hangfire.Database", "Databases\Budgetify.Hangfire.Database\Budgetify.Hangfire.Database.sqlproj", "{9FC144A1-7755-468E-BB21-B1AA50BE666D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgetify.Functions", "Api\Budgetify.Functions\Budgetify.Functions.csproj", "{59087754-BBDA-4BB1-8C57-930F972FB9A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +107,10 @@ Global
 		{9FC144A1-7755-468E-BB21-B1AA50BE666D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FC144A1-7755-468E-BB21-B1AA50BE666D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9FC144A1-7755-468E-BB21-B1AA50BE666D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{59087754-BBDA-4BB1-8C57-930F972FB9A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59087754-BBDA-4BB1-8C57-930F972FB9A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59087754-BBDA-4BB1-8C57-930F972FB9A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59087754-BBDA-4BB1-8C57-930F972FB9A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,6 +131,7 @@ Global
 		{886BC97F-E527-4789-9D42-2BC20FC03E72} = {109158A2-9F2F-4CA9-8EF0-1E2C3028269A}
 		{109158A2-9F2F-4CA9-8EF0-1E2C3028269A} = {9A392BEA-9540-4D72-960B-507AE734B038}
 		{9FC144A1-7755-468E-BB21-B1AA50BE666D} = {9FAC2DA2-5C96-46F2-A27A-FCBBE0B68219}
+		{59087754-BBDA-4BB1-8C57-930F972FB9A7} = {959A7A78-AF76-4CC6-AD6F-DE9B9822E746}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {18E0B8AE-0C6E-4062-9A42-40239D948E64}
