@@ -10,7 +10,7 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
---IF ('$(ExecuteSeedData)' = 'Y')
---BEGIN
-    :r .\Budgetify\Tables\Test\Test.Seed.sql
---END
+IF ('$(ExecuteSeedData)' = 'Y')
+BEGIN
+    :r .\Budgetify\Tables\User\User.Seed.sql
+END
