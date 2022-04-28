@@ -1,6 +1,5 @@
 ﻿namespace Budgetify.Storage.Test.Entities
 {
-
     using Budgetify.Storage.Common.Entities;
 
     public class Test : AggregateRoot
