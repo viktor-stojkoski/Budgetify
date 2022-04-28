@@ -6,10 +6,9 @@
     using System.Threading.Tasks;
 
     using Budgetify.Common.Jobs;
-    using Budgetify.Queries;
+    using Budgetify.Queries.Asd;
     using Budgetify.Services.Test;
 
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
 
@@ -66,16 +65,15 @@
         [HttpPost("test-query/{uid:guid}")]
         public async Task<IActionResult> TestQuery(Guid uid)
         {
-            QueryResult<Queries.Test.Entities.Test> result =
-                await _queryDispatcher.ExecuteAsync(new TestQuery(uid));
+            QueryResult<Queries.User.Entities.User>? result = await _queryDispatcher.ExecuteAsync(new TestQuery(uid));
 
             return Ok(result);
         }
 
         [HttpPost("test-command")]
-        public async Task<IActionResult> TestCommand([FromForm] IFormFile file)
+        public async Task<IActionResult> TestCommand(Guid uid)
         {
-            return Ok(await _commandDispatcher.ExecuteAsync(new TestCommand(Guid.NewGuid(), file)));
+            return Ok(await _commandDispatcher.ExecuteAsync(new TestCommand(uid)));
         }
     }
 }

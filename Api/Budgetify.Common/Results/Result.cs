@@ -7,6 +7,7 @@
 
     using Budgetify.Common.Extensions;
 
+#nullable disable
     public class Result : ResultBase
     {
         private Result()
@@ -68,9 +69,9 @@
 
     public class Result<T> : ResultBase
     {
-        private static readonly T? Empty = default;
+        private static readonly T Empty = default;
 
-        public T? Value { get; }
+        public T Value { get; }
 
         public bool IsEmpty => Value?.Equals(Empty) ?? true;
 
@@ -154,4 +155,5 @@
             Message = message;
         }
     }
+#nullable restore
 }

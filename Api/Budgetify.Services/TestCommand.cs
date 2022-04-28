@@ -4,10 +4,13 @@
     using System.IO;
     using System.Threading.Tasks;
 
+    using Budgetify.Common.Results;
     using Budgetify.Common.Storage;
     using Budgetify.Contracts.Infrastructure.Logger;
     using Budgetify.Contracts.Infrastructure.Storage;
     using Budgetify.Contracts.Settings;
+    using Budgetify.Contracts.User.Repositories;
+    using Budgetify.Entities.User.Domain;
     using Budgetify.Storage.Test.Entities;
     using Budgetify.Storage.Test.Repositories;
 
@@ -15,7 +18,7 @@
 
     using VS.Commands;
 
-    public record TestCommand(Guid TestUid, IFormFile File) : ICommand<Test>;
+    public record TestCommand(Guid TestUid) : ICommand<Test>;
 
     public class TestCommandHandler : ICommandHandler<TestCommand, Test>
     {
@@ -24,19 +27,22 @@
         private readonly ILogger<TestCommand> _logger;
         private readonly IStorageService _storageService;
         private readonly IStorageSettings _storageSettings;
+        private readonly IUserRepository _userRepository;
 
         public TestCommandHandler(
             ITestRepository testRepository,
             IUnitOfWork unitOfWork,
             ILogger<TestCommand> logger,
             IStorageService storageService,
-            IStorageSettings storageSettings)
+            IStorageSettings storageSettings,
+            IUserRepository userRepository)
         {
             _testRepository = testRepository;
             _unitOfWork = unitOfWork;
             _logger = logger;
             _storageService = storageService;
             _storageSettings = storageSettings;
+            _userRepository = userRepository;
         }
 
         public async Task<CommandResult<Test>> ExecuteAsync(TestCommand command)
@@ -55,7 +61,7 @@
 
             //Uri fileUri = await _storageService.GetSignedUrlAsync(_storageSettings.ContainerName, command.File.FileName, DateTime.UtcNow.AddDays(1));
 
-            _ = await _storageService.DownloadAsync("", command.File.FileName);
+            //_ = await _storageService.DownloadAsync("", command.File.FileName);
 
             //await _storageService.DeleteFileAsync(_storageSettings.ContainerName, command.File.FileName);
 
@@ -65,13 +71,24 @@
 
             //await File.WriteAllBytesAsync("File.pdf", bytes);
 
-            _logger.LogError("TEST");
-            _logger.LogException(new Exception(), "test");
-            _logger.LogInformation("TEST321321321", new { test = "test321" });
+            //_logger.LogError("TEST");
+            //_logger.LogException(new Exception(), "test");
+            //_logger.LogInformation("TEST321321321", new { test = "test321" });
 
             //_testRepository.Update(testResult.Value);
 
             //Result<Test> testResult2 = await _testRepository.GetTestAsync(Guid.Parse("fad55626-9765-4576-9ef5-e5df4aaae5a3"));
+
+            Result<User> test = await _userRepository.GetUserAsync(command.TestUid);
+
+            if (test.IsFailure)
+            {
+                return result.FailWith("NOT_FOUNDD");
+            }
+
+            test.Value.Update("New name", "newemail@budgetify.tech");
+
+            _userRepository.Update(test.Value);
 
             await _unitOfWork.SaveAsync();
 

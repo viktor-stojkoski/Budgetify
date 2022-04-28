@@ -15,7 +15,7 @@
 
     public class UserRepository : Repository<Entities.User>, IUserRepository
     {
-        protected UserRepository(IBudgetifyDbContext budgetifyDbContext)
+        public UserRepository(IBudgetifyDbContext budgetifyDbContext)
             : base(budgetifyDbContext) { }
 
         public async Task<Result<User>> GetUserAsync(Guid userUid)

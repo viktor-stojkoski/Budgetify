@@ -1,7 +1,6 @@
 namespace Budgetify.Api
 {
     using Budgetify.Api.Registers;
-    using Budgetify.Storage.Test.Repositories;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -36,9 +35,8 @@ namespace Budgetify.Api
                 .RegisterLogging()
                 .RegisterLoggingServices()
                 .RegisterHealthChecks(Configuration)
-                .RegisterSwagger(Configuration);
-
-            services.AddScoped<ITestRepository, TestRepository>();
+                .RegisterSwagger(Configuration)
+                .RegisterServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
