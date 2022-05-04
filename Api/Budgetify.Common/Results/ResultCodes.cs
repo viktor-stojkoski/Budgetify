@@ -4,7 +4,7 @@
     {
         #region Common
 
-        public const string EmailInvalid = "INVALID_EMAIL";
+        public const string EmailInvalid = "EMAIL_INVALID";
         public const string EmailInvalidLength = "EMAIL_INVALID_LENGTH";
 
         #endregion
