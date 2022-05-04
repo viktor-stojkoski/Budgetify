@@ -21,12 +21,12 @@
         {
             if (value.IsEmpty())
             {
-                return Result.Invalid<UserNameValue>(ResultCodes.InvalidUserName);
+                return Result.Invalid<UserNameValue>(ResultCodes.UserNameInvalid);
             }
 
             if (value.Length > MAX_NAME_LENGTH)
             {
-                return Result.Invalid<UserNameValue>(ResultCodes.InvalidUserNameLength);
+                return Result.Invalid<UserNameValue>(ResultCodes.UserNameInvalidLength);
             }
 
             return Result.Ok(new UserNameValue(value));

@@ -11,8 +11,8 @@
 
         #region User
 
-        public const string InvalidUserName = "INVALID_USER_NAME";
-        public const string InvalidUserNameLength = "INVALID_USER_NAME_LENGTH";
+        public const string UserNameInvalid = "USER_NAME_INVALID";
+        public const string UserNameInvalidLength = "USER_NAME_INVALID_LENGTH";
         public const string UserNotFound = "USER_NOT_FOUND";
 
         #endregion

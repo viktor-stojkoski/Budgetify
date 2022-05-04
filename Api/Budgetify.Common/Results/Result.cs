@@ -2,12 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Net;
 
     using Budgetify.Common.Extensions;
 
-#nullable disable
     public class Result : ResultBase
     {
         private Result()
@@ -69,11 +69,14 @@
 
     public class Result<T> : ResultBase
     {
-        private static readonly T Empty = default;
+        private static readonly T? Empty = default;
 
-        public T Value { get; }
+        public T? Value { get; }
 
         public bool IsEmpty => Value?.Equals(Empty) ?? true;
+
+        [MemberNotNullWhen(returnValue: false, nameof(Value))]
+        public bool IsFailureOrNull => IsEmpty || IsFailure;
 
         internal Result(ResultType resultType, string message)
             : base(resultType: resultType, isFailure: true, message: message) { }
@@ -155,5 +158,4 @@
             Message = message;
         }
     }
-#nullable restore
 }

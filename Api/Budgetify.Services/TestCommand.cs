@@ -81,7 +81,7 @@
 
             Result<User> test = await _userRepository.GetUserAsync(command.TestUid);
 
-            if (test.IsFailure)
+            if (test.IsFailureOrNull)
             {
                 return result.FailWith("NOT_FOUNDD");
             }
