@@ -32,7 +32,11 @@
             return Result.Ok(new UserNameValue(value));
         }
 
-        public static implicit operator string?(UserNameValue? obj) => obj?.Value;
+        //public static implicit operator string?(UserNameValue? obj) => obj?.Value;
+
+        //public static explicit operator UserNameValue?(string? value) => Of(value);
+
+        //private static UserNameValue? Of(string? value) => (UserNameValue?)(Create(value)?.Value);
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

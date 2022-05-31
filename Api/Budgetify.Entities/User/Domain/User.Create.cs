@@ -1,6 +1,7 @@
 ﻿namespace Budgetify.Entities.User.Domain
 {
     using System;
+    using System.Collections.Generic;
 
     using Budgetify.Common.Results;
     using Budgetify.Entities.User.ValueObjects;
@@ -20,8 +21,26 @@
         {
             Result<UserNameValue> nameValue = UserNameValue.Create(name);
             Result<EmailValue> emailValue = EmailValue.Create(email);
+            Result<UserNameValue> test2 = UserNameValue.Create(name);
 
-            Result okOrError = Result.FirstFailureOrOk(nameValue, emailValue);
+            //nameValue.FailureOrOk(emailValue);
+
+            IEnumerable<Result> test = new List<Result>() { nameValue, emailValue };
+            //test.AnyFailure();
+            //Result okOrError = Result.FirstFailureOrOk(nameValue, emailValue);
+            Result okOrError = Result.FirstFailureNullOrOk(nameValue, emailValue);
+
+            //Result ok = ResultExtensions.IsNull(nameValue, emailValue, test2);
+
+            //if (nameValue.IsFailureOrNull || emailValue.IsFailureOrNull)
+            //{
+            //    return Result.FromError<User>(okOrError);
+            //}
+
+            //if (nameValue.AreFailureOrNull(emailValue))
+            //{
+
+            //}
 
             if (okOrError.IsFailure)
             {
@@ -29,7 +48,7 @@
             }
 
             return Result.Ok(
-                new User
+                new User(nameValue.Value, emailValue.Value)
                 {
                     Id = id,
                     Uid = uid,

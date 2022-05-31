@@ -24,15 +24,15 @@
         /// </summary>
         internal static Entities.User CreateUser(this User user)
         {
-            return new Entities.User
-            {
-                Id = user.Id,
-                Uid = user.Uid,
-                CreatedOn = user.CreatedOn,
-                DeletedOn = user.DeletedOn,
-                Name = user.Name,
-                Email = user.Email
-            };
+            return new Entities.User(user.Name, user.Email);
+            //{
+            //    Id = user.Id,
+            //    Uid = user.Uid,
+            //    CreatedOn = user.CreatedOn,
+            //    DeletedOn = user.DeletedOn,
+            //    Name = user.Name,
+            //    Email = user.Email
+            //};
         }
     }
 }

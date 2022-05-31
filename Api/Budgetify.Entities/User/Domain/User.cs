@@ -6,16 +6,21 @@
 
     public sealed partial class User : AggregateRoot
     {
-        private User() => State = EntityState.Unchanged;
+        private User(UserNameValue name, EmailValue email)
+        {
+            Name = name;
+            Email = email;
+            State = EntityState.Unchanged;
+        }
 
         /// <summary>
         /// User's name.
         /// </summary>
-        public UserNameValue? Name { get; private set; }
+        public UserNameValue Name { get; private set; }
 
         /// <summary>
         /// User's email address.
         /// </summary>
-        public EmailValue? Email { get; private set; }
+        public EmailValue Email { get; private set; }
     }
 }

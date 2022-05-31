@@ -4,8 +4,14 @@
 
     public class User : AggregateRoot
     {
-        public string? Name { get; protected internal set; }
+        public User(string name, string email)
+        {
+            Name = name;
+            Email = email;
+        }
 
-        public string? Email { get; protected internal set; }
+        public string Name { get; protected internal set; }
+
+        public string Email { get; protected internal set; }
     }
 }
