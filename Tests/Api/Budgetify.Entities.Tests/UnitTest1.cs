@@ -1,5 +1,7 @@
 namespace Budgetify.Entities.Tests
 {
+    using System;
+
     using NUnit.Framework;
 
     public class Tests
@@ -12,7 +14,11 @@ namespace Budgetify.Entities.Tests
         [Test]
         public void Test1()
         {
-            Assert.Pass();
+            string value = null;
+
+            Budgetify.Common.Results.Result<User.Domain.User> user = User.Domain.User.Create(System.Guid.NewGuid(), DateTime.Now, value, "test");
+
+            Assert.That(user.IsFailureOrNull, Is.True);
         }
     }
 }

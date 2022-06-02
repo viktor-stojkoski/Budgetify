@@ -8,6 +8,7 @@
         Forbidden = 3,
         Conflicted = 4,
         Invalid = 5,
-        Unauthorized = 6
+        Unauthorized = 6,
+        NullValue = 7
     }
 }
