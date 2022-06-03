@@ -21,11 +21,9 @@
         {
             Result<UserNameValue> nameValue = UserNameValue.Create(name);
             Result<EmailValue> emailValue = EmailValue.Create(email);
-            Result<UserNameValue> test2 = UserNameValue.Create(name);
 
             //nameValue.FailureOrOk(emailValue);
 
-            IEnumerable<Result> test = new List<Result>() { nameValue, emailValue };
             //test.AnyFailure();
             //Result okOrError = Result.FirstFailureOrOk(nameValue, emailValue);
             Result okOrError = Result.FirstFailureNullOrOk(nameValue, emailValue);
@@ -79,7 +77,7 @@
             }
 
             return Result.Ok(
-                new User
+                new User(nameValue.Value, emailValue.Value)
                 {
                     Uid = uid,
                     CreatedOn = createdOn,

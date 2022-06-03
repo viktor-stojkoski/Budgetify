@@ -24,7 +24,7 @@
         /// </summary>
         internal static Entities.User CreateUser(this User user)
         {
-            return new Entities.User(user.Name, user.Email);
+            return new Entities.User(user.Name.Value, user.Email.Value);
             //{
             //    Id = user.Id,
             //    Uid = user.Uid,

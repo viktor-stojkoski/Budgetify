@@ -10,11 +10,19 @@
 
     public class Result : ResultBase
     {
+
+        public object? Value { get; }
+
         private Result()
             : base(resultType: ResultType.Ok, isFailure: false, isFailureOrNull: false, message: string.Empty) { }
 
         internal Result(ResultType resultType, string message)
             : base(resultType: resultType, isFailure: true, isFailureOrNull: true, message: message) { }
+
+        protected Result(object? value, ResultType resultType, string message) : base(resultType, isFailure: false, isFailureOrNull: false, message)
+        {
+            Value = value;
+        }
 
         public static Result Conflicted(string message) => new(ResultType.Conflicted, message);
 
@@ -44,9 +52,8 @@
 
         public static Result<T> Ok<T>([NotNullIfNotNull("value")][DisallowNull] T value) => new(value);
 
-        public static Result FirstFailureNullOrOk(params dynamic[] results)
+        public static Result FirstFailureNullOrOk(params Result[] results)
         {
-            //List<Result<object>> list = (List<Result<object>>)results.Select(x => (Result<object>)Convert.ChangeType(x, x.GetType()));
 
             if (results.Any(x => x.IsFailure || x.IsFailureOrNull))
             {
@@ -79,29 +86,22 @@
         public static Result<T> FromError<T>(ResultBase result) => new(result.ResultType, result.Message);
     }
 
-    public class Result<T> : ResultBase
+    public class Result<T> : Result
     {
         private static readonly T? Empty = default;
 
-        //[NotNull]
-        public T? Value { get; }
+        [AllowNull]
+        public new T Value { get; }
 
         public bool IsEmpty => Value?.Equals(Empty) ?? true;
 
-        [MemberNotNullWhen(false, nameof(Value))]
-        public bool IsFailureOrNull { get; }
-
         internal Result(ResultType resultType, string message)
-            : base(resultType: resultType, isFailure: true, isFailureOrNull: true, message: message) => Value = default;
+            : base(resultType: resultType, message: message) => Value = default;
 
         internal Result([NotNullIfNotNull("value")][NotNullIfNotNull("Value")][DisallowNull] T value)
-            : base(
+            : base(value,
                   resultType: ResultType.Ok,
-                  isFailure: false,
-                  isFailureOrNull: value == null,
-                  message: string.Empty,
-                  value: value,
-                  type: typeof(T))
+                  message: string.Empty)
         {
             Value = value;
             //Value = value;
@@ -120,15 +120,15 @@
         //    return result.IsFailureOrNull || results.Any(x => x.IsFailureOrNull);
         //}
 
-        public static implicit operator Result(Result<T> result)
-        {
-            if (result.IsSuccess)
-            {
-                return Result.Ok();
-            }
+        //public static implicit operator Result(Result<T> result)
+        //{
+        //    if (result.IsSuccess)
+        //    {
+        //        return Ok();
+        //    }
 
-            return new Result(result.ResultType, result.Message);
-        }
+        //    return new Result(result.ResultType, result.Message);
+        //}
 
         //public override Type? Type { get; }
 
@@ -174,6 +174,8 @@
         public bool IsNotFound => IsFailure && HttpStatusCode is HttpStatusCode.NotFound;
 
         public ResultType ResultType { get; }
+
+        public bool IsFailureOrNull { get; }
 
         //public Type? Type { get; }
 
@@ -235,6 +237,7 @@
 
             ResultType = resultType;
             IsFailure = isFailure;
+            IsFailureOrNull = isFailureOrNull;
             Message = message;
         }
 
