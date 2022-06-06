@@ -29,8 +29,8 @@
                 uid: user.Uid,
                 createdOn: user.CreatedOn,
                 deletedOn: user.DeletedOn,
-                name: user.Name.Value,
-                email: user.Email.Value);
+                name: user.Name,
+                email: user.Email);
         }
     }
 }
