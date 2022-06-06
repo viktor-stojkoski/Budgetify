@@ -1,11 +1,5 @@
 ﻿namespace Budgetify.Queries.Infrastructure.Configuration
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     using Budgetify.Queries.Common.Configuration;
     using Budgetify.Queries.User.Entities;
 

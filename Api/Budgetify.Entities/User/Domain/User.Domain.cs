@@ -6,18 +6,18 @@
     public partial class User
     {
         /// <summary>
-        /// Updates User.
+        /// Updates user.
         /// </summary>
         public Result Update(string? name, string? email)
         {
             Result<UserNameValue> nameValue = UserNameValue.Create(name);
             Result<EmailValue> emailValue = EmailValue.Create(email);
 
-            Result firstFailureNullOrOk = Result.FirstFailureNullOrOk(nameValue, emailValue);
+            Result okOrError = Result.FirstFailureNullOrOk(nameValue, emailValue);
 
-            if (firstFailureNullOrOk.IsFailureOrNull)
+            if (okOrError.IsFailureOrNull)
             {
-                return firstFailureNullOrOk;
+                return okOrError;
             }
 
             Name = nameValue.Value;

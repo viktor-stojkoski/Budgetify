@@ -23,7 +23,7 @@
             Entities.User dbUser = await AllNoTrackedOf<Entities.User>()
                 .SingleOrDefaultAsync(x => x.Uid == userUid);
 
-            if (dbUser == null)
+            if (dbUser is null)
             {
                 return Result.NotFound<User>(ResultCodes.UserNotFound);
             }

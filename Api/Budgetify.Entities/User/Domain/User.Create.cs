@@ -8,7 +8,7 @@
     public partial class User
     {
         /// <summary>
-        /// Create User DB to domain only.
+        /// Create user DB to domain only.
         /// </summary>
         public static Result<User> Create(
             int id,
@@ -39,10 +39,9 @@
         }
 
         /// <summary>
-        /// Creates User.
+        /// Creates user.
         /// </summary>
         public static Result<User> Create(
-            Guid uid,
             DateTime createdOn,
             string name,
             string email)
@@ -60,7 +59,7 @@
             return Result.Ok(
                 new User(nameValue.Value, emailValue.Value)
                 {
-                    Uid = uid,
+                    Uid = Guid.NewGuid(),
                     CreatedOn = createdOn
                 });
         }

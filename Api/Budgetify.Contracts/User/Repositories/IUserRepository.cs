@@ -9,7 +9,7 @@
     public interface IUserRepository
     {
         /// <summary>
-        /// Returns User by given userUid.
+        /// Returns user by given userUid.
         /// </summary>
         Task<Result<User>> GetUserAsync(Guid userUid);
 

@@ -16,6 +16,8 @@
 
             builder.Property(x => x.Name).HasColumnName("Name").HasColumnType("nvarchar(255)").IsRequired();
             builder.Property(x => x.Email).HasColumnName("Email").HasColumnType("nvarchar(255)").IsRequired();
+
+            builder.Ignore(x => x.DomainEvents);
         }
     }
 }

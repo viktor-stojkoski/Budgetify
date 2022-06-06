@@ -44,15 +44,8 @@
 
         public static Result<T> Ok<T>(T value) => new(value);
 
-        public static Result FirstFailureNullOrOk(params Result[] results)
-        {
-            if (results.Any(x => x.IsFailure || x.IsFailureOrNull))
-            {
-                return results.First(x => x.IsFailure || x.IsFailureOrNull);
-            }
-
-            return Ok();
-        }
+        public static Result FirstFailureNullOrOk(params Result[] results) =>
+            results.Any(x => x.IsFailure || x.IsFailureOrNull) ? results.First(x => x.IsFailure || x.IsFailureOrNull) : Ok();
 
         public static Result FirstFailureOrOk(params Result[] results) =>
             results.Any(x => x.IsFailure) ? results.First(x => x.IsFailure) : Ok();

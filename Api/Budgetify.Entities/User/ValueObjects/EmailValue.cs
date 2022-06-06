@@ -43,7 +43,7 @@
             return Result.Invalid<EmailValue>(ResultCodes.EmailInvalid);
         }
 
-        public static implicit operator string?(EmailValue? obj) => obj?.Value;
+        public static implicit operator string(EmailValue obj) => obj.Value;
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
