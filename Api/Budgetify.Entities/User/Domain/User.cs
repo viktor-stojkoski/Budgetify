@@ -8,9 +8,10 @@
     {
         private User(UserNameValue name, EmailValue email)
         {
+            State = EntityState.Unchanged;
+
             Name = name;
             Email = email;
-            State = EntityState.Unchanged;
         }
 
         /// <summary>

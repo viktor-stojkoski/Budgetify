@@ -32,7 +32,7 @@
             return Result.Ok(new UserNameValue(value));
         }
 
-        //public static implicit operator string?(UserNameValue? obj) => obj?.Value;
+        public static implicit operator string?(UserNameValue? obj) => obj?.Value;
 
         //public static explicit operator UserNameValue?(string? value) => Of(value);
 
