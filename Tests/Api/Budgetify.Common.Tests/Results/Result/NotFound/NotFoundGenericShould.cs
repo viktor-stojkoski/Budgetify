@@ -17,7 +17,7 @@
             // Arrange
 
             // Act
-            Result result = Result.NotFound<string>("NOT_FOUND");
+            Result<string> result = Result.NotFound<string>("NOT_FOUND");
 
             // Assert
             result.IsFailure.Should().BeTrue();
@@ -27,6 +27,8 @@
             result.ResultType.Should().Be(ResultType.NotFound);
             result.HttpStatusCode.Should().Be(HttpStatusCode.NotFound);
             result.IsNotFound.Should().BeTrue();
+            result.Value.Should().BeNull();
+            result.IsEmpty.Should().BeTrue();
         }
     }
 }

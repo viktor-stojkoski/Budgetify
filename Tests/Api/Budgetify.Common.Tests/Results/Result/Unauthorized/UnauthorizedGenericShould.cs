@@ -17,7 +17,7 @@
             // Arrange
 
             // Act
-            Result result = Result.Unauthorized<string>("UNAUTHORIZED");
+            Result<string> result = Result.Unauthorized<string>("UNAUTHORIZED");
 
             // Assert
             result.IsFailure.Should().BeTrue();
@@ -27,6 +27,8 @@
             result.ResultType.Should().Be(ResultType.Unauthorized);
             result.HttpStatusCode.Should().Be(HttpStatusCode.Unauthorized);
             result.IsNotFound.Should().BeFalse();
+            result.Value.Should().BeNull();
+            result.IsEmpty.Should().BeTrue();
         }
     }
 }

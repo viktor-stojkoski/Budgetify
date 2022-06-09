@@ -11,6 +11,9 @@
         internal Result(ResultType resultType, string message)
             : base(resultType: resultType, isFailure: true, isFailureOrNull: true, message: message) { }
 
+        protected Result(object? value, ResultType resultType, string message)
+            : base(resultType, isFailure: false, isFailureOrNull: value is null, message) { }
+
         public static Result Ok() => new();
 
         public static Result Invalid(string message) => new(ResultType.BadRequest, message);

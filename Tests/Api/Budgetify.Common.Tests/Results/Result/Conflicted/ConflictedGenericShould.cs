@@ -17,7 +17,7 @@
             // Arrange
 
             // Act
-            Result result = Result.Conflicted<string>("CONFLICT");
+            Result<string> result = Result.Conflicted<string>("CONFLICT");
 
             // Assert
             result.IsFailure.Should().BeTrue();
@@ -27,6 +27,8 @@
             result.ResultType.Should().Be(ResultType.Conflict);
             result.HttpStatusCode.Should().Be(HttpStatusCode.Conflict);
             result.IsNotFound.Should().BeFalse();
+            result.Value.Should().BeNull();
+            result.IsEmpty.Should().BeTrue();
         }
     }
 }

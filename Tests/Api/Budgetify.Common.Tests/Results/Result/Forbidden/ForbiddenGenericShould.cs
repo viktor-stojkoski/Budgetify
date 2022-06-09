@@ -17,7 +17,7 @@
             // Arrange
 
             // Act
-            Result result = Result.Forbidden<string>("FORBIDDEN");
+            Result<string> result = Result.Forbidden<string>("FORBIDDEN");
 
             // Assert
             result.IsFailure.Should().BeTrue();
@@ -27,6 +27,8 @@
             result.ResultType.Should().Be(ResultType.Forbidden);
             result.HttpStatusCode.Should().Be(HttpStatusCode.Forbidden);
             result.IsNotFound.Should().BeFalse();
+            result.Value.Should().BeNull();
+            result.IsEmpty.Should().BeTrue();
         }
     }
 }

@@ -17,7 +17,7 @@
             // Arrange
 
             // Act
-            Result result = Result.Failed<string>("INTERNAL_SERVER_ERROR");
+            Result<string> result = Result.Failed<string>("INTERNAL_SERVER_ERROR");
 
             // Assert
             result.IsFailure.Should().BeTrue();
@@ -27,6 +27,8 @@
             result.ResultType.Should().Be(ResultType.InternalServerError);
             result.HttpStatusCode.Should().Be(HttpStatusCode.InternalServerError);
             result.IsNotFound.Should().BeFalse();
+            result.Value.Should().BeNull();
+            result.IsEmpty.Should().BeTrue();
         }
     }
 }

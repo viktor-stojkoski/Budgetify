@@ -17,7 +17,7 @@
             // Arrange
 
             // Act
-            Result result = Result.Invalid<string>("BAD_REQUEST");
+            Result<string> result = Result.Invalid<string>("BAD_REQUEST");
 
             // Assert
             result.IsFailure.Should().BeTrue();
@@ -27,6 +27,8 @@
             result.ResultType.Should().Be(ResultType.BadRequest);
             result.HttpStatusCode.Should().Be(HttpStatusCode.BadRequest);
             result.IsNotFound.Should().BeFalse();
+            result.Value.Should().BeNull();
+            result.IsEmpty.Should().BeTrue();
         }
     }
 }
