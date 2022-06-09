@@ -2,12 +2,12 @@
 {
     public enum ResultType
     {
-        InternalError = 0,
-        Ok = 1,
-        NotFound = 2,
-        Forbidden = 3,
-        Conflicted = 4,
-        Invalid = 5,
-        Unauthorized = 6
+        Ok = 200,
+        BadRequest = 400,
+        Unauthorized = 401,
+        Forbidden = 403,
+        NotFound = 404,
+        Conflict = 409,
+        InternalServerError = 500,
     }
 }
