@@ -10,6 +10,14 @@
     {
         protected Entity() { }
 
+        protected Entity(int id, Guid uid, DateTime createdOn, DateTime? deletedOn)
+        {
+            Id = id;
+            Uid = uid;
+            CreatedOn = createdOn;
+            DeletedOn = deletedOn;
+        }
+
         protected Entity(IEnumerable<IDomainEvent> domainEvents)
         {
             if (domainEvents is null)

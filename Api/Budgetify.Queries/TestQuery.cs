@@ -1,19 +1,18 @@
-﻿namespace Budgetify.Queries
+﻿namespace Budgetify.Queries.Asd
 {
     using System;
     using System.Threading.Tasks;
 
     using Budgetify.Queries.Infrastructure.Context;
+    using Budgetify.Queries.User.Entities;
 
     using Microsoft.EntityFrameworkCore;
 
     using VS.Queries;
 
-    using TestEntity = Test.Entities.Test;
+    public record TestQuery(Guid Uid) : IQuery<User>;
 
-    public record TestQuery(Guid Uid) : IQuery<TestEntity>;
-
-    public class TestQueryHandler : IQueryHandler<TestQuery, TestEntity>
+    public class TestQueryHandler : IQueryHandler<TestQuery, User>
     {
         private readonly IBudgetifyReadonlyDbContext _budgetifyReadonlyDbContext;
 
@@ -22,12 +21,12 @@
             _budgetifyReadonlyDbContext = budgetifyReadonlyDbContext;
         }
 
-        public async Task<QueryResult<TestEntity>> ExecuteAsync(TestQuery query)
+        public async Task<QueryResult<User>> ExecuteAsync(TestQuery query)
         {
-            QueryResultBuilder<TestEntity> result = new();
+            QueryResultBuilder<User> result = new();
 
-            TestEntity test = await _budgetifyReadonlyDbContext
-                .AllNoTrackedOf<TestEntity>()
+            User test = await _budgetifyReadonlyDbContext
+                .AllNoTrackedOf<User>()
                 .SingleOrDefaultAsync(x => x.Uid == query.Uid);
 
             if (test is null)

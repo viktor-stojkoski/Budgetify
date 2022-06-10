@@ -10,7 +10,7 @@
     public class IsEmptyShould
     {
         [Test]
-        public void WhenNonEmptyString_ShouldReturnFalse()
+        public void WhenNonEmptyString_WillReturnFalse()
         {
             // Arrange
             string str = "Test string";
@@ -25,7 +25,7 @@
         [TestCase("")]
         [TestCase(" ")]
         [TestCase("    ")]
-        public void WhenWhitespaceAndEmptyString_ShouldReturnTrue(string str)
+        public void WhenWhitespaceAndEmptyString_WillReturnTrue(string str)
         {
             // Arrange
 
@@ -37,10 +37,10 @@
         }
 
         [Test]
-        public void WhenStringNull_ShouldReturnTrue()
+        public void WhenStringNull_WillReturnTrue()
         {
             // Arrange
-            string str = null;
+            string? str = null;
 
             // Act
             bool result = str.IsEmpty();

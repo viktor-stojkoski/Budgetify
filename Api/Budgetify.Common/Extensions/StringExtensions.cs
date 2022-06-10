@@ -1,5 +1,6 @@
 ﻿namespace Budgetify.Common.Extensions
 {
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
     public static class StringExtensions
@@ -13,7 +14,7 @@
         /// or if value contains only whitespace characters.
         /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsEmpty(this string? value) => string.IsNullOrWhiteSpace(value);
+        public static bool IsEmpty([NotNullWhen(false)] this string? value) => string.IsNullOrWhiteSpace(value);
 
         /// <summary>
         /// Indicates whether a specified string is not null, 

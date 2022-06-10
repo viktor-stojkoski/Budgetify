@@ -10,7 +10,7 @@
     public class HasValueShould
     {
         [Test]
-        public void WhenNonEmptyString_ShouldReturnTrue()
+        public void WhenNonEmptyString_WillReturnTrue()
         {
             // Arrange
             string str = "Test string";
@@ -25,7 +25,7 @@
         [TestCase("")]
         [TestCase(" ")]
         [TestCase("    ")]
-        public void WhenWhitespaceAndEmptyString_ShouldReturnFalse(string str)
+        public void WhenWhitespaceAndEmptyString_WillReturnFalse(string str)
         {
             // Arrange
 
@@ -37,10 +37,10 @@
         }
 
         [Test]
-        public void WhenStringNull_ShouldReturnFalse()
+        public void WhenStringNull_WillReturnFalse()
         {
             // Arrange
-            string str = null;
+            string? str = null;
 
             // Act
             bool result = str.HasValue();

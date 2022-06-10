@@ -14,6 +14,7 @@
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new TestConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
     }
 }
