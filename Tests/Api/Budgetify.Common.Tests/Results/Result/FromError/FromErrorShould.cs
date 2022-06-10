@@ -1,4 +1,4 @@
-﻿namespace Budgetify.Common.Tests.Results.Result.FromError
+﻿namespace Budgetify.Common.Tests.Results.Result
 {
     using System;
     using System.Net;

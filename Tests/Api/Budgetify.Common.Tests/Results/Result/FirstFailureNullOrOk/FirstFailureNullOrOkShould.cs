@@ -1,4 +1,4 @@
-﻿namespace Budgetify.Common.Tests.Results.Result.FirstFailureNullOrOk
+﻿namespace Budgetify.Common.Tests.Results.Result
 {
     using System.Net;
 
@@ -8,7 +8,7 @@
 
     using NUnit.Framework;
 
-    [TestFixture(Category = nameof(FirstFailureOrOkGenericShould))]
+    [TestFixture(Category = nameof(FirstFailureNullOrOkShould))]
     public class FirstFailureNullOrOkShould
     {
         [Test]

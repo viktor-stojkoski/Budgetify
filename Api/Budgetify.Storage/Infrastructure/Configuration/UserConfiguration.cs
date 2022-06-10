@@ -6,7 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public class UserConfiguration : EntityTypeConfigurationBase<User>, IEntityTypeConfiguration<User>
+    internal class UserConfiguration : EntityTypeConfigurationBase<User>, IEntityTypeConfiguration<User>
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {

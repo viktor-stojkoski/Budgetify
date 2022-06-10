@@ -15,8 +15,8 @@
             Guid uid,
             DateTime createdOn,
             DateTime? deletedOn,
-            string? name,
-            string? email)
+            string name,
+            string email)
         {
             Result<UserNameValue> nameValue = UserNameValue.Create(name);
             Result<EmailValue> emailValue = EmailValue.Create(email);
@@ -43,15 +43,15 @@
         /// </summary>
         public static Result<User> Create(
             DateTime createdOn,
-            string name,
-            string email)
+            string? name,
+            string? email)
         {
             Result<UserNameValue> nameValue = UserNameValue.Create(name);
             Result<EmailValue> emailValue = EmailValue.Create(email);
 
-            Result okOrError = Result.FirstFailureOrOk(nameValue, emailValue);
+            Result okOrError = Result.FirstFailureNullOrOk(nameValue, emailValue);
 
-            if (okOrError.IsFailure)
+            if (okOrError.IsFailureOrNull)
             {
                 return Result.FromError<User>(okOrError);
             }
