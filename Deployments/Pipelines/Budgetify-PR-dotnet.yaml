@@ -22,40 +22,77 @@ variables:
 - name: projects
   value: '**/*.csproj'
 
-jobs:
-- job: job_build_test_backend
-  displayName: Budgetify .NET Build & Test
-  steps:
-  - task: DotNetCoreCLI@2
-    displayName: .NET Restore
-    inputs:
-      command: restore
-      feedsToUse: config
-      nugetConfigPath: NuGet/nuget.config
-      externalFeedCredentials: $(githubNugetServiceConnection)
-      noCache: true
-      projects: $(projects)
-      verbosityRestore: Quiet
+stages:
+  - stage: BuildAndTest
+    displayName: Build and Test Budgetify
+    
+    jobs:
+    - job: job_build_test_backend
+      displayName: Budgetify .NET Build & Test
+      steps:
+      - task: DotNetCoreCLI@2
+        displayName: .NET Restore
+        inputs:
+          command: restore
+          feedsToUse: config
+          nugetConfigPath: NuGet/nuget.config
+          externalFeedCredentials: $(githubNugetServiceConnection)
+          noCache: true
+          projects: $(projects)
+          verbosityRestore: Quiet
 
-  - task: DotNetCoreCLI@2
-    displayName: .NET Build
-    inputs:
-      projects: $(projects)
-      arguments: --configuration $(buildConfiguration) --no-restore
+      - task: DotNetCoreCLI@2
+        displayName: .NET Build
+        inputs:
+          projects: $(projects)
+          arguments: --configuration $(buildConfiguration) --no-restore
 
-  - task: DotNetCoreCLI@2
-    displayName: .NET Test
-    inputs:
-      command: test
-      projects: '**/*.Tests.csproj'
-      arguments: --configuration $(buildConfiguration) --no-restore --no-build
+      - task: DotNetCoreCLI@2
+        displayName: .NET Test
+        inputs:
+          command: test
+          projects: '**/*.Tests.csproj'
+          arguments: --configuration $(buildConfiguration) --no-restore --no-build
 
-- job: job_build_database
-  displayName: Budgetify Build Database
-  steps:
-    - task: MSBuild@1
-      displayName: Database Build
-      inputs:
-        solution: Databases/Budgetify.Database/Budgetify.Database.sqlproj
-        configuration: $(buildConfiguration)
-        clean: true
+    - job: job_build_database
+      displayName: Budgetify Build Database
+      steps:
+        - task: MSBuild@1
+          displayName: Database Build
+          inputs:
+            solution: Databases/Budgetify.Database/Budgetify.Database.sqlproj
+            configuration: $(buildConfiguration)
+            clean: true
+
+    - job: job_build_test_frontend
+      displayName: Budgetify Angular Build and Test
+      steps:
+      - task: Npm@1
+        displayName: Install packages
+        inputs:
+          command: ci
+          workingDir: $(Build.SourcesDirectory)/Clients/Angular
+
+      - task: Npm@1
+        displayName: Install Angular CLI
+        inputs:
+          command: custom
+          customCommand: install -g @angular/cli
+
+      - task: Npm@1
+        displayName: Angular Lint
+        inputs:
+          command: custom
+          customCommand: run lint
+
+      - task: Npm@1
+        displayName: Angular Build
+        inputs:
+          command: custom
+          customCommand: run build-prod
+
+      - task: Npm@1
+        displayName: Angular Test
+        inputs:
+          command: custom
+          customCommand: run test
