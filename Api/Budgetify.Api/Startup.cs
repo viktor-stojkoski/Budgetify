@@ -36,7 +36,8 @@ namespace Budgetify.Api
                 .RegisterLoggingServices()
                 .RegisterHealthChecks(Configuration)
                 .RegisterSwagger(Configuration)
-                .RegisterServices();
+                .RegisterServices()
+                .RegisterAuthentication(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +71,8 @@ namespace Budgetify.Api
                 .UseSwagger()
                 .UseHttpsRedirection()
                 .UseRouting()
+                .UseAuthentication()
+                .UseAuthorization()
                 .UseCors("AllowAll")
                 .UseAuthentication()
                 .UseEndpoints(endpoints => endpoints.MapControllers())
