@@ -65,8 +65,15 @@ stages:
             clean: true
 
     - job: job_build_test_frontend
-      displayName: Budgetify Angular Build and Test
+      displayName: Budgetify Angular Build & Test
       steps:
+      # - task: Cache@2
+      #   displayName: Cache packages
+      #   inputs:
+      #     key: npm | $(Agent.OS) | package-lock.json
+      #     restoreKeys: npm | $(Agent.OS)
+      #     path: $(Pipeline.Workspace)/.npm
+
       - task: Npm@1
         displayName: Install packages
         inputs:
@@ -77,22 +84,26 @@ stages:
         displayName: Install Angular CLI
         inputs:
           command: custom
+          workingDir: $(Build.SourcesDirectory)/Clients/Angular
           customCommand: install -g @angular/cli
 
       - task: Npm@1
         displayName: Angular Lint
         inputs:
           command: custom
+          workingDir: $(Build.SourcesDirectory)/Clients/Angular
           customCommand: run lint
 
       - task: Npm@1
         displayName: Angular Build
         inputs:
           command: custom
+          workingDir: $(Build.SourcesDirectory)/Clients/Angular
           customCommand: run build-prod
 
       - task: Npm@1
         displayName: Angular Test
         inputs:
           command: custom
+          workingDir: $(Build.SourcesDirectory)/Clients/Angular
           customCommand: run test
