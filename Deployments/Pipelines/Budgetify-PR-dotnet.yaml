@@ -67,18 +67,11 @@ stages:
     - job: job_build_test_frontend
       displayName: Budgetify Angular Build & Test
       steps:
-      - task: Cache@2
-        displayName: Cache packages
+      - task: Npm@1
+        displayName: Install packages
         inputs:
-          key: npm | $(Agent.OS) | $(Build.SourcesDirectory)/Clients/Angular/package-lock.json
-          restoreKeys: npm | $(Agent.OS)
-          path: $(Build.SourcesDirectory)/Clients/Angular/node_modules
-
-      # - task: Npm@1
-      #   displayName: Install packages
-      #   inputs:
-      #     command: ci
-      #     workingDir: $(Build.SourcesDirectory)/Clients/Angular
+          command: ci
+          workingDir: $(Build.SourcesDirectory)/Clients/Angular
 
       - task: Npm@1
         displayName: Install Angular CLI
