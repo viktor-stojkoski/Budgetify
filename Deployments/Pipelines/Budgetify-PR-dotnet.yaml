@@ -80,12 +80,12 @@ stages:
       #     command: ci
       #     workingDir: $(Build.SourcesDirectory)/Clients/Angular
 
-      # - task: Npm@1
-      #   displayName: Install Angular CLI
-      #   inputs:
-      #     command: custom
-      #     workingDir: $(Build.SourcesDirectory)/Clients/Angular
-      #     customCommand: install -g @angular/cli
+      - task: Npm@1
+        displayName: Install Angular CLI
+        inputs:
+          command: custom
+          workingDir: $(Build.SourcesDirectory)/Clients/Angular
+          customCommand: install -g @angular/cli
 
       - task: Npm@1
         displayName: Angular Lint
