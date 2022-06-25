@@ -10,10 +10,6 @@ variable "location" {
 }
 
 variable "tags" {
-  type        = map()
+  type        = map(string)
   description = "Resource group tags"
-  default = {
-    "Environment" = "Development"
-    "StartDate"   = formatdate("DD.MM.YYYY", timestamp())
-  }
 }

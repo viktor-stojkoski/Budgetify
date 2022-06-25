@@ -1,11 +1,11 @@
 resource "azurerm_storage_account" "sa" {
-  name                = var.name
+  name                = var.storage_account_name
   resource_group_name = var.resource_group_name
   location            = var.location
   tags                = var.tags
 
-  account_kind                     = "BlockBlobStorage"
-  account_tier                     = "Premium"
+  account_kind                     = var.account_kind
+  account_tier                     = var.account_tier
   account_replication_type         = "LRS"
   min_tls_version                  = "TLS1_2"
   cross_tenant_replication_enabled = false
@@ -20,10 +20,6 @@ resource "azurerm_storage_account" "sa" {
       days = 7
     }
     versioning_enabled = false
-  }
-
-  routing {
-    choice = "MicrosoftRouting"
   }
 
   network_rules {

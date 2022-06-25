@@ -14,3 +14,9 @@ variable "application_name" {
   description = "Name of the application"
   default     = "budgetify"
 }
+
+variable "sas_expiry_hours" {
+  type        = string
+  description = "Expiration date of the token in hours"
+  default     = "17520h"
+}

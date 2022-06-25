@@ -13,13 +13,21 @@ variable "location" {
   description = "Storage account location"
 }
 
+variable "account_tier" {
+  type        = string
+  description = "Storage account tier (Standard, Premium)"
+  default     = "Premium"
+}
+
+variable "account_kind" {
+  type        = string
+  description = "Storage account kind (StorageV2, BlockBlobStorage..)"
+  default     = "BlockBlobStorage"
+}
+
 variable "tags" {
-  type        = map()
+  type        = map(string)
   description = "Storage account tags"
-  default = {
-    "Environment" = "Development"
-    "StartDate"   = formatdate("DD.MM.YYYY", timestamp())
-  }
 }
 
 variable "container_name" {
