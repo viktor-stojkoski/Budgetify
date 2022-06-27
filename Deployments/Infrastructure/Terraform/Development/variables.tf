@@ -14,3 +14,18 @@ variable "application_name" {
   description = "Name of the application"
   default     = "budgetify"
 }
+
+variable "azure_subscription" {
+  type        = string
+  description = "Subscription name or ID"
+}
+
+variable "tenant_id" {
+  type        = string
+  description = "Tenant id"
+}
+
+variable "object_id" {
+  type        = string
+  description = "Principal object ID (User)"
+}
