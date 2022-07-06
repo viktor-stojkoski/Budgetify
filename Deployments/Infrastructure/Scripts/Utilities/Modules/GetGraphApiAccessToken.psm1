@@ -3,6 +3,9 @@ function Get-MicrosoftGraphApiAccessToken {
     .DESCRIPTION
     Returns Microsoft Graph Api AccessToken.
 
+    .LINK
+    https://docs.microsoft.com/en-us/graph/auth-v2-service
+
     .PARAMETER ClientId
     Application Client ID.
 
