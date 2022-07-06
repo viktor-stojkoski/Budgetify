@@ -1,30 +1,57 @@
-function GetMicrosoftGraphApiAccessToken {
+function Get-MicrosoftGraphApiAccessToken {
   <#
     .DESCRIPTION
-    Returns Microsoft Graph Api AccessToke
+    Returns Microsoft Graph Api AccessToken.
+
+    .PARAMETER ClientId
+    Application Client ID.
+
+    .PARAMETER ClientSecret
+    Application Client Secret.
+
+    .PARAMETER TenantId
+    Directory (tenant) ID.
+
+    .OUTPUTS
+    Auth Response with auth token.
+
+    [PSCustomObject]@{
+      token_type
+      expires_in
+      ext_expires_in
+      access_token
+    }
+
+    .EXAMPLE
+    Get-MicrosoftGraphApiAccessToken `
+      -ClientId "SOMEGUID" `
+      -ClientSecret "SECRET" `
+      -TenantId "budgetify.onmicrosoft.com"
   #>
   param (
     [Parameter(Mandatory = $true)]
-    [string] $clientId,
-  
+    [guid] $ClientId,
+
     [Parameter(Mandatory = $true)]
-    [string] $clientSecret,
-  
+    [string] $ClientSecret,
+
     [Parameter(Mandatory = $true)]
-    [string] $tenantId
+    [string] $TenantId
   )
-  
-  $tokenRequestBody = @{ 
+
+  $tokenRequestBody = @{
     grant_type    = "client_credentials"
     scope         = "https://graph.microsoft.com/.default"
-    client_id     = $clientId
-    client_secret = $clientSecret
+    client_id     = $ClientId
+    client_secret = $ClientSecret
   }
-  
+
   $authResponse = Invoke-RestMethod `
-    -Uri "https://login.microsoftonline.com/$($tenantId)/oauth2/v2.0/token" `
+    -Uri "https://login.microsoftonline.com/$($TenantId)/oauth2/v2.0/token" `
     -Method Post `
     -Body $tokenRequestBody
 
   return $authResponse;
 }
+
+Export-ModuleMember -Function Get-MicrosoftGraphApiAccessToken
