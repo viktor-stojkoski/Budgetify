@@ -39,10 +39,10 @@ function New-B2CIdentityUserFlow {
       isLanguageCustomizationEnabled
       defaultLanguageTag
       authenticationMethods
-      tokenClaimsConfiguration: @{
+      tokenClaimsConfiguration = @{
         isIssuerEntityUserFlow
       }
-      apiConnectorConfiguration @{}
+      apiConnectorConfiguration = @{}
     }
 
     .EXAMPLE
