@@ -7,22 +7,15 @@ function New-SignInSignUpUserFlow {
     .DESCRIPTION
     Creates new Azure AD B2C SignUp and SignIn user flow.
 
-    .LINK
-    https://docs.microsoft.com/en-us/graph/api/b2cidentityuserflow-put-apiconnectorconfiguration?view=graph-rest-beta&tabs=http
-
     .PARAMETER AccessToken
     Access token for the Microsoft Graph API.
 
     .PARAMETER ApiConnectorId
     ID of the API Connector to update the B2C User Flow with.
 
-    .OUTPUTS
-    No response.
-
     .EXAMPLE
-    Set-B2CUserFlowApiConnector `
+    New-SignInSignUpUserFlow `
       -AccessToken @{ token_type, access_token } `
-      -UserFlowId "B2C_1_SignUpIn" `
       -ApiConnectorId <ID_HERE>
   #>
   param (
