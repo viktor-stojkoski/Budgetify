@@ -27,8 +27,8 @@ function Get-MicrosoftGraphApiAccessToken {
 
     .EXAMPLE
     Get-MicrosoftGraphApiAccessToken `
-      -ClientId "SOMEGUID" `
-      -ClientSecret "SECRET" `
+      -ClientId "<GUID>" `
+      -ClientSecret "<SECRET>" `
       -TenantId "budgetify.onmicrosoft.com"
   #>
   param (
