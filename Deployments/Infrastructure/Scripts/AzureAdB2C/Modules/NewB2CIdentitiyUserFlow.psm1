@@ -1,4 +1,4 @@
-Import-Module $PSScriptRoot\..\..\Utilities\Modules\InvokeGraphApi.psm1
+Import-Module $PSScriptRoot\..\..\Utilities\Modules\InvokeGraphApi.psm1 -Force
 
 function New-B2CIdentityUserFlow {
   <#

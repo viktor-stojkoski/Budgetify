@@ -19,7 +19,7 @@ function New-ProfileEditUserFlow {
   )
 
   ## Create Profile Edit user flow
-  $profileEditFlow = New-B2CIdentitiyUserFlow `
+  $profileEditFlow = New-B2CIdentityUserFlow `
     -AccessToken $AccessToken `
     -Name "ProfileEdit" `
     -Type "profileUpdate"

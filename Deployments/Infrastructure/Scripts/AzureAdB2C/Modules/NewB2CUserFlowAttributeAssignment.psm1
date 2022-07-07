@@ -90,8 +90,8 @@ function New-B2CUserFlowAttributeAssignment {
 
   $body = @{
     displayName          = $DisplayName
-    isOptional           = $IsOptional # Maybe .IsPresent
-    requiresVerification = $RequiresVerification # Maybe .IsPresent
+    isOptional           = $IsOptional.IsPresent
+    requiresVerification = $RequiresVerification.IsPresent
     userAttributeValues  = $UserAttributeValues
     userInputType        = $UserInputType
     userAttribute        = $UserAttribute

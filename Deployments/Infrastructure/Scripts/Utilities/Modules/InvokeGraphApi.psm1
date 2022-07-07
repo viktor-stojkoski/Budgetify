@@ -52,10 +52,10 @@ function Invoke-MicrosoftGraphApi {
     [string] $Resource,
 
     [Parameter(Mandatory = $true)]
-    [PSObject] $Headers,
+    [psobject] $Headers,
 
     [Parameter(Mandatory = $false)]
-    [PSObject] $Body,
+    [psobject] $Body,
 
     [Parameter(Mandatory = $false)]
     [string] $ContentType = "application/json"
@@ -81,7 +81,7 @@ function Invoke-MicrosoftGraphApi {
   }
   catch {
     $exception = $_.Exception
-    Write-Host "Executing Microsoft Graph API throw an exception:"
+    Write-Host "Executing Microsoft Graph API failed with exception:"
     Write-Host ("Message: " + $exception.Message)
     Write-Host ("Status code: " + $exception.Response.StatusCode)
     Write-Host ("Status description: " + $exception.Response.StatusDescription)

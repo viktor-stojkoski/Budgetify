@@ -18,7 +18,7 @@ function New-PasswordResetUserFlow {
   )
 
   ## Create Password Reset user flow
-  New-B2CIdentitiyUserFlow `
+  New-B2CIdentityUserFlow `
     -AccessToken $AccessToken `
     -Name "PasswordReset" `
     -Type "passwordReset"

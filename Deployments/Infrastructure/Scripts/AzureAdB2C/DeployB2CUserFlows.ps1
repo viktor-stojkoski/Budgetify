@@ -11,8 +11,13 @@
   .PARAMETER TenantId
   Tenant ID or name.
 
-  .PARAMETER ApiConnectorId
-  ID of the API Connector to update the B2C User Flow with.
+  .PARAMETER ApiConnector
+  [PSCustomObject]@{
+    DisplayName
+    TargetUrl
+    Username
+    Password
+  }
 
   .EXAMPLE
   .\DeployB2CUserFlows.ps1 `
@@ -33,25 +38,43 @@ Param(
   [string] $TenantId,
 
   [Parameter(Mandatory = $true)]
-  [string] $ApiConnectorId
+  [hashtable] $ApiConnector
 )
 
 Import-Module $PSScriptRoot\..\Utilities\Modules\GetGraphApiAccessToken.psm1 -Force
+Import-Module $PSScriptRoot\Modules\NewApiConnector.psm1 -Force
 Import-Module $PSScriptRoot\Modules\NewSignInSignUpUserFlow.psm1 -Force
 Import-Module $PSScriptRoot\Modules\NewProfileEditUserFlow.psm1 -Force
 Import-Module $PSScriptRoot\Modules\NewPasswordResetUserFlow.psm1 -Force
 
-$accessToken = Get-MicrosoftGraphApiAccessToken `
-  -ClientId $ClientId `
-  -ClientSecret $ClientSecret `
-  -TenantId $TenantId
+try {
+  $accessToken = Get-MicrosoftGraphApiAccessToken `
+    -ClientId $ClientId `
+    -ClientSecret $ClientSecret `
+    -TenantId $TenantId
 
-New-SignInSignUpUserFlow `
-  -AccessToken $AccessToken `
-  -ApiConnectorId $ApiConnectorId
+  $apiConnectorResponse = New-ApiConnector `
+    -AccessToken $accessToken `
+    -DisplayName $ApiConnector.DisplayName `
+    -TargetUrl $ApiConnector.TargetUrl `
+    -Username $ApiConnector.Username `
+    -Password (ConvertTo-SecureString $ApiConnector.Password -AsPlainText -Force)
 
-New-ProfileEditUserFlow `
-  -AccessToken $AccessToken
+  New-SignInSignUpUserFlow `
+    -AccessToken $AccessToken `
+    -ApiConnectorId $apiConnectorResponse.id
 
-New-PasswordResetUserFlow `
-  -AccessToken $AccessToken
+  New-ProfileEditUserFlow `
+    -AccessToken $AccessToken
+
+  New-PasswordResetUserFlow `
+    -AccessToken $AccessToken
+
+}
+catch {
+  $exception = $_.Exception
+  Write-Host "Creating user flows failed with exception:"
+  Write-Host ("Message: " + $exception.Message)
+  Write-Host ("Status code: " + $exception.Response.StatusCode)
+  Write-Host ("Status description: " + $exception.Response.StatusDescription)
+}

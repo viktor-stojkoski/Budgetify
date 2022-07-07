@@ -27,7 +27,7 @@ function New-SignInSignUpUserFlow {
   )
 
   ## Create SignUpIn user flow
-  $signUpSignInFlow = New-B2CIdentitiyUserFlow `
+  $signUpSignInFlow = New-B2CIdentityUserFlow `
     -AccessToken $AccessToken `
     -Name "SignUpIn" `
     -Type "signUpOrSignIn"
