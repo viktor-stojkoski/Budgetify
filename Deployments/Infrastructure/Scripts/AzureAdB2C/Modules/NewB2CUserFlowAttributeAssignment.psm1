@@ -1,6 +1,6 @@
 Import-Module $PSScriptRoot\..\..\Utilities\Modules\InvokeGraphApi.psm1 -Force
 
-function New-B2CUserAttributeAssignments {
+function New-B2CUserFlowAttributeAssignment {
   <#
     .DESCRIPTION
     Creates new B2C user flow attribute assignment.
@@ -50,7 +50,7 @@ function New-B2CUserAttributeAssignments {
     }
 
     .EXAMPLE
-    New-B2CUserAttributeAssignments `
+    New-B2CUserFlowAttributeAssignment `
       -AccessToken @{ token_type, access_token } `
       -UserFlowId "B2C_1_SignUpIn" `
       -UserInputType "textBox" `
@@ -107,4 +107,4 @@ function New-B2CUserAttributeAssignments {
   return $response
 }
 
-Export-ModuleMember -Function New-B2CUserAttributeAssignments
+Export-ModuleMember -Function New-B2CUserFlowAttributeAssignment
