@@ -24,7 +24,7 @@
     -ClientId "<GUID_HERE>"" `
     -ClientSecret "<SECRET_HERE>"" `
     -TenantId "budgetify.onmicrosoft.com" `
-    -ApiConnectorId "<API_CONNECTOR_ID>"
+    -ApiConnector @{}
 #>
 
 Param(

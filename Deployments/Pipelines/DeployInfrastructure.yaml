@@ -1,0 +1,66 @@
+#########################################
+### Budgetify - Deploy Infrastructure ###
+#########################################
+
+pool:
+  name: Azure Pipelines
+  vmImage: ubuntu-latest
+
+trigger: none
+pr: none
+
+stages:
+  - stage: DeployInfrastructure
+    displayName: Deploy Infrastructure
+
+    jobs:
+      - job: job_deploy_terraform
+        displayName: Deploy Terraform
+        steps:
+          - task: TerraformInstaller@0
+            displayName: Install Terraform latest
+
+          - task: TerraformTaskV3@3
+            displayName: Terraform Init
+            inputs:
+              backendServiceArm: Azure Subscription
+              backendAzureRmResourceGroupName: rg-budgetify-tfstate
+              backendAzureRmStorageAccountName: stbudgetifytfstate
+              backendAzureRmContainerName: terraform-state
+              backendAzureRmKey: dev.terraform.tfstate
+
+          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+            displayName: Terraform Validate
+            inputs:
+              command: validate
+
+          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+            displayName: Terraform Plan
+            inputs:
+              command: plan
+              environmentServiceNameAzureRM: Azure Subscription
+
+          # - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+          #   displayName: Terraform Apply
+          #   inputs:
+          #     command: apply
+          #     commandOptions: --auto-approve
+          #     environmentServiceNameAzureRM: Azure Subscription
+
+      - job: job_deploy_scripts
+        displayName: Deploy Scripts
+        steps:
+          - task: PowerShell@2
+            displayName: Deploy B2C User flows
+            inputs:
+              filePath: ${{ variables['System.DefaultWorkingDirectory'] }}/Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1
+              arguments: >
+                --ClientId $(clientId)
+                --ClientSecret $(clientSecret)
+                --TenantId $(tenantId)
+                --ApiConnector @{
+                  DisplayName = $(apiConnectorDisplayName)
+                  TargetUrl = $(apiConnectorTargetUrl)
+                  Username = $(apiConnectorUsername)
+                  Password = $(apiConnectorPassword)
+                }
