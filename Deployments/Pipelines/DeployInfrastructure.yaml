@@ -17,6 +17,8 @@ stages:
       - job: job_deploy_terraform
         displayName: Deploy Terraform
         variables:
+          - name: serviceConnection
+            value: Azure Subscription
           - name: resourceGroup
             value: rg-budgetify-tfstate
           - name: storageAccount
@@ -33,7 +35,7 @@ stages:
           - task: TerraformTaskV3@3
             displayName: Terraform Init
             inputs:
-              backendServiceArm: Azure Subscription
+              backendServiceArm: $(serviceConnection)
               backendAzureRmResourceGroupName: $(resourceGroup)
               backendAzureRmStorageAccountName: $(storageAccount)
               backendAzureRmContainerName: $(container)
@@ -48,10 +50,7 @@ stages:
             displayName: Terraform Plan
             inputs:
               command: plan
-              backendAzureRmResourceGroupName: $(resourceGroup)
-              backendAzureRmStorageAccountName: $(storageAccount)
-              backendAzureRmContainerName: $(container)
-              backendAzureRmKey: $(key)
+              environmentServiceNameAzureRM: $(serviceConnection)
 
           # - task: TerraformTaskV3@3
           #   displayName: Terraform Apply
