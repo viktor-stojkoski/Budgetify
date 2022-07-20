@@ -35,7 +35,7 @@ stages:
           - task: TerraformTaskV3@3
             displayName: Terraform Init
             inputs:
-              backendServiceArm: $(serviceConnection)
+              backendServiceArm: ${{ variables.serviceConnection }}
               backendAzureRmResourceGroupName: $(resourceGroup)
               backendAzureRmStorageAccountName: $(storageAccount)
               backendAzureRmContainerName: $(container)
@@ -50,7 +50,11 @@ stages:
             displayName: Terraform Plan
             inputs:
               command: plan
-              environmentServiceNameAzureRM: $(serviceConnection)
+              environmentServiceNameAzureRM: ${{ variables.serviceConnection }}
+              backendAzureRmResourceGroupName: $(resourceGroup)
+              backendAzureRmStorageAccountName: $(storageAccount)
+              backendAzureRmContainerName: $(container)
+              backendAzureRmKey: $(key)
 
           # - task: TerraformTaskV3@3
           #   displayName: Terraform Apply
