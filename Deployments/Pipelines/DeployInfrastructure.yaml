@@ -16,6 +16,16 @@ stages:
     jobs:
       - job: job_deploy_terraform
         displayName: Deploy Terraform
+        variables:
+          - name: resourceGroup
+            value: rg-budgetify-tfstate
+          - name: storageAccount
+            value: stbudgetifytfstate
+          - name: container
+            value: terraform-state
+          - name: key
+            value: dev.terraform.tfstate
+
         steps:
           - task: TerraformInstaller@0
             displayName: Install Terraform latest
@@ -24,30 +34,37 @@ stages:
             displayName: Terraform Init
             inputs:
               backendServiceArm: Azure Subscription
-              backendAzureRmResourceGroupName: rg-budgetify-tfstate
-              backendAzureRmStorageAccountName: stbudgetifytfstate
-              backendAzureRmContainerName: terraform-state
-              backendAzureRmKey: dev.terraform.tfstate
+              backendAzureRmResourceGroupName: $(resourceGroup)
+              backendAzureRmStorageAccountName: $(storageAccount)
+              backendAzureRmContainerName: $(container)
+              backendAzureRmKey: $(key)
 
-          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+          - task: TerraformTaskV3@3
             displayName: Terraform Validate
             inputs:
               command: validate
 
-          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+          - task: TerraformTaskV3@3
             displayName: Terraform Plan
             inputs:
               command: plan
-              environmentServiceNameAzureRM: Azure Subscription
+              backendAzureRmResourceGroupName: $(resourceGroup)
+              backendAzureRmStorageAccountName: $(storageAccount)
+              backendAzureRmContainerName: $(container)
+              backendAzureRmKey: $(key)
 
-          # - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+          # - task: TerraformTaskV3@3
           #   displayName: Terraform Apply
           #   inputs:
           #     command: apply
           #     commandOptions: --auto-approve
-          #     environmentServiceNameAzureRM: Azure Subscription
+          #     backendAzureRmResourceGroupName: $(resourceGroup)
+          #     backendAzureRmStorageAccountName: $(storageAccount)
+          #     backendAzureRmContainerName: $(container)
+          #     backendAzureRmKey: $(key)
 
       - job: job_deploy_scripts
+        dependsOn: job_deploy_terraform
         displayName: Deploy Scripts
         steps:
           - task: PowerShell@2
