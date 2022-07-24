@@ -41,7 +41,11 @@ stages:
               scriptType: pscore
               scriptLocation: inlineScript
               inlineScript: |
-                terraform init -backend-config='subscription_id="b55f04c5-29eb-4060-b6fe-58d8503e9c9a" resource_group_name="rg-budgetify-tfstate" storage_account_name="stbudgetifytfstate" container_name="terraform-state" key="dev.terraform.tfstate"'
+                terraform init `
+                  -backend-config='subscription_id="b55f04c5-29eb-4060-b6fe-58d8503e9c9a" `
+                  -backend-config='resource_group_name="rg-budgetify-tfstate"' `
+                  -backend-config='storage_account_name="stbudgetifytfstate"` `
+                  -backend-config='container_name="terraform-state" key="dev.terraform.tfstate"'
 
           - task: AzureCLI@2
             inputs:
