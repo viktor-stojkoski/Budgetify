@@ -36,7 +36,7 @@ stages:
 
           - task: AzureCLI@2
             inputs:
-              azureSubscription: $(serviceConnection)
+              azureSubscription: ${{ variables.serviceConnection }}
               workingDirectory: $(workingDirectory)
               scriptType: pscore
               scriptLocation: inlineScript
@@ -45,7 +45,7 @@ stages:
 
           - task: AzureCLI@2
             inputs:
-              azureSubscription: $(serviceConnection)
+              azureSubscription: ${{ variables.serviceConnection }}
               workingDirectory: $(workingDirectory)
               scriptType: pscore
               scriptLocation: inlineScript
