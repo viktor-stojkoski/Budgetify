@@ -34,8 +34,24 @@ stages:
           - task: TerraformInstaller@0
             displayName: Install Terraform latest
 
-          - bash: terraform init -backend-config='subscription_id="b55f04c5-29eb-4060-b6fe-58d8503e9c9a" resource_group_name="rg-budgetify-tfstate" storage_account_name="stbudgetifytfstate" container_name="terraform-state" key="dev.terraform.tfstate"'
-          - bash: terraform plan
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: $(serviceConnection)
+              workingDirectory: $(workingDirectory)
+              scriptType: pscore
+              scriptLocation: inlineScript
+              inlineScript: |
+                terraform init -backend-config='subscription_id="b55f04c5-29eb-4060-b6fe-58d8503e9c9a" resource_group_name="rg-budgetify-tfstate" storage_account_name="stbudgetifytfstate" container_name="terraform-state" key="dev.terraform.tfstate"'
+
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: $(serviceConnection)
+              workingDirectory: $(workingDirectory)
+              scriptType: pscore
+              scriptLocation: inlineScript
+              inlineScript: |
+                terraform plan
+
           # - task: TerraformTaskV3@3
           #   displayName: Terraform Init
           #   inputs:
