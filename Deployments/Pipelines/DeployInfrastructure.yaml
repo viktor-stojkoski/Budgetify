@@ -42,9 +42,12 @@ stages:
               scriptLocation: inlineScript
               addSpnToEnvironment: true
               inlineScript: |
+                $Env:ARM_CLIENT_ID = $env:servicePrincipalId
+                $Env:ARM_CLIENT_SECRET = $env:servicePrincipalKey
+                $Env:ARM_SUBSCRIPTION_ID = "b55f04c5-29eb-4060-b6fe-58d8503e9c9a"
+                $Env:ARM_TENANT_ID = "2589ac95-2ee5-4cdb-9e56-e775181dcfc5"
                 Get-ChildItem -Path Env:\
                 dir env:
-                $env:servicePrincipalId
                 terraform init `
                   -backend-config='subscription_id="b55f04c5-29eb-4060-b6fe-58d8503e9c9a"' `
                   -backend-config='resource_group_name="rg-budgetify-tfstate"' `
