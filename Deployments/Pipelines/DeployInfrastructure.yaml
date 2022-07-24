@@ -40,7 +40,10 @@ stages:
               workingDirectory: $(workingDirectory)
               scriptType: pscore
               scriptLocation: inlineScript
+              addSpnToEnvironment: true
               inlineScript: |
+                $env
+                $env:servicePrincipalId
                 terraform init `
                   -backend-config='subscription_id="b55f04c5-29eb-4060-b6fe-58d8503e9c9a"' `
                   -backend-config='resource_group_name="rg-budgetify-tfstate"' `
