@@ -43,6 +43,7 @@ stages:
               backendAzureRmContainerName: $(container)
               backendAzureRmKey: $(key)
               workingDirectory: $(workingDirectory)
+              runAzLogin: true
 
           - task: TerraformTaskV3@3
             displayName: Terraform Validate
@@ -59,6 +60,7 @@ stages:
               backendAzureRmContainerName: $(container)
               backendAzureRmKey: $(key)
               workingDirectory: $(workingDirectory)
+              runAzLogin: true
 
           # - task: TerraformTaskV3@3
           #   displayName: Terraform Apply
