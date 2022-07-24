@@ -50,6 +50,9 @@ stages:
             inputs:
               command: validate
 
+          - bash: terraform plan
+            continueOnError: true
+
           - task: TerraformTaskV3@3
             displayName: Terraform Plan
             inputs:
