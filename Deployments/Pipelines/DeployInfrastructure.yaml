@@ -34,36 +34,35 @@ stages:
           - task: TerraformInstaller@0
             displayName: Install Terraform latest
 
-          - task: TerraformTaskV3@3
-            displayName: Terraform Init
-            inputs:
-              backendServiceArm: ${{ variables.serviceConnection }}
-              backendAzureRmResourceGroupName: $(resourceGroup)
-              backendAzureRmStorageAccountName: $(storageAccount)
-              backendAzureRmContainerName: $(container)
-              backendAzureRmKey: $(key)
-              workingDirectory: $(workingDirectory)
-              runAzLogin: true
-
-          - task: TerraformTaskV3@3
-            displayName: Terraform Validate
-            inputs:
-              command: validate
-
+          - bash: terraform init -backend-config='subscription_id="b55f04c5-29eb-4060-b6fe-58d8503e9c9a" resource_group_name="rg-budgetify-tfstate" storage_account_name="stbudgetifytfstate" container_name="terraform-state" key="dev.terraform.tfstate"'
           - bash: terraform plan
-            continueOnError: true
+          # - task: TerraformTaskV3@3
+          #   displayName: Terraform Init
+          #   inputs:
+          #     backendServiceArm: ${{ variables.serviceConnection }}
+          #     backendAzureRmResourceGroupName: $(resourceGroup)
+          #     backendAzureRmStorageAccountName: $(storageAccount)
+          #     backendAzureRmContainerName: $(container)
+          #     backendAzureRmKey: $(key)
+          #     workingDirectory: $(workingDirectory)
+          #     runAzLogin: true
 
-          - task: TerraformTaskV3@3
-            displayName: Terraform Plan
-            inputs:
-              command: plan
-              environmentServiceNameAzureRM: ${{ variables.serviceConnection }}
-              backendAzureRmResourceGroupName: $(resourceGroup)
-              backendAzureRmStorageAccountName: $(storageAccount)
-              backendAzureRmContainerName: $(container)
-              backendAzureRmKey: $(key)
-              workingDirectory: $(workingDirectory)
-              runAzLogin: true
+          # - task: TerraformTaskV3@3
+          #   displayName: Terraform Validate
+          #   inputs:
+          #     command: validate
+
+          # - task: TerraformTaskV3@3
+          #   displayName: Terraform Plan
+          #   inputs:
+          #     command: plan
+          #     environmentServiceNameAzureRM: ${{ variables.serviceConnection }}
+          #     backendAzureRmResourceGroupName: $(resourceGroup)
+          #     backendAzureRmStorageAccountName: $(storageAccount)
+          #     backendAzureRmContainerName: $(container)
+          #     backendAzureRmKey: $(key)
+          #     workingDirectory: $(workingDirectory)
+          #     runAzLogin: true
 
           # - task: TerraformTaskV3@3
           #   displayName: Terraform Apply
