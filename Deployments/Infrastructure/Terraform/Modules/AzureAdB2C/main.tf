@@ -48,10 +48,6 @@ resource "azuread_application" "microsoft_graph" {
       type = "Role"
     }
   }
-
-  # provisioner "local-exec" {
-  #   command = "az ad app permission admin-consent --id ${self.application_id}"
-  # }
 }
 
 resource "null_resource" "grant_admin_consent" {
