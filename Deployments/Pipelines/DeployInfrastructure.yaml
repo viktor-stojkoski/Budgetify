@@ -42,7 +42,8 @@ stages:
               scriptLocation: inlineScript
               addSpnToEnvironment: true
               inlineScript: |
-                $env
+                Get-ChildItem -Path Env:\
+                dir env:
                 $env:servicePrincipalId
                 terraform init `
                   -backend-config='subscription_id="b55f04c5-29eb-4060-b6fe-58d8503e9c9a"' `
