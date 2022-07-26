@@ -52,6 +52,8 @@ module "azure_ad_b2c" {
   tags                           = merge(var.tags, local.tags)
   app_registration_display_name  = "BudgetifyTF Angular"
   app_registration_redirect_uris = ["http://localhost:4200/"]
+  client_id                      = var.client_id
+  client_secret                  = var.client_secret
 }
 
 module "key_vault" {

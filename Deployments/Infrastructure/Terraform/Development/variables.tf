@@ -29,3 +29,15 @@ variable "object_id" {
   type        = string
   description = "Principal object ID (User)"
 }
+
+variable "client_id" {
+  type        = string
+  description = "Client ID"
+  sensitive   = true
+}
+
+variable "client_secret" {
+  type        = string
+  description = "Client Secret"
+  sensitive   = true
+}

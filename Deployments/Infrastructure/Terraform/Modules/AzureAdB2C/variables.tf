@@ -27,3 +27,15 @@ variable "app_registration_redirect_uris" {
   type        = set(string)
   description = "App registration redirect URIs"
 }
+
+variable "client_id" {
+  type        = string
+  description = "Client ID"
+  sensitive   = true
+}
+
+variable "client_secret" {
+  type        = string
+  description = "Client Secret"
+  sensitive   = true
+}

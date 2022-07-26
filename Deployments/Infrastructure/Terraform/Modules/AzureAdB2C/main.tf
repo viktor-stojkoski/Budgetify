@@ -9,8 +9,9 @@ resource "azurerm_aadb2c_directory" "tenant" {
 }
 
 provider "azuread" {
-  tenant_id = azurerm_aadb2c_directory.tenant.tenant_id
-  use_cli   = true
+  tenant_id     = azurerm_aadb2c_directory.tenant.tenant_id
+  client_id     = var.client_id
+  client_secret = var.client_secret
 }
 
 resource "azuread_application" "app_registration" {
