@@ -36,13 +36,12 @@ stages:
 
           - task: AzureCLI@2
             inputs:
-              # azureSubscription: ${{ variables.serviceConnection }}
+              azureSubscription: ${{ variables.serviceConnection }}
               workingDirectory: $(workingDirectory)
               scriptType: pscore
               scriptLocation: inlineScript
               addSpnToEnvironment: true
               inlineScript: |
-                az login --service-principal -u $env:servicePrincipalId --password $env:servicePrincipalKey --allow-no-subscriptions
                 $Env:ARM_CLIENT_ID = $env:servicePrincipalId
                 $Env:ARM_CLIENT_SECRET = $env:servicePrincipalKey
                 $Env:ARM_SUBSCRIPTION_ID = "b55f04c5-29eb-4060-b6fe-58d8503e9c9a"
@@ -64,6 +63,7 @@ stages:
               scriptLocation: inlineScript
               addSpnToEnvironment: true
               inlineScript: |
+                az login --service-principal -u $env:servicePrincipalId --password $env:servicePrincipalKey --allow-no-subscriptions
                 $Env:ARM_CLIENT_ID = $env:servicePrincipalId
                 $Env:ARM_CLIENT_SECRET = $env:servicePrincipalKey
                 $Env:ARM_SUBSCRIPTION_ID = "b55f04c5-29eb-4060-b6fe-58d8503e9c9a"
