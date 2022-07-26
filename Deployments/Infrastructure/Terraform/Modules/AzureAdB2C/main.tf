@@ -9,7 +9,7 @@ resource "azurerm_aadb2c_directory" "tenant" {
 }
 
 provider "azuread" {
-  tenant_id     = azurerm_aadb2c_directory.tenant.tenant_id
+  tenant_id     = "760fc230-aa43-4a2e-91e2-8ad7c5c022bb"
   client_id     = var.client_id
   client_secret = var.client_secret
 }
