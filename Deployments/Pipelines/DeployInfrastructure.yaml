@@ -68,7 +68,7 @@ stages:
                 $Env:ARM_SUBSCRIPTION_ID = "b55f04c5-29eb-4060-b6fe-58d8503e9c9a"
                 $Env:ARM_TENANT_ID = "2589ac95-2ee5-4cdb-9e56-e775181dcfc5"
                 $Env:TF_VAR_client_id = $env:servicePrincipalId
-                $Env:TF_VAR_client_secret $env:servicePrincipalKey
+                $Env:TF_VAR_client_secret = $env:servicePrincipalKey
                 terraform plan
 
           # - task: TerraformTaskV3@3
