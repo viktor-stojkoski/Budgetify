@@ -10,6 +10,7 @@ resource "azurerm_aadb2c_directory" "tenant" {
 
 provider "azuread" {
   tenant_id = azurerm_aadb2c_directory.tenant.tenant_id
+  use_cli   = true
 }
 
 resource "azuread_application" "app_registration" {
