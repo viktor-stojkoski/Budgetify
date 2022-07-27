@@ -67,6 +67,6 @@ module "key_vault" {
   object_id           = var.object_id
   tags                = merge(var.tags, local.tags)
   secrets = {
-    "graph-secret" = module.azure_ad_b2c.graph_secret
+    "graph-secret-test" = module.azure_ad_b2c.graph_secret # TODO: Revert test
   }
 }
