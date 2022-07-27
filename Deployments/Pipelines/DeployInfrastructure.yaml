@@ -16,6 +16,7 @@ stages:
     jobs:
       - job: job_deploy_terraform
         displayName: Deploy Terraform
+        condition: false
         variables:
           - name: serviceConnection
             value: Azure Subscription
@@ -111,13 +112,14 @@ stages:
           #     workingDirectory: $(workingDirectory)
 
       - job: job_deploy_scripts
-        dependsOn: job_deploy_terraform
+        # dependsOn: job_deploy_terraform
         displayName: Deploy Scripts
         steps:
           - task: PowerShell@2
             displayName: Deploy B2C User flows
             inputs:
-              filePath: ${{ variables['System.DefaultWorkingDirectory'] }}/Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1
+              workingDirectory: $(System.DefaultWorkingDirectory)
+              filePath: Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1
               arguments: >
                 --ClientId $(clientId)
                 --ClientSecret $(clientSecret)
