@@ -1,17 +1,5 @@
-resource "azurerm_aadb2c_directory" "tenant" {
-  country_code            = "ML" # Macedonia
-  data_residency_location = "Europe"
-  display_name            = var.tenant_display_name
-  domain_name             = var.tenant_domain_name
-  resource_group_name     = var.resource_group_name
-  sku_name                = "PremiumP1"
-  tags                    = var.tags
-}
-
 provider "azuread" {
-  tenant_id     = "760fc230-aa43-4a2e-91e2-8ad7c5c022bb"
-  client_id     = var.client_id
-  client_secret = var.client_secret
+  tenant_id = var.tenant_id
 }
 
 resource "azuread_application" "app_registration" {
