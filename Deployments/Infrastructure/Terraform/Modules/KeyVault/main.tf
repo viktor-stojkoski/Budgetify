@@ -1,3 +1,5 @@
+data "azurerm_client_config" "current" {}
+
 resource "azurerm_key_vault" "kv" {
   name                        = var.key_vault_name
   resource_group_name         = var.resource_group_name
@@ -10,8 +12,8 @@ resource "azurerm_key_vault" "kv" {
   tags                        = var.tags
 
   access_policy {
-    tenant_id = var.tenant_id
-    object_id = var.object_id
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.object_id
 
     key_permissions = [
       "Get",
@@ -68,66 +70,65 @@ resource "azurerm_key_vault" "kv" {
   }
 }
 
-data "azurerm_client_config" "current" {}
 
-resource "azurerm_key_vault_access_policy" "terraform_sp_access" {
-  key_vault_id = azurerm_key_vault.kv.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = data.azurerm_client_config.current.object_id
+# resource "azurerm_key_vault_access_policy" "terraform_sp_access" {
+#   key_vault_id = azurerm_key_vault.kv.id
+#   tenant_id    = data.azurerm_client_config.current.tenant_id
+#   object_id    = data.azurerm_client_config.current.object_id
 
-  key_permissions = [
-    "Get",
-    "List",
-    "Update",
-    "Create",
-    "Import",
-    "Delete",
-    "Recover",
-    "Backup",
-    "Restore",
+#   key_permissions = [
+#     "Get",
+#     "List",
+#     "Update",
+#     "Create",
+#     "Import",
+#     "Delete",
+#     "Recover",
+#     "Backup",
+#     "Restore",
 
-    "Decrypt",
-    "Encrypt",
-    "UnwrapKey",
-    "WrapKey",
-    "Verify",
-    "Sign",
+#     "Decrypt",
+#     "Encrypt",
+#     "UnwrapKey",
+#     "WrapKey",
+#     "Verify",
+#     "Sign",
 
-    "Purge"
-  ]
+#     "Purge"
+#   ]
 
-  secret_permissions = [
-    "Get",
-    "List",
-    "Set",
-    "Delete",
-    "Recover",
-    "Backup",
-    "Restore",
+#   secret_permissions = [
+#     "Get",
+#     "List",
+#     "Set",
+#     "Delete",
+#     "Recover",
+#     "Backup",
+#     "Restore",
 
-    "Purge"
-  ]
+#     "Purge"
+#   ]
 
-  certificate_permissions = [
-    "Get",
-    "List",
-    "Update",
-    "Create",
-    "Import",
-    "Delete",
-    "Recover",
-    "Backup",
-    "Restore",
-    "ManageContacts",
-    "ManageIssuers",
-    "GetIssuers",
-    "ListIssuers",
-    "SetIssuers",
-    "DeleteIssuers",
+#   certificate_permissions = [
+#     "Get",
+#     "List",
+#     "Update",
+#     "Create",
+#     "Import",
+#     "Delete",
+#     "Recover",
+#     "Backup",
+#     "Restore",
+#     "ManageContacts",
+#     "ManageIssuers",
+#     "GetIssuers",
+#     "ListIssuers",
+#     "SetIssuers",
+#     "DeleteIssuers",
 
-    "Purge"
-  ]
-}
+#     "Purge"
+#   ]
+# }
 
 resource "azurerm_key_vault_secret" "secrets" {
   for_each     = var.secrets
