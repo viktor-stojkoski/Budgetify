@@ -62,6 +62,7 @@ stages:
               failOnStderr: true
               script: |
                 terraform init `
+                  -backend-config='subscription_id="$(azureSubscriptionId)"' `
                   -backend-config='resource_group_name="$(resourceGroup)"' `
                   -backend-config='storage_account_name="$(storageAccount)"' `
                   -backend-config='container_name="$(container)"' `
