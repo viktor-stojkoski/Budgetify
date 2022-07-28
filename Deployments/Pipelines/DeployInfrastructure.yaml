@@ -17,9 +17,12 @@ stages:
       - job: job_deploy_terraform
         displayName: Deploy Terraform
         condition: false
+
         variables:
-          - name: serviceConnection
+          - name: azureSubscriptionName
             value: Azure Subscription
+          - name: azureSubscriptionId
+            value: b55f04c5-29eb-4060-b6fe-58d8503e9c9a
           - name: resourceGroup
             value: rg-budgetify-tfstate
           - name: storageAccount
@@ -30,52 +33,73 @@ stages:
             value: dev.terraform.tfstate
           - name: workingDirectory
             value: $(System.DefaultWorkingDirectory)/Deployments/Infrastructure/Terraform/Development
+          - name: tfplan
+            value: tfplan
 
         steps:
           - task: TerraformInstaller@0
             displayName: Install Terraform latest
 
           - task: AzureCLI@2
+            displayName: Set service principal variables for Terraform
             inputs:
-              azureSubscription: ${{ variables.serviceConnection }}
-              workingDirectory: $(workingDirectory)
+              azureSubscription: ${{ variables.azureSubscriptionName }}
               scriptType: pscore
               scriptLocation: inlineScript
+              failOnStandardError: true
               addSpnToEnvironment: true
               inlineScript: |
                 $Env:ARM_CLIENT_ID = $env:servicePrincipalId
                 $Env:ARM_CLIENT_SECRET = $env:servicePrincipalKey
-                $Env:ARM_SUBSCRIPTION_ID = "b55f04c5-29eb-4060-b6fe-58d8503e9c9a"
-                $Env:ARM_TENANT_ID = "2589ac95-2ee5-4cdb-9e56-e775181dcfc5"
-                Get-ChildItem -Path Env:\
-                dir env:
-                terraform init `
-                  -backend-config='subscription_id="b55f04c5-29eb-4060-b6fe-58d8503e9c9a"' `
-                  -backend-config='resource_group_name="rg-budgetify-tfstate"' `
-                  -backend-config='storage_account_name="stbudgetifytfstate"' `
-                  -backend-config='container_name="terraform-state"' `
-                  -backend-config='key="dev.terraform.tfstate"'
+                $Env:ARM_SUBSCRIPTION_ID = $(azureSubscriptionId)
+                $Env:ARM_TENANT_ID = $env:tenantId
 
-          - task: AzureCLI@2
+          - task: PowerShell@2
+            displayName: Terraform Validate
             inputs:
-              azureSubscription: ${{ variables.serviceConnection }}
+              pwsh: true
+              targetType: inline
               workingDirectory: $(workingDirectory)
-              scriptType: pscore
-              scriptLocation: inlineScript
-              addSpnToEnvironment: true
-              inlineScript: |
-                $Env:ARM_CLIENT_ID = $env:servicePrincipalId
-                $Env:ARM_CLIENT_SECRET = $env:servicePrincipalKey
-                $Env:ARM_SUBSCRIPTION_ID = "b55f04c5-29eb-4060-b6fe-58d8503e9c9a"
-                $Env:ARM_TENANT_ID = "2589ac95-2ee5-4cdb-9e56-e775181dcfc5"
-                $Env:TF_VAR_client_id = $env:servicePrincipalId
-                $Env:TF_VAR_client_secret = $env:servicePrincipalKey
-                terraform plan
+              failOnStderr: true
+              script: terraform validate
+
+          - task: PowerShell@2
+            displayName: Terraform Init
+            inputs:
+              pwsh: true
+              targetType: inline
+              workingDirectory: $(workingDirectory)
+              failOnStderr: true
+              script: |
+                terraform init `
+                # -backend-config='subscription_id="b55f04c5-29eb-4060-b6fe-58d8503e9c9a"' `
+                -backend-config='resource_group_name="$(resourceGroup)"' `
+                -backend-config='storage_account_name="$(storageAccount)"' `
+                -backend-config='container_name="$(container)"' `
+                -backend-config='key="$(key)"'
+
+          - task: PowerShell@2
+            displayName: Terraform Plan
+            inputs:
+              pwsh: true
+              targetType: inline
+              workingDirectory: $(workingDirectory)
+              failOnStderr: true
+              script: terraform plan -out $(tfplan)
+
+          # - task: PowerShell@2
+          #   displayName: Terraform Apply
+          #   inputs:
+          #     pwsh: true
+          #     targetType: inline
+          #     workingDirectory: $(workingDirectory)
+          #     failOnStderr: true
+          #     script: terraform apply $(tfplan) --auto-approve
 
           # - task: TerraformTaskV3@3
           #   displayName: Terraform Init
           #   inputs:
-          #     backendServiceArm: ${{ variables.serviceConnection }}
+          #     backendServiceArm: ${{ variables.azureSubscriptionName }}
           #     backendAzureRmResourceGroupName: $(resourceGroup)
           #     backendAzureRmStorageAccountName: $(storageAccount)
           #     backendAzureRmContainerName: $(container)
@@ -92,7 +116,7 @@ stages:
           #   displayName: Terraform Plan
           #   inputs:
           #     command: plan
-          #     environmentServiceNameAzureRM: ${{ variables.serviceConnection }}
+          #     environmentServiceNameAzureRM: ${{ variables.azureSubscriptionName }}
           #     backendAzureRmResourceGroupName: $(resourceGroup)
           #     backendAzureRmStorageAccountName: $(storageAccount)
           #     backendAzureRmContainerName: $(container)
@@ -112,7 +136,7 @@ stages:
           #     workingDirectory: $(workingDirectory)
 
       - job: job_deploy_scripts
-        # dependsOn: job_deploy_terraform
+        dependsOn: job_deploy_terraform
         displayName: Deploy Scripts
         steps:
           - task: PowerShell@2
