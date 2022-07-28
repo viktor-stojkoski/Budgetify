@@ -62,11 +62,10 @@ stages:
               failOnStderr: true
               script: |
                 terraform init `
-                # -backend-config='subscription_id="b55f04c5-29eb-4060-b6fe-58d8503e9c9a"' `
-                -backend-config='resource_group_name="$(resourceGroup)"' `
-                -backend-config='storage_account_name="$(storageAccount)"' `
-                -backend-config='container_name="$(container)"' `
-                -backend-config='key="$(key)"'
+                  -backend-config='resource_group_name="$(resourceGroup)"' `
+                  -backend-config='storage_account_name="$(storageAccount)"' `
+                  -backend-config='container_name="$(container)"' `
+                  -backend-config='key="$(key)"'
 
           - task: PowerShell@2
             displayName: Terraform Validate
