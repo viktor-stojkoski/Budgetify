@@ -51,5 +51,5 @@ resource "null_resource" "grant_admin_consent" {
 
 resource "azuread_application_password" "graph_secret" {
   application_object_id = azuread_application.microsoft_graph.object_id
-  display_name          = "Graph Secret Test" # TODO: Remove test
+  display_name          = "Graph Secret"
 }

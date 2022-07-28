@@ -33,5 +33,4 @@ variable "tags" {
 variable "container_name" {
   type        = string
   description = "Container name"
-  default     = "budgetify"
 }

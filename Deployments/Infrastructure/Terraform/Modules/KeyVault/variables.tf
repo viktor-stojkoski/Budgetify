@@ -13,19 +13,9 @@ variable "location" {
   description = "Location"
 }
 
-variable "tenant_id" {
-  type        = string
-  description = "Tenant ID that should be used for authenticationg requests to the key vault"
-}
-
-variable "object_id" {
-  type        = string
-  description = "User's object ID for access policy"
-}
-
 variable "tags" {
   type        = map(string)
-  description = "Tags"
+  description = "Key vault tags"
 }
 
 variable "secrets" {
