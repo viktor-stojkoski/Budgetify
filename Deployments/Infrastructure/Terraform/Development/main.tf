@@ -15,22 +15,15 @@ terraform {
 
   backend "azurerm" {
     # resource_group_name  = "rg-budgetify-tfstate"
-    # storage_account_name = "stbudgetifytfstate"
+    # storage_account_name = "sabudgetifytfstate"
     # container_name       = "terraform-state"
-    # key                  = "evironments/dev/terraform.tfstate"
+    # key                  = "dev.terraform.tfstate"
   }
 }
 
-provider "azurerm" {
-  features {}
-  subscription_id = var.azure_subscription
-}
-
-provider "azuread" {}
-
 module "resource_group" {
   source   = "../Modules/ResourceGroup"
-  name     = "rg-budgetify-tf" # TODO: Change from locals
+  name     = local.resource_group_name
   location = var.location
   tags     = merge(var.tags, local.tags)
 }
@@ -38,15 +31,15 @@ module "resource_group" {
 module "storage_account" {
   source               = "../Modules/StorageAccount"
   resource_group_name  = module.resource_group.resource_group_name
-  storage_account_name = "stbudgetifydevtest" # TODO: Change from locals
+  storage_account_name = local.storage_account_name
   location             = var.location
-  container_name       = "budgetify"
+  container_name       = lower(var.application_name)
   tags                 = merge(var.tags, local.tags)
 }
 
 module "b2c_tenant" {
   source              = "../Modules/B2CTenant"
-  tenant_display_name = "BudgetifyTF" # TODO: Change after testing
+  tenant_display_name = var.application_name
   resource_group_name = module.resource_group.resource_group_name
   tags                = merge(var.tags, local.tags)
 }
@@ -54,7 +47,7 @@ module "b2c_tenant" {
 module "azure_ad_b2c" {
   source                         = "../Modules/B2CResources"
   tenant_id                      = module.b2c_tenant.tenant_id
-  app_registration_display_name  = "BudgetifyTF Angular"
+  app_registration_display_name  = "${var.application_name} Angular"
   app_registration_redirect_uris = ["http://localhost:4200/"]
 }
 
@@ -63,10 +56,8 @@ module "key_vault" {
   key_vault_name      = local.key_vault_name
   resource_group_name = module.resource_group.resource_group_name
   location            = var.location
-  tenant_id           = var.tenant_id
-  object_id           = var.object_id
   tags                = merge(var.tags, local.tags)
   secrets = {
-    "graph-secret-test" = module.azure_ad_b2c.graph_secret # TODO: Revert test
+    "graph-secret" = module.azure_ad_b2c.graph_secret
   }
 }
