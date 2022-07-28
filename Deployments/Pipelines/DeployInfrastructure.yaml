@@ -16,7 +16,6 @@ stages:
     jobs:
       - job: job_deploy_terraform
         displayName: Deploy Terraform
-        condition: false
 
         variables:
           - name: azureSubscriptionName
