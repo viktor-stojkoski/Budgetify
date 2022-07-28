@@ -52,10 +52,12 @@ stages:
                 $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
                 $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
                 $Env:ARM_TENANT_ID = "$env:tenantId"
+                $Env:ARM_USE_MSAL = $true
 
           - task: AzureCLI@2
             displayName: Terraform Init
             inputs:
+              azureSubscription: ${{ variables.azureSubscriptionName }}
               scriptType: pscore
               scriptLocation: inlineScript
               workingDirectory: $(workingDirectory)
@@ -70,6 +72,7 @@ stages:
           - task: AzureCLI@2
             displayName: Terraform Validate
             inputs:
+              azureSubscription: ${{ variables.azureSubscriptionName }}
               scriptType: pscore
               scriptLocation: inlineScript
               workingDirectory: $(workingDirectory)
@@ -79,6 +82,7 @@ stages:
           - task: AzureCLI@2
             displayName: Terraform Plan
             inputs:
+              azureSubscription: ${{ variables.azureSubscriptionName }}
               scriptType: pscore
               scriptLocation: inlineScript
               workingDirectory: $(workingDirectory)
