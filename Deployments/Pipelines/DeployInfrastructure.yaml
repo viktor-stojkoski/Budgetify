@@ -54,15 +54,6 @@ stages:
                 $Env:ARM_TENANT_ID = "$env:tenantId"
 
           - task: PowerShell@2
-            displayName: Terraform Validate
-            inputs:
-              pwsh: true
-              targetType: inline
-              workingDirectory: $(workingDirectory)
-              failOnStderr: true
-              script: terraform validate
-
-          - task: PowerShell@2
             displayName: Terraform Init
             inputs:
               pwsh: true
@@ -76,6 +67,15 @@ stages:
                 -backend-config='storage_account_name="$(storageAccount)"' `
                 -backend-config='container_name="$(container)"' `
                 -backend-config='key="$(key)"'
+
+          - task: PowerShell@2
+            displayName: Terraform Validate
+            inputs:
+              pwsh: true
+              targetType: inline
+              workingDirectory: $(workingDirectory)
+              failOnStderr: true
+              script: terraform validate
 
           - task: PowerShell@2
             displayName: Terraform Plan
