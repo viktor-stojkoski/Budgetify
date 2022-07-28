@@ -56,7 +56,6 @@ stages:
           - task: AzureCLI@2
             displayName: Terraform Init
             inputs:
-              azureSubscription: ${{ variables.azureSubscriptionName }}
               scriptType: pscore
               scriptLocation: inlineScript
               workingDirectory: $(workingDirectory)
@@ -71,7 +70,6 @@ stages:
           - task: AzureCLI@2
             displayName: Terraform Validate
             inputs:
-              azureSubscription: ${{ variables.azureSubscriptionName }}
               scriptType: pscore
               scriptLocation: inlineScript
               workingDirectory: $(workingDirectory)
@@ -81,7 +79,6 @@ stages:
           - task: AzureCLI@2
             displayName: Terraform Plan
             inputs:
-              azureSubscription: ${{ variables.azureSubscriptionName }}
               scriptType: pscore
               scriptLocation: inlineScript
               workingDirectory: $(workingDirectory)
