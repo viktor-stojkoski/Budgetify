@@ -48,10 +48,10 @@ stages:
               failOnStandardError: true
               addSpnToEnvironment: true
               inlineScript: |
-                $Env:ARM_CLIENT_ID = $env:servicePrincipalId
-                $Env:ARM_CLIENT_SECRET = $env:servicePrincipalKey
-                $Env:ARM_SUBSCRIPTION_ID = $(azureSubscriptionId)
-                $Env:ARM_TENANT_ID = $env:tenantId
+                $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
+                $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
+                $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
+                $Env:ARM_TENANT_ID = "$env:tenantId"
 
           - task: PowerShell@2
             displayName: Terraform Validate
