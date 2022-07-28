@@ -53,14 +53,15 @@ stages:
                 $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
                 $Env:ARM_TENANT_ID = "$env:tenantId"
 
-          - task: PowerShell@2
+          - task: AzureCLI@2
             displayName: Terraform Init
             inputs:
-              pwsh: true
-              targetType: inline
+              azureSubscription: ${{ variables.azureSubscriptionName }}
+              scriptType: pscore
+              scriptLocation: inlineScript
               workingDirectory: $(workingDirectory)
-              failOnStderr: true
-              script: |
+              failOnStandardError: true
+              inlineScript: |
                 terraform init `
                   -backend-config='subscription_id="$(azureSubscriptionId)"' `
                   -backend-config='resource_group_name="$(resourceGroup)"' `
@@ -68,23 +69,25 @@ stages:
                   -backend-config='container_name="$(container)"' `
                   -backend-config='key="$(key)"'
 
-          - task: PowerShell@2
+          - task: AzureCLI@2
             displayName: Terraform Validate
             inputs:
-              pwsh: true
-              targetType: inline
+              azureSubscription: ${{ variables.azureSubscriptionName }}
+              scriptType: pscore
+              scriptLocation: inlineScript
               workingDirectory: $(workingDirectory)
-              failOnStderr: true
-              script: terraform validate
+              failOnStandardError: true
+              inlineScript: terraform validate
 
-          - task: PowerShell@2
+          - task: AzureCLI@2
             displayName: Terraform Plan
             inputs:
-              pwsh: true
-              targetType: inline
+              azureSubscription: ${{ variables.azureSubscriptionName }}
+              scriptType: pscore
+              scriptLocation: inlineScript
               workingDirectory: $(workingDirectory)
-              failOnStderr: true
-              script: terraform plan -out $(tfplan)
+              failOnStandardError: true
+              inlineScript: terraform plan -out $(tfplan)
 
           # - task: PowerShell@2
           #   displayName: Terraform Apply
