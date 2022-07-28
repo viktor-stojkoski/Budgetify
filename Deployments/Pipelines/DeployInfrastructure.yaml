@@ -63,6 +63,7 @@ stages:
               workingDirectory: $(workingDirectory)
               failOnStandardError: true
               inlineScript: |
+                dir env:
                 terraform init `
                   -backend-config='resource_group_name="$(resourceGroup)"' `
                   -backend-config='storage_account_name="$(storageAccount)"' `
