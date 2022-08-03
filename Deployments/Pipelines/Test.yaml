@@ -149,9 +149,9 @@ stages:
           - name: apiConnectorPassword
             value: test123
           - name: rgName
-            value: dependencies.job_deploy_terraform.outputs['terraformOutput.resource_group_name']
+            value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.resource_group_name'] ]
           - name: saName
-            value: dependencies.job_deploy_terraform.outputs['terraformOutput.storage_account_name']
+            value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.storage_account_name'] ]
 
         steps:
           - powershell: |
