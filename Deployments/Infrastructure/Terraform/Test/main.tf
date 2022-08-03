@@ -3,14 +3,6 @@ terraform {
     azurerm = {
       source = "hashicorp/azurerm"
     }
-
-    azuread = {
-      source = "hashicorp/azuread"
-    }
-
-    null = {
-      source = "hashicorp/null"
-    }
   }
 
   backend "azurerm" {
@@ -19,6 +11,10 @@ terraform {
     # container_name       = "terraform-state"
     # key                  = "dev.terraform.tfstate"
   }
+}
+
+provider "azurerm" {
+  features {}
 }
 
 module "resource_group" {
