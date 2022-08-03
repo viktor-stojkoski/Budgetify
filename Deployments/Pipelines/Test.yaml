@@ -29,9 +29,9 @@ stages:
           - name: container
             value: terraform-state
           - name: key
-            value: dev.terraform.tfstate
+            value: test.terraform.tfstate
           - name: workingDirectory
-            value: $(System.DefaultWorkingDirectory)/Deployments/Infrastructure/Terraform/Development
+            value: $(System.DefaultWorkingDirectory)/Deployments/Infrastructure/Terraform/Test
           - name: tfplan
             value: tfplan
 
@@ -94,81 +94,50 @@ stages:
 
                 terraform plan -out $(tfplan)
 
-          # - task: PowerShell@2
-          #   displayName: Terraform Apply
-          #   inputs:
-          #     pwsh: true
-          #     targetType: inline
-          #     workingDirectory: $(workingDirectory)
-          #     failOnStderr: true
-          #     script: terraform apply $(tfplan) --auto-approve
-
-          # - task: TerraformTaskV3@3
-          #   displayName: Terraform Init
-          #   inputs:
-          #     backendServiceArm: ${{ variables.azureSubscriptionName }}
-          #     backendAzureRmResourceGroupName: $(resourceGroup)
-          #     backendAzureRmStorageAccountName: $(storageAccount)
-          #     backendAzureRmContainerName: $(container)
-          #     backendAzureRmKey: $(key)
-          #     workingDirectory: $(workingDirectory)
-          #     runAzLogin: true
-
-          # - task: TerraformTaskV3@3
-          #   displayName: Terraform Validate
-          #   inputs:
-          #     command: validate
-
-          # - task: TerraformTaskV3@3
-          #   displayName: Terraform Plan
-          #   inputs:
-          #     command: plan
-          #     environmentServiceNameAzureRM: ${{ variables.azureSubscriptionName }}
-          #     backendAzureRmResourceGroupName: $(resourceGroup)
-          #     backendAzureRmStorageAccountName: $(storageAccount)
-          #     backendAzureRmContainerName: $(container)
-          #     backendAzureRmKey: $(key)
-          #     workingDirectory: $(workingDirectory)
-          #     runAzLogin: true
-
-          # - task: TerraformTaskV3@3
-          #   displayName: Terraform Apply
-          #   inputs:
-          #     command: apply
-          #     commandOptions: --auto-approve
-          #     backendAzureRmResourceGroupName: $(resourceGroup)
-          #     backendAzureRmStorageAccountName: $(storageAccount)
-          #     backendAzureRmContainerName: $(container)
-          #     backendAzureRmKey: $(key)
-          #     workingDirectory: $(workingDirectory)
-
-      - job: job_deploy_scripts
-        dependsOn: job_deploy_terraform
-        displayName: Deploy Scripts
-
-        variables:
-          - name: apiConnectorDisplayName
-            value: Budgetify API
-          - name: apiConnectorTargetUrl
-            value: budgetify.io
-          - name: apiConnectorUsername
-            value: zoki
-          - name: apiConnectorPassword
-            value: test123
-
-        steps:
-          - task: PowerShell@2
-            displayName: Deploy B2C User flows
+          - task: AzureCLI@2
+            displayName: Terraform Apply
             inputs:
-              workingDirectory: $(System.DefaultWorkingDirectory)
-              filePath: Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1
-              arguments: >
-                --ClientId $(clientId)
-                --ClientSecret $(clientSecret)
-                --TenantId $(tenantId)
-                --ApiConnector @{
-                  DisplayName = $(apiConnectorDisplayName)
-                  TargetUrl = $(apiConnectorTargetUrl)
-                  Username = $(apiConnectorUsername)
-                  Password = $(apiConnectorPassword)
-                }
+              azureSubscription: ${{ variables.azureSubscriptionName }}
+              scriptType: pscore
+              scriptLocation: inlineScript
+              workingDirectory: $(workingDirectory)
+              failOnStandardError: true
+              addSpnToEnvironment: true
+              inlineScript: |
+                $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
+                $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
+                $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
+                $Env:ARM_TENANT_ID = "$env:tenantId"
+
+                terraform apply $(tfplan) --auto-approve
+
+      # - job: job_deploy_scripts
+      #   dependsOn: job_deploy_terraform
+      #   displayName: Deploy Scripts
+
+      #   variables:
+      #     - name: apiConnectorDisplayName
+      #       value: Budgetify API
+      #     - name: apiConnectorTargetUrl
+      #       value: budgetify.io
+      #     - name: apiConnectorUsername
+      #       value: zoki
+      #     - name: apiConnectorPassword
+      #       value: test123
+
+      #   steps:
+      #     - task: PowerShell@2
+      #       displayName: Deploy B2C User flows
+      #       inputs:
+      #         workingDirectory: $(System.DefaultWorkingDirectory)
+      #         filePath: Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1
+      #         arguments: >
+      #           --ClientId $(clientId)
+      #           --ClientSecret $(clientSecret)
+      #           --TenantId $(tenantId)
+      #           --ApiConnector @{
+      #             DisplayName = $(apiConnectorDisplayName)
+      #             TargetUrl = $(apiConnectorTargetUrl)
+      #             Username = $(apiConnectorUsername)
+      #             Password = $(apiConnectorPassword)
+      #           }
