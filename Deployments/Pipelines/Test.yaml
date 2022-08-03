@@ -109,7 +109,7 @@ stages:
                 $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
                 $Env:ARM_TENANT_ID = "$env:tenantId"
 
-                terraform apply $(tfplan) --auto-approve
+                terraform apply $(tfplan)
 
           - task: AzureCLI@2
             displayName: Terraform Output
