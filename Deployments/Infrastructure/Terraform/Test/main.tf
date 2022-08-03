@@ -26,7 +26,7 @@ module "resource_group" {
 module "storage_account" {
   source               = "../Modules/StorageAccount"
   resource_group_name  = module.resource_group.resource_group_name
-  storage_account_name = "testst"
+  storage_account_name = "budgetifyytestst"
   location             = "West Europe"
   container_name       = "test"
 }
