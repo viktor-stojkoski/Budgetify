@@ -132,7 +132,7 @@ stages:
 
                 # Export output as pipeline variables
                 foreach ($property in $output.psobject.properties) {
-                  Write-Host("##vso[task.setvariable variable=$($prop.Name);isOutput=true;isSecret=$($prop.Value.sensitive)]$($prop.Value.value)")
+                  Write-Host "##vso[task.setvariable variable=$($prop.Name);isOutput=true;isSecret=$($prop.Value.sensitive)]$($prop.Value.value)"
                 }
 
       - job: job_deploy_scripts
