@@ -10,12 +10,13 @@ variable "resource_group_name" {
 
 variable "location" {
   type        = string
-  description = "Location"
+  description = "Key vault location"
 }
 
 variable "tags" {
   type        = map(string)
   description = "Key vault tags"
+  default     = {}
 }
 
 variable "secrets" {

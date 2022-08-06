@@ -9,6 +9,12 @@ pool:
 trigger: none
 pr: none
 
+parameters:
+  - name: createB2CTenantResources
+    displayName: Create B2C Tenant Resources
+    type: boolean
+    default: false
+
 stages:
   - stage: DeployInfrastructure
     displayName: Deploy Infrastructure
@@ -177,6 +183,7 @@ stages:
       - job: job_deploy_scripts
         dependsOn: job_deploy_terraform
         displayName: Deploy Scripts
+        condition: and(succeeded(), eq('${{ parameters.createB2CTenantResources }}', 'true'))
 
         variables:
           - name: clientId
@@ -189,11 +196,11 @@ stages:
           - name: apiConnectorDisplayName
             value: Budgetify API
           - name: apiConnectorTargetUrl
-            value: budgetify.io
+            value: http://budgetify.loca.lt/
           - name: apiConnectorUsername
-            value: zoki
+            value: BudgetifyUser
           - name: apiConnectorPassword
-            value: test123
+            value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.api_connector_password'] ]
 
         steps:
           - task: PowerShell@2

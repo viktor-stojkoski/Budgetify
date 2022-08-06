@@ -13,3 +13,9 @@ output "b2c_tenant_id" {
   value       = module.b2c_tenant.tenant_id
   description = "B2C Tenant ID"
 }
+
+output "api_connector_password" {
+  description = "API Connector Password"
+  value       = local.apiConnectorPassword
+  sensitive   = true
+}

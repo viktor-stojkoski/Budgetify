@@ -39,7 +39,7 @@ module "storage_account" {
 
 module "b2c_tenant" {
   source              = "../Modules/B2CTenant"
-  tenant_display_name = var.application_name
+  tenant_display_name = local.b2c_tenant_display_name
   resource_group_name = module.resource_group.resource_group_name
   tags                = merge(var.tags, local.tags)
 }
@@ -58,6 +58,8 @@ module "key_vault" {
   location            = var.location
   tags                = merge(var.tags, local.tags)
   secrets = {
-    "graph-secret" = module.azure_ad_b2c.graph_secret
+    "graphApi"                       = module.azure_ad_b2c.graph_secret
+    "storageAccountConnectionString" = module.storage_account.storage_account_connection_string
+    "apiConnectorPassword"           = local.apiConnectorPassword
   }
 }
