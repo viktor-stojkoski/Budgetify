@@ -1,3 +1,6 @@
 locals {
-  graph_api_permissions = ["APIConnectors.ReadWrite.All", "IdentityUserFlow.ReadWrite.All"]
+  graph_api_permissions = [
+    "APIConnectors.ReadWrite.All",
+    "IdentityUserFlow.ReadWrite.All"
+  ]
 }

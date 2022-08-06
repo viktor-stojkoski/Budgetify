@@ -29,18 +29,15 @@ resource "azuread_application" "microsoft_graph" {
   display_name = "Microsoft Graph API"
 
   required_resource_access {
-    # resource_app_id = "00000003-0000-0000-c000-000000000000" # Microsoft Graph
     resource_app_id = data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph
 
     resource_access {
-      # id   = "1dfe531a-24a6-4f1b-80f4-7a0dc5a0a171" # APIConnectors.ReadWrite.All
-      id   = azuread_service_principal.microsoft_graph.app_role_ids["APIConnectors.ReadWrite.All"]
+      id   = azuread_service_principal.microsoft_graph.app_role_ids[local.graph_api_permissions[0]]
       type = "Role"
     }
 
     resource_access {
-      # id   = "65319a09-a2be-469d-8782-f6b07debf789" # IdentityUserFlow.ReadWrite.All
-      id   = azuread_service_principal.microsoft_graph.app_role_ids["IdentityUserFlow.ReadWrite.All"]
+      id   = azuread_service_principal.microsoft_graph.app_role_ids[local.graph_api_permissions[1]]
       type = "Role"
     }
   }
@@ -56,21 +53,6 @@ resource "azuread_app_role_assignment" "graph_role_assignment" {
   principal_object_id = azuread_service_principal.microsoft_graph_sp.object_id
   resource_object_id  = azuread_service_principal.microsoft_graph.object_id
 }
-
-# resource "azuread_app_role_assignment" "microsoft_graph" {
-#   app_role_id         = azuread_service_principal.microsoft_graph.app_role_ids["IdentityUserFlow.ReadWrite.All"]
-#   principal_object_id = azuread_service_principal.microsoft_graph_sp.object_id
-#   resource_object_id  = azuread_service_principal.microsoft_graph.object_id
-# }
-
-# resource "null_resource" "grant_admin_consent" {
-#   depends_on = [
-#     azuread_application.microsoft_graph
-#   ]
-#   provisioner "local-exec" {
-#     command = "az ad app permission admin-consent --id ${azuread_application.microsoft_graph.application_id}"
-#   }
-# }
 
 resource "azuread_application_password" "graph_secret" {
   application_object_id = azuread_application.microsoft_graph.object_id
