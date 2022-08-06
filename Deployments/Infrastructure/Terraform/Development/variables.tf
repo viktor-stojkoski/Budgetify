@@ -12,7 +12,7 @@ variable "tags" {
 variable "application_name" {
   type        = string
   description = "Name of the application"
-  default     = "Budgetifytest"
+  default     = "Budgetify"
 }
 
 variable "azure_subscription" {
