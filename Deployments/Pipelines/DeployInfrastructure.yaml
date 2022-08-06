@@ -100,85 +100,46 @@ stages:
 
                 terraform plan -out $(tfplan)
 
-          # - task: AzureCLI@2
-          #   displayName: Terraform Apply
-          #   inputs:
-          #     azureSubscription: ${{ variables.azureSubscriptionName }}
-          #     scriptType: pscore
-          #     scriptLocation: inlineScript
-          #     workingDirectory: $(workingDirectory)
-          #     failOnStandardError: true
-          #     addSpnToEnvironment: true
-          #     inlineScript: |
-          #       $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
-          #       $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
-          #       $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
-          #       $Env:ARM_TENANT_ID = "$env:tenantId"
+          - task: AzureCLI@2
+            displayName: Terraform Apply
+            inputs:
+              azureSubscription: ${{ variables.azureSubscriptionName }}
+              scriptType: pscore
+              scriptLocation: inlineScript
+              workingDirectory: $(workingDirectory)
+              failOnStandardError: true
+              addSpnToEnvironment: true
+              inlineScript: |
+                $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
+                $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
+                $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
+                $Env:ARM_TENANT_ID = "$env:tenantId"
 
-          #       terraform apply $(tfplan)
+                terraform apply $(tfplan)
 
-          # - task: AzureCLI@2
-          #   displayName: Export Terraform output as Pipeline Variables
-          #   name: terraformOutput
-          #   inputs:
-          #     azureSubscription: ${{ variables.azureSubscriptionName }}
-          #     scriptType: pscore
-          #     scriptLocation: inlineScript
-          #     workingDirectory: $(workingDirectory)
-          #     failOnStandardError: true
-          #     addSpnToEnvironment: true
-          #     inlineScript: |
-          #       $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
-          #       $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
-          #       $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
-          #       $Env:ARM_TENANT_ID = "$env:tenantId"
+          - task: AzureCLI@2
+            displayName: Export Terraform output as Pipeline Variables
+            name: terraformOutput
+            inputs:
+              azureSubscription: ${{ variables.azureSubscriptionName }}
+              scriptType: pscore
+              scriptLocation: inlineScript
+              workingDirectory: $(workingDirectory)
+              failOnStandardError: true
+              addSpnToEnvironment: true
+              inlineScript: |
+                $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
+                $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
+                $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
+                $Env:ARM_TENANT_ID = "$env:tenantId"
 
-          #       # Get the output
-          #       $output = $(terraform output -json | ConvertFrom-Json)
+                # Get the output
+                $output = $(terraform output -json | ConvertFrom-Json)
 
-          #       # Export output as pipeline variables
-          #       foreach ($property in $output.psobject.properties) {
-          #         Write-Host "##vso[task.setvariable variable=$($property.Name);isOutput=true;isSecret=$($property.Value.sensitive)]$($property.Value.value)"
-          #       }
-
-          # - task: TerraformTaskV3@3
-          #   displayName: Terraform Init
-          #   inputs:
-          #     backendServiceArm: ${{ variables.azureSubscriptionName }}
-          #     backendAzureRmResourceGroupName: $(resourceGroup)
-          #     backendAzureRmStorageAccountName: $(storageAccount)
-          #     backendAzureRmContainerName: $(container)
-          #     backendAzureRmKey: $(key)
-          #     workingDirectory: $(workingDirectory)
-          #     runAzLogin: true
-
-          # - task: TerraformTaskV3@3
-          #   displayName: Terraform Validate
-          #   inputs:
-          #     command: validate
-
-          # - task: TerraformTaskV3@3
-          #   displayName: Terraform Plan
-          #   inputs:
-          #     command: plan
-          #     environmentServiceNameAzureRM: ${{ variables.azureSubscriptionName }}
-          #     backendAzureRmResourceGroupName: $(resourceGroup)
-          #     backendAzureRmStorageAccountName: $(storageAccount)
-          #     backendAzureRmContainerName: $(container)
-          #     backendAzureRmKey: $(key)
-          #     workingDirectory: $(workingDirectory)
-          #     runAzLogin: true
-
-          # - task: TerraformTaskV3@3
-          #   displayName: Terraform Apply
-          #   inputs:
-          #     command: apply
-          #     commandOptions: --auto-approve
-          #     backendAzureRmResourceGroupName: $(resourceGroup)
-          #     backendAzureRmStorageAccountName: $(storageAccount)
-          #     backendAzureRmContainerName: $(container)
-          #     backendAzureRmKey: $(key)
-          #     workingDirectory: $(workingDirectory)
+                # Export output as pipeline variables
+                foreach ($property in $output.psobject.properties) {
+                  Write-Host "##vso[task.setvariable variable=$($property.Name);isOutput=true;isSecret=$($property.Value.sensitive)]$($property.Value.value)"
+                }
 
       - job: job_deploy_scripts
         dependsOn: job_deploy_terraform
