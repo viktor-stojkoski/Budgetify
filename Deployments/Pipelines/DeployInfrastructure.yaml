@@ -164,7 +164,7 @@ stages:
         steps:
           - task: AzureCLI@2
             displayName: Terraform Apply
-            condition: eq('${{ variables.runTerraformApply }}', 'True')
+            condition: eq(variables.runTerraformApply, 'True')
             inputs:
               azureSubscription: ${{ variables.azureSubscriptionName }}
               scriptType: pscore
