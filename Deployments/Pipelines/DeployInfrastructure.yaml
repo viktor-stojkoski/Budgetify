@@ -122,6 +122,31 @@ stages:
 
                 Write-Host "##vso[task.setvariable variable=commandSuccessful;isOutput=true]$?"
 
+          - task: AzureCLI@2
+            displayName: Export Terraform output as Pipeline Variables
+            condition: eq(variables.commandSuccessful, 'True')
+            name: terraformOutput
+            inputs:
+              azureSubscription: ${{ variables.azureSubscriptionName }}
+              scriptType: pscore
+              scriptLocation: inlineScript
+              workingDirectory: $(workingDirectory)
+              failOnStandardError: true
+              addSpnToEnvironment: true
+              inlineScript: |
+                $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
+                $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
+                $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
+                $Env:ARM_TENANT_ID = "$env:tenantId"
+
+                # Get the output
+                $output = $(terraform output -json | ConvertFrom-Json)
+
+                # Export output as pipeline variables
+                foreach ($property in $output.psobject.properties) {
+                  Write-Host "##vso[task.setvariable variable=$($property.Name);isOutput=true;isSecret=$($property.Value.sensitive)]$($property.Value.value)"
+                }
+
       - job: manual_validation
         dependsOn: job_deploy_terraform
         displayName: Wait for B2C tenant creation
@@ -140,6 +165,7 @@ stages:
           - job_deploy_terraform
           - manual_validation
         displayName: Continue deployment of Terraform
+        condition: eq(dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'], 'False')
 
         variables:
           - name: azureSubscriptionName
@@ -158,13 +184,48 @@ stages:
             value: $(System.DefaultWorkingDirectory)/Deployments/Infrastructure/Terraform/Development
           - name: tfplan
             value: tfplan
-          - name: runTerraformApply
-            value: $[ dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'] ]
 
         steps:
           - task: AzureCLI@2
+            displayName: Terraform Init
+            inputs:
+              azureSubscription: ${{ variables.azureSubscriptionName }}
+              scriptType: pscore
+              scriptLocation: inlineScript
+              workingDirectory: $(workingDirectory)
+              failOnStandardError: true
+              addSpnToEnvironment: true
+              inlineScript: |
+                $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
+                $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
+                $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
+                $Env:ARM_TENANT_ID = "$env:tenantId"
+
+                terraform init `
+                  -backend-config='resource_group_name="$(resourceGroup)"' `
+                  -backend-config='storage_account_name="$(storageAccount)"' `
+                  -backend-config='container_name="$(container)"' `
+                  -backend-config='key="$(key)"'
+
+          - task: AzureCLI@2
+            displayName: Terraform Plan
+            inputs:
+              azureSubscription: ${{ variables.azureSubscriptionName }}
+              scriptType: pscore
+              scriptLocation: inlineScript
+              workingDirectory: $(workingDirectory)
+              failOnStandardError: true
+              addSpnToEnvironment: true
+              inlineScript: |
+                $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
+                $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
+                $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
+                $Env:ARM_TENANT_ID = "$env:tenantId"
+
+                terraform plan -out $(tfplan)
+
+          - task: AzureCLI@2
             displayName: Terraform Apply
-            condition: eq(variables.runTerraformApply, 'True')
             inputs:
               azureSubscription: ${{ variables.azureSubscriptionName }}
               scriptType: pscore
@@ -188,7 +249,6 @@ stages:
 
           - task: AzureCLI@2
             displayName: Export Terraform output as Pipeline Variables
-            condition: succeeded()
             name: terraformOutput
             inputs:
               azureSubscription: ${{ variables.azureSubscriptionName }}
@@ -212,17 +272,31 @@ stages:
                 }
 
       - job: job_deploy_scripts
-        dependsOn: continue_deploy_terraform
+        dependsOn:
+          - job_deploy_terraform
+          - continue_deploy_terraform
         displayName: Deploy Scripts
-        condition: and(succeeded(), eq('${{ parameters.createB2CTenantResources }}', 'true'))
+        condition: eq('${{ parameters.createB2CTenantResources }}', 'true')
 
         variables:
-          - name: clientId
-            value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.graph_client_id'] ]
-          - name: clientSecret
-            value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.graph_secret'] ]
-          - name: tenantId
-            value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.b2c_tenant_id'] ]
+          - ${{ if in(dependencies.job_deploy_terraform.result, 'Skipped') }}:
+              - name: clientId
+                value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.graph_client_id'] ]
+              - name: clientSecret
+                value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.graph_secret'] ]
+              - name: tenantId
+                value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.b2c_tenant_id'] ]
+              - name: apiConnectorPassword
+                value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.api_connector_password'] ]
+          - ${{ else }}:
+              - name: clientId
+                value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.graph_client_id'] ]
+              - name: clientSecret
+                value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.graph_secret'] ]
+              - name: tenantId
+                value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.b2c_tenant_id'] ]
+              - name: apiConnectorPassword
+                value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.api_connector_password'] ]
 
           - name: apiConnectorDisplayName
             value: Budgetify API
@@ -230,8 +304,6 @@ stages:
             value: http://budgetify.loca.lt/
           - name: apiConnectorUsername
             value: BudgetifyUser
-          - name: apiConnectorPassword
-            value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.api_connector_password'] ]
 
         steps:
           - task: PowerShell@2
