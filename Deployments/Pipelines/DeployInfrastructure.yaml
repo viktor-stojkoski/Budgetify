@@ -128,7 +128,7 @@ stages:
 
           - task: AzureCLI@2
             displayName: Export Terraform output as Pipeline Variables
-            condition: eq(variables.commandSuccessful, 'True')
+            condition: eq(variables['commandSuccessful'], 'True')
             name: terraformOutput
             inputs:
               azureSubscription: ${{ variables.azureSubscriptionName }}
@@ -274,6 +274,10 @@ stages:
         displayName: Deploy Scripts
         condition: |
           and(
+            or(
+              eq(dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'], 'True'),
+              in(dependencies.job_deploy_terraform_with_b2c.result, 'Succeeded')
+            ),
             or(not(failed()), not(canceled())),
             eq('${{ parameters.createB2CTenantResources }}', 'true')
           )
