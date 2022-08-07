@@ -22,7 +22,6 @@ stages:
     jobs:
       - job: job_deploy_terraform
         displayName: Deploy Terraform
-        pool: server
 
         variables:
           - name: azureSubscriptionName
@@ -103,7 +102,7 @@ stages:
 
           - task: AzureCLI@2
             displayName: Terraform Apply
-            # continueOnError: true
+            name: applyStatus
             inputs:
               azureSubscription: ${{ variables.azureSubscriptionName }}
               scriptType: pscore
@@ -119,8 +118,12 @@ stages:
 
                 terraform apply $(tfplan)
 
-                Write-Host "##vso[task.setvariable variable=commandSuccessful]$?"
+                Write-Host "##vso[task.setvariable variable=commandSuccessful;isOutput=true]$?"
 
+      - job: manual_validation
+        displayName: Wait for B2C tenant creation
+        pool: server
+        steps:
           - task: ManualValidation@0
             condition: eq('${{ variables.commandSuccessful }}', 'False')
             displayName: Wait for B2C Tenant to be manually created
@@ -129,9 +132,32 @@ stages:
               onTimeout: reject
               notifyUsers: viktor.98@hotmail.com
 
+      - job: continue_deploy_terraform
+        dependsOn: job_deploy_terraform
+        displayName: Continue deployment of Terraform
+
+        variables:
+          - name: azureSubscriptionName
+            value: Azure Subscription
+          - name: azureSubscriptionId
+            value: b55f04c5-29eb-4060-b6fe-58d8503e9c9a
+          - name: resourceGroup
+            value: rg-budgetify-tfstate
+          - name: storageAccount
+            value: sabudgetifytfstate
+          - name: container
+            value: terraform-state
+          - name: key
+            value: dev.terraform.tfstate
+          - name: workingDirectory
+            value: $(System.DefaultWorkingDirectory)/Deployments/Infrastructure/Terraform/Development
+          - name: tfplan
+            value: tfplan
+
+        steps:
           - task: AzureCLI@2
             displayName: Terraform Apply
-            condition: eq('${{ variables.commandSuccessful }}', 'False')
+            condition: eq(dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'], 'False')
             inputs:
               azureSubscription: ${{ variables.azureSubscriptionName }}
               scriptType: pscore
@@ -179,17 +205,17 @@ stages:
                 }
 
       - job: job_deploy_scripts
-        dependsOn: job_deploy_terraform
+        dependsOn: continue_deploy_terraform
         displayName: Deploy Scripts
         condition: and(succeeded(), eq('${{ parameters.createB2CTenantResources }}', 'true'))
 
         variables:
           - name: clientId
-            value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.graph_client_id'] ]
+            value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.graph_client_id'] ]
           - name: clientSecret
-            value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.graph_secret'] ]
+            value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.graph_secret'] ]
           - name: tenantId
-            value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.b2c_tenant_id'] ]
+            value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.b2c_tenant_id'] ]
 
           - name: apiConnectorDisplayName
             value: Budgetify API
@@ -198,7 +224,7 @@ stages:
           - name: apiConnectorUsername
             value: BudgetifyUser
           - name: apiConnectorPassword
-            value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.api_connector_password'] ]
+            value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.api_connector_password'] ]
 
         steps:
           - task: PowerShell@2
