@@ -279,7 +279,9 @@ stages:
         condition: eq('${{ parameters.createB2CTenantResources }}', 'true')
 
         variables:
-          - ${{ if in(dependencies.job_deploy_terraform.result, 'Skipped') }}:
+          - name: deployTerraformSkipped
+            value: $[ in(dependencies.continue_deploy_terraform.result, 'Skipped') ]
+          - ${{ if eq(variables.deployTerraformSkipped, 'False') }}:
               - name: clientId
                 value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.graph_client_id'] ]
               - name: clientSecret
