@@ -104,6 +104,8 @@ stages:
             displayName: Terraform Apply
             name: applyStatus
             inputs:
+              powerShellErrorActionPreference: silentlyContinue
+              powerShellIgnoreLASTEXITCODE: true
               azureSubscription: ${{ variables.azureSubscriptionName }}
               scriptType: pscore
               scriptLocation: inlineScript
