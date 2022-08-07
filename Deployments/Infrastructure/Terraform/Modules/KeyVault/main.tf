@@ -15,59 +15,20 @@ resource "azurerm_key_vault" "kv" {
     tenant_id = data.azurerm_client_config.current.tenant_id
     object_id = data.azurerm_client_config.current.object_id
 
-    key_permissions = [
-      "Get",
-      "List",
-      "Update",
-      "Create",
-      "Import",
-      "Delete",
-      "Recover",
-      "Backup",
-      "Restore",
-
-      "Decrypt",
-      "Encrypt",
-      "UnwrapKey",
-      "WrapKey",
-      "Verify",
-      "Sign",
-
-      "Purge"
-    ]
-
-    secret_permissions = [
-      "Get",
-      "List",
-      "Set",
-      "Delete",
-      "Recover",
-      "Backup",
-      "Restore",
-
-      "Purge"
-    ]
-
-    certificate_permissions = [
-      "Get",
-      "List",
-      "Update",
-      "Create",
-      "Import",
-      "Delete",
-      "Recover",
-      "Backup",
-      "Restore",
-      "ManageContacts",
-      "ManageIssuers",
-      "GetIssuers",
-      "ListIssuers",
-      "SetIssuers",
-      "DeleteIssuers",
-
-      "Purge"
-    ]
+    key_permissions         = local.all_key_permissions
+    secret_permissions      = local.all_secret_permissions
+    certificate_permissions = local.all_certificate_permissions
   }
+}
+
+resource "azurerm_key_vault_access_policy" "viktor_stojkoski_access_policy" {
+  key_vault_id = azurerm_key_vault.kv.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = local.viktor_stojkoski_object_id
+
+  key_permissions         = local.all_key_permissions
+  secret_permissions      = local.all_secret_permissions
+  certificate_permissions = local.all_certificate_permissions
 }
 
 resource "azurerm_key_vault_secret" "secrets" {

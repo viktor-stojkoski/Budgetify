@@ -7,6 +7,10 @@ terraform {
     azuread = {
       source = "hashicorp/azuread"
     }
+
+    random = {
+      source = "hashicorp/random"
+    }
   }
 
   backend "azurerm" {
@@ -46,6 +50,11 @@ module "azure_ad_b2c" {
   app_registration_redirect_uris = ["http://localhost:4200/"]
 }
 
+resource "random_password" "api_connector_password" {
+  length  = 16
+  special = true
+}
+
 module "key_vault" {
   source              = "../Modules/KeyVault"
   key_vault_name      = local.key_vault_name
@@ -55,6 +64,6 @@ module "key_vault" {
   secrets = {
     "graphApi"                       = module.azure_ad_b2c.graph_secret
     "storageAccountConnectionString" = module.storage_account.storage_account_connection_string
-    "apiConnectorPassword"           = local.apiConnectorPassword
+    "apiConnectorPassword"           = random_password.api_connector_password.result
   }
 }
