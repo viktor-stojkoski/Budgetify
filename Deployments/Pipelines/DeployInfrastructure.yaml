@@ -320,11 +320,12 @@ stages:
               ignoreLASTEXITCODE: true
               pwsh: true
               workingDirectory: $(System.DefaultWorkingDirectory)
+
               filePath: Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1
-              arguments: >
-                --ClientId $(clientId)
-                --ClientSecret $(clientSecret)
-                --TenantId $(tenantId)
+              arguments: |
+                --ClientId $(clientId) `
+                --ClientSecret $(clientSecret) `
+                --TenantId $(tenantId) `
                 --ApiConnector @{
                   DisplayName = $(apiConnectorDisplayName); `
                   TargetUrl = $(apiConnectorTargetUrl); `
