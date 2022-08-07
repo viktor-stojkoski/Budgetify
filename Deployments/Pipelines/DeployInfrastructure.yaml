@@ -122,8 +122,9 @@ stages:
 
                 terraform apply $(tfplan)
 
-                Write-Host "$?"
-                Write-Host "##vso[task.setvariable variable=commandSuccessful;isOutput=true]$?"
+                $terraformApplySucceeded = "$?"
+                Write-Host "Terraform apply succeeded: $terraformApplySucceeded"
+                Write-Host "##vso[task.setvariable variable=commandSuccessful;isOutput=true]$terraformApplySucceeded"
 
           - task: AzureCLI@2
             displayName: Export Terraform output as Pipeline Variables
