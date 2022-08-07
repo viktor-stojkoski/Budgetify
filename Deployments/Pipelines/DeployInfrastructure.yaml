@@ -317,6 +317,8 @@ stages:
           - task: PowerShell@2
             displayName: Deploy B2C User flows
             inputs:
+              ignoreLASTEXITCODE: true
+              pwsh: true
               workingDirectory: $(System.DefaultWorkingDirectory)
               filePath: Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1
               arguments: >
