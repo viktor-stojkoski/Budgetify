@@ -331,10 +331,10 @@ stages:
                   "Password"    = "$(apiConnectorPassword)"
                 }
 
-                $filePath --ClientId $(clientId) `
-                  --ClientSecret $(clientSecret) `
-                  --TenantId $(tenantId) `
-                  --ApiConnector $apiConnector
+                $filePath -ClientId $(clientId) `
+                  -ClientSecret $(clientSecret) `
+                  -TenantId $(tenantId) `
+                  -ApiConnector $apiConnector
               # arguments: >
               #   --ClientId $(clientId)
               #   --ClientSecret $(clientSecret)
