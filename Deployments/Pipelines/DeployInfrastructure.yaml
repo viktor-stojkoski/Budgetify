@@ -123,6 +123,7 @@ stages:
                 Write-Host "##vso[task.setvariable variable=commandSuccessful;isOutput=true]$?"
 
       - job: manual_validation
+        dependsOn: job_deploy_terraform
         displayName: Wait for B2C tenant creation
         pool: server
         steps:
@@ -135,7 +136,9 @@ stages:
               notifyUsers: viktor.98@hotmail.com
 
       - job: continue_deploy_terraform
-        dependsOn: job_deploy_terraform
+        dependsOn:
+          - job_deploy_terraform
+          - manual_validation
         displayName: Continue deployment of Terraform
 
         variables:
@@ -159,7 +162,7 @@ stages:
         steps:
           - task: AzureCLI@2
             displayName: Terraform Apply
-            condition: eq(dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'], 'False')
+            condition: and(succeeded(), eq(dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'], 'False'))
             inputs:
               azureSubscription: ${{ variables.azureSubscriptionName }}
               scriptType: pscore
