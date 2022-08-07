@@ -125,10 +125,10 @@ stages:
       - job: manual_validation
         dependsOn: job_deploy_terraform
         displayName: Wait for B2C tenant creation
+        condition: eq(dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'], 'False')
         pool: server
         steps:
           - task: ManualValidation@0
-            condition: eq('${{ variables.commandSuccessful }}', 'False')
             displayName: Wait for B2C Tenant to be manually created
             inputs:
               instructions: Create B2C Tenant manually in the resource group (https://github.com/hashicorp/terraform-provider-azurerm/issues/17713)
