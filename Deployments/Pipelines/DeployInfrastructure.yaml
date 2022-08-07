@@ -147,183 +147,183 @@ stages:
                   Write-Host "##vso[task.setvariable variable=$($property.Name);isOutput=true;isSecret=$($property.Value.sensitive)]$($property.Value.value)"
                 }
 
-      - job: manual_validation
-        dependsOn: job_deploy_terraform
-        displayName: Wait for B2C tenant creation
-        condition: eq(dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'], 'False')
-        pool: server
-        steps:
-          - task: ManualValidation@0
-            displayName: Wait for B2C Tenant to be manually created
-            inputs:
-              instructions: Create B2C Tenant manually in the resource group (https://github.com/hashicorp/terraform-provider-azurerm/issues/17713)
-              onTimeout: reject
-              notifyUsers: viktor.98@hotmail.com
+      # - job: manual_validation
+      #   dependsOn: job_deploy_terraform
+      #   displayName: Wait for B2C tenant creation
+      #   condition: eq(dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'], 'False')
+      #   pool: server
+      #   steps:
+      #     - task: ManualValidation@0
+      #       displayName: Wait for B2C Tenant to be manually created
+      #       inputs:
+      #         instructions: Create B2C Tenant manually in the resource group (https://github.com/hashicorp/terraform-provider-azurerm/issues/17713)
+      #         onTimeout: reject
+      #         notifyUsers: viktor.98@hotmail.com
 
-      - job: continue_deploy_terraform
-        dependsOn:
-          - job_deploy_terraform
-          - manual_validation
-        displayName: Continue deployment of Terraform
-        condition: eq(dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'], 'False')
+      # - job: continue_deploy_terraform
+      #   dependsOn:
+      #     - job_deploy_terraform
+      #     - manual_validation
+      #   displayName: Continue deployment of Terraform
+      #   condition: eq(dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'], 'False')
 
-        variables:
-          - name: azureSubscriptionName
-            value: Azure Subscription
-          - name: azureSubscriptionId
-            value: b55f04c5-29eb-4060-b6fe-58d8503e9c9a
-          - name: resourceGroup
-            value: rg-budgetify-tfstate
-          - name: storageAccount
-            value: sabudgetifytfstate
-          - name: container
-            value: terraform-state
-          - name: key
-            value: dev.terraform.tfstate
-          - name: workingDirectory
-            value: $(System.DefaultWorkingDirectory)/Deployments/Infrastructure/Terraform/Development
-          - name: tfplan
-            value: tfplan
+      #   variables:
+      #     - name: azureSubscriptionName
+      #       value: Azure Subscription
+      #     - name: azureSubscriptionId
+      #       value: b55f04c5-29eb-4060-b6fe-58d8503e9c9a
+      #     - name: resourceGroup
+      #       value: rg-budgetify-tfstate
+      #     - name: storageAccount
+      #       value: sabudgetifytfstate
+      #     - name: container
+      #       value: terraform-state
+      #     - name: key
+      #       value: dev.terraform.tfstate
+      #     - name: workingDirectory
+      #       value: $(System.DefaultWorkingDirectory)/Deployments/Infrastructure/Terraform/Development
+      #     - name: tfplan
+      #       value: tfplan
 
-        steps:
-          - task: AzureCLI@2
-            displayName: Terraform Init
-            inputs:
-              azureSubscription: ${{ variables.azureSubscriptionName }}
-              scriptType: pscore
-              scriptLocation: inlineScript
-              workingDirectory: $(workingDirectory)
-              failOnStandardError: true
-              addSpnToEnvironment: true
-              inlineScript: |
-                $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
-                $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
-                $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
-                $Env:ARM_TENANT_ID = "$env:tenantId"
+      #   steps:
+      #     - task: AzureCLI@2
+      #       displayName: Terraform Init
+      #       inputs:
+      #         azureSubscription: ${{ variables.azureSubscriptionName }}
+      #         scriptType: pscore
+      #         scriptLocation: inlineScript
+      #         workingDirectory: $(workingDirectory)
+      #         failOnStandardError: true
+      #         addSpnToEnvironment: true
+      #         inlineScript: |
+      #           $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
+      #           $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
+      #           $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
+      #           $Env:ARM_TENANT_ID = "$env:tenantId"
 
-                terraform init `
-                  -backend-config='resource_group_name="$(resourceGroup)"' `
-                  -backend-config='storage_account_name="$(storageAccount)"' `
-                  -backend-config='container_name="$(container)"' `
-                  -backend-config='key="$(key)"'
+      #           terraform init `
+      #             -backend-config='resource_group_name="$(resourceGroup)"' `
+      #             -backend-config='storage_account_name="$(storageAccount)"' `
+      #             -backend-config='container_name="$(container)"' `
+      #             -backend-config='key="$(key)"'
 
-          - task: AzureCLI@2
-            displayName: Terraform Plan
-            inputs:
-              azureSubscription: ${{ variables.azureSubscriptionName }}
-              scriptType: pscore
-              scriptLocation: inlineScript
-              workingDirectory: $(workingDirectory)
-              failOnStandardError: true
-              addSpnToEnvironment: true
-              inlineScript: |
-                $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
-                $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
-                $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
-                $Env:ARM_TENANT_ID = "$env:tenantId"
+      #     - task: AzureCLI@2
+      #       displayName: Terraform Plan
+      #       inputs:
+      #         azureSubscription: ${{ variables.azureSubscriptionName }}
+      #         scriptType: pscore
+      #         scriptLocation: inlineScript
+      #         workingDirectory: $(workingDirectory)
+      #         failOnStandardError: true
+      #         addSpnToEnvironment: true
+      #         inlineScript: |
+      #           $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
+      #           $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
+      #           $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
+      #           $Env:ARM_TENANT_ID = "$env:tenantId"
 
-                terraform plan -out $(tfplan)
+      #           terraform plan -out $(tfplan)
 
-          - task: AzureCLI@2
-            displayName: Terraform Apply
-            inputs:
-              azureSubscription: ${{ variables.azureSubscriptionName }}
-              scriptType: pscore
-              scriptLocation: inlineScript
-              workingDirectory: $(workingDirectory)
-              failOnStandardError: true
-              addSpnToEnvironment: true
-              inlineScript: |
-                $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
-                $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
-                $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
-                $Env:ARM_TENANT_ID = "$env:tenantId"
+      #     - task: AzureCLI@2
+      #       displayName: Terraform Apply
+      #       inputs:
+      #         azureSubscription: ${{ variables.azureSubscriptionName }}
+      #         scriptType: pscore
+      #         scriptLocation: inlineScript
+      #         workingDirectory: $(workingDirectory)
+      #         failOnStandardError: true
+      #         addSpnToEnvironment: true
+      #         inlineScript: |
+      #           $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
+      #           $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
+      #           $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
+      #           $Env:ARM_TENANT_ID = "$env:tenantId"
 
-                # Import the B2C Tenant into Terraform State
-                $b2cTenantId = az resource list `
-                  --query "[?type == 'Microsoft.AzureActiveDirectory/b2cDirectories' && tags.Environment == 'Development'].id | [0]"
+      #           # Import the B2C Tenant into Terraform State
+      #           $b2cTenantId = az resource list `
+      #             --query "[?type == 'Microsoft.AzureActiveDirectory/b2cDirectories' && tags.Environment == 'Development'].id | [0]"
 
-                Write-Host "B2C Tenant ID: $b2cTenantId"
+      #           Write-Host "B2C Tenant ID: $b2cTenantId"
 
-                terraform apply $(tfplan)
+      #           terraform apply $(tfplan)
 
-                terraform import module.b2c_tenant.azurerm_aadb2c_directory.tenant $b2cTenantId
+      #           terraform import module.b2c_tenant.azurerm_aadb2c_directory.tenant $b2cTenantId
 
-                terraform apply $(tfplan)
+      #           terraform apply $(tfplan)
 
-          - task: AzureCLI@2
-            displayName: Export Terraform output as Pipeline Variables
-            name: terraformOutput
-            inputs:
-              azureSubscription: ${{ variables.azureSubscriptionName }}
-              scriptType: pscore
-              scriptLocation: inlineScript
-              workingDirectory: $(workingDirectory)
-              failOnStandardError: true
-              addSpnToEnvironment: true
-              inlineScript: |
-                $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
-                $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
-                $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
-                $Env:ARM_TENANT_ID = "$env:tenantId"
+      #     - task: AzureCLI@2
+      #       displayName: Export Terraform output as Pipeline Variables
+      #       name: terraformOutput
+      #       inputs:
+      #         azureSubscription: ${{ variables.azureSubscriptionName }}
+      #         scriptType: pscore
+      #         scriptLocation: inlineScript
+      #         workingDirectory: $(workingDirectory)
+      #         failOnStandardError: true
+      #         addSpnToEnvironment: true
+      #         inlineScript: |
+      #           $Env:ARM_CLIENT_ID = "$env:servicePrincipalId"
+      #           $Env:ARM_CLIENT_SECRET = "$env:servicePrincipalKey"
+      #           $Env:ARM_SUBSCRIPTION_ID = "$(azureSubscriptionId)"
+      #           $Env:ARM_TENANT_ID = "$env:tenantId"
 
-                # Get the output
-                $output = $(terraform output -json | ConvertFrom-Json)
+      #           # Get the output
+      #           $output = $(terraform output -json | ConvertFrom-Json)
 
-                # Export output as pipeline variables
-                foreach ($property in $output.psobject.properties) {
-                  Write-Host "##vso[task.setvariable variable=$($property.Name);isOutput=true;isSecret=$($property.Value.sensitive)]$($property.Value.value)"
-                }
+      #           # Export output as pipeline variables
+      #           foreach ($property in $output.psobject.properties) {
+      #             Write-Host "##vso[task.setvariable variable=$($property.Name);isOutput=true;isSecret=$($property.Value.sensitive)]$($property.Value.value)"
+      #           }
 
-      - job: job_deploy_scripts
-        dependsOn:
-          - job_deploy_terraform
-          - continue_deploy_terraform
-        displayName: Deploy Scripts
-        condition: and(succeeded(), eq('${{ parameters.createB2CTenantResources }}', 'true'))
+      # - job: job_deploy_scripts
+      #   dependsOn:
+      #     - job_deploy_terraform
+      #     - continue_deploy_terraform
+      #   displayName: Deploy Scripts
+      #   condition: and(succeeded(), eq('${{ parameters.createB2CTenantResources }}', 'true'))
 
-        variables:
-          - name: deployTerraformSkipped
-            value: $[ in(dependencies.continue_deploy_terraform.result, 'Skipped') ]
-          - ${{ if eq(variables.deployTerraformSkipped, 'False') }}:
-              - name: clientId
-                value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.graph_client_id'] ]
-              - name: clientSecret
-                value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.graph_secret'] ]
-              - name: tenantId
-                value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.b2c_tenant_id'] ]
-              - name: apiConnectorPassword
-                value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.api_connector_password'] ]
-          - ${{ else }}:
-              - name: clientId
-                value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.graph_client_id'] ]
-              - name: clientSecret
-                value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.graph_secret'] ]
-              - name: tenantId
-                value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.b2c_tenant_id'] ]
-              - name: apiConnectorPassword
-                value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.api_connector_password'] ]
+      #   variables:
+      #     - name: deployTerraformSkipped
+      #       value: $[ in(dependencies.continue_deploy_terraform.result, 'Skipped') ]
+      #     - ${{ if eq(variables.deployTerraformSkipped, 'False') }}:
+      #         - name: clientId
+      #           value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.graph_client_id'] ]
+      #         - name: clientSecret
+      #           value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.graph_secret'] ]
+      #         - name: tenantId
+      #           value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.b2c_tenant_id'] ]
+      #         - name: apiConnectorPassword
+      #           value: $[ dependencies.continue_deploy_terraform.outputs['terraformOutput.api_connector_password'] ]
+      #     - ${{ else }}:
+      #         - name: clientId
+      #           value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.graph_client_id'] ]
+      #         - name: clientSecret
+      #           value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.graph_secret'] ]
+      #         - name: tenantId
+      #           value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.b2c_tenant_id'] ]
+      #         - name: apiConnectorPassword
+      #           value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.api_connector_password'] ]
 
-          - name: apiConnectorDisplayName
-            value: Budgetify API
-          - name: apiConnectorTargetUrl
-            value: http://budgetify.loca.lt/
-          - name: apiConnectorUsername
-            value: BudgetifyUser
+      #     - name: apiConnectorDisplayName
+      #       value: Budgetify API
+      #     - name: apiConnectorTargetUrl
+      #       value: http://budgetify.loca.lt/
+      #     - name: apiConnectorUsername
+      #       value: BudgetifyUser
 
-        steps:
-          - task: PowerShell@2
-            displayName: Deploy B2C User flows
-            inputs:
-              workingDirectory: $(System.DefaultWorkingDirectory)
-              filePath: Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1
-              arguments: >
-                --ClientId $(clientId)
-                --ClientSecret $(clientSecret)
-                --TenantId $(tenantId)
-                --ApiConnector @{
-                  DisplayName = $(apiConnectorDisplayName)
-                  TargetUrl = $(apiConnectorTargetUrl)
-                  Username = $(apiConnectorUsername)
-                  Password = $(apiConnectorPassword)
-                }
+      #   steps:
+      #     - task: PowerShell@2
+      #       displayName: Deploy B2C User flows
+      #       inputs:
+      #         workingDirectory: $(System.DefaultWorkingDirectory)
+      #         filePath: Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1
+      #         arguments: >
+      #           --ClientId $(clientId)
+      #           --ClientSecret $(clientSecret)
+      #           --TenantId $(tenantId)
+      #           --ApiConnector @{
+      #             DisplayName = $(apiConnectorDisplayName)
+      #             TargetUrl = $(apiConnectorTargetUrl)
+      #             Username = $(apiConnectorUsername)
+      #             Password = $(apiConnectorPassword)
+      #           }
