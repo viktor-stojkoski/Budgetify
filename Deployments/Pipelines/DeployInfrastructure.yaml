@@ -320,15 +320,28 @@ stages:
               ignoreLASTEXITCODE: true
               pwsh: true
               workingDirectory: $(System.DefaultWorkingDirectory)
+              script: |
+                $filePath = "Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1"
 
-              filePath: Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1
-              arguments: >
-                --ClientId $(clientId)
-                --ClientSecret $(clientSecret)
-                --TenantId $(tenantId)
-                --ApiConnector @( `
-                  "DisplayName" = "$(apiConnectorDisplayName)"; `
-                  "TargetUrl"   = "$(apiConnectorTargetUrl)"; `
-                  "Username"    = "$(apiConnectorUsername)"; `
-                  "Password"    = "$(apiConnectorPassword)"; `
-                )
+                $apiConnector = @{
+                  "DisplayName" = "$(apiConnectorDisplayName)"
+                  "TargetUrl"   = "$(apiConnectorTargetUrl)"
+                  "Username"    = "$(apiConnectorUsername)"
+                  "Password"    = "$(apiConnectorPassword)"
+                }
+
+                $filePath `
+                  --ClientId $(clientId) `
+                  --ClientSecret $(clientSecret) `
+                  --TenantId $(tenantId) `
+                  --ApiConnector $apiConnector
+              # arguments: >
+              #   --ClientId $(clientId)
+              #   --ClientSecret $(clientSecret)
+              #   --TenantId $(tenantId)
+              #   --ApiConnector @( `
+              #     "DisplayName" = "$(apiConnectorDisplayName)"; `
+              #     "TargetUrl"   = "$(apiConnectorTargetUrl)"; `
+              #     "Username"    = "$(apiConnectorUsername)"; `
+              #     "Password"    = "$(apiConnectorPassword)"; `
+              #   )
