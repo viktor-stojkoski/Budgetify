@@ -321,7 +321,7 @@ stages:
               pwsh: true
               workingDirectory: $(System.DefaultWorkingDirectory)
               script: |
-                $filePath = "Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1"
+                $filePath = "./Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1"
 
                 $apiConnector = @{
                   "DisplayName" = "$(apiConnectorDisplayName)"
