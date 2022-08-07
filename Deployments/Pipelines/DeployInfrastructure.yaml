@@ -152,7 +152,11 @@ stages:
       - job: job_manual_validation
         dependsOn: job_deploy_terraform
         displayName: Wait for B2C tenant creation
-        condition: eq(dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'], 'False')
+        condition: |
+          and(
+            succeeded(),
+            eq(dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'], 'False')
+          )
         pool: server
         steps:
           - task: ManualValidation@0
@@ -167,7 +171,11 @@ stages:
           - job_deploy_terraform
           - job_manual_validation
         displayName: Deploy Terraform with Azure AD B2C
-        condition: eq(dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'], 'False')
+        condition: |
+          and(
+            succeeded(),
+            eq(dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'], 'False')
+          )
 
         steps:
           - task: AzureCLI@2
@@ -262,7 +270,11 @@ stages:
           - job_deploy_terraform
           - job_deploy_terraform_with_b2c
         displayName: Deploy Scripts
-        condition: and(succeeded(), eq('${{ parameters.createB2CTenantResources }}', 'true'))
+        condition: |
+          and(
+            succeeded(),
+            eq('${{ parameters.createB2CTenantResources }}', 'true')
+          )
 
         variables:
           - name: deployTerraformSkipped
