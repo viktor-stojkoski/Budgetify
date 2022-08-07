@@ -243,6 +243,10 @@ stages:
                 $b2cTenantId = az resource list `
                   --query "[?type == 'Microsoft.AzureActiveDirectory/b2cDirectories' && tags.Environment == 'Development'].id | [0]"
 
+                Write-Host "B2C Tenant ID: $b2cTenantId"
+
+                terraform apply $(tfplan)
+
                 terraform import module.b2c_tenant.azurerm_aadb2c_directory.tenant $b2cTenantId
 
                 terraform apply $(tfplan)
@@ -276,7 +280,7 @@ stages:
           - job_deploy_terraform
           - continue_deploy_terraform
         displayName: Deploy Scripts
-        condition: eq('${{ parameters.createB2CTenantResources }}', 'true')
+        condition: and(or(succeeded(), skipped()), eq('${{ parameters.createB2CTenantResources }}', 'true'))
 
         variables:
           - name: deployTerraformSkipped
