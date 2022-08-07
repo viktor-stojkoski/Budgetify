@@ -274,7 +274,7 @@ stages:
         displayName: Deploy Scripts
         condition: |
           and(
-            succeeded(),
+            or(not(failed()), not(canceled())),
             eq('${{ parameters.createB2CTenantResources }}', 'true')
           )
 

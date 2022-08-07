@@ -33,6 +33,10 @@ resource "azurerm_key_vault_access_policy" "viktor_stojkoski" {
 }
 
 resource "azurerm_key_vault_secret" "secrets" {
+  depends_on = [
+    azurerm_key_vault_access_policy.current_principal
+  ]
+
   for_each     = var.secrets
   name         = each.key
   value        = each.value
