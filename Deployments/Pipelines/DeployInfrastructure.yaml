@@ -320,6 +320,7 @@ stages:
               ignoreLASTEXITCODE: true
               pwsh: true
               workingDirectory: $(System.DefaultWorkingDirectory)
+              targetType: inline
               script: |
                 $filePath = "./Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1"
 
