@@ -125,10 +125,11 @@ stages:
                 $terraformApplySucceeded = "$?"
                 Write-Host "Terraform apply succeeded: $terraformApplySucceeded"
                 Write-Host "##vso[task.setvariable variable=commandSuccessful;isOutput=true]$terraformApplySucceeded"
+                Write-Host "##vso[task.setvariable variable=commandSuccessful]$terraformApplySucceeded"
 
           - task: AzureCLI@2
             displayName: Export Terraform output as Pipeline Variables
-            condition: eq(variables['commandSuccessful'], 'True')
+            condition: eq(variables.commandSuccessful, 'True')
             name: terraformOutput
             inputs:
               azureSubscription: ${{ variables.azureSubscriptionName }}
