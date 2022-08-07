@@ -158,11 +158,13 @@ stages:
             value: $(System.DefaultWorkingDirectory)/Deployments/Infrastructure/Terraform/Development
           - name: tfplan
             value: tfplan
+          - name: runTerraformApply
+            value: $[ dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'] ]
 
         steps:
           - task: AzureCLI@2
             displayName: Terraform Apply
-            condition: and(succeeded(), eq(dependencies.job_deploy_terraform.outputs['applyStatus.commandSuccessful'], 'False'))
+            condition: $(runTerraformApply)
             inputs:
               azureSubscription: ${{ variables.azureSubscriptionName }}
               scriptType: pscore
