@@ -280,7 +280,7 @@ stages:
           - job_deploy_terraform
           - continue_deploy_terraform
         displayName: Deploy Scripts
-        condition: and(or(succeeded(), skipped()), eq('${{ parameters.createB2CTenantResources }}', 'true'))
+        condition: and(succeeded(), eq('${{ parameters.createB2CTenantResources }}', 'true'))
 
         variables:
           - name: deployTerraformSkipped
