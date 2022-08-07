@@ -322,7 +322,7 @@ stages:
               workingDirectory: $(System.DefaultWorkingDirectory)
               targetType: inline
               script: |
-                $filePath = "./Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1"
+                $filePath = "Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1"
 
                 $apiConnector = @{
                   "DisplayName" = "$(apiConnectorDisplayName)"
@@ -331,8 +331,7 @@ stages:
                   "Password"    = "$(apiConnectorPassword)"
                 }
 
-                $filePath `
-                  --ClientId $(clientId) `
+                $filePath --ClientId $(clientId) `
                   --ClientSecret $(clientSecret) `
                   --TenantId $(tenantId) `
                   --ApiConnector $apiConnector
