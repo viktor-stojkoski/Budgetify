@@ -22,6 +22,7 @@ stages:
     jobs:
       - job: job_deploy_terraform
         displayName: Deploy Terraform
+        pool: server
 
         variables:
           - name: azureSubscriptionName
