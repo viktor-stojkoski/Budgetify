@@ -7,9 +7,3 @@ variable "resource_group_name" {
   type        = string
   description = "Resource group name"
 }
-
-variable "tags" {
-  type        = map(string)
-  description = "Tenant tags"
-  default     = {}
-}

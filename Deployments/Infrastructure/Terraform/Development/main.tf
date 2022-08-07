@@ -37,7 +37,6 @@ module "b2c_tenant" {
   source              = "../Modules/B2CTenant"
   tenant_display_name = local.b2c_tenant_display_name
   resource_group_name = module.resource_group.resource_group_name
-  tags                = merge(var.tags, local.tags)
 }
 
 module "azure_ad_b2c" {
