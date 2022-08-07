@@ -122,6 +122,7 @@ stages:
 
                 terraform apply $(tfplan)
 
+                Write-Host "$?"
                 Write-Host "##vso[task.setvariable variable=commandSuccessful;isOutput=true]$?"
 
           - task: AzureCLI@2
