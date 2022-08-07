@@ -1,7 +1,7 @@
 locals {
   tags = {
     DeployedOn  = formatdate("DD.MM.YYYY", timestamp())
-    Environment = terraform.workspace
+    Environment = "Development"
   }
 
   resource_group_name     = lower("rg-${var.application_name}-dev")
