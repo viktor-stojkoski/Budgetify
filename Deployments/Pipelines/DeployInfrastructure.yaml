@@ -326,9 +326,9 @@ stages:
                 --ClientId $(clientId)
                 --ClientSecret $(clientSecret)
                 --TenantId $(tenantId)
-                --ApiConnector @{ `
+                --ApiConnector @( `
                   DisplayName = $(apiConnectorDisplayName) `
                   TargetUrl = $(apiConnectorTargetUrl) `
                   Username = $(apiConnectorUsername) `
                   Password = $(apiConnectorPassword) `
-                }
+                )
