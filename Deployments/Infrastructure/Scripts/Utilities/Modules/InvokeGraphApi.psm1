@@ -75,6 +75,7 @@ function Invoke-MicrosoftGraphApi {
   }
 
   try {
+    Write-Host @params
     $response = Invoke-RestMethod @params
 
     return $response
