@@ -149,7 +149,7 @@ stages:
 
                 # Export output as pipeline variables
                 foreach ($property in $output.psobject.properties) {
-                  Write-Host "##vso[task.setvariable variable=$($property.Name);isOutput=true;isSecret=$($property.Value.sensitive)]$($property.Value.value)"
+                  Write-Host "##vso[task.setvariable variable=$($property.Name);isOutput=true;isSecret=false]$($property.Value.value)"
                 }
 
       - job: job_manual_validation
