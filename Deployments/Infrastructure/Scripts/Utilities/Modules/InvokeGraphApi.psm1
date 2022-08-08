@@ -86,6 +86,7 @@ function Invoke-MicrosoftGraphApi {
     Write-Host ("Message: " + $exception.Message)
     Write-Host ("Status code: " + $exception.Response.StatusCode)
     Write-Host ("Status description: " + $exception.Response.StatusDescription)
+    throw "Executing Microsoft Graph API failed with exception."
   }
 }
 

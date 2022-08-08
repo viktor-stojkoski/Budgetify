@@ -149,7 +149,7 @@ stages:
 
                 # Export output as pipeline variables
                 foreach ($property in $output.psobject.properties) {
-                  Write-Host "##vso[task.setvariable variable=$($property.Name);isOutput=true;isSecret=false]$($property.Value.value)"
+                  Write-Host "##vso[task.setvariable variable=$($property.Name);isOutput=true;isSecret=$($property.Value.sensitive)]$($property.Value.value)"
                 }
 
       - job: job_manual_validation
@@ -309,7 +309,7 @@ stages:
           - name: apiConnectorDisplayName
             value: Budgetify API
           - name: apiConnectorTargetUrl
-            value: http://budgetify.loca.lt/
+            value: https://budgetify.loca.lt/
           - name: apiConnectorUsername
             value: BudgetifyUser
 
