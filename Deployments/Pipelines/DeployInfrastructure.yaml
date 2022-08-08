@@ -319,30 +319,45 @@ stages:
             inputs:
               ignoreLASTEXITCODE: true
               pwsh: true
+              failOnStderr: true
               workingDirectory: $(System.DefaultWorkingDirectory)
-              targetType: inline
-              script: |
-                $filePath = ".\Deployments\Infrastructure\Scripts\AzureAdB2C\DeployB2CUserFlows.ps1"
+              targetType: filePath
+              filePath: Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1
+              arguments: >
+                --ClientId $(clientId)
+                --ClientSecret $(clientSecret)
+                --TenantId $(tenantId)
+                --ApiConnector @{ "DisplayName"="$(apiConnectorDisplayName)"; "TargetUrl"="$(apiConnectorTargetUrl)"; "Username"="$(apiConnectorUsername)"; "Password"="$(apiConnectorPassword)"; }
 
-                $apiConnector = @{
-                  DisplayName = "$(apiConnectorDisplayName)"
-                  TargetUrl   = "$(apiConnectorTargetUrl)"
-                  Username    = "$(apiConnectorUsername)"
-                  Password    = "$(apiConnectorPassword)"
-                }
+              # script: |
+              # $filePath = ".\Deployments\Infrastructure\Scripts\AzureAdB2C\DeployB2CUserFlows.ps1"
 
-                pwsh $filePath `
-                  -ClientId "$(clientId)" `
-                  -ClientSecret "$(clientSecret)" `
-                  -TenantId "$(tenantId)" `
-                  -ApiConnector $apiConnector
-              # arguments: >
-              #   --ClientId $(clientId)
-              #   --ClientSecret $(clientSecret)
-              #   --TenantId $(tenantId)
-              #   --ApiConnector @( `
-              #     "DisplayName" = "$(apiConnectorDisplayName)"; `
-              #     "TargetUrl"   = "$(apiConnectorTargetUrl)"; `
-              #     "Username"    = "$(apiConnectorUsername)"; `
-              #     "Password"    = "$(apiConnectorPassword)"; `
-              #   )
+              # $params = @{
+              #   ClientId     = "asd"
+              #   ClientSecret = "asd"
+              #   TenantId     = "asd"
+              #   ApiConnector = @{
+              #     DisplayName = "asd"
+              #     TargetUrl   = "asd"
+              #     Username    = "asd"
+              #     Password    = "asd"
+              #   }
+              # }
+
+              # [pshashtable]$apiConnector = @{
+              #   DisplayName = "asd"
+              #   TargetUrl   = "asd"
+              #   Username    = "asd"
+              #   Password    = "asd"
+              # }
+
+              # pwsh $filePath `
+              #   -ClientId "asd" `
+              #   -ClientSecret "asd" `
+              #   -TenantId "asd" `
+              #   -ApiConnector @{
+              #     DisplayName = "asd"
+              #     TargetUrl   = "asd"
+              #     Username    = "asd"
+              #     Password    = "asd"
+              #   }
