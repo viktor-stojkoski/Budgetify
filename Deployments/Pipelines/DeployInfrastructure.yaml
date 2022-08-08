@@ -324,10 +324,10 @@ stages:
               targetType: filePath
               filePath: Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1
               arguments: >
-                --ClientId $(clientId)
-                --ClientSecret $(clientSecret)
-                --TenantId $(tenantId)
-                --ApiConnector @{ "DisplayName"="$(apiConnectorDisplayName)"; "TargetUrl"="$(apiConnectorTargetUrl)"; "Username"="$(apiConnectorUsername)"; "Password"="$(apiConnectorPassword)"; }
+                -ClientId $(clientId)
+                -ClientSecret $(clientSecret)
+                -TenantId $(tenantId)
+                -ApiConnector @{ "DisplayName"="$(apiConnectorDisplayName)"; "TargetUrl"="$(apiConnectorTargetUrl)"; "Username"="$(apiConnectorUsername)"; "Password"="$(apiConnectorPassword)"; }
 
               # script: |
               # $filePath = ".\Deployments\Infrastructure\Scripts\AzureAdB2C\DeployB2CUserFlows.ps1"
