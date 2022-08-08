@@ -14,6 +14,11 @@ output "b2c_tenant_id" {
   description = "B2C Tenant ID"
 }
 
+output "tenant_id" {
+  value       = data.azuread_client_config.current.tenant_id
+  description = "Current tenant ID"
+}
+
 output "api_connector_password" {
   description = "API Connector Password"
   value       = random_password.api_connector_password.result

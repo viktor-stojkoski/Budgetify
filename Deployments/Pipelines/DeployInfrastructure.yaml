@@ -149,7 +149,7 @@ stages:
 
                 # Export output as pipeline variables
                 foreach ($property in $output.psobject.properties) {
-                  Write-Host "##vso[task.setvariable variable=$($property.Name);isOutput=true;isSecret=false]$($property.Value.value)"
+                  Write-Host "##vso[task.setvariable variable=$($property.Name);isOutput=true;isSecret=$($property.Value.sensitive)]$($property.Value.value)"
                 }
 
       - job: job_manual_validation
@@ -293,7 +293,7 @@ stages:
               - name: clientSecret
                 value: $[ dependencies.job_deploy_terraform_with_b2c.outputs['terraformOutput.graph_secret'] ]
               - name: tenantId
-                value: $[ dependencies.job_deploy_terraform_with_b2c.outputs['terraformOutput.b2c_tenant_id'] ]
+                value: $[ dependencies.job_deploy_terraform_with_b2c.outputs['terraformOutput.tenant_id'] ]
               - name: apiConnectorPassword
                 value: $[ dependencies.job_deploy_terraform_with_b2c.outputs['terraformOutput.api_connector_password'] ]
           - ${{ else }}:
@@ -302,7 +302,7 @@ stages:
               - name: clientSecret
                 value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.graph_secret'] ]
               - name: tenantId
-                value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.b2c_tenant_id'] ]
+                value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.tenant_id'] ]
               - name: apiConnectorPassword
                 value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.api_connector_password'] ]
 
