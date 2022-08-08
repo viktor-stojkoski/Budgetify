@@ -316,6 +316,9 @@ stages:
         steps:
           - task: PowerShell@2
             displayName: Deploy B2C User flows
+            env:
+              clientSecret: $(clientSecret)
+              apiConnectorPassword: $(apiConnectorPassword)
             inputs:
               ignoreLASTEXITCODE: true
               pwsh: true

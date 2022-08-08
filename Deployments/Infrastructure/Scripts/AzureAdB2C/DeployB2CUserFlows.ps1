@@ -61,8 +61,6 @@ try {
     -ClientSecret $ClientSecret `
     -TenantId $TenantId
 
-  Write-Host $accessToken
-
   $apiConnectorResponse = New-ApiConnector `
     -AccessToken $accessToken `
     -DisplayName $ApiConnector.DisplayName `
