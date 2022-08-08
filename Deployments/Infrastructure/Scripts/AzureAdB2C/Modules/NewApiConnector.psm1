@@ -67,7 +67,7 @@ function New-ApiConnector {
     authenticationConfiguration = @{
       "@odata.type" = "#microsoft.graph.basicAuthentication"
       username      = $Username
-      password      = (ConvertFrom-SecureString $Password -AsPlainText -Force)
+      password      = (ConvertFrom-SecureString $Password -AsPlainText)
     }
   }
 
