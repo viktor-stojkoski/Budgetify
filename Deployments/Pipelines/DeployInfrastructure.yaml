@@ -325,10 +325,10 @@ stages:
                 $filePath = ".\Deployments\Infrastructure\Scripts\AzureAdB2C\DeployB2CUserFlows.ps1"
 
                 $apiConnector = @{
-                  "DisplayName" = "$(apiConnectorDisplayName)"
-                  "TargetUrl"   = "$(apiConnectorTargetUrl)"
-                  "Username"    = "$(apiConnectorUsername)"
-                  "Password"    = "$(apiConnectorPassword)"
+                  DisplayName = "$(apiConnectorDisplayName)"
+                  TargetUrl   = "$(apiConnectorTargetUrl)"
+                  Username    = "$(apiConnectorUsername)"
+                  Password    = "$(apiConnectorPassword)"
                 }
 
                 pwsh $filePath `
