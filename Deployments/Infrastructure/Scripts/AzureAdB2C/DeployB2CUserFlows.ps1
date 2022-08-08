@@ -32,7 +32,7 @@ Param(
   [string] $ClientId,
 
   [Parameter(Mandatory = $true)]
-  [securestring] $ClientSecret,
+  [string] $ClientSecret,
 
   [Parameter(Mandatory = $true)]
   [string] $TenantId,
