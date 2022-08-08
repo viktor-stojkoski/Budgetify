@@ -50,16 +50,18 @@ Import-Module $PSScriptRoot\Modules\NewPasswordResetUserFlow.psm1 -Force
 try {
   Write-Host $accessToken
   Write-Host $ClientId
-  Write-Host (ConvertFrom-SecureString $ClientSecret)
+  Write-Host $ClientSecret
   Write-Host $ApiConnector.DisplayName
   Write-Host $ApiConnector.TargetUrl
   Write-Host $ApiConnector.Username
-  Write-Host (ConvertFrom-SecureString $ApiConnector.Password)
+  Write-Host $ApiConnector.Password
 
   $accessToken = Get-MicrosoftGraphApiAccessToken `
     -ClientId $ClientId `
     -ClientSecret $ClientSecret `
     -TenantId $TenantId
+
+  Write-Host $accessToken
 
   $apiConnectorResponse = New-ApiConnector `
     -AccessToken $accessToken `
