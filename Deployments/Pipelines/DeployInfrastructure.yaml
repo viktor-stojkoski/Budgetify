@@ -317,8 +317,8 @@ stages:
           - task: PowerShell@2
             displayName: Deploy B2C User flows
             env:
-              clientSecret: $(clientSecret)
-              apiConnectorPassword: $(apiConnectorPassword)
+              CLIENT_SECRET: $(clientSecret)
+              API_CONNECTOR_PASSWORD: $(apiConnectorPassword)
             inputs:
               ignoreLASTEXITCODE: true
               pwsh: true
@@ -328,9 +328,9 @@ stages:
               filePath: Deployments/Infrastructure/Scripts/AzureAdB2C/DeployB2CUserFlows.ps1
               arguments: >
                 -ClientId $(clientId)
-                -ClientSecret $(clientSecret)
+                -ClientSecret $env:CLIENT_SECRET
                 -TenantId $(tenantId)
-                -ApiConnector @{ "DisplayName"="$(apiConnectorDisplayName)"; "TargetUrl"="$(apiConnectorTargetUrl)"; "Username"="$(apiConnectorUsername)"; "Password"="$(apiConnectorPassword)"; }
+                -ApiConnector @{ "DisplayName"="$(apiConnectorDisplayName)"; "TargetUrl"="$(apiConnectorTargetUrl)"; "Username"="$(apiConnectorUsername)"; "Password"="$(API_CONNECTOR_PASSWORD)"; }
 
               # script: |
               # $filePath = ".\Deployments\Infrastructure\Scripts\AzureAdB2C\DeployB2CUserFlows.ps1"
