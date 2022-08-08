@@ -66,7 +66,7 @@ $apiConnectorResponse = New-ApiConnector `
   -DisplayName $ApiConnector.DisplayName `
   -TargetUrl $ApiConnector.TargetUrl `
   -Username $ApiConnector.Username `
-  -Password (ConvertTo-SecureString $ApiConnector.Password -AsPlainText -Force)
+  -Password $ApiConnector.Password
 
 New-SignInSignUpUserFlow `
   -AccessToken $AccessToken `
