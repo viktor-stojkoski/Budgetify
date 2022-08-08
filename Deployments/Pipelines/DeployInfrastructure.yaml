@@ -330,7 +330,7 @@ stages:
                 -ClientId $(clientId)
                 -ClientSecret $env:CLIENT_SECRET
                 -TenantId $(tenantId)
-                -ApiConnector @{ "DisplayName"="$(apiConnectorDisplayName)"; "TargetUrl"="$(apiConnectorTargetUrl)"; "Username"="$(apiConnectorUsername)"; "Password"="$(API_CONNECTOR_PASSWORD)"; }
+                -ApiConnector @{ "DisplayName"="$(apiConnectorDisplayName)"; "TargetUrl"="$(apiConnectorTargetUrl)"; "Username"="$(apiConnectorUsername)"; "Password"="$env:API_CONNECTOR_PASSWORD"; }
 
               # script: |
               # $filePath = ".\Deployments\Infrastructure\Scripts\AzureAdB2C\DeployB2CUserFlows.ps1"
