@@ -9,14 +9,9 @@ output "graph_secret" {
   sensitive   = true
 }
 
-output "b2c_tenant_id" {
-  value       = module.b2c_tenant.tenant_id
+output "b2c_tenant_domain_name" {
+  value       = module.b2c_tenant.tenant_domain_name
   description = "B2C Tenant ID"
-}
-
-output "tenant_id" {
-  value       = data.azurerm_client_config.current.tenant_id
-  description = "Current tenant ID"
 }
 
 output "api_connector_password" {

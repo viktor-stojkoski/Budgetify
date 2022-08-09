@@ -293,7 +293,7 @@ stages:
               - name: clientSecret
                 value: $[ dependencies.job_deploy_terraform_with_b2c.outputs['terraformOutput.graph_secret'] ]
               - name: tenantId
-                value: $[ dependencies.job_deploy_terraform_with_b2c.outputs['terraformOutput.tenant_id'] ]
+                value: $[ dependencies.job_deploy_terraform_with_b2c.outputs['terraformOutput.b2c_tenant_domain_name'] ]
               - name: apiConnectorPassword
                 value: $[ dependencies.job_deploy_terraform_with_b2c.outputs['terraformOutput.api_connector_password'] ]
           - ${{ else }}:
@@ -302,7 +302,7 @@ stages:
               - name: clientSecret
                 value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.graph_secret'] ]
               - name: tenantId
-                value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.tenant_id'] ]
+                value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.b2c_tenant_domain_name'] ]
               - name: apiConnectorPassword
                 value: $[ dependencies.job_deploy_terraform.outputs['terraformOutput.api_connector_password'] ]
 

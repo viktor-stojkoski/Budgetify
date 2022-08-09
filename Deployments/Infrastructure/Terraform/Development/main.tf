@@ -21,8 +21,6 @@ terraform {
   }
 }
 
-data "azurerm_client_config" "current" {}
-
 module "resource_group" {
   source   = "../Modules/ResourceGroup"
   name     = local.resource_group_name
