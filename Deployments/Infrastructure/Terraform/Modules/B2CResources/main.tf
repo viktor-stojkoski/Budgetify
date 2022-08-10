@@ -30,7 +30,7 @@ resource "azuread_service_principal" "microsoft_graph" {
 }
 
 resource "azuread_application" "microsoft_graph" {
-  provider     = azuread.workaround_import
+  # provider     = azuread.workaround_import
   display_name = "Microsoft Graph API"
 
   required_resource_access {
