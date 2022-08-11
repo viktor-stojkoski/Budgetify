@@ -3,4 +3,4 @@ provider "azurerm" {
   subscription_id = var.azure_subscription
 }
 
-provider "random" {}
+# provider "random" {}
