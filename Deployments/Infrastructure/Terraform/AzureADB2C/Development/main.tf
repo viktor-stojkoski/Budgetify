@@ -22,7 +22,7 @@ terraform {
 }
 
 module "azure_ad_b2c" {
-  source = "../Modules/B2CResources"
+  source = "../../Modules/B2CResources"
   # tenant_id                      = var.tenant_id
   app_registration_display_name  = "${var.application_name} Angular"
   app_registration_redirect_uris = ["http://localhost:4200/"]

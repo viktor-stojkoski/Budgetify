@@ -43,7 +43,7 @@ variables:
 
 stages:
   - stage: DeployB2C
-    displayName: Deploy B2C resources to $(environmentFullName) environment
+    displayName: Deploy B2C resources to ${{ variables.environmentFullName }} environment
 
     jobs:
       - job: job_deploy_terraform
@@ -101,6 +101,7 @@ stages:
               failOnStandardError: true
               addSpnToEnvironment: true
               inlineScript: |
+                Write-Host $(environmentFullName)
                 $rgName = az group list --query "[?tags.Environment == '$(environmentFullName)'].name | [0]"
                 $keyVaultId = az resource list `
                   --query "[?type == 'Microsoft.KeyVault/vaults' && tags.Environment == '$(environmentFullName)'].id | [0]"
