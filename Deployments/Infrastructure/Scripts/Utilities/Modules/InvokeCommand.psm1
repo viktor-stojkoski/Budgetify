@@ -1,13 +1,12 @@
 function Invoke-Command {
   <#
     .DESCRIPTION
-    Wrapper function to use when you want to exit on first error.
+    Wrapper function to use when you want to exit on error.
 
     .PARAMETER ScriptBlock
     Script to execute
 
     .EXAMPLE
-
     Invoke-Command {
       <SCRIPT_HERE>
     }

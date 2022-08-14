@@ -2,28 +2,28 @@ Import-Module $PSScriptRoot\..\..\Utilities\Modules\InvokeGraphApi.psm1 -Force
 
 function New-ApiConnector {
   <#
-  .DESCRIPTION
-  Creates new API Connector.
+    .DESCRIPTION
+    Creates new API Connector.
 
-  .LINK
-  https://docs.microsoft.com/en-us/graph/api/identityapiconnector-create?view=graph-rest-1.0&tabs=http
+    .LINK
+    https://docs.microsoft.com/en-us/graph/api/identityapiconnector-create?view=graph-rest-1.0&tabs=http
 
-  .PARAMETER AccessToken
-  Access token for the Microsoft Graph API.
+    .PARAMETER AccessToken
+    Access token for the Microsoft Graph API.
 
-  .PARAMETER DisplayName
-  API Connector display name.
+    .PARAMETER DisplayName
+    API Connector display name.
 
-  .PARAMETER TargetUrl
-  API Connector target url.
+    .PARAMETER TargetUrl
+    API Connector target url.
 
-  .PARAMETER UserName
-  API Connector basic authentication username.
+    .PARAMETER UserName
+    API Connector basic authentication username.
 
-  .PARAMETER Password
-  API Connector basic authentication password.
+    .PARAMETER Password
+    API Connector basic authentication password.
 
-  .OUTPUTS
+    .OUTPUTS
     Microsoft Graph API Response.
 
     [PSCustomObject]@{
@@ -37,7 +37,15 @@ function New-ApiConnector {
         password
       }
     }
-#>
+
+    .EXAMPLE
+    New-ApiConnector `
+      -AccessToken @{ token_type, access_token } `
+      -DisplayName "Budgetify API" `
+      -TargetUrl "https://someurl.com" `
+      -UserName "Some Username" `
+      -Password "Some_Password"
+  #>
 
   Param(
     [Parameter(Mandatory = $true)]

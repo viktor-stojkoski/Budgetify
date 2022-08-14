@@ -37,24 +37,6 @@ module "storage_account" {
   tags                 = merge(var.tags, local.tags)
 }
 
-# module "b2c_tenant" {
-#   source              = "../Modules/B2CTenant"
-#   tenant_display_name = local.b2c_tenant_display_name
-#   resource_group_name = module.resource_group.resource_group_name
-# }
-
-# module "azure_ad_b2c" {
-#   source                         = "../Modules/B2CResources"
-#   tenant_id                      = module.b2c_tenant.tenant_id
-#   app_registration_display_name  = "${var.application_name} Angular"
-#   app_registration_redirect_uris = ["http://localhost:4200/"]
-# }
-
-# resource "random_password" "api_connector_password" {
-#   length  = 16
-#   special = true
-# }
-
 module "key_vault" {
   source              = "../Modules/KeyVault"
   key_vault_name      = local.key_vault_name
@@ -63,7 +45,5 @@ module "key_vault" {
   tags                = merge(var.tags, local.tags)
   secrets = {
     "storageAccountConnectionString" = module.storage_account.storage_account_connection_string
-    # "graphApi"                       = module.azure_ad_b2c.graph_secret
-    # "apiConnectorPassword"           = random_password.api_connector_password.result
   }
 }

@@ -14,14 +14,6 @@ pr:
     include:
       - master
 
-variables:
-  - name: buildConfiguration
-    value: Release
-  - name: githubNugetServiceConnection
-    value: GithubNugetFeed
-  - name: projects
-    value: '**/*.csproj'
-
 stages:
   - stage: BuildAndTest
     displayName: Build and Test Budgetify
@@ -29,6 +21,15 @@ stages:
     jobs:
       - job: job_build_test_backend
         displayName: Budgetify .NET Build & Test
+
+        variables:
+          - name: buildConfiguration
+            value: Release
+          - name: githubNugetServiceConnection
+            value: GithubNugetFeed
+          - name: projects
+            value: '**/*.csproj'
+
         steps:
           - task: DotNetCoreCLI@2
             displayName: .NET Restore
@@ -66,37 +67,42 @@ stages:
 
       - job: job_build_test_frontend
         displayName: Budgetify Angular Build & Test
+
+        variables:
+          - name: workingDirectory
+            value: $(Build.SourcesDirectory)/Clients/Angular
+
         steps:
           - task: Npm@1
             displayName: Install packages
             inputs:
               command: ci
-              workingDir: $(Build.SourcesDirectory)/Clients/Angular
+              workingDir: $(workingDirectory)
 
           - task: Npm@1
             displayName: Install Angular CLI
             inputs:
               command: custom
-              workingDir: $(Build.SourcesDirectory)/Clients/Angular
+              workingDir: $(workingDirectory)
               customCommand: install -g @angular/cli
 
           - task: Npm@1
             displayName: Angular Lint
             inputs:
               command: custom
-              workingDir: $(Build.SourcesDirectory)/Clients/Angular
+              workingDir: $(workingDirectory)
               customCommand: run lint
 
           - task: Npm@1
             displayName: Angular Build
             inputs:
               command: custom
-              workingDir: $(Build.SourcesDirectory)/Clients/Angular
+              workingDir: $(workingDirectory)
               customCommand: run build-prod
 
           - task: Npm@1
             displayName: Angular Test
             inputs:
               command: custom
-              workingDir: $(Build.SourcesDirectory)/Clients/Angular
+              workingDir: $(workingDirectory)
               customCommand: run test-headless
