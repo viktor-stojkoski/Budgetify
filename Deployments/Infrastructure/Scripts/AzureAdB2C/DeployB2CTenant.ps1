@@ -8,6 +8,10 @@
   .PARAMETER DeployB2CUserFlows
   Boolean indicating whether to deploy B2C User flows or not.
   (Has to be done once!)
+
+  .EXAMPLE
+  .\DeployB2CTenant.ps1 `
+    -Environment Development
 #>
 
 Param(
@@ -19,7 +23,7 @@ Param(
   [switch] $DeployB2CUserFlows
 )
 
-$ErrorActionPreference = "Stop"
+Import-Module $PSScriptRoot\..\Utilities\Modules\InvokeCommand.psm1 -Force
 
 # Set the location to the appropriate working directory for Terraform
 $workingDirectory = "$PSScriptRoot\..\..\Terraform\AzureADB2C\$Environment"
@@ -27,30 +31,44 @@ Set-Location $workingDirectory
 
 # Terraform init
 Write-Host "Running terraform init..." -ForegroundColor red -BackgroundColor white
-terraform init --backend-config=backend.config
+Invoke-Command {
+  terraform init --backend-config=backend.config
+}
 
 # Terraform validate
 Write-Host "Running terraform validate..." -ForegroundColor red -BackgroundColor white
-terraform validate
+Invoke-Command {
+  terraform validate
+}
 
 # Get needed variables
-$rgName = az group list --query "[?tags.Environment == '$Environment'].name | [0]"
-$keyVaultId = az resource list `
-  --query "[?type == 'Microsoft.KeyVault/vaults' && tags.Environment == '$Environment'].id | [0]"
+$script:rgName = ""
+$script:keyVaultId = ""
+Invoke-Command {
+  $script:rgName = az group list --query "[?tags.Environment == '$Environment'].name | [0]" 
+}
+Invoke-Command {
+  $script:keyVaultId = az resource list `
+    --query "[?type == 'Microsoft.KeyVault/vaults' && tags.Environment == '$Environment'].id | [0]" 
+}
 
 Write-Host "Resource group name: $rgName" -ForegroundColor red -BackgroundColor white
 Write-Host "Key vault ID: $keyVaultId" -ForegroundColor red -BackgroundColor white
 
 # Terraform plan
 Write-Host "Running terraform plan..." -ForegroundColor red -BackgroundColor white
-terraform plan `
-  -out tfplan `
-  -var "resource_group_name=$rgName" `
-  -var "key_vault_id=$keyVaultId"
+Invoke-Command {
+  terraform plan `
+    -out tfplan `
+    -var "resource_group_name=$rgName" `
+    -var "key_vault_id=$keyVaultId"
+}
 
 # Terraform apply
 Write-Host "Running terraform apply..." -ForegroundColor red -BackgroundColor white
-terraform apply tfplan
+Invoke-Command {
+  terraform apply tfplan
+}
 
 Remove-Item tfplan
 

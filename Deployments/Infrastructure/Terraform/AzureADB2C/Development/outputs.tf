@@ -16,6 +16,6 @@ output "b2c_tenant_domain_name" {
 
 output "api_connector_password" {
   description = "API Connector Password"
-  value       = random_password.api_connector_password.result
+  value       = random_password.api_connector.result
   sensitive   = true
 }

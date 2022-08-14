@@ -47,15 +47,6 @@ Import-Module $PSScriptRoot\Modules\NewSignInSignUpUserFlow.psm1 -Force
 Import-Module $PSScriptRoot\Modules\NewProfileEditUserFlow.psm1 -Force
 Import-Module $PSScriptRoot\Modules\NewPasswordResetUserFlow.psm1 -Force
 
-# try {
-# Write-Host $ClientId
-# Write-Host $ClientSecret
-# Write-Host $TenantId
-# Write-Host $ApiConnector.DisplayName
-# Write-Host $ApiConnector.TargetUrl
-# Write-Host $ApiConnector.Username
-# Write-Host $ApiConnector.Password
-
 $accessToken = Get-MicrosoftGraphApiAccessToken `
   -ClientId $ClientId `
   -ClientSecret $ClientSecret `
@@ -77,13 +68,3 @@ New-ProfileEditUserFlow `
 
 New-PasswordResetUserFlow `
   -AccessToken $AccessToken
-
-# }
-# catch {
-#   $exception = $_.Exception
-#   Write-Host "Creating user flows failed with exception:"
-#   Write-Host ("Message: " + $exception.Message)
-#   Write-Host ("Status code: " + $exception.Response.StatusCode)
-#   Write-Host ("Status description: " + $exception.Response.StatusDescription)
-#   throw "Create user flows failed with exception."
-# }
