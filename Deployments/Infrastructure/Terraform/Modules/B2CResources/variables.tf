@@ -1,7 +1,7 @@
-# variable "tenant_id" {
-#   type        = string
-#   description = "B2C Tenant ID"
-# }
+variable "tenant_id" {
+  type        = string
+  description = "B2C Tenant ID"
+}
 
 variable "app_registration_display_name" {
   type        = string

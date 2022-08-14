@@ -3,7 +3,7 @@ output "graph_client_id" {
   description = "Microsoft Graph API Client ID"
 }
 
-output "graph_secret" {
+output "graph_client_secret" {
   value       = module.azure_ad_b2c.graph_secret
   description = "Microsoft Graph API Secret"
   sensitive   = true
