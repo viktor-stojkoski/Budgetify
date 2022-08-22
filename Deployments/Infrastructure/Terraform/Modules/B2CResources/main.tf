@@ -1,5 +1,10 @@
 data "azuread_application_published_app_ids" "well_known" {}
 
+resource "azuread_service_principal" "microsoft_graph" {
+  application_id = data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph
+  use_existing   = true
+}
+
 resource "azuread_application" "app_registration" {
   display_name     = var.app_registration_display_name
   sign_in_audience = "AzureADandPersonalMicrosoftAccount"
@@ -18,11 +23,14 @@ resource "azuread_application" "app_registration" {
       id_token_issuance_enabled     = true
     }
   }
-}
 
-resource "azuread_service_principal" "microsoft_graph" {
-  application_id = data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph
-  use_existing   = true
+  required_resource_access {
+    resource_app_id = data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph
+    resource_access {
+      id   = azuread_service_principal.app_role_ids[local.angular_app_permissions[0]]
+      type = "Role"
+    }
+  }
 }
 
 resource "azuread_application" "microsoft_graph" {

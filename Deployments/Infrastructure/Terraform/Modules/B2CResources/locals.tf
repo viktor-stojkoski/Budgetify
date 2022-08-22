@@ -3,4 +3,8 @@ locals {
     "APIConnectors.ReadWrite.All",
     "IdentityUserFlow.ReadWrite.All"
   ]
+
+  angular_app_permissions = [
+    "openid"
+  ]
 }
