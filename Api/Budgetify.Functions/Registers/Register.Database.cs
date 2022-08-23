@@ -5,7 +5,6 @@ using System;
 using Budgetify.Contracts.Infrastructure.Storage;
 using Budgetify.Contracts.Settings;
 using Budgetify.Functions.Settings;
-using Budgetify.Queries.Infrastructure.Context;
 using Budgetify.Storage.Infrastructure.Context;
 using Budgetify.Storage.Infrastructure.UnitOfWork;
 
@@ -24,26 +23,12 @@ public static partial class Register
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        services.AddScoped<IBudgetifyReadonlyDbContext, BudgetifyReadonlyDbContext>();
         services.AddScoped<IBudgetifyDbContext, BudgetifyDbContext>();
 
         services.AddDbContext<BudgetifyDbContext>(options =>
         {
             options.UseSqlServer(
                 connectionString: connectionStringSettings.SqlConnectionString,
-                sqlServerOptionsAction: sqlOptions =>
-                {
-                    sqlOptions.EnableRetryOnFailure(
-                        maxRetryCount: 5,
-                        maxRetryDelay: TimeSpan.FromSeconds(15),
-                        errorNumbersToAdd: null);
-                });
-        });
-
-        services.AddDbContext<BudgetifyReadonlyDbContext>(options =>
-        {
-            options.UseSqlServer(
-                connectionString: connectionStringSettings.SqlConnectionReadonlyString,
                 sqlServerOptionsAction: sqlOptions =>
                 {
                     sqlOptions.EnableRetryOnFailure(

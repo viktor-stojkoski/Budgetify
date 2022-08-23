@@ -1,5 +1,10 @@
 data "azuread_application_published_app_ids" "well_known" {}
 
+resource "azuread_service_principal" "microsoft_graph" {
+  application_id = data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph
+  use_existing   = true
+}
+
 resource "azuread_application" "app_registration" {
   display_name                   = var.app_registration_display_name
   sign_in_audience               = "AzureADandPersonalMicrosoftAccount"
@@ -23,20 +28,15 @@ resource "azuread_application" "app_registration" {
   required_resource_access {
     resource_app_id = data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph
     resource_access {
-      id   = local.angular_app_permissions[0]
+      id   = azuread_service_principal.microsoft_graph.oauth2_permission_scope_ids[local.angular_app_permissions[0]]
       type = "Scope"
     }
 
     resource_access {
-      id   = local.angular_app_permissions[1]
+      id   = azuread_service_principal.microsoft_graph.oauth2_permission_scope_ids[local.angular_app_permissions[1]]
       type = "Scope"
     }
   }
-}
-
-resource "azuread_service_principal" "microsoft_graph" {
-  application_id = data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph
-  use_existing   = true
 }
 
 resource "azuread_service_principal" "app_registration" {

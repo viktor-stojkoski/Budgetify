@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   azureAdB2C: {
-    clientId: "2e1a61fe-70e4-4f38-914d-4d16ed8679ff",
+    clientId: "e46f8fb1-4d68-43cc-b53b-cf052b8f195f",
     redirectUrl: "http://localhost:4200/",
     policies: {
       signUpSignIn: "B2C_1_SignUpIn",

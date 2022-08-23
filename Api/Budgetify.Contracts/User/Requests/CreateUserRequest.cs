@@ -1,6 +1,5 @@
 ﻿namespace Budgetify.Contracts.User.Requests
 {
-
     using Newtonsoft.Json;
 
     public class CreateUserRequest

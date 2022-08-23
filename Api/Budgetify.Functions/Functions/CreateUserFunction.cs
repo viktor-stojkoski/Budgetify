@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Budgetify.Contracts.Settings;
 using Budgetify.Contracts.User.Requests;
+using Budgetify.Functions.Contracts.AzureADB2C;
 using Budgetify.Services.User.Commands;
 
 using Microsoft.AspNetCore.Http;
@@ -46,7 +47,6 @@ public class CreateUserFunction
         }
 
         string requestBody = await new StreamReader(request.Body).ReadToEndAsync();
-        _logger.LogInformation(requestBody); // TODO: Remove
         CreateUserRequest createUserRequest = JsonConvert.DeserializeObject<CreateUserRequest>(requestBody);
 
         CommandResult<EmptyValue>? result =
@@ -57,9 +57,9 @@ public class CreateUserFunction
                     LastName: createUserRequest.LastName,
                     City: createUserRequest.City));
 
-        return result is not null
-            ? new OkObjectResult(result.Value)
-            : new BadRequestObjectResult("");
+        return result?.Value is not null
+            ? new OkObjectResult(new ResponseContent())
+            : new OkObjectResult(new ResponseContent("ValidationError", result?.Message));
     }
 
     private bool Authorize(HttpRequest request)
@@ -70,8 +70,6 @@ public class CreateUserFunction
         }
 
         string authorizationHeaders = request.Headers.Authorization;
-
-        _logger.LogInformation(authorizationHeaders); // TODO: Remove
 
         if (!authorizationHeaders.StartsWith("Basic "))
         {
