@@ -37,7 +37,7 @@ stages:
               command: restore
               feedsToUse: config
               nugetConfigPath: NuGet/nuget.config
-              externalFeedCredentials: $(githubNugetServiceConnection)
+              externalFeedCredentials: ${{ variables.githubNugetServiceConnection }}
               noCache: true
               projects: $(projects)
               verbosityRestore: Quiet
