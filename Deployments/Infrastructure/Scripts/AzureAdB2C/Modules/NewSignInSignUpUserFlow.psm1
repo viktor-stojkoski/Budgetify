@@ -35,6 +35,7 @@ function New-SignInSignUpUserFlow {
   ## Create SignUpSignIn flow user attribute assignments
   # City
   New-B2CUserFlowAttributeAssignment `
+    -DisplayName "City" `
     -AccessToken $AccessToken `
     -UserFlowId $signUpSignInFlow.id `
     -UserInputType "textBox" `
@@ -42,6 +43,7 @@ function New-SignInSignUpUserFlow {
 
   # Given name
   New-B2CUserFlowAttributeAssignment `
+    -DisplayName "First name" `
     -AccessToken $AccessToken `
     -UserFlowId $signUpSignInFlow.id `
     -UserInputType "textBox" `
@@ -49,6 +51,7 @@ function New-SignInSignUpUserFlow {
 
   # Surname
   New-B2CUserFlowAttributeAssignment `
+    -DisplayName "Last name" `
     -AccessToken $AccessToken `
     -UserFlowId $signUpSignInFlow.id `
     -UserInputType "textBox" `

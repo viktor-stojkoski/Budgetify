@@ -1,18 +1,20 @@
 ﻿namespace Budgetify.Contracts.User.Requests
 {
-    using System.Text.Json.Serialization;
 
-    //using Newtonsoft.Json;
+    using Newtonsoft.Json;
 
     public class CreateUserRequest
     {
-        [JsonPropertyName("givenName")]
+        [JsonProperty("email")]
+        public string? Email { get; set; }
+
+        [JsonProperty("givenName")]
         public string? FirstName { get; set; }
 
-        [JsonPropertyName("surname")]
+        [JsonProperty("surname")]
         public string? LastName { get; set; }
 
-        [JsonPropertyName("email")]
-        public string? Email { get; set; }
+        [JsonProperty("city")]
+        public string? City { get; set; }
     }
 }

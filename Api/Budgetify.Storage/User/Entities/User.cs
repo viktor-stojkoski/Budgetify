@@ -11,15 +11,23 @@
             Guid uid,
             DateTime createdOn,
             DateTime? deletedOn,
-            string name,
-            string email) : base(id, uid, createdOn, deletedOn)
+            string email,
+            string firstName,
+            string lastName,
+            string city) : base(id, uid, createdOn, deletedOn)
         {
-            Name = name;
             Email = email;
+            FirstName = firstName;
+            LastName = lastName;
+            City = city;
         }
 
-        public string Name { get; protected internal set; }
-
         public string Email { get; protected internal set; }
+
+        public string FirstName { get; protected internal set; }
+
+        public string LastName { get; protected internal set; }
+
+        public string City { get; protected internal set; }
     }
 }

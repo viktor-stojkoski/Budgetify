@@ -5,14 +5,14 @@
 export const environment = {
   production: false,
   azureAdB2C: {
-    clientId: "9d504530-5d20-4b84-90ec-57f65c7352b9",
-    redirectUrl: "http://localhost:4200",
+    clientId: "2e1a61fe-70e4-4f38-914d-4d16ed8679ff",
+    redirectUrl: "http://localhost:4200/",
     policies: {
       signUpSignIn: "B2C_1_SignUpIn",
       editProfile: "B2C_1_ProfileEdit",
       resetPassword: "B2C_1_PasswordReset"
     },
-    tenantName: "viktorbudgetify"
+    tenantName: "budgetifydev"
   }
 };
 

@@ -45,11 +45,11 @@ Invoke-Command {
 $script:rgName = ""
 $script:keyVaultId = ""
 Invoke-Command {
-  $script:rgName = az group list --query "[?tags.Environment == '$Environment'].name | [0]" 
+  $script:rgName = az group list --query "[?tags.Environment == '$Environment'].name | [0]"
 }
 Invoke-Command {
   $script:keyVaultId = az resource list `
-    --query "[?type == 'Microsoft.KeyVault/vaults' && tags.Environment == '$Environment'].id | [0]" 
+    --query "[?type == 'Microsoft.KeyVault/vaults' && tags.Environment == '$Environment'].id | [0]"
 }
 
 Write-Host "Resource group name: $rgName" -ForegroundColor red -BackgroundColor white
@@ -85,8 +85,8 @@ if ($DeployB2CUserFlows.IsPresent) {
 
   # Deploy B2C User Flows
   $apiConnector = @{
-    DisplayName = "Budgetify API"
-    TargetUrl   = "https://budgetify.loca.lt/"
+    DisplayName = "Budgetify API Create user"
+    TargetUrl   = "https://budgetify.loca.lt/api/users"
     Username    = "BudgetifyUser"
     Password    = "$api_connector_password"
   }

@@ -10,6 +10,7 @@
 
     using VS.Commands;
 
+    // TODO: Remove this controller ?
     [Route("api/accounts")]
     [ApiController]
     [AllowAnonymous]
@@ -21,9 +22,11 @@
             => _commandDispatcher = commandDispatcher;
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = "")]
         public async Task<IActionResult> SignUp([FromBody] CreateUserRequest request) =>
             OkOrError(await _commandDispatcher.ExecuteAsync(
                 new CreateUserCommand(
+                    City: request.City,
                     FirstName: request.FirstName,
                     LastName: request.LastName,
                     Email: request.Email)));

@@ -13,8 +13,12 @@ public class Startup : FunctionsStartup
     public override void Configure(IFunctionsHostBuilder builder)
     {
         //FunctionsHostBuilderContext context = builder.GetContext();
+        IConfiguration configuration = builder.GetContext().Configuration;
 
         builder.Services
+            .RegisterServices()
+            .RegisterDatabase(configuration)
+            .RegisterSettings()
             .RegisterCommands();
     }
 

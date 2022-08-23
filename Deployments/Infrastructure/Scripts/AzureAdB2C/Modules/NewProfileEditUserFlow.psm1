@@ -27,6 +27,7 @@ function New-ProfileEditUserFlow {
   ## Create Profile Edit flow user attribute assignments
   # City
   New-B2CUserFlowAttributeAssignment `
+    -DisplayName "City" `
     -AccessToken $AccessToken `
     -UserFlowId $profileEditFlow.id `
     -UserInputType "textBox" `
@@ -34,6 +35,7 @@ function New-ProfileEditUserFlow {
 
   # Given name
   New-B2CUserFlowAttributeAssignment `
+    -DisplayName "First name" `
     -AccessToken $AccessToken `
     -UserFlowId $profileEditFlow.id `
     -UserInputType "textBox" `
@@ -41,6 +43,7 @@ function New-ProfileEditUserFlow {
 
   # Surname
   New-B2CUserFlowAttributeAssignment `
+    -DisplayName "Last name" `
     -AccessToken $AccessToken `
     -UserFlowId $profileEditFlow.id `
     -UserInputType "textBox" `

@@ -10,7 +10,11 @@
 
     using VS.Commands;
 
-    public record CreateUserCommand(string? FirstName, string? LastName, string? Email) : ICommand;
+    public record CreateUserCommand(
+        string? Email,
+        string? FirstName,
+        string? LastName,
+        string? City) : ICommand;
 
     public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand>
     {
@@ -30,8 +34,10 @@
             Result<User> userResult =
                 User.Create(
                     createdOn: System.DateTime.UtcNow,
-                    name: $"{command.FirstName} {command.LastName}",
-                    email: command.Email);
+                    email: command.Email,
+                    firstName: command.FirstName,
+                    lastName: command.LastName,
+                    city: command.City);
 
             if (userResult.IsFailureOrNull)
             {
