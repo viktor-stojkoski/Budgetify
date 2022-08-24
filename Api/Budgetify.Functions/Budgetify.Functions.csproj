@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Budgetify.Queries\Budgetify.Queries.csproj" />
     <ProjectReference Include="..\Budgetify.Services\Budgetify.Services.csproj" />
   </ItemGroup>
 
