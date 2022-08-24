@@ -9,7 +9,7 @@ public static partial class Register
 {
     public static IServiceCollection RegisterSettings(this IServiceCollection services)
     {
-        services.AddSingleton<IAzureADB2CSettings, AzureADB2CSettings>();
+        services.AddSingleton<IAzureADB2CApiConnectorSettings, AzureADB2CApiConnectorSettings>();
 
         return services;
     }

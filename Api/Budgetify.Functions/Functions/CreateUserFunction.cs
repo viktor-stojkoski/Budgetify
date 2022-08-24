@@ -22,16 +22,16 @@ using VS.Commands;
 public class CreateUserFunction
 {
     private readonly ICommandDispatcher _commandDispatcher;
-    private readonly IAzureADB2CSettings _azureADB2CSettings;
+    private readonly IAzureADB2CApiConnectorSettings _azureADB2CApiConnectorSettings;
     private readonly ILogger<CreateUserFunction> _logger;
 
     public CreateUserFunction(
         ICommandDispatcher commandDispatcher,
-        IAzureADB2CSettings azureADB2CSettings,
+        IAzureADB2CApiConnectorSettings azureADB2CApiConnectorSettings,
         ILogger<CreateUserFunction> logger)
     {
         _commandDispatcher = commandDispatcher;
-        _azureADB2CSettings = azureADB2CSettings;
+        _azureADB2CApiConnectorSettings = azureADB2CApiConnectorSettings;
         _logger = logger;
     }
 
@@ -82,7 +82,7 @@ public class CreateUserFunction
                 Convert.FromBase64String(
                     authorizationHeaders[6..])).Split(":");
 
-        return credentials[0] == _azureADB2CSettings.ApiConnectorUsername
-            && credentials[1] == _azureADB2CSettings.ApiConnectorPassword;
+        return credentials[0] == _azureADB2CApiConnectorSettings.Username
+            && credentials[1] == _azureADB2CApiConnectorSettings.Password;
     }
 }

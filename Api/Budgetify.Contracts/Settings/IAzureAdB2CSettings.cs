@@ -1,15 +1,32 @@
 ﻿namespace Budgetify.Contracts.Settings
 {
+    using System;
+
     public interface IAzureADB2CSettings
     {
         /// <summary>
-        /// API Connector basic authentication Username.
+        /// App registration Client ID.
         /// </summary>
-        string ApiConnectorUsername { get; }
+        string ClientId { get; }
 
         /// <summary>
-        /// API Connector Basic authentication Password.
+        /// Tenant ID.
         /// </summary>
-        string ApiConnectorPassword { get; }
+        string TenantId { get; }
+
+        /// <summary>
+        /// Tenant name.
+        /// </summary>
+        string TenantName { get; }
+
+        /// <summary>
+        /// Login instance URI.
+        /// </summary>
+        Uri Instance { get; }
+
+        /// <summary>
+        /// Sign Up & Sign In Policy ID.
+        /// </summary>
+        string SignUpSignInPolicyId { get; }
     }
 }

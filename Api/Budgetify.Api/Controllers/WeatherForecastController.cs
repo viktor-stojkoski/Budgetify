@@ -9,12 +9,14 @@
     using Budgetify.Queries.Asd;
     using Budgetify.Services.Test;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
 
     using VS.Commands;
     using VS.Queries;
 
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

@@ -36,6 +36,7 @@ namespace Budgetify.Api
                 .RegisterLoggingServices()
                 .RegisterHealthChecks(Configuration)
                 .RegisterSwagger(Configuration)
+                .RegisterAuthentication(Configuration)
                 .RegisterServices();
         }
 
@@ -73,7 +74,6 @@ namespace Budgetify.Api
                 .UseAuthentication()
                 .UseAuthorization()
                 .UseCors("AllowAll")
-                .UseAuthentication()
                 .UseEndpoints(endpoints => endpoints.MapControllers())
                 .UseHangfire()
                 .UseHealthChecks();
