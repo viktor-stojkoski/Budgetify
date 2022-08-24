@@ -1,6 +1,7 @@
 ﻿namespace Budgetify.Api.Registers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Budgetify.Api.Settings;
@@ -20,7 +21,9 @@
     {
         private const string ApiVersion1_0 = "1.0";
 
-        public static IServiceCollection RegisterSwagger(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection RegisterSwagger(
+            this IServiceCollection services,
+            IConfiguration configuration)
         {
             ISwaggerSettings swaggerSettings = new SwaggerSettings(configuration);
 
@@ -34,6 +37,31 @@
                             Title = swaggerSettings.Version1_0_Name,
                             Version = ApiVersion1_0
                         });
+
+                    c.AddSecurityDefinition("Bearer", new()
+                    {
+                        In = ParameterLocation.Header,
+                        Description = "JWT Authorization header using the Bearer scheme. <br>Example: <h4>Bearer <TOKEN_HERE></h4>",
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey,
+                        Scheme = "bearer"
+                    });
+
+                    c.AddSecurityRequirement(new()
+                    {
+                       {
+                           new OpenApiSecurityScheme
+                           {
+                               Reference = new()
+                               {
+                                   Type = ReferenceType.SecurityScheme,
+                                   Id = "Bearer"
+                               },
+
+                           },
+                           new List<string>()
+                       }
+                    });
 
                     c.DocInclusionPredicate((docName, apiDesc) =>
                     {
