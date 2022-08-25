@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  azureAdB2C: {
+  azureADB2C: {
     clientId: "e46f8fb1-4d68-43cc-b53b-cf052b8f195f",
     redirectUrl: "http://localhost:4200/",
     policies: {

@@ -4,24 +4,24 @@ import { environment } from '../../../environments/environment';
 
 export const b2cPolicies = {
   names: {
-    signUpSignIn: environment.azureAdB2C.policies.signUpSignIn,
-    editProfile: environment.azureAdB2C.policies.editProfile,
-    resetpassword: environment.azureAdB2C.policies.resetPassword
+    signUpSignIn: environment.azureADB2C.policies.signUpSignIn,
+    editProfile: environment.azureADB2C.policies.editProfile,
+    resetpassword: environment.azureADB2C.policies.resetPassword
   },
   authorities: {
-    signUpSignIn: `https://${environment.azureAdB2C.tenantName}.b2clogin.com/${environment.azureAdB2C.tenantName}.onmicrosoft.com/${environment.azureAdB2C.policies.signUpSignIn}`,
-    editProfile: `https://${environment.azureAdB2C.tenantName}.b2clogin.com/${environment.azureAdB2C.tenantName}.onmicrosoft.com/${environment.azureAdB2C.policies.editProfile}`,
-    resetPassword: `https://${environment.azureAdB2C.tenantName}.b2clogin.com/${environment.azureAdB2C.tenantName}.onmicrosoft.com/${environment.azureAdB2C.policies.resetPassword}`
+    signUpSignIn: `https://${environment.azureADB2C.tenantName}.b2clogin.com/${environment.azureADB2C.tenantName}.onmicrosoft.com/${environment.azureADB2C.policies.signUpSignIn}`,
+    editProfile: `https://${environment.azureADB2C.tenantName}.b2clogin.com/${environment.azureADB2C.tenantName}.onmicrosoft.com/${environment.azureADB2C.policies.editProfile}`,
+    resetPassword: `https://${environment.azureADB2C.tenantName}.b2clogin.com/${environment.azureADB2C.tenantName}.onmicrosoft.com/${environment.azureADB2C.policies.resetPassword}`
   },
-  authorityDomain: `${environment.azureAdB2C.tenantName}.b2clogin.com`
+  authorityDomain: `${environment.azureADB2C.tenantName}.b2clogin.com`
 }
 
 export const msalConfig: Configuration = {
   auth: {
-    clientId: environment.azureAdB2C.clientId,
+    clientId: environment.azureADB2C.clientId,
     authority: b2cPolicies.authorities.signUpSignIn,
     knownAuthorities: [b2cPolicies.authorityDomain],
-    redirectUri: environment.azureAdB2C.redirectUrl
+    redirectUri: environment.azureADB2C.redirectUrl
   },
   cache: {
     cacheLocation: BrowserCacheLocation.LocalStorage
@@ -29,7 +29,9 @@ export const msalConfig: Configuration = {
   system: {
     loggerOptions: {
       loggerCallback: (_, message, _1) => {
-        console.log(message);
+        if (!environment.production) {
+          console.log(message);
+        }
       },
       logLevel: LogLevel.Verbose,
       piiLoggingEnabled: false
