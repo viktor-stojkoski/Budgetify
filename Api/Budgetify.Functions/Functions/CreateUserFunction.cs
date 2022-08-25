@@ -49,7 +49,7 @@ public class CreateUserFunction
         string requestBody = await new StreamReader(request.Body).ReadToEndAsync();
         CreateUserRequest createUserRequest = JsonConvert.DeserializeObject<CreateUserRequest>(requestBody);
 
-        CommandResult<EmptyValue>? result =
+        CommandResult<EmptyValue> result =
             await _commandDispatcher.ExecuteAsync(
                 new CreateUserCommand(
                     Email: createUserRequest.Email,
@@ -57,15 +57,16 @@ public class CreateUserFunction
                     LastName: createUserRequest.LastName,
                     City: createUserRequest.City));
 
-        return result?.Value is not null
+        return result.Value is not null
             ? new OkObjectResult(new ResponseContent())
-            : new OkObjectResult(new ResponseContent("ValidationError", result?.Message));
+            : new OkObjectResult(new ResponseContent("ValidationError", result.Message));
     }
 
     private bool Authorize(HttpRequest request)
     {
         if (!request.Headers.ContainsKey("Authorization"))
         {
+            _logger.LogError("Request does not contain Authorization header.");
             return false;
         }
 
@@ -73,6 +74,7 @@ public class CreateUserFunction
 
         if (!authorizationHeaders.StartsWith("Basic "))
         {
+            _logger.LogError("Authorization header does not start with Basic...");
             return false;
         }
 
