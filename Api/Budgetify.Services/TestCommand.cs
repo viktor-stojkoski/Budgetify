@@ -86,7 +86,7 @@
                 return result.FailWith("NOT_FOUNDD");
             }
 
-            test.Value.Update("New name", "newemail@budgetify.tech");
+            test.Value.Update("newemail@budgetify.tech", "firsTName", "lastName", "citty");
 
             _userRepository.Update(test.Value);
 

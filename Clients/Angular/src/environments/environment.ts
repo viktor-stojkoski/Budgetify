@@ -3,7 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  azureADB2C: {
+    clientId: 'e46f8fb1-4d68-43cc-b53b-cf052b8f195f',
+    redirectUrl: 'http://localhost:4200/',
+    policies: {
+      signUpSignIn: 'B2C_1_SignUpIn',
+      editProfile: 'B2C_1_ProfileEdit',
+      resetPassword: 'B2C_1_PasswordReset'
+    },
+    tenantName: 'budgetifydev'
+  }
 };
 
 /*

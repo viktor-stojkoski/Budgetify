@@ -8,20 +8,33 @@
         /// <summary>
         /// Updates user.
         /// </summary>
-        public Result Update(string? name, string? email)
+        public Result Update(
+            string? email,
+            string? firstName,
+            string? lastName,
+            string? city)
         {
-            Result<UserNameValue> nameValue = UserNameValue.Create(name);
             Result<EmailValue> emailValue = EmailValue.Create(email);
+            Result<UserNameValue> firstNameValue = UserNameValue.Create(firstName);
+            Result<UserNameValue> lastNameValue = UserNameValue.Create(lastName);
+            Result<CityValue> cityValue = CityValue.Create(city);
 
-            Result okOrError = Result.FirstFailureNullOrOk(nameValue, emailValue);
+            Result okOrError =
+                Result.FirstFailureNullOrOk(
+                    emailValue,
+                    firstNameValue,
+                    lastNameValue,
+                    cityValue);
 
             if (okOrError.IsFailureOrNull)
             {
                 return okOrError;
             }
 
-            Name = nameValue.Value;
             Email = emailValue.Value;
+            FirstName = firstNameValue.Value;
+            LastName = lastNameValue.Value;
+            City = cityValue.Value;
 
             MarkModify();
 

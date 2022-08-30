@@ -3,6 +3,7 @@
     using System;
 
     using Budgetify.Common.Results;
+    using Budgetify.Entities.Common.Enumerations;
     using Budgetify.Entities.User.ValueObjects;
 
     public partial class User
@@ -15,13 +16,22 @@
             Guid uid,
             DateTime createdOn,
             DateTime? deletedOn,
-            string name,
-            string email)
+            string email,
+            string firstName,
+            string lastName,
+            string city)
         {
-            Result<UserNameValue> nameValue = UserNameValue.Create(name);
             Result<EmailValue> emailValue = EmailValue.Create(email);
+            Result<UserNameValue> firstNameValue = UserNameValue.Create(firstName);
+            Result<UserNameValue> lastNameValue = UserNameValue.Create(lastName);
+            Result<CityValue> cityValue = CityValue.Create(city);
 
-            Result okOrError = Result.FirstFailureNullOrOk(nameValue, emailValue);
+            Result okOrError =
+                Result.FirstFailureNullOrOk(
+                    emailValue,
+                    firstNameValue,
+                    lastNameValue,
+                    cityValue);
 
             if (okOrError.IsFailureOrNull)
             {
@@ -29,7 +39,11 @@
             }
 
             return Result.Ok(
-                new User(nameValue.Value, emailValue.Value)
+                new User(
+                    email: emailValue.Value,
+                    firstName: firstNameValue.Value,
+                    lastName: lastNameValue.Value,
+                    city: cityValue.Value)
                 {
                     Id = id,
                     Uid = uid,
@@ -43,13 +57,22 @@
         /// </summary>
         public static Result<User> Create(
             DateTime createdOn,
-            string? name,
-            string? email)
+            string? email,
+            string? firstName,
+            string? lastName,
+            string? city)
         {
-            Result<UserNameValue> nameValue = UserNameValue.Create(name);
             Result<EmailValue> emailValue = EmailValue.Create(email);
+            Result<UserNameValue> firstNameValue = UserNameValue.Create(firstName);
+            Result<UserNameValue> lastNameValue = UserNameValue.Create(lastName);
+            Result<CityValue> cityValue = CityValue.Create(city);
 
-            Result okOrError = Result.FirstFailureNullOrOk(nameValue, emailValue);
+            Result okOrError =
+                Result.FirstFailureNullOrOk(
+                    emailValue,
+                    firstNameValue,
+                    lastNameValue,
+                    cityValue);
 
             if (okOrError.IsFailureOrNull)
             {
@@ -57,10 +80,15 @@
             }
 
             return Result.Ok(
-                new User(nameValue.Value, emailValue.Value)
+                new User(
+                    email: emailValue.Value,
+                    firstName: firstNameValue.Value,
+                    lastName: lastNameValue.Value,
+                    city: cityValue.Value)
                 {
                     Uid = Guid.NewGuid(),
-                    CreatedOn = createdOn
+                    CreatedOn = createdOn,
+                    State = EntityState.Added
                 });
         }
     }

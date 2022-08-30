@@ -12,91 +12,97 @@ trigger: none
 pr:
   branches:
     include:
-    - master
-
-variables:
-- name: buildConfiguration
-  value: Release
-- name: githubNugetServiceConnection
-  value: GithubNugetFeed
-- name: projects
-  value: '**/*.csproj'
+      - master
 
 stages:
   - stage: BuildAndTest
     displayName: Build and Test Budgetify
-    
+
     jobs:
-    - job: job_build_test_backend
-      displayName: Budgetify .NET Build & Test
-      steps:
-      - task: DotNetCoreCLI@2
-        displayName: .NET Restore
-        inputs:
-          command: restore
-          feedsToUse: config
-          nugetConfigPath: NuGet/nuget.config
-          externalFeedCredentials: $(githubNugetServiceConnection)
-          noCache: true
-          projects: $(projects)
-          verbosityRestore: Quiet
+      - job: job_build_test_backend
+        displayName: Budgetify .NET Build & Test
 
-      - task: DotNetCoreCLI@2
-        displayName: .NET Build
-        inputs:
-          projects: $(projects)
-          arguments: --configuration $(buildConfiguration) --no-restore
+        variables:
+          - name: buildConfiguration
+            value: Release
+          - name: githubNugetServiceConnection
+            value: GithubNugetFeed
+          - name: projects
+            value: '**/*.csproj'
 
-      - task: DotNetCoreCLI@2
-        displayName: .NET Test
-        inputs:
-          command: test
-          projects: '**/*.Tests.csproj'
-          arguments: --configuration $(buildConfiguration) --no-restore --no-build
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: .NET Restore
+            inputs:
+              command: restore
+              feedsToUse: config
+              nugetConfigPath: NuGet/nuget.config
+              externalFeedCredentials: ${{ variables.githubNugetServiceConnection }}
+              noCache: true
+              projects: $(projects)
+              verbosityRestore: Quiet
 
-    - job: job_build_database
-      displayName: Budgetify Build Database
-      steps:
-        - task: MSBuild@1
-          displayName: Database Build
-          inputs:
-            solution: Databases/Budgetify.Database/Budgetify.Database.sqlproj
-            configuration: $(buildConfiguration)
-            clean: true
+          - task: DotNetCoreCLI@2
+            displayName: .NET Build
+            inputs:
+              projects: $(projects)
+              arguments: --configuration $(buildConfiguration) --no-restore
 
-    - job: job_build_test_frontend
-      displayName: Budgetify Angular Build & Test
-      steps:
-      - task: Npm@1
-        displayName: Install packages
-        inputs:
-          command: ci
-          workingDir: $(Build.SourcesDirectory)/Clients/Angular
+          - task: DotNetCoreCLI@2
+            displayName: .NET Test
+            inputs:
+              command: test
+              projects: '**/*.Tests.csproj'
+              arguments: --configuration $(buildConfiguration) --no-restore --no-build
 
-      - task: Npm@1
-        displayName: Install Angular CLI
-        inputs:
-          command: custom
-          workingDir: $(Build.SourcesDirectory)/Clients/Angular
-          customCommand: install -g @angular/cli
+      - job: job_build_database
+        displayName: Budgetify Build Database
+        steps:
+          - task: MSBuild@1
+            displayName: Database Build
+            inputs:
+              solution: Databases/Budgetify.Database/Budgetify.Database.sqlproj
+              configuration: $(buildConfiguration)
+              clean: true
 
-      - task: Npm@1
-        displayName: Angular Lint
-        inputs:
-          command: custom
-          workingDir: $(Build.SourcesDirectory)/Clients/Angular
-          customCommand: run lint
+      - job: job_build_test_frontend
+        displayName: Budgetify Angular Build & Test
 
-      - task: Npm@1
-        displayName: Angular Build
-        inputs:
-          command: custom
-          workingDir: $(Build.SourcesDirectory)/Clients/Angular
-          customCommand: run build-prod
+        variables:
+          - name: workingDirectory
+            value: $(Build.SourcesDirectory)/Clients/Angular
 
-      - task: Npm@1
-        displayName: Angular Test
-        inputs:
-          command: custom
-          workingDir: $(Build.SourcesDirectory)/Clients/Angular
-          customCommand: run test-headless
+        steps:
+          - task: Npm@1
+            displayName: Install packages
+            inputs:
+              command: ci
+              workingDir: $(workingDirectory)
+
+          - task: Npm@1
+            displayName: Install Angular CLI
+            inputs:
+              command: custom
+              workingDir: $(workingDirectory)
+              customCommand: install -g @angular/cli
+
+          - task: Npm@1
+            displayName: Angular Lint
+            inputs:
+              command: custom
+              workingDir: $(workingDirectory)
+              customCommand: run lint
+
+          - task: Npm@1
+            displayName: Angular Build
+            inputs:
+              command: custom
+              workingDir: $(workingDirectory)
+              customCommand: run build-prod
+
+          - task: Npm@1
+            displayName: Angular Test
+            inputs:
+              command: custom
+              workingDir: $(workingDirectory)
+              customCommand: run test-headless

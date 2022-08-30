@@ -4,7 +4,7 @@
 
     using Microsoft.Extensions.Configuration;
 
-    internal class ConnectionStringSettings : IConnectionStringSettings
+    public class ConnectionStringSettings : IConnectionStringSettings
     {
         private readonly IConfiguration _configuration;
 

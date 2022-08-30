@@ -15,8 +15,10 @@
                 uid: dbUser.Uid,
                 createdOn: dbUser.CreatedOn,
                 deletedOn: dbUser.DeletedOn,
-                name: dbUser.Name,
-                email: dbUser.Email);
+                email: dbUser.Email,
+                firstName: dbUser.FirstName,
+                lastName: dbUser.LastName,
+                city: dbUser.City);
         }
 
         /// <summary>
@@ -29,8 +31,10 @@
                 uid: user.Uid,
                 createdOn: user.CreatedOn,
                 deletedOn: user.DeletedOn,
-                name: user.Name,
-                email: user.Email);
+                email: user.Email,
+                firstName: user.FirstName,
+                lastName: user.LastName,
+                city: user.City);
         }
     }
 }

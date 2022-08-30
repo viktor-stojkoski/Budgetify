@@ -5,5 +5,7 @@
     [CreatedOn]     SMALLDATETIME       NOT NULL, 
     [DeletedOn]     SMALLDATETIME           NULL, 
     [Email]         NVARCHAR(255)       NOT NULL, 
-    [Name]          NVARCHAR(255)       NOT NULL
+    [FirstName]     NVARCHAR(255)       NOT NULL,
+    [LastName]      NVARCHAR(255)       NOT NULL,
+    [City]          NVARCHAR(255)       NOT NULL
 )

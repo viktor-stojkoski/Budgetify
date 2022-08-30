@@ -14,6 +14,7 @@
             services.AddSingleton<ILoggerSettings, LoggerSettings>();
             services.AddSingleton<IStorageSettings, StorageSettings>();
             services.AddSingleton<ISwaggerSettings, SwaggerSettings>();
+            services.AddSingleton<IAzureADB2CSettings, AzureADB2CSettings>();
 
             return services;
         }
