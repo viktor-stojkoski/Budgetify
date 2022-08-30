@@ -8,6 +8,8 @@ namespace Budgetify.Api
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
 
+    using Serilog;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -37,10 +39,7 @@ namespace Budgetify.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.ConfigureLogging();
-                    webBuilder.UseStartup<Startup>();
-                });
+                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
+                .UseSerilog();
     }
 }

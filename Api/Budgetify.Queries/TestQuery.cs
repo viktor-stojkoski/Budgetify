@@ -25,7 +25,7 @@
         {
             QueryResultBuilder<User> result = new();
 
-            User test = await _budgetifyReadonlyDbContext
+            User? test = await _budgetifyReadonlyDbContext
                 .AllNoTrackedOf<User>()
                 .SingleOrDefaultAsync(x => x.Uid == query.Uid);
 

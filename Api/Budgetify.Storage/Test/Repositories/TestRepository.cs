@@ -17,7 +17,7 @@
 
         public async Task<Result<Test>> GetTestAsync(Guid testUid)
         {
-            Test dbTest = await AllNoTrackedOf<Test>()
+            Test? dbTest = await AllNoTrackedOf<Test>()
                 .SingleOrDefaultAsync(x => x.Uid == testUid);
 
             if (dbTest is null)

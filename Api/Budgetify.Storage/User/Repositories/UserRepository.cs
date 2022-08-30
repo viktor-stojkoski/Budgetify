@@ -20,7 +20,7 @@
 
         public async Task<Result<User>> GetUserAsync(Guid userUid)
         {
-            Entities.User dbUser = await AllNoTrackedOf<Entities.User>()
+            Entities.User? dbUser = await AllNoTrackedOf<Entities.User>()
                 .SingleOrDefaultAsync(x => x.Uid == userUid);
 
             if (dbUser is null)

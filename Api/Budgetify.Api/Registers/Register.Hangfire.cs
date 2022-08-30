@@ -42,6 +42,8 @@
                     });
             });
 
+            services.AddHangfireServer(options => options.Queues = jobSettings.ProcessingQueues);
+
             services.AddScoped<IJobService, HangfireJobService>();
 
             return services;
@@ -52,11 +54,6 @@
             using IServiceScope serviceScope = app.ApplicationServices.CreateScope();
 
             IJobSettings jobSettings = serviceScope.ServiceProvider.GetRequiredService<IJobSettings>();
-
-            app.UseHangfireServer(new()
-            {
-                Queues = jobSettings.ProcessingQueues
-            });
 
             DashboardOptions options = new()
             {
