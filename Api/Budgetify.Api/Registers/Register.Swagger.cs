@@ -50,7 +50,7 @@
                     c.AddSecurityRequirement(new()
                     {
                        {
-                           new OpenApiSecurityScheme
+                           new()
                            {
                                Reference = new()
                                {

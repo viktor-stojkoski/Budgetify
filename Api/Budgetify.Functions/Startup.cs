@@ -16,9 +16,9 @@ public class Startup : FunctionsStartup
         IConfiguration configuration = builder.GetContext().Configuration;
 
         builder.Services
+            .RegisterSettings()
             .RegisterServices()
             .RegisterDatabase(configuration)
-            .RegisterSettings()
             .RegisterCommands();
     }
 
