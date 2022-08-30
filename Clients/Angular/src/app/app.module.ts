@@ -1,25 +1,31 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MsalBroadcastService, MsalGuard, MsalInterceptor, MsalModule, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG } from '@azure/msal-angular';
+import {
+  MsalBroadcastService,
+  MsalGuard,
+  MsalInterceptor,
+  MsalModule,
+  MsalRedirectComponent,
+  MsalService,
+  MSAL_GUARD_CONFIG,
+  MSAL_INSTANCE,
+  MSAL_INTERCEPTOR_CONFIG
+} from '@azure/msal-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MsalGuardConfigFactory, MsalInstanceFactory, MsalInterceptorConfigFactory } from './services/configs/auth-config';
 import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import {
+  MsalGuardConfigFactory,
+  MsalInstanceFactory,
+  MsalInterceptorConfigFactory
+} from './services/configs/auth-config';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    ProfileComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MsalModule
-  ],
+  declarations: [AppComponent, HomeComponent, ProfileComponent],
+  imports: [BrowserModule, AppRoutingModule, MsalModule],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -28,7 +34,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     },
     {
       provide: MSAL_INSTANCE,
-      useFactory: MsalInstanceFactory,
+      useFactory: MsalInstanceFactory
     },
     {
       provide: MSAL_GUARD_CONFIG,
@@ -42,6 +48,6 @@ import { ProfileComponent } from './components/profile/profile.component';
     MsalGuard,
     MsalBroadcastService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, MsalRedirectComponent]
 })
-export class AppModule { }
+export class AppModule {}
