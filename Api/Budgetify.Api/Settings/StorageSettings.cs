@@ -1,20 +1,19 @@
-﻿namespace Budgetify.Api.Settings
+﻿namespace Budgetify.Api.Settings;
+
+using Budgetify.Contracts.Settings;
+
+using Microsoft.Extensions.Configuration;
+
+public class StorageSettings : IStorageSettings
 {
-    using Budgetify.Contracts.Settings;
+    private readonly IConfiguration _configuration;
 
-    using Microsoft.Extensions.Configuration;
-
-    public class StorageSettings : IStorageSettings
+    public StorageSettings(IConfiguration configuration)
     {
-        private readonly IConfiguration _configuration;
-
-        public StorageSettings(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
-        public string ConnectionString => _configuration.GetValue<string>("storage:connectionString");
-
-        public string ContainerName => _configuration.GetValue<string>("storage:containerName");
+        _configuration = configuration;
     }
+
+    public string ConnectionString => _configuration.GetValue<string>("storage:connectionString");
+
+    public string ContainerName => _configuration.GetValue<string>("storage:containerName");
 }

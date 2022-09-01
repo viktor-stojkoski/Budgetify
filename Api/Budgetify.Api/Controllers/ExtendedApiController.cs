@@ -1,76 +1,75 @@
-﻿namespace Budgetify.Api.Controllers
+﻿namespace Budgetify.Api.Controllers;
+
+using Budgetify.Common.Results;
+
+using Microsoft.AspNetCore.Mvc;
+
+using VS.Commands;
+using VS.Queries;
+
+[ApiController]
+public class ExtendedApiController : ControllerBase
 {
-    using Budgetify.Common.Results;
-
-    using Microsoft.AspNetCore.Mvc;
-
-    using VS.Commands;
-    using VS.Queries;
-
-    [ApiController]
-    public class ExtendedApiController : ControllerBase
+    protected IActionResult OkOrError<T>(Result<T> result)
     {
-        protected IActionResult OkOrError<T>(Result<T> result)
+        IActionResult? errorResponse = GetErrorResponse(result);
+
+        if (errorResponse is not null)
         {
-            IActionResult? errorResponse = GetErrorResponse(result);
-
-            if (errorResponse is not null)
-            {
-                return errorResponse;
-            }
-
-            return Ok(result);
+            return errorResponse;
         }
 
-        protected IActionResult OkOrError(ResultBase result)
+        return Ok(result);
+    }
+
+    protected IActionResult OkOrError(ResultBase result)
+    {
+        IActionResult? errorResponse = GetErrorResponse(result);
+
+        if (errorResponse is not null)
         {
-            IActionResult? errorResponse = GetErrorResponse(result);
-
-            if (errorResponse is not null)
-            {
-                return errorResponse;
-            }
-
-            return Ok(result);
+            return errorResponse;
         }
 
-        protected IActionResult OkOrError<T>(CommandResult<T> result)
-        {
-            if (result.IsFailure)
-            {
-                return new ObjectResult(result.Message)
-                {
-                    StatusCode = (int)result.HttpStatusCode
-                };
-            }
+        return Ok(result);
+    }
 
-            return Ok(result);
+    protected IActionResult OkOrError<T>(CommandResult<T> result)
+    {
+        if (result.IsFailure)
+        {
+            return new ObjectResult(result.Message)
+            {
+                StatusCode = (int)result.HttpStatusCode
+            };
         }
 
-        protected IActionResult OkOrError<T>(QueryResult<T> result)
-        {
-            if (result.IsFailure)
-            {
-                return new ObjectResult(result.Message)
-                {
-                    StatusCode = (int)result.HttpStatusCode
-                };
-            }
+        return Ok(result);
+    }
 
-            return Ok(result);
+    protected IActionResult OkOrError<T>(QueryResult<T> result)
+    {
+        if (result.IsFailure)
+        {
+            return new ObjectResult(result.Message)
+            {
+                StatusCode = (int)result.HttpStatusCode
+            };
         }
 
-        private static IActionResult? GetErrorResponse(ResultBase result)
-        {
-            if (result.IsFailure)
-            {
-                return new ObjectResult(result.Message)
-                {
-                    StatusCode = (int)result.HttpStatusCode
-                };
-            }
+        return Ok(result);
+    }
 
-            return null;
+    private static IActionResult? GetErrorResponse(ResultBase result)
+    {
+        if (result.IsFailure)
+        {
+            return new ObjectResult(result.Message)
+            {
+                StatusCode = (int)result.HttpStatusCode
+            };
         }
+
+        return null;
     }
 }

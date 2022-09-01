@@ -1,23 +1,22 @@
-﻿namespace Budgetify.Storage.Infrastructure.Context
+﻿namespace Budgetify.Storage.Infrastructure.Context;
+
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+
+public interface IBudgetifyDbContext : IDisposable
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
+    DatabaseFacade Database { get; }
 
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
-    using Microsoft.EntityFrameworkCore.Infrastructure;
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
-    public interface IBudgetifyDbContext : IDisposable
-    {
-        DatabaseFacade Database { get; }
+    DbSet<TEntity> Set<TEntity>() where TEntity : class;
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 
-        DbSet<TEntity> Set<TEntity>() where TEntity : class;
-
-        EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
-
-        ChangeTracker ChangeTracker { get; }
-    }
+    ChangeTracker ChangeTracker { get; }
 }

@@ -1,20 +1,19 @@
-﻿namespace Budgetify.Storage.Infrastructure.Context
+﻿namespace Budgetify.Storage.Infrastructure.Context;
+
+using Budgetify.Storage.Infrastructure.Configuration;
+
+using Microsoft.EntityFrameworkCore;
+
+public class BudgetifyDbContext : DbContext, IBudgetifyDbContext
 {
-    using Budgetify.Storage.Infrastructure.Configuration;
+    public BudgetifyDbContext(DbContextOptions<BudgetifyDbContext> options)
+        : base(options) { }
 
-    using Microsoft.EntityFrameworkCore;
-
-    public class BudgetifyDbContext : DbContext, IBudgetifyDbContext
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public BudgetifyDbContext(DbContextOptions<BudgetifyDbContext> options)
-            : base(options) { }
+        base.OnModelCreating(modelBuilder);
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.ApplyConfiguration(new TestConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-        }
+        modelBuilder.ApplyConfiguration(new TestConfiguration());
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
     }
 }

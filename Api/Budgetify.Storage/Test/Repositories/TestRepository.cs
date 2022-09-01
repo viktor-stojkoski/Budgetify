@@ -1,58 +1,57 @@
-﻿namespace Budgetify.Storage.Test.Repositories
+﻿namespace Budgetify.Storage.Test.Repositories;
+
+using System;
+using System.Threading.Tasks;
+
+using Budgetify.Common.Results;
+using Budgetify.Storage.Common.Repositories;
+using Budgetify.Storage.Infrastructure.Context;
+using Budgetify.Storage.Test.Entities;
+
+using Microsoft.EntityFrameworkCore;
+
+public class TestRepository : Repository<Test>, ITestRepository
 {
-    using System;
-    using System.Threading.Tasks;
+    public TestRepository(IBudgetifyDbContext budgetifyDbContext)
+        : base(budgetifyDbContext) { }
 
-    using Budgetify.Common.Results;
-    using Budgetify.Storage.Common.Repositories;
-    using Budgetify.Storage.Infrastructure.Context;
-    using Budgetify.Storage.Test.Entities;
-
-    using Microsoft.EntityFrameworkCore;
-
-    public class TestRepository : Repository<Test>, ITestRepository
+    public async Task<Result<Test>> GetTestAsync(Guid testUid)
     {
-        public TestRepository(IBudgetifyDbContext budgetifyDbContext)
-            : base(budgetifyDbContext) { }
+        Test? dbTest = await AllNoTrackedOf<Test>()
+            .SingleOrDefaultAsync(x => x.Uid == testUid);
 
-        public async Task<Result<Test>> GetTestAsync(Guid testUid)
+        if (dbTest is null)
         {
-            Test? dbTest = await AllNoTrackedOf<Test>()
-                .SingleOrDefaultAsync(x => x.Uid == testUid);
-
-            if (dbTest is null)
-            {
-                return Result.NotFound<Test>("ERROR");
-            }
-
-            return Result.Ok(dbTest);
+            return Result.NotFound<Test>("ERROR");
         }
 
-        public void Insert(int num)
-        {
-            //Insert(
-            //    new Test
-            //    {
-            //        Uid = Guid.NewGuid(),
-            //        CreatedOn = DateTime.UtcNow,
-            //        DeletedOn = null,
-            //        Name = $"Test Name {num}",
-            //        Address = $"Test Address {num}"
-            //    });
-        }
-
-        public void Update(Test test)
-        {
-            AttachOrUpdate(test, EntityState.Modified);
-        }
+        return Result.Ok(dbTest);
     }
 
-    public interface ITestRepository
+    public void Insert(int num)
     {
-        Task<Result<Test>> GetTestAsync(Guid testUid);
-
-        void Insert(int num);
-
-        void Update(Test test);
+        //Insert(
+        //    new Test
+        //    {
+        //        Uid = Guid.NewGuid(),
+        //        CreatedOn = DateTime.UtcNow,
+        //        DeletedOn = null,
+        //        Name = $"Test Name {num}",
+        //        Address = $"Test Address {num}"
+        //    });
     }
+
+    public void Update(Test test)
+    {
+        AttachOrUpdate(test, EntityState.Modified);
+    }
+}
+
+public interface ITestRepository
+{
+    Task<Result<Test>> GetTestAsync(Guid testUid);
+
+    void Insert(int num);
+
+    void Update(Test test);
 }

@@ -1,22 +1,21 @@
-﻿namespace Budgetify.Api.Settings
+﻿namespace Budgetify.Api.Settings;
+
+using Budgetify.Contracts.Settings;
+
+using Microsoft.Extensions.Configuration;
+
+public class ConnectionStringSettings : IConnectionStringSettings
 {
-    using Budgetify.Contracts.Settings;
+    private readonly IConfiguration _configuration;
 
-    using Microsoft.Extensions.Configuration;
-
-    public class ConnectionStringSettings : IConnectionStringSettings
+    public ConnectionStringSettings(IConfiguration configuration)
     {
-        private readonly IConfiguration _configuration;
-
-        public ConnectionStringSettings(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
-        public string SqlConnectionString =>
-            _configuration.GetValue<string>("connectionStrings:sqlConnectionString");
-
-        public string SqlConnectionReadonlyString =>
-            _configuration.GetValue<string>("connectionStrings:sqlConnectionReadonlyString");
+        _configuration = configuration;
     }
+
+    public string SqlConnectionString =>
+        _configuration.GetValue<string>("connectionStrings:sqlConnectionString");
+
+    public string SqlConnectionReadonlyString =>
+        _configuration.GetValue<string>("connectionStrings:sqlConnectionReadonlyString");
 }

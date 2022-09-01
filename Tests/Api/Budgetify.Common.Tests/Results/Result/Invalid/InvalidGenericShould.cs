@@ -1,34 +1,33 @@
-﻿namespace Budgetify.Common.Tests.Results.Result
+﻿namespace Budgetify.Common.Tests.Results.Result;
+
+using System.Net;
+
+using Budgetify.Common.Results;
+
+using FluentAssertions;
+
+using NUnit.Framework;
+
+[TestFixture(Category = nameof(InvalidGenericShould))]
+public class InvalidGenericShould
 {
-    using System.Net;
-
-    using Budgetify.Common.Results;
-
-    using FluentAssertions;
-
-    using NUnit.Framework;
-
-    [TestFixture(Category = nameof(InvalidGenericShould))]
-    public class InvalidGenericShould
+    [Test]
+    public void WillReturnBadRequest()
     {
-        [Test]
-        public void WillReturnBadRequest()
-        {
-            // Arrange
+        // Arrange
 
-            // Act
-            Result<string> result = Result.Invalid<string>("BAD_REQUEST");
+        // Act
+        Result<string> result = Result.Invalid<string>("BAD_REQUEST");
 
-            // Assert
-            result.IsFailure.Should().BeTrue();
-            result.IsSuccess.Should().BeFalse();
-            result.IsFailureOrNull.Should().BeTrue();
-            result.Message.Should().Be("BAD_REQUEST");
-            result.ResultType.Should().Be(ResultType.BadRequest);
-            result.HttpStatusCode.Should().Be(HttpStatusCode.BadRequest);
-            result.IsNotFound.Should().BeFalse();
-            result.Value.Should().BeNull();
-            result.IsEmpty.Should().BeTrue();
-        }
+        // Assert
+        result.IsFailure.Should().BeTrue();
+        result.IsSuccess.Should().BeFalse();
+        result.IsFailureOrNull.Should().BeTrue();
+        result.Message.Should().Be("BAD_REQUEST");
+        result.ResultType.Should().Be(ResultType.BadRequest);
+        result.HttpStatusCode.Should().Be(HttpStatusCode.BadRequest);
+        result.IsNotFound.Should().BeFalse();
+        result.Value.Should().BeNull();
+        result.IsEmpty.Should().BeTrue();
     }
 }

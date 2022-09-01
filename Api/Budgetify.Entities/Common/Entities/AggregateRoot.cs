@@ -1,7 +1,6 @@
-﻿namespace Budgetify.Entities.Common.Entities
+﻿namespace Budgetify.Entities.Common.Entities;
+
+public class AggregateRoot : Entity
 {
-    public class AggregateRoot : Entity
-    {
-        protected AggregateRoot() { }
-    }
+    protected AggregateRoot() { }
 }

@@ -1,42 +1,41 @@
-﻿namespace Budgetify.Entities.User.ValueObjects
+﻿namespace Budgetify.Entities.User.ValueObjects;
+
+using System.Collections.Generic;
+
+using Budgetify.Common.Extensions;
+using Budgetify.Common.Results;
+using Budgetify.Entities.Common.ValueObjects;
+
+public sealed class CityValue : ValueObject
 {
-    using System.Collections.Generic;
+    private const uint MAX_CITY_LENGTH = 255;
 
-    using Budgetify.Common.Extensions;
-    using Budgetify.Common.Results;
-    using Budgetify.Entities.Common.ValueObjects;
+    public string Value { get; }
 
-    public sealed class CityValue : ValueObject
+    private CityValue(string value)
     {
-        private const uint MAX_CITY_LENGTH = 255;
+        Value = value;
+    }
 
-        public string Value { get; }
-
-        private CityValue(string value)
+    public static Result<CityValue> Create(string? value)
+    {
+        if (value.IsEmpty())
         {
-            Value = value;
+            return Result.Invalid<CityValue>(ResultCodes.CityInvalid);
         }
 
-        public static Result<CityValue> Create(string? value)
+        if (value.Length > MAX_CITY_LENGTH)
         {
-            if (value.IsEmpty())
-            {
-                return Result.Invalid<CityValue>(ResultCodes.CityInvalid);
-            }
-
-            if (value.Length > MAX_CITY_LENGTH)
-            {
-                return Result.Invalid<CityValue>(ResultCodes.CityInvalidLength);
-            }
-
-            return Result.Ok(new CityValue(value));
+            return Result.Invalid<CityValue>(ResultCodes.CityInvalidLength);
         }
 
-        public static implicit operator string(CityValue obj) => obj.Value;
+        return Result.Ok(new CityValue(value));
+    }
 
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Value;
-        }
+    public static implicit operator string(CityValue obj) => obj.Value;
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Value;
     }
 }
