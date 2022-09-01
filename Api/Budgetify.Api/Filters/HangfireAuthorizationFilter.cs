@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 using Budgetify.Common.Extensions;
@@ -57,8 +58,8 @@ public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
     private static bool Unauthorized(DashboardContext context, HttpContext httpContext)
     {
         httpContext.Response.Headers["WWW-Authenticate"] = "Basic";
-        httpContext.Response.StatusCode = 401;
-        context.Response.StatusCode = 401;
+        httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+        context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
 
         return false;
     }

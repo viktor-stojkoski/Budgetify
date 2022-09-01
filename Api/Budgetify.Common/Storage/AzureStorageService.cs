@@ -170,9 +170,10 @@ public class AzureStorageService : IStorageService
     /// </summary>
     private static BlobHttpHeaders GetBlobHttpHeaders(string contentType)
     {
-        BlobHttpHeaders blobHttpHeaders = new();
-
-        blobHttpHeaders.ContentType = contentType;
+        BlobHttpHeaders blobHttpHeaders = new()
+        {
+            ContentType = contentType
+        };
 
         return blobHttpHeaders;
     }

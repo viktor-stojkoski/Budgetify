@@ -49,7 +49,9 @@ public static partial class Register
                     shared: true,
                     flushToDiskInterval: TimeSpan.FromSeconds(1))
                 .WriteTo.ApplicationInsights(
-                    //TODO: FIX telemetryConfiguration: new() { ConnectionString = LoggerSettings.ApplicationInsightsKey },
+#if !DEBUG
+                    telemetryConfiguration: new() { ConnectionString = LoggerSettings.ApplicationInsightsKey },
+#endif
                     telemetryConverter: TelemetryConverter.Traces)
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
