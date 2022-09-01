@@ -1,33 +1,32 @@
-﻿namespace Budgetify.Queries.Infrastructure.Context
+﻿namespace Budgetify.Queries.Infrastructure.Context;
+
+using System.Linq;
+
+using Budgetify.Queries.Common.Entities;
+using Budgetify.Queries.Infrastructure.Configuration;
+
+using Microsoft.EntityFrameworkCore;
+
+public class BudgetifyReadonlyDbContext : DbContext, IBudgetifyReadonlyDbContext
 {
-    using System.Linq;
+    public BudgetifyReadonlyDbContext(DbContextOptions<BudgetifyReadonlyDbContext> options)
+        : base(options) { }
 
-    using Budgetify.Queries.Common.Entities;
-    using Budgetify.Queries.Infrastructure.Configuration;
-
-    using Microsoft.EntityFrameworkCore;
-
-    public class BudgetifyReadonlyDbContext : DbContext, IBudgetifyReadonlyDbContext
+    public IQueryable<TEntity> AllNoTrackedOf<TEntity>() where TEntity : Entity
     {
-        public BudgetifyReadonlyDbContext(DbContextOptions<BudgetifyReadonlyDbContext> options)
-            : base(options) { }
+        return Set<TEntity>().AsNoTracking().Where(x => x.DeletedOn == null);
+    }
 
-        public IQueryable<TEntity> AllNoTrackedOf<TEntity>() where TEntity : Entity
-        {
-            return Set<TEntity>().AsNoTracking().Where(x => x.DeletedOn == null);
-        }
+    public IQueryable<TEntity> SetOf<TEntity>() where TEntity : Entity
+    {
+        return Set<TEntity>().AsNoTracking();
+    }
 
-        public IQueryable<TEntity> SetOf<TEntity>() where TEntity : Entity
-        {
-            return Set<TEntity>().AsNoTracking();
-        }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.ApplyConfiguration(new TestConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-        }
+        modelBuilder.ApplyConfiguration(new TestConfiguration());
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
     }
 }

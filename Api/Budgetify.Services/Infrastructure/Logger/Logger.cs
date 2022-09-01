@@ -1,40 +1,39 @@
-﻿namespace Budgetify.Services.Infrastructure.Logger
+﻿namespace Budgetify.Services.Infrastructure.Logger;
+
+using System;
+
+using Budgetify.Contracts.Settings;
+
+using Microsoft.Extensions.Logging;
+
+public class Logger<TCategoryName> : Contracts.Infrastructure.Logger.ILogger<TCategoryName>
 {
-    using System;
+    private readonly ILogger<TCategoryName> _logger;
+    private readonly ILoggerSettings _loggerSettings;
 
-    using Budgetify.Contracts.Settings;
-
-    using Microsoft.Extensions.Logging;
-
-    public class Logger<TCategoryName> : Contracts.Infrastructure.Logger.ILogger<TCategoryName>
+    public Logger(ILogger<TCategoryName> logger, ILoggerSettings loggerSettings)
     {
-        private readonly ILogger<TCategoryName> _logger;
-        private readonly ILoggerSettings _loggerSettings;
+        _logger = logger;
+        _loggerSettings = loggerSettings;
+    }
 
-        public Logger(ILogger<TCategoryName> logger, ILoggerSettings loggerSettings)
-        {
-            _logger = logger;
-            _loggerSettings = loggerSettings;
-        }
+    public void LogError(string message)
+    {
+        _logger.LogError(message);
+    }
 
-        public void LogError(string message)
-        {
-            _logger.LogError(message);
-        }
+    public void LogException(Exception exception, string message)
+    {
+        _logger.LogError(exception, message);
+    }
 
-        public void LogException(Exception exception, string message)
-        {
-            _logger.LogError(exception, message);
-        }
+    public void LogException(Exception exception)
+    {
+        _logger.LogError(exception, exception.Message);
+    }
 
-        public void LogException(Exception exception)
-        {
-            _logger.LogError(exception, exception.Message);
-        }
-
-        public void LogInformation(string message, object data)
-        {
-            _logger.LogInformation(_loggerSettings.DataMessageTemplate, message, data);
-        }
+    public void LogInformation(string message, object data)
+    {
+        _logger.LogInformation(_loggerSettings.DataMessageTemplate, message, data);
     }
 }

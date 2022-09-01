@@ -1,52 +1,51 @@
-﻿namespace Budgetify.Common.Tests.Extensions.StringExtensions
+﻿namespace Budgetify.Common.Tests.Extensions.StringExtensions;
+
+using Budgetify.Common.Extensions;
+
+using FluentAssertions;
+
+using NUnit.Framework;
+
+[TestFixture(Category = nameof(IsEmptyShould))]
+public class IsEmptyShould
 {
-    using Budgetify.Common.Extensions;
-
-    using FluentAssertions;
-
-    using NUnit.Framework;
-
-    [TestFixture(Category = nameof(IsEmptyShould))]
-    public class IsEmptyShould
+    [Test]
+    public void WhenNonEmptyString_WillReturnFalse()
     {
-        [Test]
-        public void WhenNonEmptyString_WillReturnFalse()
-        {
-            // Arrange
-            string str = "Test string";
+        // Arrange
+        string str = "Test string";
 
-            // Act
-            bool result = str.IsEmpty();
+        // Act
+        bool result = str.IsEmpty();
 
-            // Assert
-            result.Should().BeFalse();
-        }
+        // Assert
+        result.Should().BeFalse();
+    }
 
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase("    ")]
-        public void WhenWhitespaceAndEmptyString_WillReturnTrue(string str)
-        {
-            // Arrange
+    [TestCase("")]
+    [TestCase(" ")]
+    [TestCase("    ")]
+    public void WhenWhitespaceAndEmptyString_WillReturnTrue(string str)
+    {
+        // Arrange
 
-            // Act
-            bool result = str.IsEmpty();
+        // Act
+        bool result = str.IsEmpty();
 
-            // Assert
-            result.Should().BeTrue();
-        }
+        // Assert
+        result.Should().BeTrue();
+    }
 
-        [Test]
-        public void WhenStringNull_WillReturnTrue()
-        {
-            // Arrange
-            string? str = null;
+    [Test]
+    public void WhenStringNull_WillReturnTrue()
+    {
+        // Arrange
+        string? str = null;
 
-            // Act
-            bool result = str.IsEmpty();
+        // Act
+        bool result = str.IsEmpty();
 
-            // Assert
-            result.Should().BeTrue();
-        }
+        // Assert
+        result.Should().BeTrue();
     }
 }

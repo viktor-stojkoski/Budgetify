@@ -1,48 +1,47 @@
-﻿namespace Budgetify.Storage.User.Repositories
+﻿namespace Budgetify.Storage.User.Repositories;
+
+using System;
+using System.Threading.Tasks;
+
+using Budgetify.Common.Results;
+using Budgetify.Contracts.User.Repositories;
+using Budgetify.Entities.User.Domain;
+using Budgetify.Storage.Common.Extensions;
+using Budgetify.Storage.Common.Repositories;
+using Budgetify.Storage.Infrastructure.Context;
+using Budgetify.Storage.User.Factories;
+
+using Microsoft.EntityFrameworkCore;
+
+public class UserRepository : Repository<Entities.User>, IUserRepository
 {
-    using System;
-    using System.Threading.Tasks;
+    public UserRepository(IBudgetifyDbContext budgetifyDbContext)
+        : base(budgetifyDbContext) { }
 
-    using Budgetify.Common.Results;
-    using Budgetify.Contracts.User.Repositories;
-    using Budgetify.Entities.User.Domain;
-    using Budgetify.Storage.Common.Extensions;
-    using Budgetify.Storage.Common.Repositories;
-    using Budgetify.Storage.Infrastructure.Context;
-    using Budgetify.Storage.User.Factories;
-
-    using Microsoft.EntityFrameworkCore;
-
-    public class UserRepository : Repository<Entities.User>, IUserRepository
+    public async Task<Result<User>> GetUserAsync(Guid userUid)
     {
-        public UserRepository(IBudgetifyDbContext budgetifyDbContext)
-            : base(budgetifyDbContext) { }
+        Entities.User? dbUser = await AllNoTrackedOf<Entities.User>()
+            .SingleOrDefaultAsync(x => x.Uid == userUid);
 
-        public async Task<Result<User>> GetUserAsync(Guid userUid)
+        if (dbUser is null)
         {
-            Entities.User dbUser = await AllNoTrackedOf<Entities.User>()
-                .SingleOrDefaultAsync(x => x.Uid == userUid);
-
-            if (dbUser is null)
-            {
-                return Result.NotFound<User>(ResultCodes.UserNotFound);
-            }
-
-            return dbUser.CreateUser();
+            return Result.NotFound<User>(ResultCodes.UserNotFound);
         }
 
-        public void Insert(User user)
-        {
-            Entities.User dbUser = user.CreateUser();
+        return dbUser.CreateUser();
+    }
 
-            Insert(dbUser);
-        }
+    public void Insert(User user)
+    {
+        Entities.User dbUser = user.CreateUser();
 
-        public void Update(User user)
-        {
-            Entities.User dbUser = user.CreateUser();
+        Insert(dbUser);
+    }
 
-            AttachOrUpdate(dbUser, user.State.GetState());
-        }
+    public void Update(User user)
+    {
+        Entities.User dbUser = user.CreateUser();
+
+        AttachOrUpdate(dbUser, user.State.GetState());
     }
 }

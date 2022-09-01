@@ -1,6 +1,5 @@
-﻿namespace Budgetify.Common.Storage
-{
-    using System;
+﻿namespace Budgetify.Common.Storage;
 
-    public record UploadedFileResponse(Uri FileUri, string FileName);
-}
+using System;
+
+public record UploadedFileResponse(Uri FileUri, string FileName);

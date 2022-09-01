@@ -1,28 +1,27 @@
-﻿namespace Budgetify.Api.Settings
+﻿namespace Budgetify.Api.Settings;
+
+using Budgetify.Contracts.Settings;
+
+using Microsoft.Extensions.Configuration;
+
+public class JobSettings : IJobSettings
 {
-    using Budgetify.Contracts.Settings;
+    private readonly IConfiguration _configuration;
 
-    using Microsoft.Extensions.Configuration;
-
-    public class JobSettings : IJobSettings
+    public JobSettings(IConfiguration configuration)
     {
-        private readonly IConfiguration _configuration;
-
-        public JobSettings(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
-        public string Endpoint => _configuration.GetValue<string>("jobs:endpoint");
-
-        public string DashboardUsername => _configuration.GetValue<string>("jobs:dashboardUsername");
-
-        public string DashboardPassword => _configuration.GetValue<string>("jobs:dashboardPassword");
-
-        public string DefaultQueue => _configuration.GetValue<string>("jobs:defaultQueue");
-
-        public string[] ProcessingQueues => _configuration.GetSection("jobs:processingQueues").Get<string[]>();
-
-        public string SqlConnectionString => _configuration.GetValue<string>("jobs:sqlConnectionString");
+        _configuration = configuration;
     }
+
+    public string Endpoint => _configuration.GetValue<string>("jobs:endpoint");
+
+    public string DashboardUsername => _configuration.GetValue<string>("jobs:dashboardUsername");
+
+    public string DashboardPassword => _configuration.GetValue<string>("jobs:dashboardPassword");
+
+    public string DefaultQueue => _configuration.GetValue<string>("jobs:defaultQueue");
+
+    public string[] ProcessingQueues => _configuration.GetSection("jobs:processingQueues").Get<string[]>();
+
+    public string SqlConnectionString => _configuration.GetValue<string>("jobs:sqlConnectionString");
 }

@@ -1,42 +1,41 @@
-﻿namespace Budgetify.Entities.User.ValueObjects
+﻿namespace Budgetify.Entities.User.ValueObjects;
+
+using System.Collections.Generic;
+
+using Budgetify.Common.Extensions;
+using Budgetify.Common.Results;
+using Budgetify.Entities.Common.ValueObjects;
+
+public sealed class UserNameValue : ValueObject
 {
-    using System.Collections.Generic;
+    private const uint MAX_NAME_LENGTH = 255;
 
-    using Budgetify.Common.Extensions;
-    using Budgetify.Common.Results;
-    using Budgetify.Entities.Common.ValueObjects;
+    public string Value { get; }
 
-    public sealed class UserNameValue : ValueObject
+    private UserNameValue(string value)
     {
-        private const uint MAX_NAME_LENGTH = 255;
+        Value = value;
+    }
 
-        public string Value { get; }
-
-        private UserNameValue(string value)
+    public static Result<UserNameValue> Create(string? value)
+    {
+        if (value.IsEmpty())
         {
-            Value = value;
+            return Result.Invalid<UserNameValue>(ResultCodes.UserNameInvalid);
         }
 
-        public static Result<UserNameValue> Create(string? value)
+        if (value.Length > MAX_NAME_LENGTH)
         {
-            if (value.IsEmpty())
-            {
-                return Result.Invalid<UserNameValue>(ResultCodes.UserNameInvalid);
-            }
-
-            if (value.Length > MAX_NAME_LENGTH)
-            {
-                return Result.Invalid<UserNameValue>(ResultCodes.UserNameInvalidLength);
-            }
-
-            return Result.Ok(new UserNameValue(value));
+            return Result.Invalid<UserNameValue>(ResultCodes.UserNameInvalidLength);
         }
 
-        public static implicit operator string(UserNameValue obj) => obj.Value;
+        return Result.Ok(new UserNameValue(value));
+    }
 
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Value;
-        }
+    public static implicit operator string(UserNameValue obj) => obj.Value;
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Value;
     }
 }

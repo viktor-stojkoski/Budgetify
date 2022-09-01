@@ -1,213 +1,213 @@
-﻿namespace Budgetify.Common.Storage
+﻿namespace Budgetify.Common.Storage;
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
+using Azure;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Sas;
+
+using Budgetify.Common.Extensions;
+
+public class AzureStorageService : IStorageService
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Threading.Tasks;
+    private readonly BlobServiceClient _blobServiceClient;
 
-    using Azure;
-    using Azure.Storage.Blobs;
-    using Azure.Storage.Blobs.Models;
-    using Azure.Storage.Blobs.Specialized;
-    using Azure.Storage.Sas;
-
-    using Budgetify.Common.Extensions;
-
-    public class AzureStorageService : IStorageService
+    public AzureStorageService(string connectionString)
     {
-        private readonly BlobServiceClient _blobServiceClient;
+        _blobServiceClient = new BlobServiceClient(connectionString);
+    }
 
-        public AzureStorageService(string connectionString)
+    public async Task DeleteDirectoryAsync(string containerName, string directory)
+    {
+        CheckStringArgument(containerName, nameof(containerName));
+        CheckStringArgument(directory, nameof(directory));
+
+        BlobContainerClient container = await GetContainerAsync(containerName);
+
+        IAsyncEnumerator<BlobHierarchyItem> blobEnumerator =
+            container.GetBlobsByHierarchyAsync(prefix: directory).GetAsyncEnumerator();
+
+        List<BlobItem> result = new();
+
+        while (await blobEnumerator.MoveNextAsync())
         {
-            _blobServiceClient = new BlobServiceClient(connectionString);
-        }
-
-        public async Task DeleteDirectoryAsync(string containerName, string directory)
-        {
-            CheckStringArgument(containerName, nameof(containerName));
-            CheckStringArgument(directory, nameof(directory));
-
-            BlobContainerClient container = await GetContainerAsync(containerName);
-
-            IAsyncEnumerator<BlobHierarchyItem> blobEnumerator =
-                container.GetBlobsByHierarchyAsync(prefix: directory).GetAsyncEnumerator();
-
-            List<BlobItem> result = new();
-
-            while (await blobEnumerator.MoveNextAsync())
+            if (blobEnumerator.Current.IsBlob)
             {
-                if (blobEnumerator.Current.IsBlob)
-                {
-                    result.Add(blobEnumerator.Current.Blob);
-                }
-            }
-
-            foreach (BlobItem blob in result)
-            {
-                await container.GetBlobClient(blob.Name).DeleteIfExistsAsync();
+                result.Add(blobEnumerator.Current.Blob);
             }
         }
 
-        public async Task DeleteFileAsync(string containerName, string fileName)
+        foreach (BlobItem blob in result)
         {
-            CheckStringArgument(containerName, nameof(containerName));
-            CheckStringArgument(fileName, nameof(fileName));
+            await container.GetBlobClient(blob.Name).DeleteIfExistsAsync();
+        }
+    }
 
-            BlobContainerClient container = await GetContainerAsync(containerName);
+    public async Task DeleteFileAsync(string containerName, string fileName)
+    {
+        CheckStringArgument(containerName, nameof(containerName));
+        CheckStringArgument(fileName, nameof(fileName));
 
-            BlobClient blob = container.GetBlobClient(fileName);
+        BlobContainerClient container = await GetContainerAsync(containerName);
 
-            await blob.DeleteIfExistsAsync();
+        BlobClient blob = container.GetBlobClient(fileName);
+
+        await blob.DeleteIfExistsAsync();
+    }
+
+    public async Task<Stream> DownloadAsync(string containerName, string fileName)
+    {
+        CheckStringArgument(containerName, nameof(containerName));
+        CheckStringArgument(fileName, nameof(fileName));
+
+        BlobContainerClient container = await GetContainerAsync(containerName);
+
+        BlobClient blob = container.GetBlobClient(fileName);
+
+        if (!await blob.ExistsAsync())
+        {
+            throw new FileNotFoundException($"File with name {fileName} does not exist.");
         }
 
-        public async Task<Stream> DownloadAsync(string containerName, string fileName)
+        Response<BlobDownloadResult> stream = await blob.DownloadContentAsync();
+
+        return stream.Value.Content.ToStream();
+    }
+
+    public async Task<Uri> GetSignedUrlAsync(string containerName, string fileName, DateTime expiresOn)
+    {
+        CheckStringArgument(containerName, nameof(containerName));
+        CheckStringArgument(fileName, nameof(fileName));
+        CheckExpiresOnArgument(expiresOn, nameof(expiresOn));
+
+        BlobContainerClient container = await GetContainerAsync(containerName);
+
+        BlobClient blob = container.GetBlobClient(fileName);
+
+        if (!await blob.ExistsAsync())
         {
-            CheckStringArgument(containerName, nameof(containerName));
-            CheckStringArgument(fileName, nameof(fileName));
-
-            BlobContainerClient container = await GetContainerAsync(containerName);
-
-            BlobClient blob = container.GetBlobClient(fileName);
-
-            if (!await blob.ExistsAsync())
-            {
-                throw new FileNotFoundException($"File with name {fileName} does not exist.");
-            }
-
-            Response<BlobDownloadResult> stream = await blob.DownloadContentAsync();
-
-            return stream.Value.Content.ToStream();
+            throw new FileNotFoundException($"File with name {fileName} does not exist.");
         }
 
-        public async Task<Uri> GetSignedUrlAsync(string containerName, string fileName, DateTime expiresOn)
+        if (!blob.CanGenerateSasUri)
         {
-            CheckStringArgument(containerName, nameof(containerName));
-            CheckStringArgument(fileName, nameof(fileName));
-            CheckExpiresOnArgument(expiresOn, nameof(expiresOn));
-
-            BlobContainerClient container = await GetContainerAsync(containerName);
-
-            BlobClient blob = container.GetBlobClient(fileName);
-
-            if (!await blob.ExistsAsync())
-            {
-                throw new FileNotFoundException($"File with name {fileName} does not exist.");
-            }
-
-            if (!blob.CanGenerateSasUri)
-            {
-                throw new AccessViolationException(
-                    $"BlobClient must be authorized with Shared Key credentials to create a service SAS.");
-            }
-
-            BlobSasBuilder sasBuilder = new()
-            {
-                BlobContainerName = blob.GetParentBlobContainerClient().Name,
-                BlobName = blob.Name,
-                ExpiresOn = expiresOn
-            };
-
-            sasBuilder.SetPermissions(BlobSasPermissions.Read);
-
-            return blob.GenerateSasUri(sasBuilder);
+            throw new AccessViolationException(
+                $"BlobClient must be authorized with Shared Key credentials to create a service SAS.");
         }
 
-        public async Task<UploadedFileResponse> UploadAsync(string containerName, string fileName, byte[] content, string contentType)
+        BlobSasBuilder sasBuilder = new()
         {
-            CheckStringArgument(containerName, nameof(containerName));
-            CheckStringArgument(fileName, nameof(fileName));
-            CheckContentArgument(content, nameof(content));
-            CheckStringArgument(contentType, nameof(contentType));
+            BlobContainerName = blob.GetParentBlobContainerClient().Name,
+            BlobName = blob.Name,
+            ExpiresOn = expiresOn
+        };
 
-            BlobContainerClient container = await GetContainerAsync(containerName);
+        sasBuilder.SetPermissions(BlobSasPermissions.Read);
 
-            string fileId = RemoveUnsupportedCharacters(fileName);
+        return blob.GenerateSasUri(sasBuilder);
+    }
 
-            BlobClient blob = container.GetBlobClient(fileId);
+    public async Task<UploadedFileResponse> UploadAsync(string containerName, string fileName, byte[] content, string contentType)
+    {
+        CheckStringArgument(containerName, nameof(containerName));
+        CheckStringArgument(fileName, nameof(fileName));
+        CheckContentArgument(content, nameof(content));
+        CheckStringArgument(contentType, nameof(contentType));
 
-            using Stream fileStream = new MemoryStream(content);
+        BlobContainerClient container = await GetContainerAsync(containerName);
 
-            BlobHttpHeaders blobHttpHeader = GetBlobHttpHeaders(contentType);
+        string fileId = RemoveUnsupportedCharacters(fileName);
 
-            await blob.UploadAsync(fileStream, blobHttpHeader);
+        BlobClient blob = container.GetBlobClient(fileId);
 
-            return new UploadedFileResponse(
-                FileUri: blob.Uri,
-                FileName: fileId);
+        using Stream fileStream = new MemoryStream(content);
+
+        BlobHttpHeaders blobHttpHeader = GetBlobHttpHeaders(contentType);
+
+        await blob.UploadAsync(fileStream, blobHttpHeader);
+
+        return new UploadedFileResponse(
+            FileUri: blob.Uri,
+            FileName: fileId);
+    }
+
+    /// <summary>
+    /// Returns the blob container client if found.
+    /// </summary>
+    private async Task<BlobContainerClient> GetContainerAsync(string containerName)
+    {
+        BlobContainerClient container =
+            _blobServiceClient.GetBlobContainerClient(containerName);
+
+        if (!await container.ExistsAsync())
+        {
+            throw new DirectoryNotFoundException($"Container with name {containerName} does not exist.");
         }
 
-        /// <summary>
-        /// Returns the blob container client if found.
-        /// </summary>
-        private async Task<BlobContainerClient> GetContainerAsync(string containerName)
+        return container;
+    }
+
+    /// <summary>
+    /// Removes unsupported characters.
+    /// </summary>
+    private static string RemoveUnsupportedCharacters(string name)
+    {
+        IEnumerable<char> invalidChars = Path.GetInvalidPathChars()
+            .Union(Path.GetInvalidFileNameChars())
+            .Where(x => x != '/');
+
+        return string.Concat(name.Split(invalidChars.ToArray()));
+    }
+
+    /// <summary>
+    /// Returns Blob HTTP Headers with the given parameters.
+    /// </summary>
+    private static BlobHttpHeaders GetBlobHttpHeaders(string contentType)
+    {
+        BlobHttpHeaders blobHttpHeaders = new()
         {
-            BlobContainerClient container =
-                _blobServiceClient.GetBlobContainerClient(containerName);
+            ContentType = contentType
+        };
 
-            if (!await container.ExistsAsync())
-            {
-                throw new DirectoryNotFoundException($"Container with name {containerName} does not exist.");
-            }
+        return blobHttpHeaders;
+    }
 
-            return container;
+    /// <summary>
+    /// Checks and throws exception if string argument is null or empty string.
+    /// </summary>
+    private static void CheckStringArgument(string argumentValue, string argumentName)
+    {
+        if (argumentValue.IsEmpty())
+        {
+            throw new ArgumentException($"Argument {argumentName} is required.");
         }
+    }
 
-        /// <summary>
-        /// Removes unsupported characters.
-        /// </summary>
-        private static string RemoveUnsupportedCharacters(string name)
+    /// <summary>
+    /// Checks and throws exception if argument of type T is null or empty.
+    /// </summary>
+    private static void CheckContentArgument<T>(T argumentValue, string argumentName)
+    {
+        if (Equals(argumentValue, default(T)))
         {
-            IEnumerable<char> invalidChars = Path.GetInvalidPathChars()
-                .Union(Path.GetInvalidFileNameChars())
-                .Where(x => x != '/');
-
-            return string.Concat(name.Split(invalidChars.ToArray()));
+            throw new ArgumentException($"Argument {argumentName} is required.");
         }
+    }
 
-        /// <summary>
-        /// Returns Blob HTTP Headers with the given parameters.
-        /// </summary>
-        private static BlobHttpHeaders GetBlobHttpHeaders(string contentType)
+    /// <summary>
+    /// Checks and throws exception if date argument is not UTC and references moment in the past.
+    /// </summary>
+    private static void CheckExpiresOnArgument(DateTime expiresOn, string argumentName)
+    {
+        if (expiresOn.Kind is not DateTimeKind.Utc || expiresOn < DateTime.UtcNow)
         {
-            BlobHttpHeaders blobHttpHeaders = new();
-
-            blobHttpHeaders.ContentType = contentType;
-
-            return blobHttpHeaders;
-        }
-
-        /// <summary>
-        /// Checks and throws exception if string argument is null or empty string.
-        /// </summary>
-        private static void CheckStringArgument(string argumentValue, string argumentName)
-        {
-            if (argumentValue.IsEmpty())
-            {
-                throw new ArgumentException($"Argument {argumentName} is required.");
-            }
-        }
-
-        /// <summary>
-        /// Checks and throws exception if argument of type T is null or empty.
-        /// </summary>
-        private static void CheckContentArgument<T>(T argumentValue, string argumentName)
-        {
-            if (Equals(argumentValue, default(T)))
-            {
-                throw new ArgumentException($"Argument {argumentName} is required.");
-            }
-        }
-
-        /// <summary>
-        /// Checks and throws exception if date argument is not UTC and references moment in the past.
-        /// </summary>
-        private static void CheckExpiresOnArgument(DateTime expiresOn, string argumentName)
-        {
-            if (expiresOn.Kind is not DateTimeKind.Utc || expiresOn < DateTime.UtcNow)
-            {
-                throw new ArgumentException($"Argument {argumentName} must be UTC kind and reference moment in the future.");
-            }
+            throw new ArgumentException($"Argument {argumentName} must be UTC kind and reference moment in the future.");
         }
     }
 }

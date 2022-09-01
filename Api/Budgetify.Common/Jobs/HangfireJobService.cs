@@ -1,38 +1,37 @@
-﻿namespace Budgetify.Common.Jobs
+﻿namespace Budgetify.Common.Jobs;
+
+using System;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+
+using Hangfire;
+
+public class HangfireJobService : IJobService
 {
-    using System;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
+    private readonly IBackgroundJobClient _backgroundJobClient;
 
-    using Hangfire;
-
-    public class HangfireJobService : IJobService
+    public HangfireJobService(IBackgroundJobClient backgroundJobClient)
     {
-        private readonly IBackgroundJobClient _backgroundJobClient;
+        _backgroundJobClient = backgroundJobClient;
+    }
 
-        public HangfireJobService(IBackgroundJobClient backgroundJobClient)
-        {
-            _backgroundJobClient = backgroundJobClient;
-        }
+    public string Enqueue(Expression<Action> methodCall)
+    {
+        return _backgroundJobClient.Enqueue(methodCall);
+    }
 
-        public string Enqueue(Expression<Action> methodCall)
-        {
-            return _backgroundJobClient.Enqueue(methodCall);
-        }
+    public string Enqueue<T>(Expression<Func<T, Task>> methodCall)
+    {
+        return _backgroundJobClient.Enqueue(methodCall);
+    }
 
-        public string Enqueue<T>(Expression<Func<T, Task>> methodCall)
-        {
-            return _backgroundJobClient.Enqueue(methodCall);
-        }
+    public string Enqueue<T>(Expression<Action<T>> methodCall)
+    {
+        return _backgroundJobClient.Enqueue(methodCall);
+    }
 
-        public string Enqueue<T>(Expression<Action<T>> methodCall)
-        {
-            return _backgroundJobClient.Enqueue(methodCall);
-        }
-
-        public string Enqueue(Expression<Func<Task>> methodCall)
-        {
-            return _backgroundJobClient.Enqueue(methodCall);
-        }
+    public string Enqueue(Expression<Func<Task>> methodCall)
+    {
+        return _backgroundJobClient.Enqueue(methodCall);
     }
 }

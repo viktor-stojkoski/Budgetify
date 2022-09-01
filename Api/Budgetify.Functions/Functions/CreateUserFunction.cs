@@ -47,7 +47,14 @@ public class CreateUserFunction
         }
 
         string requestBody = await new StreamReader(request.Body).ReadToEndAsync();
-        CreateUserRequest createUserRequest = JsonConvert.DeserializeObject<CreateUserRequest>(requestBody);
+        CreateUserRequest? createUserRequest = JsonConvert.DeserializeObject<CreateUserRequest>(requestBody);
+
+        if (createUserRequest is null)
+        {
+            _logger.LogError("Request invalid.");
+
+            return new BadRequestResult();
+        }
 
         CommandResult<EmptyValue> result =
             await _commandDispatcher.ExecuteAsync(

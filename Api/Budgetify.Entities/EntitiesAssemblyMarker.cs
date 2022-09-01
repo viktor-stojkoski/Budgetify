@@ -1,10 +1,9 @@
-﻿namespace Budgetify.Entities
+﻿namespace Budgetify.Entities;
+
+/// <summary>
+/// Marker class for entities.
+/// </summary>
+public sealed class EntitiesAssemblyMarker
 {
-    /// <summary>
-    /// Marker class for entities.
-    /// </summary>
-    public sealed class EntitiesAssemblyMarker
-    {
-        private EntitiesAssemblyMarker() { }
-    }
+    private EntitiesAssemblyMarker() { }
 }

@@ -1,18 +1,17 @@
-namespace Budgetify.Storage.Tests
+namespace Budgetify.Storage.Tests;
+
+using NUnit.Framework;
+
+public class Tests
 {
-    using NUnit.Framework;
-
-    public class Tests
+    [SetUp]
+    public void Setup()
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
+    }
 
-        [Test]
-        public void Test1()
-        {
-            Assert.Pass();
-        }
+    [Test]
+    public void Test1()
+    {
+        Assert.Pass();
     }
 }

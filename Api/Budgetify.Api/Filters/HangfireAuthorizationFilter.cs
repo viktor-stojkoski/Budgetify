@@ -1,66 +1,66 @@
-﻿namespace Budgetify.Api.Filters
+﻿namespace Budgetify.Api.Filters;
+
+using System;
+using System.Linq;
+using System.Net;
+using System.Text;
+
+using Budgetify.Common.Extensions;
+
+using Hangfire.Annotations;
+using Hangfire.Dashboard;
+
+using Microsoft.AspNetCore.Http;
+
+public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
 {
-    using System;
-    using System.Linq;
-    using System.Text;
+    private readonly string _username;
+    private readonly string _password;
 
-    using Budgetify.Common.Extensions;
-
-    using Hangfire.Annotations;
-    using Hangfire.Dashboard;
-
-    using Microsoft.AspNetCore.Http;
-
-    public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
+    public HangfireAuthorizationFilter(string username, string password)
     {
-        private readonly string _username;
-        private readonly string _password;
+        _username = username;
+        _password = password;
+    }
 
-        public HangfireAuthorizationFilter(string username, string password)
+    public bool Authorize([NotNull] DashboardContext context)
+    {
+        HttpContext httpContext = context.GetHttpContext();
+
+        string authHeader = httpContext.Request.Headers["Authorization"];
+
+        if (authHeader?.StartsWith("Basic") == true)
         {
-            _username = username;
-            _password = password;
-        }
+            string? encodedUsernameAndPassword = authHeader.Split(" ").LastOrDefault();
 
-        public bool Authorize([NotNull] DashboardContext context)
-        {
-            HttpContext httpContext = context.GetHttpContext();
-
-            string authHeader = httpContext.Request.Headers["Authorization"];
-
-            if (authHeader?.StartsWith("Basic") == true)
+            if (encodedUsernameAndPassword is not null)
             {
-                string? encodedUsernameAndPassword = authHeader.Split(" ").LastOrDefault();
+                string decodedUsernameAndPassword =
+                    Encoding.UTF8.GetString(Convert.FromBase64String(encodedUsernameAndPassword));
 
-                if (encodedUsernameAndPassword is not null)
-                {
-                    string decodedUsernameAndPassword =
-                        Encoding.UTF8.GetString(Convert.FromBase64String(encodedUsernameAndPassword));
+                string? username = decodedUsernameAndPassword.Split(":").FirstOrDefault();
+                string? password = decodedUsernameAndPassword.Split(":").LastOrDefault();
 
-                    string? username = decodedUsernameAndPassword.Split(":").FirstOrDefault();
-                    string? password = decodedUsernameAndPassword.Split(":").LastOrDefault();
-
-                    return ValidateCredentials(username, password) != false
-                        || Unauthorized(context, httpContext);
-                }
-
-                return true;
+                return ValidateCredentials(username, password) != false
+                    || Unauthorized(context, httpContext);
             }
 
-            return Unauthorized(context, httpContext);
+            return true;
         }
 
-        private bool ValidateCredentials(string? username, string? password)
-            => username.HasValue() && password.HasValue()
-                && _username == username && password == _password;
+        return Unauthorized(context, httpContext);
+    }
 
-        private static bool Unauthorized(DashboardContext context, HttpContext httpContext)
-        {
-            httpContext.Response.Headers["WWW-Authenticate"] = "Basic";
-            httpContext.Response.StatusCode = 401;
-            context.Response.StatusCode = 401;
+    private bool ValidateCredentials(string? username, string? password)
+        => username.HasValue() && password.HasValue()
+            && _username == username && password == _password;
 
-            return false;
-        }
+    private static bool Unauthorized(DashboardContext context, HttpContext httpContext)
+    {
+        httpContext.Response.Headers["WWW-Authenticate"] = "Basic";
+        httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+        context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+
+        return false;
     }
 }
