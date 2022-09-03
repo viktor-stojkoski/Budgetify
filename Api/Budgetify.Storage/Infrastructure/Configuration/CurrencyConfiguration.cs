@@ -14,9 +14,9 @@ internal class CurrencyConfiguration : EntityTypeConfigurationBase<Currency>, IE
 
         ConfigureDefaultColumns(builder);
 
-        builder.Property(x => x.Name).HasColumnName("Name").HasColumnType("nvarchar(255)").IsRequired();
+        builder.Property(x => x.Name).HasColumnName("Name").HasColumnType("nvarchar(50)").IsRequired();
         builder.Property(x => x.Code).HasColumnName("Code").HasColumnType("nvarchar(3)").IsRequired();
-        builder.Property(x => x.Symbol).HasColumnName("Symbol").HasColumnType("nvarchar(50)");
+        builder.Property(x => x.Symbol).HasColumnName("Symbol").HasColumnType("nvarchar(10)");
 
         builder.Ignore(x => x.DomainEvents);
     }

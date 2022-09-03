@@ -20,12 +20,10 @@ public sealed class CurrencyCodeValue : ValueObject
 
     public static Result<CurrencyCodeValue> Create(string? value)
     {
-        if (value.IsEmpty())
-        {
-            return Result.Invalid<CurrencyCodeValue>(ResultCodes.CurrencyCodeInvalid);
-        }
-
-        if (value.Length != CurrencyCodeLength || !value.All(char.IsLetter) || !value.All(char.IsUpper))
+        if (value.IsEmpty()
+            || value.Length != CurrencyCodeLength
+                || !value.All(char.IsLetter)
+                    || !value.All(char.IsUpper))
         {
             return Result.Invalid<CurrencyCodeValue>(ResultCodes.CurrencyCodeInvalid);
         }
