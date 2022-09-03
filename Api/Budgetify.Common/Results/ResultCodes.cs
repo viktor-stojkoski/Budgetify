@@ -16,6 +16,7 @@ public static class ResultCodes
     public const string UserNotFound = "USER_NOT_FOUND";
     public const string CityInvalid = "CITY_INVALID";
     public const string CityInvalidLength = "CITY_INVALID_LENGTH";
+    public const string UserAlreadyExists = "USER_ALREADY_EXISTS";
 
     #endregion
 

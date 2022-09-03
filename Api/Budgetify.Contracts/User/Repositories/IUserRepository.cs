@@ -9,11 +9,6 @@ using Budgetify.Entities.User.Domain;
 public interface IUserRepository
 {
     /// <summary>
-    /// Returns user by given userUid.
-    /// </summary>
-    Task<Result<User>> GetUserAsync(Guid userUid);
-
-    /// <summary>
     /// Inserts new user.
     /// </summary>
     void Insert(User user);
@@ -22,4 +17,14 @@ public interface IUserRepository
     /// Updates user.
     /// </summary>
     void Update(User user);
+
+    /// <summary>
+    /// Returns user by given userUid.
+    /// </summary>
+    Task<Result<User>> GetUserAsync(Guid userUid);
+
+    /// <summary>
+    /// Returns boolean indicating whether user with the given email exists.
+    /// </summary>
+    Task<bool> DoesUserWithEmailExists(string? email);
 }
