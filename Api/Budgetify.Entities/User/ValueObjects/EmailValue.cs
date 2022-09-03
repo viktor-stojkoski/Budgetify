@@ -9,8 +9,8 @@ using Budgetify.Entities.Common.ValueObjects;
 
 public sealed class EmailValue : ValueObject
 {
-    private const uint MAX_EMAIL_LENGTH = 255;
-    private const string EMAIL_REGEX_PATTERN = @"^[^\s@]+@[^\s@]+\.[^\s@]+$";
+    private const uint EmailMaxLength = 255;
+    private const string EmailRegexPattern = @"^[^\s@]+@[^\s@]+\.[^\s@]+$";
 
     public string Value { get; }
 
@@ -28,12 +28,12 @@ public sealed class EmailValue : ValueObject
 
         value = value.Trim();
 
-        if (value.Length > MAX_EMAIL_LENGTH)
+        if (value.Length > EmailMaxLength)
         {
             return Result.Invalid<EmailValue>(ResultCodes.EmailInvalidLength);
         }
 
-        Regex emailRegex = new(EMAIL_REGEX_PATTERN);
+        Regex emailRegex = new(EmailRegexPattern);
 
         if (emailRegex.IsMatch(value))
         {

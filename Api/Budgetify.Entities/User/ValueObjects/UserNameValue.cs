@@ -8,7 +8,7 @@ using Budgetify.Entities.Common.ValueObjects;
 
 public sealed class UserNameValue : ValueObject
 {
-    private const uint MAX_NAME_LENGTH = 255;
+    private const uint NameMaxLength = 255;
 
     public string Value { get; }
 
@@ -24,7 +24,7 @@ public sealed class UserNameValue : ValueObject
             return Result.Invalid<UserNameValue>(ResultCodes.UserNameInvalid);
         }
 
-        if (value.Length > MAX_NAME_LENGTH)
+        if (value.Length > NameMaxLength)
         {
             return Result.Invalid<UserNameValue>(ResultCodes.UserNameInvalidLength);
         }

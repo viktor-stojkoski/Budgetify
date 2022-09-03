@@ -18,4 +18,13 @@ public static class ResultCodes
     public const string CityInvalidLength = "CITY_INVALID_LENGTH";
 
     #endregion
+
+    #region Currency
+
+    public const string CurrencyNameInvalid = "CURRENCY_NAME_INVALID";
+    public const string CurrencyNameInvalidLength = "CURRENCY_NAME_INVALID_LENGTH";
+    public const string CurrencyCodeInvalid = "CURRENCY_CODE_INVALID";
+    public const string CurrencySymbolInvalidLength = "CURRENCY_SYMBOL_INVALID_LENGTH";
+
+    #endregion
 }

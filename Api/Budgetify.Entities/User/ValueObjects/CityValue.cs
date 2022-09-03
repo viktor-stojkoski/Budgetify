@@ -8,7 +8,7 @@ using Budgetify.Entities.Common.ValueObjects;
 
 public sealed class CityValue : ValueObject
 {
-    private const uint MAX_CITY_LENGTH = 255;
+    private const uint CityMaxLength = 255;
 
     public string Value { get; }
 
@@ -24,7 +24,7 @@ public sealed class CityValue : ValueObject
             return Result.Invalid<CityValue>(ResultCodes.CityInvalid);
         }
 
-        if (value.Length > MAX_CITY_LENGTH)
+        if (value.Length > CityMaxLength)
         {
             return Result.Invalid<CityValue>(ResultCodes.CityInvalidLength);
         }
