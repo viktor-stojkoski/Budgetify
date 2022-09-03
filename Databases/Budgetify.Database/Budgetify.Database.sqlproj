@@ -61,16 +61,19 @@
     <Folder Include="Budgetify\Tables" />
     <Folder Include="Budgetify\Tables\Test" />
     <Folder Include="Budgetify\Tables\User" />
+    <Folder Include="Budgetify\Tables\Currency" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Budgetify\Budgetify.sql" />
     <Build Include="Budgetify\Tables\Test\Test.sql" />
     <Build Include="Budgetify\Tables\User\User.sql" />
+    <Build Include="Budgetify\Tables\Currency\Currency.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Budgetify.Database.publish.xml" />
     <None Include="Budgetify\Tables\Test\Test.Seed.sql" />
     <None Include="Budgetify\Tables\User\User.Seed.sql" />
+    <None Include="Budgetify\Tables\Currency\Currency.Seed.sql" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PostDeploy Include="Script.PostDeployment.Debug.sql" />

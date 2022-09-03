@@ -13,4 +13,5 @@ Post-Deployment Script Template
 IF ('$(ExecuteSeedData)' = 'Y')
 BEGIN
     :r .\Budgetify\Tables\User\User.Seed.sql
+    :r .\Budgetify\Tables\Currency\Currency.Seed.sql
 END
