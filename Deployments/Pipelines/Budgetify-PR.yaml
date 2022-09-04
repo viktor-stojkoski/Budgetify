@@ -33,9 +33,9 @@ stages:
             displayName: Run CSpell on Solution
             inputs:
               pwsh: true
-              failOnStderr: true
+              # failOnStderr: true
               targetType: inline
-              script: cspell ** --gitignore --no-progress
+              script: cspell ** --gitignore # --no-progress --no-summary
 
       - job: job_build_test_backend
         displayName: Budgetify .NET Build & Test
