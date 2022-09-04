@@ -28,5 +28,6 @@ public class BudgetifyReadonlyDbContext : DbContext, IBudgetifyReadonlyDbContext
 
         modelBuilder.ApplyConfiguration(new TestConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new CurrencyConfiguration());
     }
 }

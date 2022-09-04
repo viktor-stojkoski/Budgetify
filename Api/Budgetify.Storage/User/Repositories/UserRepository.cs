@@ -18,6 +18,20 @@ public class UserRepository : Repository<Entities.User>, IUserRepository
     public UserRepository(IBudgetifyDbContext budgetifyDbContext)
         : base(budgetifyDbContext) { }
 
+    public void Insert(User user)
+    {
+        Entities.User dbUser = user.CreateUser();
+
+        Insert(dbUser);
+    }
+
+    public void Update(User user)
+    {
+        Entities.User dbUser = user.CreateUser();
+
+        AttachOrUpdate(dbUser, user.State.GetState());
+    }
+
     public async Task<Result<User>> GetUserAsync(Guid userUid)
     {
         Entities.User? dbUser = await AllNoTrackedOf<Entities.User>()
@@ -31,17 +45,9 @@ public class UserRepository : Repository<Entities.User>, IUserRepository
         return dbUser.CreateUser();
     }
 
-    public void Insert(User user)
+    public async Task<bool> DoesUserWithEmailExists(string? email)
     {
-        Entities.User dbUser = user.CreateUser();
-
-        Insert(dbUser);
-    }
-
-    public void Update(User user)
-    {
-        Entities.User dbUser = user.CreateUser();
-
-        AttachOrUpdate(dbUser, user.State.GetState());
+        return await AllNoTrackedOf<Entities.User>()
+            .AnyAsync(x => x.Email == email);
     }
 }

@@ -31,6 +31,11 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand>
     {
         CommandResultBuilder result = new();
 
+        if (await _userRepository.DoesUserWithEmailExists(command.Email))
+        {
+            return result.FailWith(ResultCodes.UserAlreadyExists);
+        }
+
         Result<User> userResult =
             User.Create(
                 createdOn: System.DateTime.UtcNow,

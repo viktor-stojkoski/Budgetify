@@ -15,5 +15,6 @@ public class BudgetifyDbContext : DbContext, IBudgetifyDbContext
 
         modelBuilder.ApplyConfiguration(new TestConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new CurrencyConfiguration());
     }
 }
