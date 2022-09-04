@@ -35,7 +35,7 @@ stages:
               pwsh: true
               failOnStderr: true
               targetType: inline
-              script: cspell ** --gitignore
+              script: cspell ** --gitignore --no-progress
 
       - job: job_build_test_backend
         displayName: Budgetify .NET Build & Test
