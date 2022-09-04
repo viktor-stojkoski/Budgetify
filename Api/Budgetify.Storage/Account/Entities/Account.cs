@@ -18,9 +18,7 @@ public class Account : AggregateRoot
         string type,
         decimal balance,
         int currencyFk,
-        string? description,
-        User user,
-        Currency currency) : base(id, uid, createdOn, deletedOn)
+        string? description) : base(id, uid, createdOn, deletedOn)
     {
         UserFk = userFk;
         Name = name;
@@ -28,9 +26,6 @@ public class Account : AggregateRoot
         Balance = balance;
         CurrencyFk = currencyFk;
         Description = description;
-
-        User = user;
-        Currency = currency;
     }
 
     public int UserFk { get; protected internal set; }
@@ -45,7 +40,7 @@ public class Account : AggregateRoot
 
     public string? Description { get; protected internal set; }
 
-    public virtual User User { get; protected internal set; }
+    public virtual User User { get; protected internal set; } = null!;
 
-    public virtual Currency Currency { get; protected internal set; }
+    public virtual Currency Currency { get; protected internal set; } = null!;
 }
