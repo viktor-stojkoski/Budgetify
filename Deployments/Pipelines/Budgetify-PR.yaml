@@ -28,6 +28,7 @@ stages:
             inputs:
               pwsh: true
               failOnStderr: true
+              targetType: inline
               script: npm install cspell
 
           - task: PowerShell@2
@@ -35,6 +36,7 @@ stages:
             inputs:
               pwsh: true
               failOnStderr: true
+              targetType: inline
               script: cspell ** --gitignore
 
       - job: job_build_test_backend
