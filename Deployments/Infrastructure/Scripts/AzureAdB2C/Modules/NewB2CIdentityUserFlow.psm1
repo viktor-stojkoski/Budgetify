@@ -80,7 +80,7 @@ function New-B2CIdentityUserFlow {
   $body = @{
     id                             = $Name
     userFlowType                   = $Type
-    userflowTypeVersion            = $TypeVersion
+    userFlowTypeVersion            = $TypeVersion
     isLanguageCustomizationEnabled = $IsLanguageCustomizationEnabled
     defaultLanguageTag             = $DefaultLanguageTag
   }

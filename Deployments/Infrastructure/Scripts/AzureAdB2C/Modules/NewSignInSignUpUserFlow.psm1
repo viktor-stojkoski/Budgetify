@@ -1,4 +1,4 @@
-Import-Module $PSScriptRoot\NewB2CIdentitiyUserFlow.psm1 -Force
+Import-Module $PSScriptRoot\NewB2CIdentityUserFlow.psm1 -Force
 Import-Module $PSScriptRoot\NewB2CUserFlowAttributeAssignment.psm1 -Force
 Import-Module $PSScriptRoot\SetB2CUserFlowApiConnector.psm1 -Force
 

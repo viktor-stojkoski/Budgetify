@@ -83,10 +83,10 @@ public class TestCommandHandler : ICommandHandler<TestCommand, Test>
 
         if (test.IsFailureOrNull)
         {
-            return result.FailWith("NOT_FOUNDD");
+            return result.FailWith("NOT_FOUND");
         }
 
-        test.Value.Update("newemail@budgetify.tech", "firsTName", "lastName", "citty");
+        test.Value.Update("newemail@budgetify.tech", "firstName", "lastName", "city");
 
         _userRepository.Update(test.Value);
 

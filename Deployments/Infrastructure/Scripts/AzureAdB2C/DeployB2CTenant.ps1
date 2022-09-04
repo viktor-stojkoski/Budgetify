@@ -1,6 +1,6 @@
 <#
   .DESCRIPTION
-  Deploys Azure AD B2C (has to be run with owner privilages).
+  Deploys Azure AD B2C (has to be run with owner privileges).
 
   .PARAMETER Environment
   Environment to deploy B2C Tenant to.
