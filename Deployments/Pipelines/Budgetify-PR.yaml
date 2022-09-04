@@ -23,14 +23,6 @@ stages:
         displayName: Spell Check Solution
 
         steps:
-          # - task: PowerShell@2
-          #   displayName: Install CSpell
-          #   inputs:
-          #     pwsh: true
-          #     failOnStderr: true
-          #     targetType: inline
-          #     script: npm install cspell
-
           - task: Npm@1
             displayName: Install CSpell
             inputs:
