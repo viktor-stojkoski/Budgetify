@@ -20,19 +20,25 @@ stages:
 
     jobs:
       - job: job_spell_check
-        displayName: Spell Check solution
+        displayName: Spell Check Solution
 
         steps:
-          - task: PowerShell@2
+          # - task: PowerShell@2
+          #   displayName: Install CSpell
+          #   inputs:
+          #     pwsh: true
+          #     failOnStderr: true
+          #     targetType: inline
+          #     script: npm install cspell
+
+          - task: Npm@1
             displayName: Install CSpell
             inputs:
-              pwsh: true
-              failOnStderr: true
-              targetType: inline
-              script: npm install cspell
+              command: custom
+              customCommand: install -g cspell
 
           - task: PowerShell@2
-            displayName: Run CSpell on solution
+            displayName: Run CSpell on Solution
             inputs:
               pwsh: true
               failOnStderr: true
