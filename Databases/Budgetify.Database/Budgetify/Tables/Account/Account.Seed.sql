@@ -6,10 +6,10 @@ USING
     SELECT *
     FROM (
     VALUES
-        (1, N'e3c30e16-994e-4f2e-aee7-ac0435eed449', CAST(N'2022-09-04 21:13:00' AS SMALLDATETIME), NULL, 1, N'Cash', N'Cash', 2000, 1, N'Personal cash'),
-        (2, N'f4aae1a8-9d01-4ed2-9c99-d7a0b4c3f4be', CAST(N'2022-09-04 21:13:00' AS SMALLDATETIME), NULL, 1, N'Komercijalna Banka', N'Debit', 50000, 1, N'Komercijalna banka debit card'),
-        (3, N'a503fc32-51ac-4d87-bb2c-9f2a1c4228d9', CAST(N'2022-09-04 21:13:00' AS SMALLDATETIME), NULL, 1, N'NLB', N'Debit', 1000, 1, N'NLB debit card'),
-        (4, N'83dcbb9a-6dc1-4fec-affd-050e3d632665', CAST(N'2022-09-04 21:13:00' AS SMALLDATETIME), NULL, 1, N'Euro savings', N'Savings', 3000, 2, N'Euro savings account')
+        (1, N'e3c30e16-994e-4f2e-aee7-ac0435eed449', CAST(N'2022-09-04 21:13:00' AS SMALLDATETIME), NULL, 1, N'Cash', N'CASH', 2000, 1, N'Personal cash'),
+        (2, N'f4aae1a8-9d01-4ed2-9c99-d7a0b4c3f4be', CAST(N'2022-09-04 21:13:00' AS SMALLDATETIME), NULL, 1, N'Komercijalna Banka', N'DEBIT', 50000, 1, N'Komercijalna banka debit card'),
+        (3, N'a503fc32-51ac-4d87-bb2c-9f2a1c4228d9', CAST(N'2022-09-04 21:13:00' AS SMALLDATETIME), NULL, 1, N'NLB', N'DEBIT', 1000, 1, N'NLB debit card'),
+        (4, N'83dcbb9a-6dc1-4fec-affd-050e3d632665', CAST(N'2022-09-04 21:13:00' AS SMALLDATETIME), NULL, 1, N'Euro savings', N'SAVINGS', 3000, 2, N'Euro savings account')
      ) AS temp ([Id], [Uid], [CreatedOn], [DeletedOn], [UserFk], [Name], [Type], [Balance], [CurrencyFk], [Description])
 ) AS S
 ON T.Id=S.Id

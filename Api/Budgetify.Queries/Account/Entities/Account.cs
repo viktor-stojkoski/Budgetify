@@ -7,22 +7,22 @@ using Budgetify.Queries.User.Entities;
 public class Account : Entity
 {
     public Account(
-        int userFk,
+        int userId,
         string name,
         string type,
         decimal balance,
-        int currencyFk,
+        int currencyId,
         string? description)
     {
-        UserFk = userFk;
+        UserId = userId;
         Name = name;
         Type = type;
         Balance = balance;
-        CurrencyFk = currencyFk;
+        CurrencyId = currencyId;
         Description = description;
     }
 
-    public int UserFk { get; protected internal set; }
+    public int UserId { get; protected internal set; }
 
     public string Name { get; protected internal set; }
 
@@ -30,7 +30,7 @@ public class Account : Entity
 
     public decimal Balance { get; protected internal set; }
 
-    public int CurrencyFk { get; protected internal set; }
+    public int CurrencyId { get; protected internal set; }
 
     public string? Description { get; protected internal set; }
 
