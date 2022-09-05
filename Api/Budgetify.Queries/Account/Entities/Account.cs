@@ -1,0 +1,40 @@
+﻿namespace Budgetify.Queries.Account.Entities;
+
+using Budgetify.Queries.Common.Entities;
+using Budgetify.Queries.Currency.Entities;
+using Budgetify.Queries.User.Entities;
+
+public class Account : Entity
+{
+    public Account(
+        int userFk,
+        string name,
+        string type,
+        decimal balance,
+        int currencyFk,
+        string? description)
+    {
+        UserFk = userFk;
+        Name = name;
+        Type = type;
+        Balance = balance;
+        CurrencyFk = currencyFk;
+        Description = description;
+    }
+
+    public int UserFk { get; protected internal set; }
+
+    public string Name { get; protected internal set; }
+
+    public string Type { get; protected internal set; }
+
+    public decimal Balance { get; protected internal set; }
+
+    public int CurrencyFk { get; protected internal set; }
+
+    public string? Description { get; protected internal set; }
+
+    public virtual User User { get; protected internal set; } = null!;
+
+    public virtual Currency Currency { get; protected internal set; } = null!;
+}
