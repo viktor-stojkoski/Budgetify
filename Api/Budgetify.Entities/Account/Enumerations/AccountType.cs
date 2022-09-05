@@ -14,7 +14,7 @@ public sealed class AccountType : Enumeration
 
     public AccountType(int id, string name) : base(id, name) { }
 
-    public static Result<AccountType> Create(string type)
+    public static Result<AccountType> Create(string? type)
     {
         AccountType? accountType = GetAll<AccountType>().SingleOrDefault(x => x.Name == type);
 

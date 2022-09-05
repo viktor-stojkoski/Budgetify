@@ -1,6 +1,10 @@
 ﻿namespace Budgetify.Api.Registers;
 
+using Budgetify.Contracts.Account.Repositories;
+using Budgetify.Contracts.Currency.Repositories;
 using Budgetify.Contracts.User.Repositories;
+using Budgetify.Storage.Account.Repositories;
+using Budgetify.Storage.Currency.Repositories;
 using Budgetify.Storage.Test.Repositories;
 using Budgetify.Storage.User.Repositories;
 
@@ -12,6 +16,8 @@ public static partial class Register
     {
         services.AddScoped<ITestRepository, TestRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+        services.AddScoped<IAccountRepository, AccountRepository>();
 
         return services;
     }

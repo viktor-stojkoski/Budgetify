@@ -55,8 +55,8 @@ public partial class Account
     public static Result<Account> Create(
         DateTime createdOn,
         int userId,
-        string name,
-        string type,
+        string? name,
+        string? type,
         decimal balance,
         int currencyId,
         string? description)
