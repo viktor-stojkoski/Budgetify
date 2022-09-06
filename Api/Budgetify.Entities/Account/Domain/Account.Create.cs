@@ -1,4 +1,5 @@
 ﻿namespace Budgetify.Entities.Account.Domain;
+
 using System;
 
 using Budgetify.Common.Results;

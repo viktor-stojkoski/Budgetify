@@ -28,5 +28,5 @@ public class Currency : AggregateRoot
 
     public string Symbol { get; protected internal set; }
 
-    public ICollection<Account> Accounts { get; protected internal set; } = new List<Account>();
+    public virtual ICollection<Account> Accounts { get; protected internal set; } = new List<Account>();
 }

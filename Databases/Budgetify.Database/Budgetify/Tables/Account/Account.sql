@@ -10,6 +10,6 @@
     [Balance]       DECIMAL(19,4)       NOT NULL    DEFAULT 0,
     [CurrencyFk]    INT                 NOT NULL,
     [Description]   NVARCHAR(MAX)           NULL    DEFAULT N'',
-    CONSTRAINT [FK_Account_User] FOREIGN KEY ([UserFk]) REFERENCES [Budgetify].[User]([Id]),
+    CONSTRAINT [FK_Account_User]     FOREIGN KEY ([UserFk]) REFERENCES [Budgetify].[User]([Id]),
     CONSTRAINT [FK_Account_Currency] FOREIGN KEY ([UserFk]) REFERENCES [Budgetify].[Currency]([Id])
 )
