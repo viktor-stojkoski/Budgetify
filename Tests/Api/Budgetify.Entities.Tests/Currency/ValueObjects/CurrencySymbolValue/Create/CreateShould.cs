@@ -13,7 +13,7 @@ using static CommonTestsHelper;
 public class CreateShould
 {
     [Test]
-    public void WhenValueHasMoreThanTenCharacters_WillReturnErrorResult()
+    public void WhenValueHasMoreThan10Characters_WillReturnErrorResult()
     {
         // Arrange
         string value = RandomString(11);
@@ -68,6 +68,7 @@ public class CreateShould
         // Assert
         result.IsSuccess.Should().BeTrue();
 
-        result.Value.Value.Should().Be(value);
+        string? implicitOperatorResult = result.Value;
+        implicitOperatorResult.Should().Be(value);
     }
 }

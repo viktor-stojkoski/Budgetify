@@ -39,7 +39,7 @@ public class CreateShould
     }
 
     [Test]
-    public void WhenValueNotThreeCharacters_WillReturnErrorResult()
+    public void WhenValueNot3Characters_WillReturnErrorResult()
     {
         // Arrange
         string value = "MK";
@@ -92,6 +92,7 @@ public class CreateShould
         // Assert
         result.IsSuccess.Should().BeTrue();
 
-        result.Value.Value.Should().Be(value);
+        string implicitOperatorResult = result.Value;
+        implicitOperatorResult.Should().Be(value);
     }
 }
