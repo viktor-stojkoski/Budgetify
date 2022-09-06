@@ -1,7 +1,7 @@
 ﻿namespace Budgetify.Storage.Infrastructure.Configuration;
 
 using Budgetify.Storage.Common.Configuration;
-using Budgetify.Storage.Currency;
+using Budgetify.Storage.Currency.Entities;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

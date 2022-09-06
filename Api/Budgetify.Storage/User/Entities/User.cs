@@ -1,7 +1,9 @@
 ﻿namespace Budgetify.Storage.User.Entities;
 
 using System;
+using System.Collections.Generic;
 
+using Budgetify.Storage.Account.Entities;
 using Budgetify.Storage.Common.Entities;
 
 public class User : AggregateRoot
@@ -29,4 +31,6 @@ public class User : AggregateRoot
     public string LastName { get; protected internal set; }
 
     public string City { get; protected internal set; }
+
+    public virtual ICollection<Account> Accounts { get; protected internal set; } = new List<Account>();
 }

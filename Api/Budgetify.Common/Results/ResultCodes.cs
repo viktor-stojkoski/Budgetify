@@ -26,6 +26,15 @@ public static class ResultCodes
     public const string CurrencyNameInvalidLength = "CURRENCY_NAME_INVALID_LENGTH";
     public const string CurrencyCodeInvalid = "CURRENCY_CODE_INVALID";
     public const string CurrencySymbolInvalidLength = "CURRENCY_SYMBOL_INVALID_LENGTH";
+    public const string CurrencyNotFound = "CURRENCY_NOT_FOUND";
+
+    #endregion
+
+    #region Account
+
+    public const string AccountNameInvalid = "ACCOUNT_NAME_INVALID";
+    public const string AccountNameInvalidLength = "ACCOUNT_NAME_INVALID_LENGTH";
+    public const string AccountTypeInvalid = "ACCOUNT_TYPE_INVALID";
 
     #endregion
 }
