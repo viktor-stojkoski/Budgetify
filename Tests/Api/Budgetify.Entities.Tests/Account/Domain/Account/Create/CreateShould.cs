@@ -49,7 +49,7 @@ public class CreateShould
         DateTime createdOn = new(2022, 9, 9);
         int userId = RandomId();
         string name = "Test account name";
-        string type = "CASHS";
+        string type = "INVALID";
         decimal balance = 1000;
         int currencyId = RandomId();
         string? description = "Test description";

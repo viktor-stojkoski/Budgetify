@@ -15,7 +15,7 @@ public class EqualsShould
     {
         // Arrange
         Result<CityValue> value1 = CityValue.Create("Skopje");
-        Result<CityValue> value2 = CityValue.Create("Tetovo");
+        Result<CityValue> value2 = CityValue.Create("Gostivar");
 
         // Act
         bool result = value1.Value == value2.Value;

@@ -1,4 +1,4 @@
-﻿namespace Budgetify.Entities.Tests.User.ValueObjects.UserNameValue.GetHashCode;
+﻿namespace Budgetify.Entities.Tests.User.ValueObjects.UserNameValue;
 
 using Budgetify.Common.Results;
 using Budgetify.Entities.User.ValueObjects;

@@ -141,7 +141,7 @@ public class CreateFromStorageShould
         string email = "viktor@budgetify.tech";
         string firstName = "Viktor";
         string lastName = "Stojkoski";
-        string city = "Skoopje";
+        string city = "Skopje";
 
         // Act
         Result<User> result =
