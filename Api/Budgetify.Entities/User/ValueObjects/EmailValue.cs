@@ -35,12 +35,12 @@ public sealed class EmailValue : ValueObject
 
         Regex emailRegex = new(EmailRegexPattern);
 
-        if (emailRegex.IsMatch(value))
+        if (!emailRegex.IsMatch(value))
         {
-            return Result.Ok(new EmailValue(value));
+            return Result.Invalid<EmailValue>(ResultCodes.EmailInvalid);
         }
 
-        return Result.Invalid<EmailValue>(ResultCodes.EmailInvalid);
+        return Result.Ok(new EmailValue(value));
     }
 
     public static implicit operator string(EmailValue obj) => obj.Value;
