@@ -13,5 +13,5 @@ public static class CommonTestsHelper
     internal static string RandomString(int length) =>
         string.Join(
             separator: "",
-            values: Enumerable.Repeat(0, length).Select(x => (char)randomString.Next(127)));
+            values: Enumerable.Repeat(0, length).Select(x => (char)randomString.Next(33, 127)));
 }

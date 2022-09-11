@@ -1,7 +1,7 @@
-﻿namespace Budgetify.Entities.Tests.Currency.ValueObjects.CurrencyNameValue;
+﻿namespace Budgetify.Entities.Tests.User.ValueObjects.UserNameValue;
 
 using Budgetify.Common.Results;
-using Budgetify.Entities.Currency.ValueObjects;
+using Budgetify.Entities.User.ValueObjects;
 
 using FluentAssertions;
 
@@ -19,11 +19,11 @@ public class CreateShould
         string? value = null;
 
         // Act
-        Result<CurrencyNameValue> result = CurrencyNameValue.Create(value);
+        Result<UserNameValue> result = UserNameValue.Create(value);
 
         // Assert
         result.IsFailure.Should().BeTrue();
-        result.Message.Should().Be(ResultCodes.CurrencyNameInvalid);
+        result.Message.Should().Be(ResultCodes.UserNameInvalid);
     }
 
     [Test]
@@ -33,35 +33,35 @@ public class CreateShould
         string value = "";
 
         // Act
-        Result<CurrencyNameValue> result = CurrencyNameValue.Create(value);
+        Result<UserNameValue> result = UserNameValue.Create(value);
 
         // Assert
         result.IsFailure.Should().BeTrue();
-        result.Message.Should().Be(ResultCodes.CurrencyNameInvalid);
+        result.Message.Should().Be(ResultCodes.UserNameInvalid);
     }
 
     [Test]
-    public void WhenValueHasMoreThan50Characters_WillReturnErrorResult()
+    public void WhenValueHasMoreThan255Characters_WillReturnErrorResult()
     {
         // Arrange
-        string value = RandomString(51);
+        string value = RandomString(256);
 
         // Act
-        Result<CurrencyNameValue> result = CurrencyNameValue.Create(value);
+        Result<UserNameValue> result = UserNameValue.Create(value);
 
         // Assert
         result.IsFailure.Should().BeTrue();
-        result.Message.Should().Be(ResultCodes.CurrencyNameInvalidLength);
+        result.Message.Should().Be(ResultCodes.UserNameInvalidLength);
     }
 
     [Test]
-    public void WhenValueCorrect_WillCreateCurrencyName()
+    public void WhenValueCorrect_WillCreateUserName()
     {
         // Arrange
-        string value = "Macedonian Denar";
+        string value = "Viktor";
 
         // Act
-        Result<CurrencyNameValue> result = CurrencyNameValue.Create(value);
+        Result<UserNameValue> result = UserNameValue.Create(value);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
