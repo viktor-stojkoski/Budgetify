@@ -4,6 +4,7 @@ using System;
 
 using Budgetify.Common.Results;
 using Budgetify.Entities.Account.Domain;
+using Budgetify.Entities.Common.Enumerations;
 
 using FluentAssertions;
 
@@ -96,6 +97,7 @@ public class CreateShould
         // Assert
         result.IsSuccess.Should().BeTrue();
 
+        result.Value.State.Should().Be(EntityState.Added);
         result.Value.CreatedOn.Should().Be(createdOn);
         result.Value.DeletedOn.Should().BeNull();
         result.Value.Name.Value.Should().Be(name);

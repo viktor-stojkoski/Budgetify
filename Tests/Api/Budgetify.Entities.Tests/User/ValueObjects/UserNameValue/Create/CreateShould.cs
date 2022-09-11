@@ -44,7 +44,7 @@ public class CreateShould
     public void WhenValueHasMoreThan255Characters_WillReturnErrorResult()
     {
         // Arrange
-        string? value = RandomString(256);
+        string value = RandomString(256);
 
         // Act
         Result<UserNameValue> result = UserNameValue.Create(value);

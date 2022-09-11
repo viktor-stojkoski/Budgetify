@@ -20,7 +20,7 @@ public class CreateShould
     {
         // Arrange
         DateTime createdOn = new(2022, 9, 11);
-        string email = "wrong_email";
+        string email = "email@invalid";
         string firstName = "Viktor";
         string lastName = "Stojkoski";
         string city = "Skopje";

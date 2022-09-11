@@ -41,7 +41,7 @@ public class CreateShould
     }
 
     [Test]
-    public void ValueHasMoreThan255Characters_WillReturnErrorResult()
+    public void WhenValueHasMoreThan255Characters_WillReturnErrorResult()
     {
         // Arrange
         string value = RandomString(256);

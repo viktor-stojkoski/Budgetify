@@ -22,7 +22,7 @@ public class CreateFromStorageShould
         int id = RandomId();
         Guid uid = Guid.NewGuid();
         DateTime createdOn = new(2022, 9, 11);
-        string email = "wrong_email";
+        string email = "email@invalid";
         string firstName = "Viktor";
         string lastName = "Stojkoski";
         string city = "Skopje";

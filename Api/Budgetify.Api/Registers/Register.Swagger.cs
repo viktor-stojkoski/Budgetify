@@ -67,7 +67,7 @@ public static partial class Register
                 {
                     ApiVersionModel? apiVersionModel = ApiVersion(apiDesc.ActionDescriptor);
 
-                    return apiVersionModel == null
+                    return apiVersionModel is null
                         || apiVersionModel.ImplementedApiVersions.Any(x => x.ToString() == docName);
                 });
 

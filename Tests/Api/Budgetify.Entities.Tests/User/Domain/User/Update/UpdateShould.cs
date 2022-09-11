@@ -17,7 +17,7 @@ public class UpdateShould
     public void WhenEmailInvalid_WillReturnErrorResult()
     {
         // Arrange
-        string email = "wrong_email";
+        string email = "email@invalid";
         string firstName = "Viktor";
         string lastName = "Stojkoski";
         string city = "Skopje";
