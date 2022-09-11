@@ -32,9 +32,9 @@ public class EqualsShould
         Result<UserNameValue> value2 = UserNameValue.Create("Viktor");
 
         // Act
-        bool result = value1.Value == value2.Value;
+        bool result = value1.Value != value2.Value;
 
         // Assert
-        result.Should().BeTrue();
+        result.Should().BeFalse();
     }
 }
