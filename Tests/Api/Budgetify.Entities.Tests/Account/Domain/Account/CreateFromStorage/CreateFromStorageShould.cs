@@ -4,6 +4,7 @@ using System;
 
 using Budgetify.Common.Results;
 using Budgetify.Entities.Account.Domain;
+using Budgetify.Entities.Common.Enumerations;
 
 using FluentAssertions;
 
@@ -111,6 +112,7 @@ public class CreateFromStorageShould
         // Assert
         result.IsSuccess.Should().BeTrue();
 
+        result.Value.State.Should().Be(EntityState.Unchanged);
         result.Value.Id.Should().Be(id);
         result.Value.Uid.Should().Be(uid);
         result.Value.CreatedOn.Should().Be(createdOn);
