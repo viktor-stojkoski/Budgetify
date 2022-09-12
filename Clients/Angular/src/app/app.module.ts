@@ -1,5 +1,7 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { BrowserModule } from '@angular/platform-browser';
 import {
   MsalBroadcastService,
@@ -12,7 +14,6 @@ import {
   MSAL_INSTANCE,
   MSAL_INTERCEPTOR_CONFIG
 } from '@azure/msal-angular';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -25,7 +26,7 @@ import {
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, ProfileComponent],
-  imports: [BrowserModule, AppRoutingModule, MsalModule],
+  imports: [BrowserModule, AppRoutingModule, MsalModule, MatCardModule, MatButtonModule],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

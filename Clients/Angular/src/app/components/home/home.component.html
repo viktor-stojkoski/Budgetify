@@ -1,5 +1,10 @@
 <div>
-  <button *ngIf="!displayLogin" (click)="login()">LOGIN</button>
+  <button mat-raised-button color="primary" *ngIf="!displayLogin" (click)="login()">LOGIN</button>
   <div *ngIf="displayLogin">I AM LOGGED IN</div>
-  <button *ngIf="displayLogin" (click)="logout()">LOGOUT</button>
+  <button mat-raised-button color="primary" *ngIf="displayLogin" (click)="logout()">LOGOUT</button>
 </div>
+
+<mat-card>
+  Test text
+  <button mat-raised-button color="primary">TEST</button>
+</mat-card>
