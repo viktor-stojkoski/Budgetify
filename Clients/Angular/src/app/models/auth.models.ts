@@ -1,4 +1,4 @@
-export class SelfUser {
+export class CurrentUser {
   public email?: string;
   public firstName?: string;
   public lastName?: string;

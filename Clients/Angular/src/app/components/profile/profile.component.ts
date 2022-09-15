@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SelfUser } from 'src/app/models/auth.models';
+import { CurrentUser } from 'src/app/models/auth.models';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  public user: SelfUser | null | undefined;
+  public user: CurrentUser | null | undefined;
 
   constructor(private authService: AuthService) {}
 
