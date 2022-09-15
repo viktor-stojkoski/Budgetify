@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { CurrentUser } from 'src/app/models/auth.models';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss']
 })
-export class HomeComponent implements OnInit {
-  public displayLogin = false;
+export class NavbarComponent implements OnInit {
+  public isAuthenticated: boolean | undefined;
+  public currentUser: CurrentUser | null | undefined;
 
   constructor(private authService: AuthService) {}
 
@@ -24,7 +26,8 @@ export class HomeComponent implements OnInit {
   }
 
   public isLoggedIn(): void {
-    this.displayLogin = this.authService.isLoggedIn();
+    this.isAuthenticated = this.authService.isLoggedIn();
+    this.currentUser = this.authService.getSelfUser();
   }
 
   public logout(): void {

@@ -1,0 +1,45 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <!-- <img /> -->
+
+    <div fxShow="true" fxHide.lt-md>
+      <a mat-button [routerLink]="'/accounts'"> Accounts </a>
+      <a mat-button [routerLink]="'/transactions'"> Transactions </a>
+      <a mat-button [routerLink]="'/about'"> About </a>
+      <a mat-button [routerLink]="'/contact'"> Contact </a>
+    </div>
+
+    <span class="menu-spacer"></span>
+
+    <div fxShow="true" fxHide.lt-md>
+      <a mat-button *ngIf="!isAuthenticated" (click)="login()" routerLinkActive="mat-accent"> Log In Or Register </a>
+      <a mat-button [routerLink]="'/profile'" *ngIf="isAuthenticated">
+        {{ currentUser?.firstName }} {{ currentUser?.lastName }}
+      </a>
+      <a mat-button *ngIf="isAuthenticated" (click)="logout()">Log out</a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container fxFlexFill>
+  <mat-sidenav #sidenav>
+    <mat-nav-list>
+      <a [routerLink]="'/accounts'" mat-list-item (click)="sidenav.toggle()"> Accounts </a>
+      <a [routerLink]="'/transactions'" mat-list-item (click)="sidenav.toggle()"> Transactions </a>
+      <a [routerLink]="'/about'" mat-list-item (click)="sidenav.toggle()"> About </a>
+      <a [routerLink]="'/contact'" mat-list-item (click)="sidenav.toggle()"> Contact </a>
+      <a [routerLink]="'/profile'" mat-list-item *ngIf="isAuthenticated">
+        {{ currentUser?.firstName }} {{ currentUser?.lastName }}
+      </a>
+      <a mat-list-item *ngIf="isAuthenticated" (click)="logout()" (click)="sidenav.toggle()">Log out</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content fxFlexFill>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

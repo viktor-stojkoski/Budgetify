@@ -2,13 +2,13 @@ import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { MsalBroadcastService, MsalGuardConfiguration, MsalService, MSAL_GUARD_CONFIG } from '@azure/msal-angular';
 import { InteractionStatus, RedirectRequest } from '@azure/msal-browser';
 import { filter, Observable, Subject, takeUntil } from 'rxjs';
-import { SelfUser } from '../models/auth.models';
+import { CurrentUser } from '../models/auth.models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService implements OnDestroy {
-  private _selfUser$: Subject<SelfUser | null>;
+  private _currentUser$: Subject<CurrentUser | null>;
   private readonly _destroying$ = new Subject<void>();
 
   constructor(
@@ -16,7 +16,7 @@ export class AuthService implements OnDestroy {
     private msalService: MsalService,
     private msalBroadcastService: MsalBroadcastService
   ) {
-    this._selfUser$ = new Subject();
+    this._currentUser$ = new Subject();
     this._destroying$ = new Subject<void>();
     this.msalBroadcastService.inProgress$
       .pipe(
@@ -29,8 +29,8 @@ export class AuthService implements OnDestroy {
       });
   }
 
-  get selfUser(): Observable<SelfUser | null> {
-    return this._selfUser$.asObservable();
+  get currentUser(): Observable<CurrentUser | null> {
+    return this._currentUser$.asObservable();
   }
 
   public ngOnDestroy(): void {
@@ -55,14 +55,14 @@ export class AuthService implements OnDestroy {
     return this.msalService.instance.getActiveAccount() !== null;
   }
 
-  public getSelfUser(): SelfUser | null {
+  public getSelfUser(): CurrentUser | null {
     if (this.isLoggedIn()) {
       return this.getClaims(this.msalService.instance.getActiveAccount()?.idTokenClaims);
     }
     return null;
   }
 
-  private getClaims(claims?: { [key: string]: any }): SelfUser | null {
+  private getClaims(claims?: { [key: string]: any }): CurrentUser | null {
     if (claims) {
       return {
         email: claims['emails'][0] as string,
@@ -85,9 +85,9 @@ export class AuthService implements OnDestroy {
     }
 
     if (activeAccount) {
-      this._selfUser$.next(this.getClaims(activeAccount.idTokenClaims));
+      this._currentUser$.next(this.getClaims(activeAccount.idTokenClaims));
     } else {
-      this._selfUser$.next(null);
+      this._currentUser$.next(null);
     }
   }
 }
