@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
   "version": "0.2",
   "language": "en",
-  "ignorePaths": ["*.drawio"],
+  "ignorePaths": ["*.drawio", "Clients/Angular/src/assets/i18n/mk.json"],
   "words": [
     "Budgetify",
     "Swashbuckle",

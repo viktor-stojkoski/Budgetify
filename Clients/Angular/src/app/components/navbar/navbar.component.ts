@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrentUser } from 'src/app/models/auth.models';
-import { AuthService } from 'src/app/services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ILanguage } from 'src/app/models/interfaces';
+import { CurrentUser } from '../../models/auth.models';
+import { AuthService } from '../../services/auth.service';
+import { TranslationKeys } from '../../static/translationKeys';
 
 @Component({
   selector: 'app-navbar',
@@ -10,8 +13,20 @@ import { AuthService } from 'src/app/services/auth.service';
 export class NavbarComponent implements OnInit {
   public isAuthenticated: boolean | undefined;
   public currentUser: CurrentUser | null | undefined;
+  public translationKeys = TranslationKeys;
+  public languages: ILanguage[] = [
+    {
+      name: this.translationKeys.navbarLanguageEnglish,
+      resource: 'en'
+    },
+    {
+      name: this.translationKeys.navbarLanguageMacedonian,
+      resource: 'mk'
+    }
+  ];
+  public selectedLanguage: string = this.languages[0].resource;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private translateService: TranslateService) {}
 
   public ngOnInit(): void {
     this.isLoggedIn();
@@ -32,5 +47,9 @@ export class NavbarComponent implements OnInit {
 
   public logout(): void {
     this.authService.logout();
+  }
+
+  public changeLanguage() {
+    this.translateService.use(this.selectedLanguage);
   }
 }

@@ -1,3 +1,17 @@
 .menu-spacer {
   flex: 1 1 auto;
 }
+
+::ng-deep {
+  .mat-select {
+    font-size: 14px;
+  }
+
+  .mat-form-field-infix {
+    width: min-content !important;
+  }
+}
+
+.form-field-list-item {
+  padding: 0 16px;
+}
