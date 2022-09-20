@@ -24,11 +24,12 @@ import {
   MSAL_INTERCEPTOR_CONFIG
 } from '@azure/msal-angular';
 import { TranslateModule } from '@ngx-translate/core';
+import { HomeComponent } from './components/home/home.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { MsalGuardConfigFactory, MsalInstanceFactory, MsalInterceptorConfigFactory } from './configs/auth-config';
-import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
-  declarations: [NavbarComponent],
+  declarations: [NavbarComponent, HomeComponent],
   imports: [
     CommonModule,
     MsalModule,
@@ -47,6 +48,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     FlexLayoutModule,
     ReactiveFormsModule
   ],
+  exports: [TranslateModule, NavbarComponent, HomeComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -68,8 +70,6 @@ import { NavbarComponent } from './navbar/navbar.component';
     MsalService,
     MsalGuard,
     MsalBroadcastService
-  ],
-  bootstrap: [],
-  exports: [NavbarComponent]
+  ]
 })
 export class CoreModule {}

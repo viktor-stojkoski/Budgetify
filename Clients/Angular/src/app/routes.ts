@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import { MsalGuard } from '@azure/msal-angular';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './core/components/home/home.component';
 
 export const routes: Route[] = [
   {

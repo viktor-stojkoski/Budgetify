@@ -21,7 +21,12 @@
     "lib": [
       "es2020",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@budgetify/environments/*": ["./src/environments/*"],
+      "@budgetify/core": ["./src/app/core/index.ts"],
+      "@budgetify/shared": ["./src/app/shared/index.ts"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
