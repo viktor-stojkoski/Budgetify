@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { MsalRedirectComponent } from '@azure/msal-angular';
+import { CoreModule } from '@budgetify/core';
+import { SharedModule } from '@budgetify/shared';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
-import { CoreModule } from './core/core.module';
 import { routes } from './routes';
-import { SharedModule } from './shared/shared.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -31,7 +31,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     CoreModule,
     SharedModule
   ],
-  providers: [],
   bootstrap: [AppComponent, MsalRedirectComponent]
 })
 export class AppModule {}
