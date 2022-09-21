@@ -40,7 +40,7 @@ export class AuthService implements OnDestroy {
 
   public login(): void {
     if (this.msalGuardConfig.authRequest) {
-      this.msalService.loginRedirect({ ...this.msalGuardConfig.authRequest } as RedirectRequest); //.subscribe(() => {});
+      this.msalService.loginRedirect({ ...this.msalGuardConfig.authRequest } as RedirectRequest);
     } else {
       this.msalService.loginRedirect();
     }

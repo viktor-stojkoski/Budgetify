@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrentUser } from 'src/app/models/auth.models';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, CurrentUser } from '@budgetify/core';
 
 @Component({
   selector: 'app-profile',

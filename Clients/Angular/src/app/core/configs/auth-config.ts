@@ -7,7 +7,7 @@ import {
   LogLevel,
   PublicClientApplication
 } from '@azure/msal-browser';
-import { environment } from '../../../environments/environment';
+import { environment } from '@budgetify/environments/environment';
 
 export const b2cPolicies = {
   names: {
