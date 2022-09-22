@@ -1,6 +1,6 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { MsalBroadcastService, MsalGuardConfiguration, MsalService, MSAL_GUARD_CONFIG } from '@azure/msal-angular';
-import { InteractionStatus, RedirectRequest } from '@azure/msal-browser';
+import { AuthenticationResult, InteractionStatus, RedirectRequest } from '@azure/msal-browser';
 import { filter, Observable, Subject, takeUntil } from 'rxjs';
 import { CurrentUser } from '../models/auth.models';
 
@@ -10,6 +10,9 @@ import { CurrentUser } from '../models/auth.models';
 export class AuthService implements OnDestroy {
   private _currentUser$: Subject<CurrentUser | null>;
   private readonly _destroying$ = new Subject<void>();
+  private readonly tokenRequest = {
+    scopes: ['openid', 'https://budgetifydev.onmicrosoft.com/api/read']
+  };
 
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
@@ -51,15 +54,19 @@ export class AuthService implements OnDestroy {
     sessionStorage.removeItem('msal.interaction.status');
   }
 
-  public isLoggedIn(): boolean {
+  public isAuthenticated(): boolean {
     return this.msalService.instance.getActiveAccount() !== null;
   }
 
   public getSelfUser(): CurrentUser | null {
-    if (this.isLoggedIn()) {
+    if (this.isAuthenticated()) {
       return this.getClaims(this.msalService.instance.getActiveAccount()?.idTokenClaims);
     }
     return null;
+  }
+
+  public getToken(): Promise<AuthenticationResult> {
+    return this.msalService.instance.acquireTokenSilent(this.tokenRequest);
   }
 
   private getClaims(claims?: { [key: string]: any }): CurrentUser | null {

@@ -13,7 +13,8 @@ export const environment = {
       resetPassword: 'B2C_1_PasswordReset'
     },
     tenantName: 'budgetifydev'
-  }
+  },
+  baseApiUrl: 'http://localhost:55555/api/'
 };
 
 /*

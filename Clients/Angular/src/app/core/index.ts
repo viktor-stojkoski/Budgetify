@@ -5,3 +5,4 @@ export * from './core.module';
 export * from './models/auth.models';
 export * from './models/common.models';
 export * from './services/auth.service';
+export * from './services/base-api.service';

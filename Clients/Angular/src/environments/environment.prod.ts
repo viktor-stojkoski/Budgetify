@@ -9,5 +9,6 @@ export const environment = {
       resetPassword: 'B2C_1_PasswordReset'
     },
     tenantName: ''
-  }
+  },
+  baseApiUrl: ''
 };

@@ -54,6 +54,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
   return {
     interactionType: InteractionType.Redirect,
     protectedResourceMap: new Map<string, Array<string>>()
+    // protectedResourceMap: new Map([['/api/', ['api://']]])
   };
 }
 

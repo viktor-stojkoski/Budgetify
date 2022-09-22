@@ -11,12 +11,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import {
   MsalBroadcastService,
   MsalGuard,
-  MsalInterceptor,
   MsalModule,
   MsalService,
   MSAL_GUARD_CONFIG,
@@ -24,6 +22,7 @@ import {
   MSAL_INTERCEPTOR_CONFIG
 } from '@azure/msal-angular';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthInterceptor } from 'src/app/core/http/auth.interceptor';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MsalGuardConfigFactory, MsalInstanceFactory, MsalInterceptorConfigFactory } from './configs/auth-config';
@@ -44,17 +43,16 @@ import { MsalGuardConfigFactory, MsalInstanceFactory, MsalInterceptorConfigFacto
     MatListModule,
     MatFormFieldModule,
     MatSelectModule,
-    BrowserAnimationsModule,
     FlexLayoutModule,
     ReactiveFormsModule
   ],
   exports: [TranslateModule, NavbarComponent, HomeComponent],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: MsalInterceptor,
-      multi: true
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: MsalInterceptor,
+    //   multi: true
+    // },
     {
       provide: MSAL_INSTANCE,
       useFactory: MsalInstanceFactory
@@ -66,6 +64,11 @@ import { MsalGuardConfigFactory, MsalInstanceFactory, MsalInterceptorConfigFacto
     {
       provide: MSAL_INTERCEPTOR_CONFIG,
       useFactory: MsalInterceptorConfigFactory
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
     },
     MsalService,
     MsalGuard,
