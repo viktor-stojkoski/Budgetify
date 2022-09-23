@@ -25,7 +25,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { MsalGuardConfigFactory, MsalInstanceFactory, MsalInterceptorConfigFactory } from './configs/auth-config';
+import { MsalGuardConfigFactory, MsalInstanceFactory, MsalInterceptorConfigFactory } from './configs/auth.config';
 
 @NgModule({
   declarations: [NavbarComponent, HomeComponent],
