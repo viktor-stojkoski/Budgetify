@@ -33,10 +33,12 @@ module "b2c_tenant" {
 }
 
 module "azure_ad_b2c" {
-  source                         = "../../Modules/B2CResources"
-  tenant_id                      = module.b2c_tenant.tenant_id
-  app_registration_display_name  = "${var.application_name} Angular"
-  app_registration_redirect_uris = ["http://localhost:4200/"]
+  source                                 = "../../Modules/B2CResources"
+  tenant_id                              = module.b2c_tenant.tenant_id
+  tenant_domain_name                     = module.b2c_tenant.tenant_domain_name
+  angular_app_registration_display_name  = "${var.application_name} Angular"
+  angular_app_registration_redirect_uris = ["http://localhost:4200/"]
+  api_app_registration_display_name      = "${var.application_name} API"
 }
 
 resource "azurerm_key_vault_secret" "graph" {
