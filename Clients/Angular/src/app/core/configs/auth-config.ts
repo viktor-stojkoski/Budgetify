@@ -53,8 +53,9 @@ export function MsalInstanceFactory(): IPublicClientApplication {
 export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
   return {
     interactionType: InteractionType.Redirect,
-    protectedResourceMap: new Map<string, Array<string>>()
-    // protectedResourceMap: new Map([['/api/', ['api://']]])
+    protectedResourceMap: new Map([
+      [environment.baseApiUrl, [`${environment.azureADB2C.api.applicationIdUri}/${environment.azureADB2C.api.scope}`]]
+    ])
   };
 }
 

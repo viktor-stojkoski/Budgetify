@@ -8,7 +8,11 @@ export const environment = {
       editProfile: 'B2C_1_ProfileEdit',
       resetPassword: 'B2C_1_PasswordReset'
     },
-    tenantName: ''
+    tenantName: '',
+    api: {
+      applicationIdUri: '',
+      scope: 'read' // or permission
+    }
   },
   baseApiUrl: ''
 };
