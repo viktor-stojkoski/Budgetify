@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslationKeys } from '@budgetify/shared';
 import { TranslateService } from '@ngx-translate/core';
-import { CurrentUser } from '../../models/auth.models';
-import { ILanguage } from '../../models/common.models';
+import { CurrentUser } from '../../models/auth.model';
+import { ILanguage } from '../../models/common.model';
 import { AuthService } from '../../services/auth.service';
 
 @Component({

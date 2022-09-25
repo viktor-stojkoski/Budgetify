@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IAccountResponse } from '../../models/account.model';
 import { AccountService } from '../../services/account.service';
+import { TranslationKeys } from '../../static/translationKeys';
 
 @Component({
   selector: 'app-accounts-table',
@@ -9,6 +10,9 @@ import { AccountService } from '../../services/account.service';
 })
 export class AccountsTableComponent implements OnInit {
   public accounts: IAccountResponse[] | undefined;
+  public displayedColumns: string[] = ['name', 'type', 'balance', 'description'];
+  public translationKeys = TranslationKeys;
+  public isLoading = true;
 
   constructor(private accountService: AccountService) {}
 
@@ -18,8 +22,14 @@ export class AccountsTableComponent implements OnInit {
 
   private getAccounts(): void {
     this.accountService.getAccounts().subscribe({
-      next: (response) => (this.accounts = response),
-      error: (error) => console.error(error)
+      next: (response) => {
+        this.accounts = response.value;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error(error);
+        this.isLoading = false;
+      }
     });
   }
 }
