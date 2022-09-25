@@ -6,5 +6,13 @@
   "navbarLogout": "Одјави се",
   "navbarLanguages": "Јазици",
   "navbarLanguageEnglish": "Англиски",
-  "navbarLanguageMacedonian": "Македонски"
+  "navbarLanguageMacedonian": "Македонски",
+
+  "accounts": {
+    "toolbarName": "Сметки",
+    "tableNameHeader": "Име",
+    "tableTypeHeader": "Тип",
+    "tableBalanceHeader": "Состојба",
+    "tableDescriptionHeader": "Опис"
+  }
 }

@@ -8,4 +8,8 @@ locals {
     "openid",
     "offline_access"
   ]
+
+  api_app_permissions = [
+    "read"
+  ]
 }

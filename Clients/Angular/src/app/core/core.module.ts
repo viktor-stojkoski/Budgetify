@@ -11,7 +11,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import {
   MsalBroadcastService,
@@ -26,7 +25,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { MsalGuardConfigFactory, MsalInstanceFactory, MsalInterceptorConfigFactory } from './configs/auth-config';
+import { MsalGuardConfigFactory, MsalInstanceFactory, MsalInterceptorConfigFactory } from './configs/auth.config';
 
 @NgModule({
   declarations: [NavbarComponent, HomeComponent],
@@ -44,7 +43,6 @@ import { MsalGuardConfigFactory, MsalInstanceFactory, MsalInterceptorConfigFacto
     MatListModule,
     MatFormFieldModule,
     MatSelectModule,
-    BrowserAnimationsModule,
     FlexLayoutModule,
     ReactiveFormsModule
   ],

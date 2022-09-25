@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import { MsalGuard } from '@azure/msal-angular';
-import { HomeComponent } from './core/components/home/home.component';
+import { HomeComponent } from '@budgetify/core';
 
 export const routes: Route[] = [
   {
@@ -11,5 +11,10 @@ export const routes: Route[] = [
     path: 'profile',
     canActivateChild: [MsalGuard],
     loadChildren: () => import('./modules/profile/profile.module').then((m) => m.ProfileModule)
+  },
+  {
+    path: 'accounts',
+    canActivateChild: [MsalGuard],
+    loadChildren: () => import('./modules/accounts/accounts.module').then((m) => m.AccountsModule)
   }
 ];

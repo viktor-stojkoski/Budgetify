@@ -17,7 +17,7 @@
 Param(
   [Parameter(Mandatory = $false)]
   [ValidateSet("Development")]
-  [string] $Environment,
+  [string] $Environment = "Development",
 
   [Parameter()]
   [switch] $DeployB2CUserFlows

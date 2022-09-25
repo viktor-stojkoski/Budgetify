@@ -2,7 +2,7 @@ import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { MsalBroadcastService, MsalGuardConfiguration, MsalService, MSAL_GUARD_CONFIG } from '@azure/msal-angular';
 import { InteractionStatus, RedirectRequest } from '@azure/msal-browser';
 import { filter, Observable, Subject, takeUntil } from 'rxjs';
-import { CurrentUser } from '../models/auth.models';
+import { CurrentUser } from '../models/auth.model';
 
 @Injectable({
   providedIn: 'root'
@@ -51,12 +51,12 @@ export class AuthService implements OnDestroy {
     sessionStorage.removeItem('msal.interaction.status');
   }
 
-  public isLoggedIn(): boolean {
+  public isAuthenticated(): boolean {
     return this.msalService.instance.getActiveAccount() !== null;
   }
 
   public getSelfUser(): CurrentUser | null {
-    if (this.isLoggedIn()) {
+    if (this.isAuthenticated()) {
       return this.getClaims(this.msalService.instance.getActiveAccount()?.idTokenClaims);
     }
     return null;

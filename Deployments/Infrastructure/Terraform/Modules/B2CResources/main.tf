@@ -5,8 +5,32 @@ resource "azuread_service_principal" "microsoft_graph" {
   use_existing   = true
 }
 
+resource "random_uuid" "api" {}
+
+resource "azuread_application" "api" {
+  display_name     = var.api_app_registration_display_name
+  sign_in_audience = "AzureADandPersonalMicrosoftAccount"
+  identifier_uris  = "https://${var.tenant_domain_name}/api"
+
+  api {
+    requested_access_token_version = 2
+    oauth2_permission_scope {
+      id                         = random_uuid.api.result
+      admin_consent_display_name = "Read Budgetify API"
+      admin_consent_description  = "Read Budgetify API"
+      enabled                    = true
+      value                      = local.api_app_permissions[0]
+    }
+  }
+}
+
+resource "azuread_service_principal" "api" {
+  application_id = azuread_application.api.application_id
+  use_existing   = true
+}
+
 resource "azuread_application" "app_registration" {
-  display_name                   = var.app_registration_display_name
+  display_name                   = var.angular_app_registration_display_name
   sign_in_audience               = "AzureADandPersonalMicrosoftAccount"
   fallback_public_client_enabled = true
 
@@ -15,7 +39,7 @@ resource "azuread_application" "app_registration" {
   }
 
   single_page_application {
-    redirect_uris = var.app_registration_redirect_uris
+    redirect_uris = var.angular_app_registration_redirect_uris
   }
 
   web {
@@ -37,6 +61,14 @@ resource "azuread_application" "app_registration" {
       type = "Scope"
     }
   }
+
+  required_resource_access {
+    resource_app_id = azuread_application.api.application_id
+    resource_access {
+      id   = azuread_application.api.oauth2_permission_scope_ids[local.api_app_permissions[0]]
+      type = "Scope"
+    }
+  }
 }
 
 resource "azuread_service_principal" "app_registration" {
@@ -44,7 +76,13 @@ resource "azuread_service_principal" "app_registration" {
   use_existing   = true
 }
 
-resource "azuread_service_principal_delegated_permission_grant" "app_registration" {
+resource "azuread_service_principal_delegated_permission_grant" "api" {
+  service_principal_object_id          = azuread_service_principal.app_registration.object_id
+  resource_service_principal_object_id = azuread_service_principal.api.object_id
+  claim_values                         = local.api_app_permissions
+}
+
+resource "azuread_service_principal_delegated_permission_grant" "microsoft_graph" {
   service_principal_object_id          = azuread_service_principal.app_registration.object_id
   resource_service_principal_object_id = azuread_service_principal.microsoft_graph.object_id
   claim_values                         = local.angular_app_permissions
@@ -72,7 +110,7 @@ resource "azuread_service_principal" "microsoft_graph_sp" {
   application_id = azuread_application.microsoft_graph.application_id
 }
 
-resource "azuread_app_role_assignment" "graph_role_assignment" {
+resource "azuread_app_role_assignment" "microsoft_graph" {
   for_each            = toset(local.graph_api_permissions)
   app_role_id         = azuread_service_principal.microsoft_graph.app_role_ids[each.key]
   principal_object_id = azuread_service_principal.microsoft_graph_sp.object_id

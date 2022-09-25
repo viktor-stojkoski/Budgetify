@@ -12,8 +12,13 @@ export const environment = {
       editProfile: 'B2C_1_ProfileEdit',
       resetPassword: 'B2C_1_PasswordReset'
     },
-    tenantName: 'budgetifydev'
-  }
+    tenantName: 'budgetifydev',
+    api: {
+      applicationIdUri: 'https://budgetifydev.onmicrosoft.com/api',
+      scope: 'read' // or permission
+    }
+  },
+  baseApiUrl: 'http://localhost:55555/api/'
 };
 
 /*

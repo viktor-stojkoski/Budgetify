@@ -3,12 +3,22 @@ variable "tenant_id" {
   description = "B2C Tenant ID"
 }
 
-variable "app_registration_display_name" {
+variable "tenant_domain_name" {
   type        = string
-  description = "App registration display name"
+  description = "B2C Tenant domain name"
 }
 
-variable "app_registration_redirect_uris" {
+variable "angular_app_registration_display_name" {
+  type        = string
+  description = "Angular app registration display name"
+}
+
+variable "angular_app_registration_redirect_uris" {
   type        = set(string)
-  description = "App registration redirect URIs"
+  description = "Angular app registration redirect URIs"
+}
+
+variable "api_app_registration_display_name" {
+  type        = string
+  description = "API app registration display name"
 }
