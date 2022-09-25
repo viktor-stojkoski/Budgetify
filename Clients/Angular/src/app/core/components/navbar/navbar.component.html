@@ -7,18 +7,24 @@
     <!-- <img /> -->
 
     <div fxShow="true" fxHide.lt-md *ngIf="isAuthenticated">
-      <a mat-button [routerLink]="'/accounts'"> {{ translationKeys.navbarAccountsMenu | translate }} </a>
-      <a mat-button [routerLink]="'/transactions'"> {{ translationKeys.navbarTransactionsMenu | translate }} </a>
-      <a mat-button [routerLink]="'/categories'"> {{ translationKeys.navbarCategoriesMenu | translate }} </a>
+      <a mat-button [routerLink]="'/accounts'" routerLinkActive="mat-accent">
+        {{ translationKeys.navbarAccountsMenu | translate }}
+      </a>
+      <a mat-button [routerLink]="'/transactions'" routerLinkActive="mat-accent">
+        {{ translationKeys.navbarTransactionsMenu | translate }}
+      </a>
+      <a mat-button [routerLink]="'/categories'" routerLinkActive="mat-accent">
+        {{ translationKeys.navbarCategoriesMenu | translate }}
+      </a>
     </div>
 
     <span class="menu-spacer"></span>
 
     <div fxShow="true" fxHide.lt-md>
-      <a mat-button *ngIf="!isAuthenticated" (click)="login()" routerLinkActive="mat-accent">
+      <a mat-button *ngIf="!isAuthenticated" (click)="login()">
         {{ translationKeys.navbarLoginOrRegister | translate }}
       </a>
-      <a mat-button [routerLink]="'/profile'" *ngIf="isAuthenticated">
+      <a mat-button [routerLink]="'/profile'" routerLinkActive="mat-accent" *ngIf="isAuthenticated">
         {{ currentUser?.firstName }} {{ currentUser?.lastName }}
       </a>
       <a mat-button *ngIf="isAuthenticated" (click)="logout()"> {{ translationKeys.navbarLogout | translate }} </a>
@@ -37,26 +43,28 @@
   <mat-sidenav #sidenav>
     <mat-nav-list>
       <div *ngIf="isAuthenticated">
-        <a [routerLink]="'/accounts'" mat-list-item (click)="sidenav.toggle()">
+        <a [routerLink]="'/accounts'" routerLinkActive="mat-accent" mat-list-item (click)="sidenav.toggle()">
           {{ translationKeys.navbarAccountsMenu | translate }}
         </a>
-        <a [routerLink]="'/transactions'" mat-list-item (click)="sidenav.toggle()">
+        <a [routerLink]="'/transactions'" routerLinkActive="mat-accent" mat-list-item (click)="sidenav.toggle()">
           {{ translationKeys.navbarTransactionsMenu | translate }}
         </a>
-        <a [routerLink]="'/categories'" mat-list-item (click)="sidenav.toggle()">
+        <a [routerLink]="'/categories'" routerLinkActive="mat-accent" mat-list-item (click)="sidenav.toggle()">
           {{ translationKeys.navbarCategoriesMenu | translate }}
         </a>
 
         <mat-divider></mat-divider>
 
-        <a [routerLink]="'/profile'" mat-list-item> {{ currentUser?.firstName }} {{ currentUser?.lastName }} </a>
+        <a [routerLink]="'/profile'" routerLinkActive="mat-accent" mat-list-item>
+          {{ currentUser?.firstName }} {{ currentUser?.lastName }}
+        </a>
         <a mat-list-item (click)="logout()" (click)="sidenav.toggle()">
           {{ translationKeys.navbarLogout | translate }}
         </a>
       </div>
 
       <div *ngIf="!isAuthenticated">
-        <a mat-list-item (click)="sidenav.toggle()" (click)="login()" routerLinkActive="mat-accent">
+        <a mat-list-item (click)="sidenav.toggle()" (click)="login()">
           {{ translationKeys.navbarLoginOrRegister | translate }}
         </a>
       </div>
