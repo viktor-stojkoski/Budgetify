@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>{{ translationKeys.createFormHeader | translate }}</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="accountForm">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormNameLabel | translate }}</mat-label>
+      <input type="text" matInput formControlName="name" cdkFocusInitial />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormTypeLabel | translate }}</mat-label>
+      <input matInput formControlName="type" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormBalanceLabel | translate }}</mat-label>
+      <input type="number" matInput formControlName="balance" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormCurrencyCodeLabel | translate }}</mat-label>
+      <input matInput formControlName="currencyCode" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormDescriptionLabel | translate }}</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="secondary" (click)="onCancelClick()">
+    {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="createAccount()">
+    {{ sharedTranslationKeys.mainActionButtonOk | translate }}
+  </button>
+</div>

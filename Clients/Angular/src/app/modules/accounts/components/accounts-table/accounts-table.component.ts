@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { IAccountResponse } from '../../models/account.model';
 import { AccountService } from '../../services/account.service';
 import { TranslationKeys } from '../../static/translationKeys';
+import { CreateAccountComponent } from '../create-account/create-account.component';
 
 @Component({
   selector: 'app-accounts-table',
@@ -11,13 +13,25 @@ import { TranslationKeys } from '../../static/translationKeys';
 export class AccountsTableComponent implements OnInit {
   public accounts: IAccountResponse[] | undefined;
   public displayedColumns: string[] = ['name', 'type', 'balance', 'description'];
-  public translationKeys = TranslationKeys;
+  public readonly translationKeys = TranslationKeys;
   public isLoading = true;
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private dialog: MatDialog) {}
 
   public ngOnInit(): void {
     this.getAccounts();
+  }
+
+  public openCreateAccountDialog() {
+    this.dialog
+      .open(CreateAccountComponent, {
+        width: '600px'
+      })
+      .afterClosed()
+      .subscribe({
+        // TODO: switch map ?
+        next: () => this.getAccounts()
+      });
   }
 
   private getAccounts(): void {

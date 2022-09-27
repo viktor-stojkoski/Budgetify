@@ -46,7 +46,7 @@ import { MsalGuardConfigFactory, MsalInstanceFactory, MsalInterceptorConfigFacto
     FlexLayoutModule,
     ReactiveFormsModule
   ],
-  exports: [TranslateModule, NavbarComponent, HomeComponent],
+  exports: [TranslateModule, NavbarComponent, HomeComponent, ReactiveFormsModule],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

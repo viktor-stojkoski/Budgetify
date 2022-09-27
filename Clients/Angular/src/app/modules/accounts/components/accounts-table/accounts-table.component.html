@@ -1,4 +1,14 @@
-<mat-toolbar>{{ translationKeys.toolbarName | translate }}</mat-toolbar>
+<mat-toolbar>
+  <span>{{ translationKeys.toolbarName | translate }}</span>
+
+  <span class="toolbar-spacer"></span>
+
+  <span>
+    <button mat-raised-button color="primary" (click)="openCreateAccountDialog()">
+      {{ translationKeys.toolbarActionCreateAccount | translate }}
+    </button>
+  </span>
+</mat-toolbar>
 
 <div class="spinner-container" *ngIf="isLoading">
   <mat-spinner></mat-spinner>
