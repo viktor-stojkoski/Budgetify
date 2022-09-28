@@ -25,6 +25,11 @@
     "createFormTypeLabel": "Тип",
     "createFormBalanceLabel": "Состојба",
     "createFormCurrencyCodeLabel": "Валута",
-    "createFormDescriptionLabel": "Опис"
+    "createFormDescriptionLabel": "Опис",
+
+    "typeCash": "Кеш",
+    "typeDebit": "Дебитна",
+    "typeCredit": "Кредитна",
+    "typeSavings": "Штедна"
   }
 }

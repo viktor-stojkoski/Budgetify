@@ -25,6 +25,11 @@
     "createFormTypeLabel": "Type",
     "createFormBalanceLabel": "Balance",
     "createFormCurrencyCodeLabel": "Currency code",
-    "createFormDescriptionLabel": "Description"
+    "createFormDescriptionLabel": "Description",
+
+    "typeCash": "Cash",
+    "typeDebit": "Debit",
+    "typeCredit": "Credit",
+    "typeSavings": "Savings"
   }
 }

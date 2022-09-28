@@ -9,7 +9,11 @@
 
     <mat-form-field appearance="outline">
       <mat-label>{{ translationKeys.createFormTypeLabel | translate }}</mat-label>
-      <input matInput formControlName="type" />
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let type of types" [value]="type.value">
+          {{ type.translationKey | translate }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="outline">

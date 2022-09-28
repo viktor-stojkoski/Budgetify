@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { AccountType } from '../../models/account.enum';
 import { IAccountResponse } from '../../models/account.model';
 import { AccountService } from '../../services/account.service';
 import { TranslationKeys } from '../../static/translationKeys';
@@ -15,6 +16,7 @@ export class AccountsTableComponent implements OnInit {
   public displayedColumns: string[] = ['name', 'type', 'balance', 'description'];
   public readonly translationKeys = TranslationKeys;
   public isLoading = true;
+  public type = AccountType;
 
   constructor(private accountService: AccountService, private dialog: MatDialog) {}
 
@@ -29,7 +31,6 @@ export class AccountsTableComponent implements OnInit {
       })
       .afterClosed()
       .subscribe({
-        // TODO: switch map ?
         next: () => this.getAccounts()
       });
   }

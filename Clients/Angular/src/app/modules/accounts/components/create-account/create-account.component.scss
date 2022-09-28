@@ -1,5 +1,8 @@
-::ng-deep {
-  .mat-form-field {
-    width: 100%
-  }
+.mat-form-field {
+  width: 100%
+}
+
+.mat-select-panel {
+  max-height: none !important;
+  height: 10px;
 }

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { TranslationKeys as SharedTranslationKeys } from '@budgetify/shared';
+import { enumToTranslationEnum, TranslationKeys as SharedTranslationKeys } from '@budgetify/shared';
+import { AccountType } from '../../models/account.enum';
 import { AccountService } from '../../services/account.service';
 import { TranslationKeys } from '../../static/translationKeys';
 
@@ -13,13 +14,14 @@ import { TranslationKeys } from '../../static/translationKeys';
 export class CreateAccountComponent {
   public readonly translationKeys = TranslationKeys;
   public readonly sharedTranslationKeys = SharedTranslationKeys;
+  public types = enumToTranslationEnum(AccountType);
 
   public accountForm = this.formBuilder.group({
     name: ['', Validators.required],
     type: ['', Validators.required],
     balance: [0, Validators.required],
     currencyCode: ['', Validators.required],
-    description: ['', Validators.required]
+    description: ['']
   });
 
   constructor(

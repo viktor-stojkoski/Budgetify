@@ -5,3 +5,8 @@ export interface IResult<T> {
   isEmpty: boolean;
   value?: T;
 }
+
+export interface ITranslationEnum {
+  translationKey: string;
+  value: string;
+}
