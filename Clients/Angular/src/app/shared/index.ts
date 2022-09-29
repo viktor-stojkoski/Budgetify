@@ -1,3 +1,4 @@
+export * from './components/destroy-base/destroy-base.component';
 export * from './helpers/enum.helper';
 export * from './models/shared.model';
 export * from './shared.module';

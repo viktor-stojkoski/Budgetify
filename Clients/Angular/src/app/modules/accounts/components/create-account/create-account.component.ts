@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { enumToTranslationEnum, TranslationKeys as SharedTranslationKeys } from '@budgetify/shared';
+import {
+  DestroyBaseComponent,
+  enumToTranslationEnum,
+  TranslationKeys as SharedTranslationKeys
+} from '@budgetify/shared';
 import { AccountType } from '../../models/account.enum';
 import { AccountService } from '../../services/account.service';
 import { TranslationKeys } from '../../static/translationKeys';
@@ -11,7 +15,7 @@ import { TranslationKeys } from '../../static/translationKeys';
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.scss']
 })
-export class CreateAccountComponent {
+export class CreateAccountComponent extends DestroyBaseComponent {
   public readonly translationKeys = TranslationKeys;
   public readonly sharedTranslationKeys = SharedTranslationKeys;
   public types = enumToTranslationEnum(AccountType);
@@ -28,7 +32,9 @@ export class CreateAccountComponent {
     public dialogRef: MatDialogRef<CreateAccountComponent>,
     private formBuilder: FormBuilder,
     private accountService: AccountService
-  ) {}
+  ) {
+    super();
+  }
 
   public createAccount(): void {
     if (this.accountForm.valid) {
