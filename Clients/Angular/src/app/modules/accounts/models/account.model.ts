@@ -12,3 +12,9 @@ export interface IAccountRequest {
   currencyCode: string | null;
   description: string | null;
 }
+
+export interface ICurrencyResponse {
+  name: string;
+  code: string;
+  symbol?: string;
+}

@@ -2,7 +2,7 @@
 
 public class CurrencyResponse
 {
-    public CurrencyResponse(string name, string code, string symbol)
+    public CurrencyResponse(string name, string code, string? symbol)
     {
         Name = name;
         Code = code;
@@ -13,5 +13,5 @@ public class CurrencyResponse
 
     public string Code { get; set; }
 
-    public string Symbol { get; set; }
+    public string? Symbol { get; set; }
 }
