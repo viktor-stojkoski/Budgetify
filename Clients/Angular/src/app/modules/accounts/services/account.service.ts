@@ -16,7 +16,7 @@ export class AccountService {
     return this.baseApiService.get<IResult<IAccountResponse[]>>(this.accountsApiRoute);
   }
 
-  public createAccount(account: IAccountRequest): Observable<void> {
-    return this.baseApiService.post<void>(this.accountsApiRoute, account);
+  public createAccount(request: IAccountRequest): Observable<void> {
+    return this.baseApiService.post<void>(this.accountsApiRoute, request);
   }
 }
