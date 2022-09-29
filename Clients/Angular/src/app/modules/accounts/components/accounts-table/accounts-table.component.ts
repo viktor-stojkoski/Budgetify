@@ -1,23 +1,41 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DestroyBaseComponent } from '@budgetify/shared';
+import { AccountType } from '../../models/account.enum';
 import { IAccountResponse } from '../../models/account.model';
 import { AccountService } from '../../services/account.service';
 import { TranslationKeys } from '../../static/translationKeys';
+import { CreateAccountComponent } from '../create-account/create-account.component';
 
 @Component({
   selector: 'app-accounts-table',
   templateUrl: './accounts-table.component.html',
   styleUrls: ['./accounts-table.component.scss']
 })
-export class AccountsTableComponent implements OnInit {
+export class AccountsTableComponent extends DestroyBaseComponent implements OnInit {
   public accounts: IAccountResponse[] | undefined;
   public displayedColumns: string[] = ['name', 'type', 'balance', 'description'];
-  public translationKeys = TranslationKeys;
+  public readonly translationKeys = TranslationKeys;
   public isLoading = true;
+  public type = AccountType;
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private dialog: MatDialog) {
+    super();
+  }
 
   public ngOnInit(): void {
     this.getAccounts();
+  }
+
+  public openCreateAccountDialog() {
+    this.dialog
+      .open(CreateAccountComponent, {
+        width: '600px'
+      })
+      .afterClosed()
+      .subscribe({
+        next: () => this.getAccounts()
+      });
   }
 
   private getAccounts(): void {

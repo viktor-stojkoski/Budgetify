@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslationKeys } from '@budgetify/shared';
+import { DestroyBaseComponent, TranslationKeys } from '@budgetify/shared';
 import { TranslateService } from '@ngx-translate/core';
 import { CurrentUser } from '../../models/auth.model';
 import { ILanguage } from '../../models/common.model';
@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent extends DestroyBaseComponent implements OnInit {
   public isAuthenticated: boolean | undefined;
   public currentUser: CurrentUser | null | undefined;
   public translationKeys = TranslationKeys;
@@ -26,7 +26,9 @@ export class NavbarComponent implements OnInit {
   ];
   public selectedLanguage: string = this.languages[0].resource;
 
-  constructor(private authService: AuthService, private translateService: TranslateService) {}
+  constructor(private authService: AuthService, private translateService: TranslateService) {
+    super();
+  }
 
   public ngOnInit(): void {
     this.isLoggedIn();

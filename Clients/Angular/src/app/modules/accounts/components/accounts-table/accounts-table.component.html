@@ -1,4 +1,14 @@
-<mat-toolbar>{{ translationKeys.toolbarName | translate }}</mat-toolbar>
+<mat-toolbar>
+  <span>{{ translationKeys.toolbarName | translate }}</span>
+
+  <span class="toolbar-spacer"></span>
+
+  <span>
+    <button mat-raised-button color="primary" (click)="openCreateAccountDialog()">
+      {{ translationKeys.toolbarActionCreateAccount | translate }}
+    </button>
+  </span>
+</mat-toolbar>
 
 <div class="spinner-container" *ngIf="isLoading">
   <mat-spinner></mat-spinner>
@@ -12,7 +22,7 @@
 
   <ng-container matColumnDef="type">
     <th mat-header-cell *matHeaderCellDef>{{ translationKeys.tableTypeHeader | translate }}</th>
-    <td mat-cell *matCellDef="let account">{{ account.type }}</td>
+    <td mat-cell *matCellDef="let account">{{ account.type | translateEnum: type }}</td>
   </ng-container>
 
   <ng-container matColumnDef="balance">

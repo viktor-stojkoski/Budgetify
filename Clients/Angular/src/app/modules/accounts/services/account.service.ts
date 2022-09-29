@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseApiService } from '@budgetify/core';
 import { IResult } from '@budgetify/shared';
 import { Observable } from 'rxjs';
-import { IAccountResponse } from '../models/account.model';
+import { IAccountRequest, IAccountResponse } from '../models/account.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +14,9 @@ export class AccountService {
 
   public getAccounts(): Observable<IResult<IAccountResponse[]>> {
     return this.baseApiService.get<IResult<IAccountResponse[]>>(this.accountsApiRoute);
+  }
+
+  public createAccount(request: IAccountRequest): Observable<void> {
+    return this.baseApiService.post<void>(this.accountsApiRoute, request);
   }
 }

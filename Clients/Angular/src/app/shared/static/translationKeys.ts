@@ -7,4 +7,7 @@ export class TranslationKeys {
   public static readonly navbarLanguages = 'navbarLanguages';
   public static readonly navbarLanguageEnglish = 'navbarLanguageEnglish';
   public static readonly navbarLanguageMacedonian = 'navbarLanguageMacedonian';
+
+  public static readonly mainActionButtonOk = 'mainActionButtonOk';
+  public static readonly mainActionButtonCancel = 'mainActionButtonCancel';
 }

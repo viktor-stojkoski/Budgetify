@@ -8,11 +8,28 @@
   "navbarLanguageEnglish": "Англиски",
   "navbarLanguageMacedonian": "Македонски",
 
+  "mainActionButtonOk": "Ок",
+  "mainActionButtonCancel": "Откажи",
+
   "accounts": {
     "toolbarName": "Сметки",
+    "toolbarActionCreateAccount": "Креирај сметка",
+
     "tableNameHeader": "Име",
     "tableTypeHeader": "Тип",
     "tableBalanceHeader": "Состојба",
-    "tableDescriptionHeader": "Опис"
+    "tableDescriptionHeader": "Опис",
+
+    "createFormHeader": "Креирај сметка",
+    "createFormNameLabel": "Име",
+    "createFormTypeLabel": "Тип",
+    "createFormBalanceLabel": "Состојба",
+    "createFormCurrencyCodeLabel": "Валута",
+    "createFormDescriptionLabel": "Опис",
+
+    "typeCash": "Кеш",
+    "typeDebit": "Дебитна",
+    "typeCredit": "Кредитна",
+    "typeSavings": "Штедна"
   }
 }

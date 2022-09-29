@@ -8,11 +8,28 @@
   "navbarLanguageEnglish": "English",
   "navbarLanguageMacedonian": "Macedonian",
 
+  "mainActionButtonOk": "Ok",
+  "mainActionButtonCancel": "Cancel",
+
   "accounts": {
     "toolbarName": "Accounts",
+    "toolbarActionCreateAccount": "Create account",
+
     "tableNameHeader": "Name",
     "tableTypeHeader": "Type",
     "tableBalanceHeader": "Balance",
-    "tableDescriptionHeader": "Description"
+    "tableDescriptionHeader": "Description",
+
+    "createFormHeader": "Create account",
+    "createFormNameLabel": "Name",
+    "createFormTypeLabel": "Type",
+    "createFormBalanceLabel": "Balance",
+    "createFormCurrencyCodeLabel": "Currency code",
+    "createFormDescriptionLabel": "Description",
+
+    "typeCash": "Cash",
+    "typeDebit": "Debit",
+    "typeCredit": "Credit",
+    "typeSavings": "Savings"
   }
 }
