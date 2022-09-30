@@ -1,6 +1,10 @@
 <h1 mat-dialog-title>{{ translationKeys.createFormHeader | translate }}</h1>
 
-<div mat-dialog-content>
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div mat-dialog-content *ngIf="!isLoading">
   <form [formGroup]="accountForm">
     <mat-form-field appearance="outline">
       <mat-label>{{ translationKeys.createFormNameLabel | translate }}</mat-label>

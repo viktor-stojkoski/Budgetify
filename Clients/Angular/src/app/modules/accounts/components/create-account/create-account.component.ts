@@ -23,6 +23,7 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
   public types = enumToTranslationEnum(AccountType);
   public currencies?: ICurrencyResponse[];
   public filteredCurrencies?: Observable<ICurrencyResponse[] | undefined>;
+  public isLoading = true;
 
   public accountForm = this.formBuilder.group({
     name: ['', Validators.required],
@@ -74,8 +75,14 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
 
   private getCurrencies(): void {
     this.accountService.getCurrencies().subscribe({
-      next: (result) => (this.currencies = result.value),
-      error: (error) => console.error(error)
+      next: (result) => {
+        this.currencies = result.value;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error(error);
+        this.isLoading = false;
+      }
     });
   }
 
