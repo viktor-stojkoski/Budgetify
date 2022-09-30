@@ -2,6 +2,7 @@ export interface IAccountResponse {
   name: string;
   type: string;
   balance: number;
+  currencyCode: string;
   description?: string;
 }
 

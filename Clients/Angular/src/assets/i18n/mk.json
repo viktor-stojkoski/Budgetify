@@ -18,6 +18,7 @@
     "tableNameHeader": "Име",
     "tableTypeHeader": "Тип",
     "tableBalanceHeader": "Состојба",
+    "tableCurrencyCodeHeader": "Валута",
     "tableDescriptionHeader": "Опис",
 
     "createFormHeader": "Креирај сметка",

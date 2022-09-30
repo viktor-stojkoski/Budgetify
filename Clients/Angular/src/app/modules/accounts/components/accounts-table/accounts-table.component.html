@@ -25,6 +25,11 @@
     <td mat-cell *matCellDef="let account">{{ account.type | translateEnum: type }}</td>
   </ng-container>
 
+  <ng-container matColumnDef="currencyCode">
+    <th mat-header-cell *matHeaderCellDef>{{ translationKeys.tableCurrencyCodeHeader | translate }}</th>
+    <td mat-cell *matCellDef="let account">{{ account.currencyCode }}</td>
+  </ng-container>
+
   <ng-container matColumnDef="balance">
     <th mat-header-cell *matHeaderCellDef>{{ translationKeys.tableBalanceHeader | translate }}</th>
     <td mat-cell *matCellDef="let account">{{ account.balance }}</td>

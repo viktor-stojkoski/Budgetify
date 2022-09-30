@@ -18,6 +18,7 @@
     "tableNameHeader": "Name",
     "tableTypeHeader": "Type",
     "tableBalanceHeader": "Balance",
+    "tableCurrencyCodeHeader": "Currency code",
     "tableDescriptionHeader": "Description",
 
     "createFormHeader": "Create account",

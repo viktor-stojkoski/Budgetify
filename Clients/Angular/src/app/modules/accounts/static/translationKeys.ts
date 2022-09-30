@@ -5,6 +5,7 @@ export class TranslationKeys {
   public static readonly tableNameHeader = 'accounts.tableNameHeader';
   public static readonly tableTypeHeader = 'accounts.tableTypeHeader';
   public static readonly tableBalanceHeader = 'accounts.tableBalanceHeader';
+  public static readonly tableCurrencyCodeHeader = 'accounts.tableCurrencyCodeHeader';
   public static readonly tableDescriptionHeader = 'accounts.tableDescriptionHeader';
 
   public static readonly createFormHeader = 'accounts.createFormHeader';

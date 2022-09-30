@@ -14,7 +14,7 @@ import { CreateAccountComponent } from '../create-account/create-account.compone
 })
 export class AccountsTableComponent extends DestroyBaseComponent implements OnInit {
   public accounts: IAccountResponse[] | undefined;
-  public displayedColumns: string[] = ['name', 'type', 'balance', 'description'];
+  public displayedColumns: string[] = ['name', 'type', 'balance', 'currencyCode', 'description'];
   public readonly translationKeys = TranslationKeys;
   public isLoading = true;
   public type = AccountType;

@@ -28,11 +28,13 @@ public class GetAccountsQueryHandler : IQueryHandler<GetAccountsQuery, IEnumerab
 
         IEnumerable<AccountResponse> accounts =
             await _budgetifyReadonlyDbContext.AllNoTrackedOf<Account>()
+                .Include(x => x.Currency)
                 .Where(x => x.UserId == 1) // TODO: Fix the hardcoded 1 by implementing Current User logic
                 .Select(x => new AccountResponse(
                     x.Name,
                     x.Type,
                     x.Balance,
+                    x.Currency.Code,
                     x.Description))
                 .ToListAsync();
 
