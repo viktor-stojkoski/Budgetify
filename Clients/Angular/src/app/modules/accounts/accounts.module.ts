@@ -6,6 +6,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from '@budgetify/core';
 import { SharedModule } from '@budgetify/shared';
@@ -24,7 +25,8 @@ import { routes } from './routes';
     MatProgressSpinnerModule,
     MatDialogModule,
     MatInputModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTooltipModule
   ],
   declarations: [AccountsTableComponent, CreateAccountComponent],
   exports: [AccountsTableComponent],
