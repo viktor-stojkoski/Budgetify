@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import {
@@ -6,7 +6,9 @@ import {
   enumToTranslationEnum,
   TranslationKeys as SharedTranslationKeys
 } from '@budgetify/shared';
+import { map, Observable, startWith } from 'rxjs';
 import { AccountType } from '../../models/account.enum';
+import { ICurrencyResponse } from '../../models/account.model';
 import { AccountService } from '../../services/account.service';
 import { TranslationKeys } from '../../static/translationKeys';
 
@@ -15,10 +17,12 @@ import { TranslationKeys } from '../../static/translationKeys';
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.scss']
 })
-export class CreateAccountComponent extends DestroyBaseComponent {
+export class CreateAccountComponent extends DestroyBaseComponent implements OnInit {
   public readonly translationKeys = TranslationKeys;
   public readonly sharedTranslationKeys = SharedTranslationKeys;
   public types = enumToTranslationEnum(AccountType);
+  public currencies?: ICurrencyResponse[];
+  public filteredCurrencies?: Observable<ICurrencyResponse[] | undefined>;
 
   public accountForm = this.formBuilder.group({
     name: ['', Validators.required],
@@ -34,6 +38,11 @@ export class CreateAccountComponent extends DestroyBaseComponent {
     private accountService: AccountService
   ) {
     super();
+  }
+
+  public ngOnInit(): void {
+    this.getCurrencies();
+    this.filterCurrencies();
   }
 
   public createAccount(): void {
@@ -57,5 +66,31 @@ export class CreateAccountComponent extends DestroyBaseComponent {
 
   public onCancelClick(): void {
     this.dialogRef.close();
+  }
+
+  public displayFn(code: string): string {
+    return this.currencies?.find((x) => x.code === code)?.name || '';
+  }
+
+  private getCurrencies(): void {
+    this.accountService.getCurrencies().subscribe({
+      next: (result) => (this.currencies = result.value),
+      error: (error) => console.error(error)
+    });
+  }
+
+  private filterCurrencies() {
+    this.filteredCurrencies = this.accountForm.controls.currencyCode.valueChanges.pipe(
+      startWith(''),
+      map((value) => this.filter(value || ''))
+    );
+  }
+
+  private filter(value: string): ICurrencyResponse[] | undefined {
+    const filterValue = value.toLowerCase();
+
+    return this.currencies?.filter(
+      (option) => option.name.toLowerCase().includes(filterValue) || option.code.toLowerCase().includes(filterValue)
+    );
   }
 }

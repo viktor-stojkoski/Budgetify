@@ -21,9 +21,14 @@
       <input type="number" matInput formControlName="balance" />
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" *ngIf="currencies">
       <mat-label>{{ translationKeys.createFormCurrencyCodeLabel | translate }}</mat-label>
-      <input matInput formControlName="currencyCode" />
+      <input type="text" matInput formControlName="currencyCode" [matAutocomplete]="currency" />
+      <mat-autocomplete #currency="matAutocomplete" [displayWith]="displayFn.bind(this)">
+        <mat-option *ngFor="let currency of filteredCurrencies | async" [value]="currency.code">
+          [{{ currency.code }}] {{ currency.name }} - {{ currency.symbol }}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
