@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { DestroyBaseComponent } from '@budgetify/shared';
+import { DestroyBaseComponent, DialogService } from '@budgetify/shared';
 import { AccountType } from '../../models/account.enum';
 import { IAccountResponse } from '../../models/account.model';
 import { AccountService } from '../../services/account.service';
@@ -19,7 +18,7 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
   public isLoading = true;
   public type = AccountType;
 
-  constructor(private accountService: AccountService, private dialog: MatDialog) {
+  constructor(private accountService: AccountService, private dialogService: DialogService) {
     super();
   }
 
@@ -28,10 +27,8 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
   }
 
   public openCreateAccountDialog() {
-    this.dialog
-      .open(CreateAccountComponent, {
-        width: '600px'
-      })
+    this.dialogService
+      .open(CreateAccountComponent)
       .afterClosed()
       .subscribe({
         next: () => this.getAccounts()
