@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
@@ -23,13 +22,11 @@ import { routes } from './routes';
     SharedModule,
     MatTableModule,
     MatProgressSpinnerModule,
-    MatDialogModule,
     MatInputModule,
     MatAutocompleteModule,
     MatTooltipModule
   ],
   declarations: [AccountsTableComponent, CreateAccountComponent],
-  exports: [AccountsTableComponent],
-  providers: [{ provide: MatDialogRef, useValue: {} }]
+  exports: [AccountsTableComponent]
 })
 export class AccountsModule {}
