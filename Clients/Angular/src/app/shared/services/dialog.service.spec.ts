@@ -8,7 +8,8 @@ describe('DialogService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule]
+      imports: [SharedModule],
+      providers: [DialogService]
     });
     service = TestBed.inject(DialogService);
   });
