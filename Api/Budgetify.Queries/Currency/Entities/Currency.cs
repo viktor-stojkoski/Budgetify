@@ -10,7 +10,7 @@ public class Currency : Entity
     public Currency(
         string name,
         string code,
-        string symbol)
+        string? symbol)
     {
         Name = name;
         Code = code;
@@ -21,7 +21,7 @@ public class Currency : Entity
 
     public string Code { get; protected internal set; }
 
-    public string Symbol { get; protected internal set; }
+    public string? Symbol { get; protected internal set; }
 
     public virtual ICollection<Account> Accounts { get; protected internal set; } = new List<Account>();
 }

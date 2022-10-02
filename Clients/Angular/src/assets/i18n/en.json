@@ -18,13 +18,14 @@
     "tableNameHeader": "Name",
     "tableTypeHeader": "Type",
     "tableBalanceHeader": "Balance",
+    "tableCurrencyCodeHeader": "Currency code",
     "tableDescriptionHeader": "Description",
 
     "createFormHeader": "Create account",
     "createFormNameLabel": "Name",
     "createFormTypeLabel": "Type",
     "createFormBalanceLabel": "Balance",
-    "createFormCurrencyCodeLabel": "Currency code",
+    "createFormCurrencyLabel": "Currency",
     "createFormDescriptionLabel": "Description",
 
     "typeCash": "Cash",

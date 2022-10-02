@@ -18,13 +18,14 @@
     "tableNameHeader": "Име",
     "tableTypeHeader": "Тип",
     "tableBalanceHeader": "Состојба",
+    "tableCurrencyCodeHeader": "Валута",
     "tableDescriptionHeader": "Опис",
 
     "createFormHeader": "Креирај сметка",
     "createFormNameLabel": "Име",
     "createFormTypeLabel": "Тип",
     "createFormBalanceLabel": "Состојба",
-    "createFormCurrencyCodeLabel": "Валута",
+    "createFormCurrencyLabel": "Валута",
     "createFormDescriptionLabel": "Опис",
 
     "typeCash": "Кеш",

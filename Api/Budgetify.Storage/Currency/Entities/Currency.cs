@@ -15,7 +15,7 @@ public class Currency : AggregateRoot
         DateTime? deletedOn,
         string name,
         string code,
-        string symbol) : base(id, uid, createdOn, deletedOn)
+        string? symbol) : base(id, uid, createdOn, deletedOn)
     {
         Name = name;
         Code = code;
@@ -26,7 +26,7 @@ public class Currency : AggregateRoot
 
     public string Code { get; protected internal set; }
 
-    public string Symbol { get; protected internal set; }
+    public string? Symbol { get; protected internal set; }
 
     public virtual ICollection<Account> Accounts { get; protected internal set; } = new List<Account>();
 }
