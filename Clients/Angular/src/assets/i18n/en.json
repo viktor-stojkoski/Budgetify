@@ -25,7 +25,7 @@
     "createFormNameLabel": "Name",
     "createFormTypeLabel": "Type",
     "createFormBalanceLabel": "Balance",
-    "createFormCurrencyCodeLabel": "Currency code",
+    "createFormCurrencyLabel": "Currency",
     "createFormDescriptionLabel": "Description",
 
     "typeCash": "Cash",
