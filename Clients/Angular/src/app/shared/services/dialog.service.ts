@@ -2,9 +2,7 @@ import { ComponentType } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DialogService {
   constructor(private dialog: MatDialog) {}
 

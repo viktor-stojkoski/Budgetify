@@ -69,7 +69,7 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
     this.dialogRef.close();
   }
 
-  public displayFn(code: string): string {
+  public displayCurrency(code: string): string {
     return this.currencies?.find((x) => x.code === code)?.name || '';
   }
 

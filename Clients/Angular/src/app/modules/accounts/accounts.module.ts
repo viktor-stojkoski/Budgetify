@@ -8,7 +8,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from '@budgetify/core';
-import { SharedModule } from '@budgetify/shared';
+import { DialogService, SharedModule } from '@budgetify/shared';
 import { AccountsTableComponent } from './components/accounts-table/accounts-table.component';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
 import { routes } from './routes';
@@ -27,6 +27,7 @@ import { routes } from './routes';
     MatTooltipModule
   ],
   declarations: [AccountsTableComponent, CreateAccountComponent],
-  exports: [AccountsTableComponent]
+  exports: [AccountsTableComponent],
+  providers: [DialogService]
 })
 export class AccountsModule {}
