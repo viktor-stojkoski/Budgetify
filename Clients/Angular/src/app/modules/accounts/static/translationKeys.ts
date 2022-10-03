@@ -14,4 +14,5 @@ export class TranslationKeys {
   public static readonly createFormBalanceLabel = 'accounts.createFormBalanceLabel';
   public static readonly createFormCurrencyLabel = 'accounts.createFormCurrencyLabel';
   public static readonly createFormDescriptionLabel = 'accounts.createFormDescriptionLabel';
+  public static readonly createAccountSuccessful = 'successMessages.accounts.create';
 }
