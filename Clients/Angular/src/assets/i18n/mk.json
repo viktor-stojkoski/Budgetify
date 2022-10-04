@@ -44,6 +44,8 @@
     "toolbarName": "Сметки",
     "toolbarActionCreateAccount": "Креирај сметка",
 
+    "tableFilterLabel": "Филтер",
+    "tableNoDataFound": "Не беа пронајдени податоци.",
     "tableNameHeader": "Име",
     "tableTypeHeader": "Тип",
     "tableBalanceHeader": "Состојба",

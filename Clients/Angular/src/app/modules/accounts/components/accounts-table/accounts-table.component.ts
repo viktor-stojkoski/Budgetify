@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { DestroyBaseComponent, DialogService } from '@budgetify/shared';
 import { AccountType } from '../../models/account.enum';
 import { IAccountResponse } from '../../models/account.model';
@@ -12,11 +14,17 @@ import { CreateAccountComponent } from '../create-account/create-account.compone
   styleUrls: ['./accounts-table.component.scss']
 })
 export class AccountsTableComponent extends DestroyBaseComponent implements OnInit {
-  public accounts: IAccountResponse[] | undefined;
+  public dataSource!: MatTableDataSource<IAccountResponse>;
   public displayedColumns: string[] = ['name', 'type', 'balance', 'currencyCode', 'description'];
   public readonly translationKeys = TranslationKeys;
   public isLoading = true;
   public type = AccountType;
+
+  @ViewChild(MatSort) set matSort(sort: MatSort) {
+    if (!this.dataSource.sort) {
+      this.dataSource.sort = sort;
+    }
+  }
 
   constructor(private accountService: AccountService, private dialogService: DialogService) {
     super();
@@ -35,10 +43,15 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
       });
   }
 
+  public applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   private getAccounts(): void {
     this.accountService.getAccounts().subscribe({
       next: (response) => {
-        this.accounts = response.value;
+        this.dataSource = new MatTableDataSource(response.value);
         this.isLoading = false;
       },
       error: (error) => {

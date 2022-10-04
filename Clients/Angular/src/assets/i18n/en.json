@@ -44,6 +44,8 @@
     "toolbarName": "Accounts",
     "toolbarActionCreateAccount": "Create account",
 
+    "tableFilterLabel": "Filter",
+    "tableNoDataFound": "No data was found.",
     "tableNameHeader": "Name",
     "tableTypeHeader": "Type",
     "tableBalanceHeader": "Balance",
