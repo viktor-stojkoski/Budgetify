@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DestroyBaseComponent, DialogService } from '@budgetify/shared';
@@ -20,6 +21,11 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
   public isLoading = true;
   public type = AccountType;
 
+  @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
+    if (!this.dataSource.paginator) {
+      this.dataSource.paginator = paginator;
+    }
+  }
   @ViewChild(MatSort) set matSort(sort: MatSort) {
     if (!this.dataSource.sort) {
       this.dataSource.sort = sort;
