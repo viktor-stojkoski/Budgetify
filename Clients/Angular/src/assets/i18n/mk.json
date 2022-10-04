@@ -11,6 +11,35 @@
   "mainActionButtonOk": "Ок",
   "mainActionButtonCancel": "Откажи",
 
+  "errorCodes": {
+    "INTERNAL_SERVER_ERROR": "Серверска грешка.",
+    "EMAIL_INVALID": "Е-маилот е невалиден.",
+    "EMAIL_INVALID_LENGTH": "Должината на е-маилот е невалидна.",
+
+    "USER_NAME_INVALID": "Корисничкото име е невалидно.",
+    "USER_NAME_INVALID_LENGTH": "Корисничкото име има невалидна должина.",
+    "USER_NOT_FOUND": "Корисникот не е пронајден.",
+    "CITY_INVALID": "Градот е невалиден.",
+    "CITY_INVALID_LENGTH": "Должината на градот е невалидна.",
+    "USER_ALREADY_EXISTS": "Корисникот веќе постои.",
+
+    "CURRENCY_NAME_INVALID": "Името на валутата е невалидно.",
+    "CURRENCY_NAME_INVALID_LENGTH": "Должината на валутата е невалидна.",
+    "CURRENCY_CODE_INVALID": "Кодот на валутата е невалиден.",
+    "CURRENCY_SYMBOL_INVALID_LENGTH": "Симболот на валутата е невалиден.",
+    "CURRENCY_NOT_FOUND": "Ваултата не е пронајдена.",
+
+    "ACCOUNT_NAME_INVALID": "Името на сметката е невалидно.",
+    "ACCOUNT_NAME_INVALID_LENGTH": "Должината на името на сметката е невалидно.",
+    "ACCOUNT_TYPE_INVALID": "Типот на сметката е невалиден."
+  },
+
+  "successMessages": {
+    "accounts": {
+      "create": "Сметката е успешно искреирана."
+    }
+  },
+
   "accounts": {
     "toolbarName": "Сметки",
     "toolbarActionCreateAccount": "Креирај сметка",

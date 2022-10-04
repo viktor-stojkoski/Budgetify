@@ -1,9 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import {
   DestroyBaseComponent,
   enumToTranslationEnum,
+  SnackbarService,
   TranslationKeys as SharedTranslationKeys
 } from '@budgetify/shared';
 import { map, Observable, startWith } from 'rxjs';
@@ -36,7 +38,8 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
   constructor(
     public dialogRef: MatDialogRef<CreateAccountComponent>,
     private formBuilder: FormBuilder,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private snackBarService: SnackbarService
   ) {
     super();
   }
@@ -57,8 +60,11 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
           description: this.accountForm.controls.description.value
         })
         .subscribe({
-          next: () => this.dialogRef.close(),
-          error: (error) => console.error(error)
+          next: () => {
+            this.dialogRef.close();
+            this.snackBarService.success(this.translationKeys.createAccountSuccessful);
+          },
+          error: (error: HttpErrorResponse) => this.snackBarService.showError(error)
         });
     } else {
       this.accountForm.markAllAsTouched();

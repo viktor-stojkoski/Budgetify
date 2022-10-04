@@ -11,6 +11,35 @@
   "mainActionButtonOk": "Ok",
   "mainActionButtonCancel": "Cancel",
 
+  "errorCodes": {
+    "INTERNAL_SERVER_ERROR": "Internal server error.",
+    "EMAIL_INVALID": "Email invalid.",
+    "EMAIL_INVALID_LENGTH": "Email invalid length.",
+
+    "USER_NAME_INVALID": "User name invalid.",
+    "USER_NAME_INVALID_LENGTH": "User name invalid length.",
+    "USER_NOT_FOUND": "User not found.",
+    "CITY_INVALID": "City invalid.",
+    "CITY_INVALID_LENGTH": "City invalid length.",
+    "USER_ALREADY_EXISTS": "User already exists.",
+
+    "CURRENCY_NAME_INVALID": "Currency name invalid.",
+    "CURRENCY_NAME_INVALID_LENGTH": "Currency name invalid length.",
+    "CURRENCY_CODE_INVALID": "Currency code invalid.",
+    "CURRENCY_SYMBOL_INVALID_LENGTH": "Currency symbol invalid length.",
+    "CURRENCY_NOT_FOUND": "Currency not found.",
+
+    "ACCOUNT_NAME_INVALID": "Account name invalid.",
+    "ACCOUNT_NAME_INVALID_LENGTH": "Account name invalid length.",
+    "ACCOUNT_TYPE_INVALID": "Account type invalid."
+  },
+
+  "successMessages": {
+    "accounts": {
+      "create": "Account has been successfully created."
+    }
+  },
+
   "accounts": {
     "toolbarName": "Accounts",
     "toolbarActionCreateAccount": "Create account",
