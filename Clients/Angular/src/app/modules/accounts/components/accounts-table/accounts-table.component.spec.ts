@@ -11,8 +11,7 @@ describe('AccountsTableComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AccountsModule, AppModule],
-      declarations: [AccountsTableComponent],
-      providers: []
+      declarations: [AccountsTableComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AccountsTableComponent);
