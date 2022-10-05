@@ -16,18 +16,18 @@ import { CreateAccountComponent } from '../create-account/create-account.compone
 })
 export class AccountsTableComponent extends DestroyBaseComponent implements OnInit {
   public dataSource!: MatTableDataSource<IAccountResponse>;
-  public displayedColumns: string[] = ['name', 'type', 'balance', 'currencyCode', 'description'];
+  public displayedColumns = ['name', 'type', 'balance', 'currencyCode', 'description'];
   public readonly translationKeys = TranslationKeys;
   public isLoading = true;
   public type = AccountType;
 
   @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
-    if (!this.dataSource.paginator) {
+    if (paginator && !this.dataSource.paginator) {
       this.dataSource.paginator = paginator;
     }
   }
   @ViewChild(MatSort) set matSort(sort: MatSort) {
-    if (!this.dataSource.sort) {
+    if (sort && !this.dataSource.sort) {
       this.dataSource.sort = sort;
     }
   }

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { AppModule } from '../../../../app.module';
 import { AccountsModule } from '../../accounts.module';
 
@@ -10,8 +11,9 @@ describe('AccountsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AccountsModule, AppModule],
-      declarations: [AccountsTableComponent]
+      imports: [AccountsModule, AppModule, MatPaginatorModule],
+      declarations: [AccountsTableComponent],
+      providers: []
     }).compileComponents();
 
     fixture = TestBed.createComponent(AccountsTableComponent);
