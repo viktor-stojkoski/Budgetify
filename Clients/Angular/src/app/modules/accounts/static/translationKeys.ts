@@ -2,6 +2,8 @@ export class TranslationKeys {
   public static readonly toolbarName = 'accounts.toolbarName';
   public static readonly toolbarActionCreateAccount = 'accounts.toolbarActionCreateAccount';
 
+  public static readonly tableFilterLabel = 'accounts.tableFilterLabel';
+  public static readonly tableNoDataFound = 'accounts.tableNoDataFound';
   public static readonly tableNameHeader = 'accounts.tableNameHeader';
   public static readonly tableTypeHeader = 'accounts.tableTypeHeader';
   public static readonly tableBalanceHeader = 'accounts.tableBalanceHeader';

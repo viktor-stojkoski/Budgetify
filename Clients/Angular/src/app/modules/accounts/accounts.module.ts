@@ -3,7 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
@@ -21,10 +23,12 @@ import { routes } from './routes';
     CoreModule,
     SharedModule,
     MatTableModule,
+    MatSortModule,
     MatProgressSpinnerModule,
     MatInputModule,
     MatAutocompleteModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatPaginatorModule
   ],
   declarations: [AccountsTableComponent, CreateAccountComponent],
   exports: [AccountsTableComponent],
