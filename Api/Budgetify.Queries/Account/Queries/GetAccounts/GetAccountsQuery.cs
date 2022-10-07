@@ -31,6 +31,7 @@ public class GetAccountsQueryHandler : IQueryHandler<GetAccountsQuery, IEnumerab
                 .Include(x => x.Currency)
                 .Where(x => x.UserId == 1) // TODO: Fix the hardcoded 1 by implementing Current User logic
                 .Select(x => new AccountResponse(
+                    x.Uid,
                     x.Name,
                     x.Type,
                     x.Balance,

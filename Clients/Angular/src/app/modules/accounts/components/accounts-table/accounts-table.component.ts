@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { DestroyBaseComponent, DialogService } from '@budgetify/shared';
 import { AccountType } from '../../models/account.enum';
 import { IAccountResponse } from '../../models/account.model';
@@ -32,7 +33,7 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
     }
   }
 
-  constructor(private accountService: AccountService, private dialogService: DialogService) {
+  constructor(private accountService: AccountService, private dialogService: DialogService, private router: Router) {
     super();
   }
 
@@ -47,6 +48,11 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
       .subscribe({
         next: () => this.getAccounts()
       });
+  }
+
+  public openAccountDetails(uid: any) {
+    console.log(uid);
+    this.router.navigateByUrl(`accounts/${uid}`);
   }
 
   public applyFilter(event: Event): void {

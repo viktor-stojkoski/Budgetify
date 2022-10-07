@@ -1,0 +1,14 @@
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<mat-card *ngIf="!isLoading && account" class="mat-elevation-z8">
+  <mat-card-title>Account details</mat-card-title>
+  <mat-card-content>
+    <li><strong>Name</strong> {{ account.name }}</li>
+    <li><strong>Type</strong> {{ account.type }}</li>
+    <li><strong>Balance</strong> {{ account.balance }}</li>
+    <li><strong>Currency</strong> {{ account.currencyCode }}</li>
+    <li><strong>Description</strong> {{ account.description }}</li>
+  </mat-card-content>
+</mat-card>

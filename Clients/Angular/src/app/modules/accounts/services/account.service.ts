@@ -17,6 +17,10 @@ export class AccountService {
     return this.baseApiService.get<IResult<IAccountResponse[]>>(this.accountsApiRoute);
   }
 
+  public getAccount(uid?: string | null): Observable<IResult<IAccountResponse>> {
+    return this.baseApiService.get<IResult<IAccountResponse>>(`${this.accountsApiRoute}/${uid}`);
+  }
+
   public createAccount(request: IAccountRequest): Observable<void> {
     return this.baseApiService.post<void>(this.accountsApiRoute, request);
   }
