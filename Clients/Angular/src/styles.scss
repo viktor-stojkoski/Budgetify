@@ -3,6 +3,13 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
 .snackbar-error {
   background-color: #E02938; // #F56C6C
   color: white;

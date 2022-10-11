@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { DestroyBaseComponent, SnackbarService } from '@budgetify/shared';
-import { concatMap, takeUntil, tap } from 'rxjs';
+import { concatMap, takeUntil } from 'rxjs';
+import { AccountType } from '../../models/account.enum';
 import { IAccountResponse } from '../../models/account.model';
 import { AccountService } from '../../services/account.service';
+import { TranslationKeys } from '../../static/translationKeys';
 
 @Component({
   selector: 'app-account-details',
@@ -13,8 +15,8 @@ import { AccountService } from '../../services/account.service';
 export class AccountDetailsComponent extends DestroyBaseComponent implements OnInit {
   public account?: IAccountResponse;
   public isLoading = true;
-
-  private accountUid?: string | null;
+  public readonly translationKeys = TranslationKeys;
+  public type = AccountType;
 
   constructor(
     private accountService: AccountService,
@@ -32,10 +34,7 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
     this.activatedRoute.paramMap
       .pipe(
         takeUntil(this.destroyed$),
-        tap((params: ParamMap) => {
-          this.accountUid = params.get('accountUid');
-        }),
-        concatMap(() => this.accountService.getAccount(this.accountUid))
+        concatMap((params: ParamMap) => this.accountService.getAccount(params.get('accountUid')))
       )
       .subscribe({
         next: (result) => {

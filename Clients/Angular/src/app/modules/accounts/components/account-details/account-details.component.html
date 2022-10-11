@@ -1,14 +1,69 @@
+<mat-toolbar *ngIf="!isLoading">
+  <span>{{ translationKeys.toolbarName | translate }} > {{ account?.name ?? '' | truncate: 30 }}</span>
+</mat-toolbar>
+
 <div class="spinner-container" *ngIf="isLoading">
   <mat-spinner></mat-spinner>
 </div>
 
 <mat-card *ngIf="!isLoading && account" class="mat-elevation-z8">
   <mat-card-title>Account details</mat-card-title>
+
   <mat-card-content>
-    <li><strong>Name</strong> {{ account.name }}</li>
-    <li><strong>Type</strong> {{ account.type }}</li>
-    <li><strong>Balance</strong> {{ account.balance }}</li>
-    <li><strong>Currency</strong> {{ account.currencyCode }}</li>
-    <li><strong>Description</strong> {{ account.description }}</li>
+    <!-- <table class="mat-table">
+      <tr class="mat-row">
+        <th class="mat-header-cell">Name</th>
+        <td class="mat-cell">
+          <span [matTooltip]="account.name" [matTooltipDisabled]="account.name.length < 30">
+            {{ account.name | truncate: 30 }}
+          </span>
+        </td>
+      </tr>
+      <tr class="mat-row">
+        <th class="mat-header-cell">Type</th>
+        <td class="mat-cell">{{ account.type | translateEnum: type }}</td>
+      </tr>
+      <tr class="mat-row">
+        <th class="mat-header-cell">Balance</th>
+        <td class="mat-cell">{{ account.balance }}</td>
+      </tr>
+      <tr class="mat-row">
+        <th class="mat-header-cell">Currency</th>
+        <td class="mat-cell">{{ account.currencyCode }}</td>
+      </tr>
+      <tr class="mat-row">
+        <th class="mat-header-cell no-border">Description</th>
+        <td class="mat-cell no-border">
+          <span [matTooltip]="account.description || ''" [matTooltipDisabled]="(account.description?.length || 0) < 50">
+            {{ account.description || '' | truncate: 50 }}
+          </span>
+        </td>
+      </tr>
+    </table> -->
+
+    <div class="grid-container">
+      <div class="grid-item">Name</div>
+      <div class="grid-item">
+        <span [matTooltip]="account.name" [matTooltipDisabled]="account.name.length < 30">
+          {{ account.name | truncate: 30 }}
+        </span>
+      </div>
+
+      <div class="grid-item">Type</div>
+      <div class="grid-item">{{ account.type | translateEnum: type }}</div>
+
+      <div class="grid-item">Balance</div>
+      <div class="grid-item">{{ account.balance }}</div>
+
+      <div class="grid-item">Currency</div>
+      <div class="grid-item">{{ account.currencyCode }}</div>
+
+      <div class="grid-item no-border">Description</div>
+      <div class="grid-item no-border">
+        <span [matTooltip]="account.description ?? ''" [matTooltipDisabled]="(account.description?.length ?? 0) < 50">
+          {{ account.description ?? '' | truncate: 50 }}
+        </span>
+      </div>
+    </div>
   </mat-card-content>
 </mat-card>
