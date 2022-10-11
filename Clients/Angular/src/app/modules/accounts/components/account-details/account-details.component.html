@@ -10,37 +10,6 @@
   <mat-card-title>Account details</mat-card-title>
 
   <mat-card-content>
-    <!-- <table class="mat-table">
-      <tr class="mat-row">
-        <th class="mat-header-cell">Name</th>
-        <td class="mat-cell">
-          <span [matTooltip]="account.name" [matTooltipDisabled]="account.name.length < 30">
-            {{ account.name | truncate: 30 }}
-          </span>
-        </td>
-      </tr>
-      <tr class="mat-row">
-        <th class="mat-header-cell">Type</th>
-        <td class="mat-cell">{{ account.type | translateEnum: type }}</td>
-      </tr>
-      <tr class="mat-row">
-        <th class="mat-header-cell">Balance</th>
-        <td class="mat-cell">{{ account.balance }}</td>
-      </tr>
-      <tr class="mat-row">
-        <th class="mat-header-cell">Currency</th>
-        <td class="mat-cell">{{ account.currencyCode }}</td>
-      </tr>
-      <tr class="mat-row">
-        <th class="mat-header-cell no-border">Description</th>
-        <td class="mat-cell no-border">
-          <span [matTooltip]="account.description || ''" [matTooltipDisabled]="(account.description?.length || 0) < 50">
-            {{ account.description || '' | truncate: 50 }}
-          </span>
-        </td>
-      </tr>
-    </table> -->
-
     <div class="grid-container">
       <div class="grid-item">Name</div>
       <div class="grid-item">

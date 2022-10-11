@@ -2,21 +2,6 @@
   margin: 20px;
 }
 
-.mat-header-cell, .mat-cell {
-  font-size: 14px;
-  text-align: left;
-  padding: 20px 25px 20px 25px;
-  border-bottom: 1px solid rgba(0,0,0,.12);
-}
-
-.mat-table {
-  width: 100%;
-}
-
-.no-border {
-  border-bottom: none !important;
-}
-
 .grid-container {
   display: grid;
   grid-template-columns: 50% 50%;
@@ -31,4 +16,8 @@
 
 .grid-item:nth-of-type(n+1) {
   border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+.no-border {
+  border-bottom: none !important;
 }
