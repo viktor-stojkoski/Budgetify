@@ -62,6 +62,13 @@
     "typeCash": "Кеш",
     "typeDebit": "Дебитна",
     "typeCredit": "Кредитна",
-    "typeSavings": "Штедна"
+    "typeSavings": "Штедна",
+
+    "detailsHeader": "Детали за сметка",
+    "detailsNameHeader": "Име",
+    "detailsTypeHeader": "Тип",
+    "detailsBalanceHeader": "Состојба",
+    "detailsCurrencyHeader": "Валута",
+    "detailsDescriptionHeader": "Опис"
   }
 }

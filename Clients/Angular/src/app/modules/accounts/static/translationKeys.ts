@@ -17,4 +17,11 @@ export class TranslationKeys {
   public static readonly createFormCurrencyLabel = 'accounts.createFormCurrencyLabel';
   public static readonly createFormDescriptionLabel = 'accounts.createFormDescriptionLabel';
   public static readonly createAccountSuccessful = 'successMessages.accounts.create';
+
+  public static readonly detailsHeader = 'accounts.detailsHeader';
+  public static readonly detailsNameHeader = 'accounts.detailsNameHeader';
+  public static readonly detailsTypeHeader = 'accounts.detailsTypeHeader';
+  public static readonly detailsBalanceHeader = 'accounts.detailsBalanceHeader';
+  public static readonly detailsCurrencyHeader = 'accounts.detailsCurrencyHeader';
+  public static readonly detailsDescriptionHeader = 'accounts.detailsDescriptionHeader';
 }

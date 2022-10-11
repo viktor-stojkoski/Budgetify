@@ -62,6 +62,13 @@
     "typeCash": "Cash",
     "typeDebit": "Debit",
     "typeCredit": "Credit",
-    "typeSavings": "Savings"
+    "typeSavings": "Savings",
+
+    "detailsHeader": "Account details",
+    "detailsNameHeader": "Name",
+    "detailsTypeHeader": "Type",
+    "detailsBalanceHeader": "Balance",
+    "detailsCurrencyHeader": "Currency",
+    "detailsDescriptionHeader": "Description"
   }
 }
