@@ -21,6 +21,10 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
   public readonly translationKeys = TranslationKeys;
   public isLoading = true;
   public type = AccountType;
+  public filterValue = '';
+
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild(MatSort) sort?: MatSort;
 
   @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
     if (paginator && !this.dataSource.paginator) {
@@ -56,14 +60,17 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
   }
 
   public applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = this.filterValue.trim().toLowerCase();
   }
 
   private getAccounts(): void {
     this.accountService.getAccounts().subscribe({
       next: (response) => {
         this.dataSource = new MatTableDataSource(response.value);
+        this.dataSource.sort = this.sort!;
+        this.dataSource.paginator = this.paginator!;
+        this.filterValue = '';
         this.isLoading = false;
       },
       error: (error) => {

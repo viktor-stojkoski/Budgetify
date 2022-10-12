@@ -16,7 +16,7 @@
 
 <mat-form-field *ngIf="!isLoading" appearance="outline">
   <mat-label>{{ translationKeys.tableFilterLabel | translate }}</mat-label>
-  <input matInput (keyup)="applyFilter($event)" />
+  <input [value]="filterValue" matInput (keyup)="applyFilter($event)" />
 </mat-form-field>
 
 <table mat-table *ngIf="!isLoading" [dataSource]="dataSource" matSort class="mat-elevation-z8">
