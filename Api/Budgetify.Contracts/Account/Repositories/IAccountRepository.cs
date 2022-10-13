@@ -1,5 +1,9 @@
 ﻿namespace Budgetify.Contracts.Account.Repositories;
 
+using System;
+using System.Threading.Tasks;
+
+using Budgetify.Common.Results;
 using Budgetify.Entities.Account.Domain;
 
 public interface IAccountRepository
@@ -13,4 +17,9 @@ public interface IAccountRepository
     /// Updates account.
     /// </summary>
     void Update(Account account);
+
+    /// <summary>
+    /// Returns account by given accountUid.
+    /// </summary>
+    Task<Result<Account>> GetAccountAsync(Guid accountUid);
 }
