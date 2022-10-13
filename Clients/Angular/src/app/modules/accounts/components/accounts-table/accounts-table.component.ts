@@ -54,8 +54,7 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
       });
   }
 
-  public openAccountDetails(uid: any) {
-    console.log(uid);
+  public openAccountDetails(uid: string): void {
     this.router.navigateByUrl(`accounts/${uid}`);
   }
 
