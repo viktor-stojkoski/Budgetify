@@ -44,7 +44,7 @@ export class SnackbarService {
   }
 
   public showError(error: HttpErrorResponse): void {
-    const isServerError = error.status.toString().startsWith('5');
+    const isServerError = error.status.toString().startsWith('5') || error.status === 0;
 
     isServerError
       ? this.error(this.translateService.instant(this.translationKeys.internalServerError))

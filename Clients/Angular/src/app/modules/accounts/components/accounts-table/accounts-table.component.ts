@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { DestroyBaseComponent, DialogService } from '@budgetify/shared';
 import { AccountType } from '../../models/account.enum';
 import { IAccountResponse } from '../../models/account.model';
@@ -20,6 +21,10 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
   public readonly translationKeys = TranslationKeys;
   public isLoading = true;
   public type = AccountType;
+  public filterValue = '';
+
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild(MatSort) sort?: MatSort;
 
   @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
     if (paginator && !this.dataSource.paginator) {
@@ -32,7 +37,7 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
     }
   }
 
-  constructor(private accountService: AccountService, private dialogService: DialogService) {
+  constructor(private accountService: AccountService, private dialogService: DialogService, private router: Router) {
     super();
   }
 
@@ -49,15 +54,22 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
       });
   }
 
+  public openAccountDetails(uid: string): void {
+    this.router.navigateByUrl(`accounts/${uid}`);
+  }
+
   public applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = this.filterValue.trim().toLowerCase();
   }
 
   private getAccounts(): void {
     this.accountService.getAccounts().subscribe({
       next: (response) => {
         this.dataSource = new MatTableDataSource(response.value);
+        this.dataSource.sort = this.sort!;
+        this.dataSource.paginator = this.paginator!;
+        this.filterValue = '';
         this.isLoading = false;
       },
       error: (error) => {
