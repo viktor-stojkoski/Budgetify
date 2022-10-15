@@ -25,3 +25,12 @@
 .no-border {
   border-bottom: none !important;
 }
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-form-field {
+  width: 100%;
+  margin-bottom: -1.25em;
+}

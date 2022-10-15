@@ -19,6 +19,7 @@ export class TranslationKeys {
   public static readonly createAccountSuccessful = 'successMessages.accounts.create';
 
   public static readonly detailsHeader = 'accounts.detailsHeader';
+  public static readonly detailsToolbarActionUpdateAccount = 'accounts.detailsToolbarActionUpdateAccount';
   public static readonly detailsNameHeader = 'accounts.detailsNameHeader';
   public static readonly detailsTypeHeader = 'accounts.detailsTypeHeader';
   public static readonly detailsBalanceHeader = 'accounts.detailsBalanceHeader';
