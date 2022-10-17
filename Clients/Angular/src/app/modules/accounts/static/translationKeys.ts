@@ -9,6 +9,7 @@ export class TranslationKeys {
   public static readonly tableBalanceHeader = 'accounts.tableBalanceHeader';
   public static readonly tableCurrencyCodeHeader = 'accounts.tableCurrencyCodeHeader';
   public static readonly tableDescriptionHeader = 'accounts.tableDescriptionHeader';
+  public static readonly tableDeleteAccountTooltip = 'accounts.tableDeleteAccountTooltip';
 
   public static readonly createFormHeader = 'accounts.createFormHeader';
   public static readonly createFormNameLabel = 'accounts.createFormNameLabel';
@@ -26,4 +27,8 @@ export class TranslationKeys {
   public static readonly detailsCurrencyHeader = 'accounts.detailsCurrencyHeader';
   public static readonly detailsDescriptionHeader = 'accounts.detailsDescriptionHeader';
   public static readonly editAccountSuccessful = 'successMessages.accounts.edit';
+
+  public static readonly deleteAccountHeader = 'accounts.deleteAccountHeader';
+  public static readonly deleteAccountContent = 'accounts.deleteAccountContent';
+  public static readonly deleteAccountSuccessful = 'successMessages.accounts.delete';
 }

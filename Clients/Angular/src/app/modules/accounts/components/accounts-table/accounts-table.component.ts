@@ -6,10 +6,11 @@ import { Router } from '@angular/router';
 import { DestroyBaseComponent, DialogService, SnackbarService } from '@budgetify/shared';
 import { take, takeUntil } from 'rxjs';
 import { AccountType } from '../../models/account.enum';
-import { IAccountResponse } from '../../models/account.model';
+import { IAccountResponse, IDeleteAccountDialogData } from '../../models/account.model';
 import { AccountService } from '../../services/account.service';
 import { TranslationKeys } from '../../static/translationKeys';
 import { CreateAccountComponent } from '../create-account/create-account.component';
+import { DeleteAccountComponent } from '../delete-account/delete-account.component';
 
 @Component({
   selector: 'app-accounts-table',
@@ -18,7 +19,7 @@ import { CreateAccountComponent } from '../create-account/create-account.compone
 })
 export class AccountsTableComponent extends DestroyBaseComponent implements OnInit {
   public dataSource!: MatTableDataSource<IAccountResponse>;
-  public displayedColumns = ['name', 'type', 'balance', 'currencyCode', 'description'];
+  public displayedColumns = ['name', 'type', 'balance', 'currencyCode', 'description', 'actions'];
   public readonly translationKeys = TranslationKeys;
   public isLoading = true;
   public type = AccountType;
@@ -51,9 +52,24 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
     this.getAccounts();
   }
 
-  public openCreateAccountDialog() {
+  public openCreateAccountDialog(): void {
     this.dialogService
       .open(CreateAccountComponent)
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: () => this.getAccounts()
+      });
+  }
+
+  public openDeleteAccountDialog(name: string, uid: string): void {
+    this.dialogService
+      .open(DeleteAccountComponent, {
+        data: {
+          name: name,
+          uid: uid
+        } as IDeleteAccountDialogData
+      })
       .afterClosed()
       .pipe(takeUntil(this.destroyed$))
       .subscribe({

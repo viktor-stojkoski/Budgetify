@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -65,7 +64,7 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
             this.dialogRef.close();
             this.snackbarService.success(this.translationKeys.createAccountSuccessful);
           },
-          error: (error: HttpErrorResponse) => this.snackbarService.showError(error)
+          error: (error) => this.snackbarService.showError(error)
         });
     } else {
       this.accountForm.markAllAsTouched();

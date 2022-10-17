@@ -39,7 +39,8 @@
   "successMessages": {
     "accounts": {
       "create": "Account has been successfully created.",
-      "edit": "Account has been successfully updated."
+      "edit": "Account has been successfully updated.",
+      "delete": "Account has been successfully deleted."
     }
   },
 
@@ -54,6 +55,7 @@
     "tableBalanceHeader": "Balance",
     "tableCurrencyCodeHeader": "Currency code",
     "tableDescriptionHeader": "Description",
+    "tableDeleteAccountTooltip": "Delete",
 
     "createFormHeader": "Create account",
     "createFormNameLabel": "Name",
@@ -72,6 +74,9 @@
     "detailsTypeHeader": "Type",
     "detailsBalanceHeader": "Balance",
     "detailsCurrencyHeader": "Currency",
-    "detailsDescriptionHeader": "Description"
+    "detailsDescriptionHeader": "Description",
+
+    "deleteAccountHeader": "Delete account",
+    "deleteAccountContent": "Are you sure you want to delete the account <strong>{{accountName}}</strong> ?"
   }
 }

@@ -39,7 +39,8 @@
   "successMessages": {
     "accounts": {
       "create": "Сметката е успешно искреирана.",
-      "edit": "Сметката е успешно уредена."
+      "edit": "Сметката е успешно уредена.",
+      "delete": "Сметката е успешно избришана."
     }
   },
 
@@ -54,6 +55,7 @@
     "tableBalanceHeader": "Состојба",
     "tableCurrencyCodeHeader": "Валута",
     "tableDescriptionHeader": "Опис",
+    "tableDeleteAccountTooltip": "Избриши",
 
     "createFormHeader": "Креирај сметка",
     "createFormNameLabel": "Име",
@@ -72,6 +74,9 @@
     "detailsTypeHeader": "Тип",
     "detailsBalanceHeader": "Состојба",
     "detailsCurrencyHeader": "Валута",
-    "detailsDescriptionHeader": "Опис"
+    "detailsDescriptionHeader": "Опис",
+
+    "deleteAccountHeader": "Избриши сметка",
+    "deleteAccountContent": "Дали сте сигурни дека сакате да ја избришете сметката <strong>{{accountName}}</strong> ?"
   }
 }

@@ -16,6 +16,7 @@ import { AccountDetailsComponent } from './components/account-details/account-de
 import { AccountsTableComponent } from './components/accounts-table/accounts-table.component';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
 import { routes } from './routes';
+import { DeleteAccountComponent } from './components/delete-account/delete-account.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,7 @@ import { routes } from './routes';
     MatPaginatorModule,
     MatCardModule
   ],
-  declarations: [AccountsTableComponent, CreateAccountComponent, AccountDetailsComponent],
+  declarations: [AccountsTableComponent, CreateAccountComponent, AccountDetailsComponent, DeleteAccountComponent],
   exports: [AccountsTableComponent],
   providers: [DialogService]
 })

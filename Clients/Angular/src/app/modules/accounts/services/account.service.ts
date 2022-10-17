@@ -34,6 +34,10 @@ export class AccountService {
     return this.baseApiService.put<void>(`${this.accountsApiRoute}/${uid}`, request);
   }
 
+  public deleteAccount(uid: string | null): Observable<void> {
+    return this.baseApiService.delete<void>(`${this.accountsApiRoute}/${uid}`);
+  }
+
   public getCurrencies(): Observable<IResult<ICurrencyResponse[]>> {
     return this.baseApiService.get<IResult<ICurrencyResponse[]>>(this.currenciesApiRoute);
   }
