@@ -48,7 +48,7 @@ public class AccountsController : ExtendedApiController
                 CurrencyCode: request.CurrencyCode,
                 Description: request.Description)));
 
-    [HttpPatch("{accountUid:Guid}")]
+    [HttpPut("{accountUid:Guid}")]
     public async Task<IActionResult> UpdateAccountAsync(
         [FromRoute] Guid accountUid,
         [FromBody] UpdateAccountRequest request) =>

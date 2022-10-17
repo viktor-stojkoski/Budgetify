@@ -31,7 +31,7 @@ export class AccountService {
   }
 
   public updateAccount(uid: string | null, request: IUpdateAccountRequest): Observable<void> {
-    return this.baseApiService.patch<void>(`${this.accountsApiRoute}/${uid}`, request);
+    return this.baseApiService.put<void>(`${this.accountsApiRoute}/${uid}`, request);
   }
 
   public getCurrencies(): Observable<IResult<ICurrencyResponse[]>> {
