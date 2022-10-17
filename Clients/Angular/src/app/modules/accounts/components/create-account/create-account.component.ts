@@ -8,7 +8,7 @@ import {
   SnackbarService,
   TranslationKeys as SharedTranslationKeys
 } from '@budgetify/shared';
-import { map, Observable, startWith } from 'rxjs';
+import { distinctUntilChanged, map, Observable, take, takeUntil } from 'rxjs';
 import { AccountType } from '../../models/account.enum';
 import { ICurrencyResponse } from '../../models/account.model';
 import { AccountService } from '../../services/account.service';
@@ -24,7 +24,7 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
   public readonly sharedTranslationKeys = SharedTranslationKeys;
   public types = enumToTranslationEnum(AccountType);
   public currencies?: ICurrencyResponse[];
-  public filteredCurrencies?: Observable<ICurrencyResponse[] | undefined>;
+  public filteredCurrencies$?: Observable<ICurrencyResponse[] | undefined>;
   public isLoading = true;
 
   public accountForm = this.formBuilder.group({
@@ -39,7 +39,7 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
     public dialogRef: MatDialogRef<CreateAccountComponent>,
     private formBuilder: FormBuilder,
     private accountService: AccountService,
-    private snackBarService: SnackbarService
+    private snackbarService: SnackbarService
   ) {
     super();
   }
@@ -59,12 +59,13 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
           currencyCode: this.accountForm.controls.currencyCode.value,
           description: this.accountForm.controls.description.value
         })
+        .pipe(take(1))
         .subscribe({
           next: () => {
             this.dialogRef.close();
-            this.snackBarService.success(this.translationKeys.createAccountSuccessful);
+            this.snackbarService.success(this.translationKeys.createAccountSuccessful);
           },
-          error: (error: HttpErrorResponse) => this.snackBarService.showError(error)
+          error: (error: HttpErrorResponse) => this.snackbarService.showError(error)
         });
     } else {
       this.accountForm.markAllAsTouched();
@@ -80,21 +81,25 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
   }
 
   private getCurrencies(): void {
-    this.accountService.getCurrencies().subscribe({
-      next: (result) => {
-        this.currencies = result.value;
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error(error);
-        this.isLoading = false;
-      }
-    });
+    this.accountService
+      .getCurrencies()
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.currencies = result.value;
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.snackbarService.showError(error);
+          this.isLoading = false;
+        }
+      });
   }
 
   private filterCurrencies() {
-    this.filteredCurrencies = this.accountForm.controls.currencyCode.valueChanges.pipe(
-      startWith(''),
+    this.filteredCurrencies$ = this.accountForm.controls.currencyCode.valueChanges.pipe(
+      distinctUntilChanged(),
+      takeUntil(this.destroyed$),
       map((value) => this.filter(value || ''))
     );
   }

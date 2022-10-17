@@ -34,14 +34,27 @@ public class AccountsController : ExtendedApiController
     public async Task<IActionResult> GetAccountsAsync() =>
         OkOrError(await _queryDispatcher.ExecuteAsync(new GetAccountsQuery()));
 
-    [HttpGet("{uid:Guid}")]
-    public async Task<IActionResult> GetAccountAsync([FromRoute] Guid uid) =>
-        OkOrError(await _queryDispatcher.ExecuteAsync(new GetAccountQuery(uid)));
+    [HttpGet("{accountUid:Guid}")]
+    public async Task<IActionResult> GetAccountAsync([FromRoute] Guid accountUid) =>
+        OkOrError(await _queryDispatcher.ExecuteAsync(new GetAccountQuery(accountUid)));
 
     [HttpPost]
     public async Task<IActionResult> CreateAccountAsync([FromBody] CreateAccountRequest request) =>
         OkOrError(await _commandDispatcher.ExecuteAsync(
             new CreateAccountCommand(
+                Name: request.Name,
+                Type: request.Type,
+                Balance: request.Balance,
+                CurrencyCode: request.CurrencyCode,
+                Description: request.Description)));
+
+    [HttpPut("{accountUid:Guid}")]
+    public async Task<IActionResult> UpdateAccountAsync(
+        [FromRoute] Guid accountUid,
+        [FromBody] UpdateAccountRequest request) =>
+        OkOrError(await _commandDispatcher.ExecuteAsync(
+            new UpdateAccountCommand(
+                AccountUid: accountUid,
                 Name: request.Name,
                 Type: request.Type,
                 Balance: request.Balance,

@@ -29,7 +29,7 @@
       <mat-label>{{ translationKeys.createFormCurrencyLabel | translate }}</mat-label>
       <input type="text" matInput formControlName="currencyCode" [matAutocomplete]="currency" />
       <mat-autocomplete #currency="matAutocomplete" [displayWith]="displayCurrency.bind(this)">
-        <mat-option *ngFor="let currency of filteredCurrencies | async" [value]="currency.code">
+        <mat-option *ngFor="let currency of filteredCurrencies$ | async" [value]="currency.code">
           [{{ currency.code }}] {{ currency.name }} - {{ currency.symbol }}
         </mat-option>
       </mat-autocomplete>

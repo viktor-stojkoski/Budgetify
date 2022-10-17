@@ -9,6 +9,8 @@
   "navbarLanguageMacedonian": "Macedonian",
 
   "mainActionButtonOk": "Ok",
+  "mainActionButtonSave": "Save",
+  "mainActionButtonEdit": "Edit",
   "mainActionButtonCancel": "Cancel",
 
   "errorCodes": {
@@ -36,7 +38,8 @@
 
   "successMessages": {
     "accounts": {
-      "create": "Account has been successfully created."
+      "create": "Account has been successfully created.",
+      "edit": "Account has been successfully updated."
     }
   },
 

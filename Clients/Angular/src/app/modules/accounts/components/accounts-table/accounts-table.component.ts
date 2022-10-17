@@ -3,7 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { DestroyBaseComponent, DialogService } from '@budgetify/shared';
+import { DestroyBaseComponent, DialogService, SnackbarService } from '@budgetify/shared';
+import { take, takeUntil } from 'rxjs';
 import { AccountType } from '../../models/account.enum';
 import { IAccountResponse } from '../../models/account.model';
 import { AccountService } from '../../services/account.service';
@@ -37,7 +38,12 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
     }
   }
 
-  constructor(private accountService: AccountService, private dialogService: DialogService, private router: Router) {
+  constructor(
+    private accountService: AccountService,
+    private dialogService: DialogService,
+    private router: Router,
+    private snackbarService: SnackbarService
+  ) {
     super();
   }
 
@@ -49,6 +55,7 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
     this.dialogService
       .open(CreateAccountComponent)
       .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
       .subscribe({
         next: () => this.getAccounts()
       });
@@ -64,18 +71,21 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
   }
 
   private getAccounts(): void {
-    this.accountService.getAccounts().subscribe({
-      next: (response) => {
-        this.dataSource = new MatTableDataSource(response.value);
-        this.dataSource.sort = this.sort!;
-        this.dataSource.paginator = this.paginator!;
-        this.filterValue = '';
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error(error);
-        this.isLoading = false;
-      }
-    });
+    this.accountService
+      .getAccounts()
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => {
+          this.dataSource = new MatTableDataSource(response.value);
+          this.dataSource.sort = this.sort!;
+          this.dataSource.paginator = this.paginator!;
+          this.filterValue = '';
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.snackbarService.showError(error);
+          this.isLoading = false;
+        }
+      });
   }
 }
