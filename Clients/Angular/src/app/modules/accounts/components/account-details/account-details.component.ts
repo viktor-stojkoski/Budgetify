@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { DestroyBaseComponent, enumToTranslationEnum, SnackbarService } from '@budgetify/shared';
-import { concatMap, map, Observable, startWith, takeUntil, tap } from 'rxjs';
+import { concatMap, distinctUntilChanged, map, Observable, take, takeUntil, tap } from 'rxjs';
 import { AccountType } from '../../models/account.enum';
 import { IAccountResponse, ICurrencyResponse } from '../../models/account.model';
 import { AccountService } from '../../services/account.service';
@@ -65,6 +65,7 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
           currencyCode: this.accountForm.controls.currencyCode.value,
           description: this.accountForm.controls.description.value
         })
+        .pipe(take(1))
         .subscribe({
           next: () => {
             this.account = this.accountForm.value as IAccountResponse;
@@ -81,21 +82,25 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
   }
 
   private getCurrencies(): void {
-    this.accountService.getCurrencies().subscribe({
-      next: (result) => {
-        this.currencies = result.value;
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error(error);
-        this.isLoading = false;
-      }
-    });
+    this.accountService
+      .getCurrencies()
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.currencies = result.value;
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error(error);
+          this.isLoading = false;
+        }
+      });
   }
 
   private filterCurrencies() {
     this.filteredCurrencies = this.accountForm.controls.currencyCode.valueChanges.pipe(
-      startWith(''),
+      distinctUntilChanged(),
+      takeUntil(this.destroyed$),
       map((value) => this.filter(value || ''))
     );
   }
