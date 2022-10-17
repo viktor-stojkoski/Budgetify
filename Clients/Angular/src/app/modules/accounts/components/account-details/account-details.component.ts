@@ -62,6 +62,7 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
   }
 
   public editAccount(): void {
+    this.isLoading = true;
     if (this.accountForm.valid) {
       this.accountService
         .updateAccount(this.accountUid, {
@@ -77,6 +78,7 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
             this.account = this.accountForm.value as IAccountResponse;
             this.snackbarService.success(this.translationKeys.editAccountSuccessful);
             this.isEditing = false;
+            this.isLoading = false;
           },
           error: (error: HttpErrorResponse) => this.snackbarService.showError(error)
         });
@@ -88,6 +90,7 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
   }
 
   private getCurrencies(): void {
+    this.isLoading = true;
     this.accountService
       .getCurrencies()
       .pipe(take(1))
@@ -120,6 +123,7 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
   }
 
   private getAccount(): void {
+    this.isLoading = true;
     this.activatedRoute.paramMap
       .pipe(
         takeUntil(this.destroyed$),
