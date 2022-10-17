@@ -25,4 +25,5 @@ export class TranslationKeys {
   public static readonly detailsBalanceHeader = 'accounts.detailsBalanceHeader';
   public static readonly detailsCurrencyHeader = 'accounts.detailsCurrencyHeader';
   public static readonly detailsDescriptionHeader = 'accounts.detailsDescriptionHeader';
+  public static readonly editAccountSuccessful = 'successMessages.accounts.edit';
 }

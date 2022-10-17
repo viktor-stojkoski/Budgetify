@@ -75,7 +75,7 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
         .subscribe({
           next: () => {
             this.account = this.accountForm.value as IAccountResponse;
-            this.snackbarService.success('SUCCESS');
+            this.snackbarService.success(this.translationKeys.editAccountSuccessful);
             this.isEditing = false;
           },
           error: (error: HttpErrorResponse) => this.snackbarService.showError(error)
