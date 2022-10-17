@@ -1,5 +1,7 @@
 ﻿namespace Budgetify.Entities.Account.Domain;
 
+using System;
+
 using Budgetify.Common.Results;
 using Budgetify.Entities.Account.Enumerations;
 using Budgetify.Entities.Account.ValueObjects;
@@ -28,6 +30,20 @@ public partial class Account
         Balance = balance;
         CurrencyId = currencyId;
         Description = description;
+
+        MarkModify();
+
+        return Result.Ok();
+    }
+
+    public Result Delete(DateTime deletedOn)
+    {
+        if (DeletedOn is not null)
+        {
+            return Result.Ok();
+        }
+
+        DeletedOn = deletedOn;
 
         MarkModify();
 
