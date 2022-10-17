@@ -25,7 +25,7 @@
         {{ translationKeys.navbarLoginOrRegister | translate }}
       </a>
       <a mat-button [routerLink]="'/profile'" routerLinkActive="mat-accent" *ngIf="isAuthenticated">
-        {{ currentUser?.firstName }} {{ currentUser?.lastName }}
+        <mat-icon>perm_identity</mat-icon> {{ currentUser?.firstName }} {{ currentUser?.lastName }}
       </a>
       <a mat-button *ngIf="isAuthenticated" (click)="logout()"> {{ translationKeys.navbarLogout | translate }} </a>
       <mat-form-field class="form-field">
