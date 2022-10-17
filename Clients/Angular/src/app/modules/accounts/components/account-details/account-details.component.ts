@@ -2,7 +2,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { DestroyBaseComponent, enumToTranslationEnum, SnackbarService } from '@budgetify/shared';
+import {
+  DestroyBaseComponent,
+  enumToTranslationEnum,
+  SnackbarService,
+  TranslationKeys as SharedTranslationKeys
+} from '@budgetify/shared';
 import { concatMap, distinctUntilChanged, map, Observable, take, takeUntil, tap } from 'rxjs';
 import { AccountType } from '../../models/account.enum';
 import { IAccountResponse, ICurrencyResponse } from '../../models/account.model';
@@ -20,6 +25,7 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
   public isLoading = true;
   public isEditing = false;
   public readonly translationKeys = TranslationKeys;
+  public readonly sharedTranslationKeys = SharedTranslationKeys;
   public type = AccountType;
   public types = enumToTranslationEnum(AccountType);
   public currencies?: ICurrencyResponse[];
@@ -48,14 +54,14 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
     this.filterCurrencies();
   }
 
-  public editAccount(): void {
+  public toggleEdit(): void {
     this.isEditing = !this.isEditing;
     if (this.account) {
       this.accountForm.patchValue(this.account);
     }
   }
 
-  public save(): void {
+  public editAccount(): void {
     if (this.accountForm.valid) {
       this.accountService
         .updateAccount(this.accountUid, {

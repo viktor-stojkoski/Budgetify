@@ -9,6 +9,8 @@
   "navbarLanguageMacedonian": "Македонски",
 
   "mainActionButtonOk": "Ок",
+  "mainActionButtonSave": "Зачувај",
+  "mainActionButtonEdit": "Уреди",
   "mainActionButtonCancel": "Откажи",
 
   "errorCodes": {

@@ -9,6 +9,8 @@ export class TranslationKeys {
   public static readonly navbarLanguageMacedonian = 'navbarLanguageMacedonian';
 
   public static readonly mainActionButtonOk = 'mainActionButtonOk';
+  public static readonly mainActionButtonSave = 'mainActionButtonSave';
+  public static readonly mainActionButtonEdit = 'mainActionButtonEdit';
   public static readonly mainActionButtonCancel = 'mainActionButtonCancel';
 
   public static readonly internalServerError = 'errorCodes.INTERNAL_SERVER_ERROR';

@@ -9,6 +9,8 @@
   "navbarLanguageMacedonian": "Macedonian",
 
   "mainActionButtonOk": "Ok",
+  "mainActionButtonSave": "Save",
+  "mainActionButtonEdit": "Edit",
   "mainActionButtonCancel": "Cancel",
 
   "errorCodes": {

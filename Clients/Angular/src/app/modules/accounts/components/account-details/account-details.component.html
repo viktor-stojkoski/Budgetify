@@ -3,13 +3,21 @@
 
   <span class="toolbar-spacer"></span>
 
-  <span *ngIf="!isEditing">
-    <button mat-raised-button color="primary" (click)="editAccount()">Edit</button>
-  </span>
-  <span *ngIf="isEditing">
-    <button mat-raised-button color="primary" (click)="save()">Save</button>
-    <button mat-raised-button color="primary" (click)="editAccount()">Cancel</button>
-  </span>
+  <div class="toolbar-buttons">
+    <span *ngIf="!isEditing">
+      <button mat-raised-button color="primary" (click)="toggleEdit()">
+        {{ sharedTranslationKeys.mainActionButtonEdit | translate }}
+      </button>
+    </span>
+    <span *ngIf="isEditing">
+      <button mat-raised-button color="secondary" (click)="toggleEdit()">
+        {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
+      </button>
+      <button mat-raised-button color="primary" (click)="editAccount()">
+        {{ sharedTranslationKeys.mainActionButtonSave | translate }}
+      </button>
+    </span>
+  </div>
 </mat-toolbar>
 
 <div class="spinner-container" *ngIf="isLoading">
@@ -28,7 +36,7 @@
         </span>
       </div>
       <div *ngIf="isEditing" class="grid-item">
-        <mat-form-field appearance="outline" class="no-margin-form-field">
+        <mat-form-field appearance="outline">
           <input type="text" matInput formControlName="name" cdkFocusInitial />
         </mat-form-field>
       </div>
@@ -36,7 +44,7 @@
       <div class="grid-item">{{ translationKeys.detailsTypeHeader | translate }}</div>
       <div *ngIf="!isEditing" class="grid-item">{{ account.type | translateEnum: type }}</div>
       <div *ngIf="isEditing" class="grid-item">
-        <mat-form-field appearance="outline" class="no-margin-form-field">
+        <mat-form-field appearance="outline">
           <mat-select formControlName="type">
             <mat-option *ngFor="let type of types" [value]="type.value">
               {{ type.translationKey | translate }}
@@ -48,7 +56,7 @@
       <div class="grid-item">{{ translationKeys.detailsBalanceHeader | translate }}</div>
       <div *ngIf="!isEditing" class="grid-item">{{ account.balance }}</div>
       <div *ngIf="isEditing" class="grid-item">
-        <mat-form-field appearance="outline" class="no-margin-form-field">
+        <mat-form-field appearance="outline">
           <input type="number" matInput formControlName="balance" />
         </mat-form-field>
       </div>
@@ -56,7 +64,7 @@
       <div class="grid-item">{{ translationKeys.detailsCurrencyHeader | translate }}</div>
       <div *ngIf="!isEditing" class="grid-item">{{ account.currencyCode }}</div>
       <div *ngIf="isEditing" class="grid-item">
-        <mat-form-field appearance="outline" class="no-margin-form-field">
+        <mat-form-field appearance="outline">
           <input type="text" matInput formControlName="currencyCode" [matAutocomplete]="currency" />
           <mat-autocomplete #currency="matAutocomplete" [displayWith]="displayCurrency.bind(this)">
             <mat-option *ngFor="let currency of filteredCurrencies | async" [value]="currency.code">
@@ -73,7 +81,7 @@
         </span>
       </div>
       <div *ngIf="isEditing" class="grid-item no-border">
-        <mat-form-field appearance="outline" class="no-margin-form-field">
+        <mat-form-field appearance="outline">
           <textarea matInput formControlName="description"></textarea>
         </mat-form-field>
       </div>
