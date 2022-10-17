@@ -20,12 +20,12 @@ import { TranslationKeys } from '../../static/translationKeys';
   styleUrls: ['./account-details.component.scss']
 })
 export class AccountDetailsComponent extends DestroyBaseComponent implements OnInit {
+  public readonly translationKeys = TranslationKeys;
+  public readonly sharedTranslationKeys = SharedTranslationKeys;
   public accountUid: string | null = '';
   public account?: IAccountResponse;
   public isLoading = true;
   public isEditing = false;
-  public readonly translationKeys = TranslationKeys;
-  public readonly sharedTranslationKeys = SharedTranslationKeys;
   public type = AccountType;
   public types = enumToTranslationEnum(AccountType);
   public currencies?: ICurrencyResponse[];
