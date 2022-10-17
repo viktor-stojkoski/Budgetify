@@ -29,7 +29,7 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
   public type = AccountType;
   public types = enumToTranslationEnum(AccountType);
   public currencies?: ICurrencyResponse[];
-  public filteredCurrencies?: Observable<ICurrencyResponse[] | undefined>;
+  public filteredCurrencies$?: Observable<ICurrencyResponse[] | undefined>;
 
   public accountForm = this.formBuilder.group({
     name: ['', Validators.required],
@@ -110,7 +110,7 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
   }
 
   private filterCurrencies() {
-    this.filteredCurrencies = this.accountForm.controls.currencyCode.valueChanges.pipe(
+    this.filteredCurrencies$ = this.accountForm.controls.currencyCode.valueChanges.pipe(
       distinctUntilChanged(),
       takeUntil(this.destroyed$),
       map((value) => this.filter(value || ''))

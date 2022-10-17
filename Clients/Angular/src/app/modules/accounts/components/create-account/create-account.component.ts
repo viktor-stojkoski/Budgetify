@@ -24,7 +24,7 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
   public readonly sharedTranslationKeys = SharedTranslationKeys;
   public types = enumToTranslationEnum(AccountType);
   public currencies?: ICurrencyResponse[];
-  public filteredCurrencies?: Observable<ICurrencyResponse[] | undefined>;
+  public filteredCurrencies$?: Observable<ICurrencyResponse[] | undefined>;
   public isLoading = true;
 
   public accountForm = this.formBuilder.group({
@@ -97,7 +97,7 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
   }
 
   private filterCurrencies() {
-    this.filteredCurrencies = this.accountForm.controls.currencyCode.valueChanges.pipe(
+    this.filteredCurrencies$ = this.accountForm.controls.currencyCode.valueChanges.pipe(
       distinctUntilChanged(),
       takeUntil(this.destroyed$),
       map((value) => this.filter(value || ''))
