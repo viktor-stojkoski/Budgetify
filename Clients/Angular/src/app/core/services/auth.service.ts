@@ -1,6 +1,7 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { MsalBroadcastService, MsalGuardConfiguration, MsalService, MSAL_GUARD_CONFIG } from '@azure/msal-angular';
 import { InteractionStatus, RedirectRequest } from '@azure/msal-browser';
+import { SnackbarService } from '@budgetify/shared';
 import { filter, Observable, Subject, takeUntil } from 'rxjs';
 import { CurrentUser } from '../models/auth.model';
 
@@ -14,7 +15,8 @@ export class AuthService implements OnDestroy {
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
     private msalService: MsalService,
-    private msalBroadcastService: MsalBroadcastService
+    private msalBroadcastService: MsalBroadcastService,
+    private snackbarService: SnackbarService
   ) {
     this._currentUser$ = new Subject();
     this._destroying$ = new Subject<void>();
@@ -25,7 +27,7 @@ export class AuthService implements OnDestroy {
       )
       .subscribe({
         next: () => this.refreshAuthUser(),
-        error: (error) => console.error(error)
+        error: (error) => this.snackbarService.showError(error)
       });
   }
 

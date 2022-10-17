@@ -39,7 +39,7 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
     public dialogRef: MatDialogRef<CreateAccountComponent>,
     private formBuilder: FormBuilder,
     private accountService: AccountService,
-    private snackBarService: SnackbarService
+    private snackbarService: SnackbarService
   ) {
     super();
   }
@@ -63,9 +63,9 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
         .subscribe({
           next: () => {
             this.dialogRef.close();
-            this.snackBarService.success(this.translationKeys.createAccountSuccessful);
+            this.snackbarService.success(this.translationKeys.createAccountSuccessful);
           },
-          error: (error: HttpErrorResponse) => this.snackBarService.showError(error)
+          error: (error: HttpErrorResponse) => this.snackbarService.showError(error)
         });
     } else {
       this.accountForm.markAllAsTouched();
@@ -90,7 +90,7 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
           this.isLoading = false;
         },
         error: (error) => {
-          console.error(error);
+          this.snackbarService.showError(error);
           this.isLoading = false;
         }
       });

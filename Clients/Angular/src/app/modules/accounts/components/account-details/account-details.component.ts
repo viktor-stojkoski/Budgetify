@@ -80,7 +80,10 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
             this.isEditing = false;
             this.isLoading = false;
           },
-          error: (error: HttpErrorResponse) => this.snackbarService.showError(error)
+          error: (error: HttpErrorResponse) => {
+            this.snackbarService.showError(error);
+            this.isLoading = false;
+          }
         });
     }
   }
@@ -100,7 +103,7 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
           this.isLoading = false;
         },
         error: (error) => {
-          console.error(error);
+          this.snackbarService.showError(error);
           this.isLoading = false;
         }
       });
