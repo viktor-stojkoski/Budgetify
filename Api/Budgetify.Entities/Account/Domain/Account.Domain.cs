@@ -8,6 +8,9 @@ using Budgetify.Entities.Account.ValueObjects;
 
 public partial class Account
 {
+    /// <summary>
+    /// Updates account.
+    /// </summary>
     public Result Update(
         string? name,
         string? type,
@@ -36,6 +39,9 @@ public partial class Account
         return Result.Ok();
     }
 
+    /// <summary>
+    /// Marks account as deleted.
+    /// </summary>
     public Result Delete(DateTime deletedOn)
     {
         if (DeletedOn is not null)
