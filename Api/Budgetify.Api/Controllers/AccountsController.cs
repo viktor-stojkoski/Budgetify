@@ -60,4 +60,8 @@ public class AccountsController : ExtendedApiController
                 Balance: request.Balance,
                 CurrencyCode: request.CurrencyCode,
                 Description: request.Description)));
+
+    [HttpDelete("{accountUid:Guid}")]
+    public async Task<IActionResult> DeleteAccountAsync([FromRoute] Guid accountUid) =>
+        OkOrError(await _commandDispatcher.ExecuteAsync(new DeleteAccountCommand(accountUid)));
 }

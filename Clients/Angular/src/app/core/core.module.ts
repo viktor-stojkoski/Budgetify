@@ -52,7 +52,8 @@ import { MsalGuardConfigFactory, MsalInstanceFactory, MsalInterceptorConfigFacto
     MatButtonModule,
     MatToolbarModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    MatIconModule
   ],
   providers: [
     {

@@ -15,6 +15,7 @@ import { DialogService, SharedModule } from '@budgetify/shared';
 import { AccountDetailsComponent } from './components/account-details/account-details.component';
 import { AccountsTableComponent } from './components/accounts-table/accounts-table.component';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
+import { DeleteAccountComponent } from './components/delete-account/delete-account.component';
 import { routes } from './routes';
 
 @NgModule({
@@ -33,7 +34,7 @@ import { routes } from './routes';
     MatPaginatorModule,
     MatCardModule
   ],
-  declarations: [AccountsTableComponent, CreateAccountComponent, AccountDetailsComponent],
+  declarations: [AccountsTableComponent, CreateAccountComponent, AccountDetailsComponent, DeleteAccountComponent],
   exports: [AccountsTableComponent],
   providers: [DialogService]
 })

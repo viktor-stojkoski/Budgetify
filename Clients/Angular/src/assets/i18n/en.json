@@ -11,6 +11,7 @@
   "mainActionButtonOk": "Ok",
   "mainActionButtonSave": "Save",
   "mainActionButtonEdit": "Edit",
+  "mainActionButtonDelete": "Delete",
   "mainActionButtonCancel": "Cancel",
 
   "errorCodes": {
@@ -33,13 +34,15 @@
 
     "ACCOUNT_NAME_INVALID": "Account name invalid.",
     "ACCOUNT_NAME_INVALID_LENGTH": "Account name invalid length.",
-    "ACCOUNT_TYPE_INVALID": "Account type invalid."
+    "ACCOUNT_TYPE_INVALID": "Account type invalid.",
+    "ACCOUNT_NOT_FOUND": "Account not found."
   },
 
   "successMessages": {
     "accounts": {
       "create": "Account has been successfully created.",
-      "edit": "Account has been successfully updated."
+      "edit": "Account has been successfully updated.",
+      "delete": "Account has been successfully deleted."
     }
   },
 
@@ -54,6 +57,7 @@
     "tableBalanceHeader": "Balance",
     "tableCurrencyCodeHeader": "Currency code",
     "tableDescriptionHeader": "Description",
+    "tableDeleteAccountTooltip": "Delete",
 
     "createFormHeader": "Create account",
     "createFormNameLabel": "Name",
@@ -72,6 +76,9 @@
     "detailsTypeHeader": "Type",
     "detailsBalanceHeader": "Balance",
     "detailsCurrencyHeader": "Currency",
-    "detailsDescriptionHeader": "Description"
+    "detailsDescriptionHeader": "Description",
+
+    "deleteAccountHeader": "Delete account",
+    "deleteAccountContent": "Are you sure you want to delete the account <strong>{{accountName}}</strong> ?"
   }
 }

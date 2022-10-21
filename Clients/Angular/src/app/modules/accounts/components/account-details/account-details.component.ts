@@ -1,18 +1,22 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
   DestroyBaseComponent,
+  DialogActionButton,
+  DialogService,
   enumToTranslationEnum,
+  IDialogResponseData,
   SnackbarService,
   TranslationKeys as SharedTranslationKeys
 } from '@budgetify/shared';
 import { concatMap, distinctUntilChanged, map, Observable, take, takeUntil, tap } from 'rxjs';
 import { AccountType } from '../../models/account.enum';
-import { IAccountResponse, ICurrencyResponse } from '../../models/account.model';
+import { IAccountResponse, ICurrencyResponse, IDeleteAccountDialogData } from '../../models/account.model';
 import { AccountService } from '../../services/account.service';
 import { TranslationKeys } from '../../static/translationKeys';
+import { DeleteAccountComponent } from '../delete-account/delete-account.component';
 
 @Component({
   selector: 'app-account-details',
@@ -43,7 +47,9 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
     private accountService: AccountService,
     private activatedRoute: ActivatedRoute,
     private snackbarService: SnackbarService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dialogService: DialogService,
+    private router: Router
   ) {
     super();
   }
@@ -86,6 +92,25 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
           }
         });
     }
+  }
+
+  public openDeleteAccountDialog(): void {
+    this.dialogService
+      .open(DeleteAccountComponent, {
+        data: {
+          name: this.account?.name,
+          uid: this.accountUid
+        } as IDeleteAccountDialogData
+      })
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (response: IDialogResponseData) => {
+          if (response.action === DialogActionButton.Ok) {
+            this.router.navigateByUrl('accounts');
+          }
+        }
+      });
   }
 
   public displayCurrency(code: string): string {

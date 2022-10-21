@@ -11,6 +11,7 @@
   "mainActionButtonOk": "Ок",
   "mainActionButtonSave": "Зачувај",
   "mainActionButtonEdit": "Уреди",
+  "mainActionButtonDelete": "Избриши",
   "mainActionButtonCancel": "Откажи",
 
   "errorCodes": {
@@ -29,17 +30,19 @@
     "CURRENCY_NAME_INVALID_LENGTH": "Должината на валутата е невалидна.",
     "CURRENCY_CODE_INVALID": "Кодот на валутата е невалиден.",
     "CURRENCY_SYMBOL_INVALID_LENGTH": "Симболот на валутата е невалиден.",
-    "CURRENCY_NOT_FOUND": "Ваултата не е пронајдена.",
+    "CURRENCY_NOT_FOUND": "Валутата не е пронајдена.",
 
     "ACCOUNT_NAME_INVALID": "Името на сметката е невалидно.",
     "ACCOUNT_NAME_INVALID_LENGTH": "Должината на името на сметката е невалидно.",
-    "ACCOUNT_TYPE_INVALID": "Типот на сметката е невалиден."
+    "ACCOUNT_TYPE_INVALID": "Типот на сметката е невалиден.",
+    "ACCOUNT_NOT_FOUND": "Сметката не е пронајдена."
   },
 
   "successMessages": {
     "accounts": {
       "create": "Сметката е успешно искреирана.",
-      "edit": "Сметката е успешно уредена."
+      "edit": "Сметката е успешно уредена.",
+      "delete": "Сметката е успешно избришана."
     }
   },
 
@@ -54,6 +57,7 @@
     "tableBalanceHeader": "Состојба",
     "tableCurrencyCodeHeader": "Валута",
     "tableDescriptionHeader": "Опис",
+    "tableDeleteAccountTooltip": "Избриши",
 
     "createFormHeader": "Креирај сметка",
     "createFormNameLabel": "Име",
@@ -72,6 +76,9 @@
     "detailsTypeHeader": "Тип",
     "detailsBalanceHeader": "Состојба",
     "detailsCurrencyHeader": "Валута",
-    "detailsDescriptionHeader": "Опис"
+    "detailsDescriptionHeader": "Опис",
+
+    "deleteAccountHeader": "Избриши сметка",
+    "deleteAccountContent": "Дали сте сигурни дека сакате да ја избришете сметката <strong>{{accountName}}</strong> ?"
   }
 }

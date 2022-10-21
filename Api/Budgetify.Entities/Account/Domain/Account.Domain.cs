@@ -1,11 +1,16 @@
 ﻿namespace Budgetify.Entities.Account.Domain;
 
+using System;
+
 using Budgetify.Common.Results;
 using Budgetify.Entities.Account.Enumerations;
 using Budgetify.Entities.Account.ValueObjects;
 
 public partial class Account
 {
+    /// <summary>
+    /// Updates account.
+    /// </summary>
     public Result Update(
         string? name,
         string? type,
@@ -28,6 +33,23 @@ public partial class Account
         Balance = balance;
         CurrencyId = currencyId;
         Description = description;
+
+        MarkModify();
+
+        return Result.Ok();
+    }
+
+    /// <summary>
+    /// Marks account as deleted.
+    /// </summary>
+    public Result Delete(DateTime deletedOn)
+    {
+        if (DeletedOn is not null)
+        {
+            return Result.Ok();
+        }
+
+        DeletedOn = deletedOn;
 
         MarkModify();
 

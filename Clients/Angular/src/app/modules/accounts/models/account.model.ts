@@ -27,3 +27,8 @@ export interface ICurrencyResponse {
   code: string;
   symbol?: string;
 }
+
+export interface IDeleteAccountDialogData {
+  name: string;
+  uid: string;
+}

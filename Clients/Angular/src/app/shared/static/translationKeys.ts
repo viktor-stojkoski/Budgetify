@@ -11,6 +11,7 @@ export class TranslationKeys {
   public static readonly mainActionButtonOk = 'mainActionButtonOk';
   public static readonly mainActionButtonSave = 'mainActionButtonSave';
   public static readonly mainActionButtonEdit = 'mainActionButtonEdit';
+  public static readonly mainActionButtonDelete = 'mainActionButtonDelete';
   public static readonly mainActionButtonCancel = 'mainActionButtonCancel';
 
   public static readonly internalServerError = 'errorCodes.INTERNAL_SERVER_ERROR';

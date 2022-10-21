@@ -8,12 +8,10 @@ export class DialogService {
 
   public open(
     component: ComponentType<unknown>,
-    width: string = '600px',
-    data: MatDialogConfig<any> | null = null
+    config: MatDialogConfig<any> = {
+      width: '600px'
+    }
   ): MatDialogRef<unknown, any> {
-    return this.dialog.open(component, {
-      width: width,
-      data: data
-    });
+    return this.dialog.open(component, config);
   }
 }
