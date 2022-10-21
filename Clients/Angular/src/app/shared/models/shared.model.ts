@@ -1,3 +1,5 @@
+import { DialogActionButton } from './shared.enum';
+
 export interface IResult<T> {
   message?: string;
   isSuccess: boolean;
@@ -9,4 +11,8 @@ export interface IResult<T> {
 export interface ITranslationEnum {
   translationKey: string;
   value: string;
+}
+
+export interface DialogResponseData {
+  action: DialogActionButton;
 }

@@ -11,6 +11,7 @@
   "mainActionButtonOk": "Ок",
   "mainActionButtonSave": "Зачувај",
   "mainActionButtonEdit": "Уреди",
+  "mainActionButtonDelete": "Избриши",
   "mainActionButtonCancel": "Откажи",
 
   "errorCodes": {
@@ -29,11 +30,12 @@
     "CURRENCY_NAME_INVALID_LENGTH": "Должината на валутата е невалидна.",
     "CURRENCY_CODE_INVALID": "Кодот на валутата е невалиден.",
     "CURRENCY_SYMBOL_INVALID_LENGTH": "Симболот на валутата е невалиден.",
-    "CURRENCY_NOT_FOUND": "Ваултата не е пронајдена.",
+    "CURRENCY_NOT_FOUND": "Валутата не е пронајдена.",
 
     "ACCOUNT_NAME_INVALID": "Името на сметката е невалидно.",
     "ACCOUNT_NAME_INVALID_LENGTH": "Должината на името на сметката е невалидно.",
-    "ACCOUNT_TYPE_INVALID": "Типот на сметката е невалиден."
+    "ACCOUNT_TYPE_INVALID": "Типот на сметката е невалиден.",
+    "ACCOUNT_NOT_FOUND": "Сметката не е пронајдена."
   },
 
   "successMessages": {

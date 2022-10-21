@@ -11,6 +11,7 @@
   "mainActionButtonOk": "Ok",
   "mainActionButtonSave": "Save",
   "mainActionButtonEdit": "Edit",
+  "mainActionButtonDelete": "Delete",
   "mainActionButtonCancel": "Cancel",
 
   "errorCodes": {
@@ -33,7 +34,8 @@
 
     "ACCOUNT_NAME_INVALID": "Account name invalid.",
     "ACCOUNT_NAME_INVALID_LENGTH": "Account name invalid length.",
-    "ACCOUNT_TYPE_INVALID": "Account type invalid."
+    "ACCOUNT_TYPE_INVALID": "Account type invalid.",
+    "ACCOUNT_NOT_FOUND": "Account not found."
   },
 
   "successMessages": {

@@ -1,6 +1,12 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DestroyBaseComponent, SnackbarService, TranslationKeys as SharedTranslationKeys } from '@budgetify/shared';
+import {
+  DestroyBaseComponent,
+  DialogActionButton,
+  DialogResponseData,
+  SnackbarService,
+  TranslationKeys as SharedTranslationKeys
+} from '@budgetify/shared';
 import { take } from 'rxjs';
 import { IDeleteAccountDialogData } from '../../models/account.model';
 import { AccountService } from '../../services/account.service';
@@ -30,7 +36,7 @@ export class DeleteAccountComponent extends DestroyBaseComponent {
       .pipe(take(1))
       .subscribe({
         next: () => {
-          this.dialogRef.close();
+          this.dialogRef.close({ action: DialogActionButton.Ok } as DialogResponseData);
           this.snackbarService.success(this.translationKeys.deleteAccountSuccessful);
         },
         error: (error) => this.snackbarService.showError(error)
@@ -38,6 +44,6 @@ export class DeleteAccountComponent extends DestroyBaseComponent {
   }
 
   public onCancelClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close({ action: DialogActionButton.Cancel } as DialogResponseData);
   }
 }
