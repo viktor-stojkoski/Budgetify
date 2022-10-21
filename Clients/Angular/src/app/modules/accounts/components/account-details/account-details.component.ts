@@ -7,6 +7,7 @@ import {
   DialogActionButton,
   DialogService,
   enumToTranslationEnum,
+  IDialogResponseData,
   SnackbarService,
   TranslationKeys as SharedTranslationKeys
 } from '@budgetify/shared';
@@ -104,7 +105,7 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
       .afterClosed()
       .pipe(takeUntil(this.destroyed$))
       .subscribe({
-        next: (response) => {
+        next: (response: IDialogResponseData) => {
           if (response.action === DialogActionButton.Ok) {
             this.router.navigateByUrl('accounts');
           }
