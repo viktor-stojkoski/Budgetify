@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
   DestroyBaseComponent,
   DialogActionButton,
-  DialogResponseData,
+  IDialogResponseData,
   SnackbarService,
   TranslationKeys as SharedTranslationKeys
 } from '@budgetify/shared';
@@ -36,7 +36,7 @@ export class DeleteAccountComponent extends DestroyBaseComponent {
       .pipe(take(1))
       .subscribe({
         next: () => {
-          this.dialogRef.close({ action: DialogActionButton.Ok } as DialogResponseData);
+          this.dialogRef.close({ action: DialogActionButton.Ok } as IDialogResponseData);
           this.snackbarService.success(this.translationKeys.deleteAccountSuccessful);
         },
         error: (error) => this.snackbarService.showError(error)
@@ -44,6 +44,6 @@ export class DeleteAccountComponent extends DestroyBaseComponent {
   }
 
   public onCancelClick(): void {
-    this.dialogRef.close({ action: DialogActionButton.Cancel } as DialogResponseData);
+    this.dialogRef.close({ action: DialogActionButton.Cancel } as IDialogResponseData);
   }
 }

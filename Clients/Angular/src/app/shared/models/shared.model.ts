@@ -13,6 +13,6 @@ export interface ITranslationEnum {
   value: string;
 }
 
-export interface DialogResponseData {
+export interface IDialogResponseData {
   action: DialogActionButton;
 }
