@@ -84,9 +84,16 @@ if ($DeployB2CUserFlows.IsPresent) {
   Set-Location $PSScriptRoot
 
   # Deploy B2C User Flows
-  $apiConnector = @{
+  $createUserApiConnector = @{
     DisplayName = "Budgetify API Create user"
     TargetUrl   = "https://budgetify.loca.lt/api/users"
+    Username    = "BudgetifyUser"
+    Password    = "$api_connector_password"
+  }
+
+  $updateUserClaimsApiConnector = @{
+    DisplayName = "Budgetify API Update user claims"
+    TargetUrl   = "https://budgetify.loca.lt/api/users/update-claims"
     Username    = "BudgetifyUser"
     Password    = "$api_connector_password"
   }
@@ -95,5 +102,6 @@ if ($DeployB2CUserFlows.IsPresent) {
     -ClientId "$graph_client_id" `
     -ClientSecret "$graph_client_secret" `
     -TenantId "$b2c_tenant_domain_name" `
-    -ApiConnector $apiConnector
+    -CreateUserApiConnector $createUserApiConnector `
+    -UpdateUserClaimsApiConnector $updateUserClaimsApiConnector
 }

@@ -39,7 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{109158A2-9F2
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Budgetify.Hangfire.Database", "Databases\Budgetify.Hangfire.Database\Budgetify.Hangfire.Database.sqlproj", "{9FC144A1-7755-468E-BB21-B1AA50BE666D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgetify.Functions", "Api\Budgetify.Functions\Budgetify.Functions.csproj", "{59087754-BBDA-4BB1-8C57-930F972FB9A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Budgetify.Functions", "Api\Budgetify.Functions\Budgetify.Functions.csproj", "{59087754-BBDA-4BB1-8C57-930F972FB9A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

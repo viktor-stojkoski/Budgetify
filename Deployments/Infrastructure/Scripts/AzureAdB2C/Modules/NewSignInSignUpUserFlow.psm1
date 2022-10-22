@@ -58,12 +58,20 @@ function New-SignInSignUpUserFlow {
     -UserAttribute @{ id = "surname" }
 
   ## Application Claims [NOT YET SUPPORTED]
+  # City
+  # Email Addresses
+  # Given Name
+  # Surname
+  # Id
 
-  ## API Connector
+  ## API Connectors
+  # Budgetify API Create user
   Set-B2CUserFlowApiConnector `
     -AccessToken $AccessToken `
     -UserFlowId $signUpSignInFlow.id `
     -ApiConnectorId $ApiConnectorId
+
+  # Budgetify API Update user claims
 }
 
 Export-ModuleMember -Function New-SignInSignUpUserFlow

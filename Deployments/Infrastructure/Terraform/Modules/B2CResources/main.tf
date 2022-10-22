@@ -10,7 +10,7 @@ resource "random_uuid" "api" {}
 resource "azuread_application" "api" {
   display_name     = var.api_app_registration_display_name
   sign_in_audience = "AzureADandPersonalMicrosoftAccount"
-  identifier_uris  = "https://${var.tenant_domain_name}/api"
+  identifier_uris  = ["https://${var.tenant_domain_name}/api"]
 
   api {
     requested_access_token_version = 2

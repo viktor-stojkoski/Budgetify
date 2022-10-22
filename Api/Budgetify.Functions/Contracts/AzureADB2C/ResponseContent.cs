@@ -40,4 +40,10 @@ public class ResponseContent
     /// </summary>
     [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "status")]
     public string? Status { get; set; }
+
+    /// <summary>
+    /// Azure AD B2C User ID.
+    /// </summary>
+    [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "extension_Id")]
+    public int Id { get; set; }
 }
