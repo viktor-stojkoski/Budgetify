@@ -40,9 +40,9 @@ public class UpdateUserClaimsFunction
         _userRepository = userRepository;
     }
 
-    [FunctionName("UpdateUserClaimsFunction")]
+    [FunctionName(nameof(UpdateUserClaimsFunction))]
     public async Task<IActionResult> UpdateUserClaimsAsync(
-        [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest request)
+        [HttpTrigger(AuthorizationLevel.Function, "post", Route = "users/update-claims")] HttpRequest request)
     {
         if (!Authorize(request))
         {
