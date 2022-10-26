@@ -3,10 +3,10 @@
 using System;
 using System.Threading.Tasks;
 
+using Budgetify.Common.CurrentUser;
 using Budgetify.Common.Results;
 using Budgetify.Contracts.Account.Repositories;
 using Budgetify.Contracts.Infrastructure.Storage;
-using Budgetify.Contracts.User.Repositories;
 using Budgetify.Entities.Account.Domain;
 using Budgetify.Services.Common.Extensions;
 
@@ -16,16 +16,16 @@ public record DeleteAccountCommand(Guid AccountUid) : ICommand;
 
 public class DeleteAccountCommandHandler : ICommandHandler<DeleteAccountCommand>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly ICurrentUser _currentUser;
     private readonly IAccountRepository _accountRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public DeleteAccountCommandHandler(
-        IUserRepository userRepository,
+        ICurrentUser currentUser,
         IAccountRepository accountRepository,
         IUnitOfWork unitOfWork)
     {
-        _userRepository = userRepository;
+        _currentUser = currentUser;
         _accountRepository = accountRepository;
         _unitOfWork = unitOfWork;
     }
@@ -35,7 +35,7 @@ public class DeleteAccountCommandHandler : ICommandHandler<DeleteAccountCommand>
         CommandResultBuilder result = new();
 
         Result<Account> accountResult =
-            await _accountRepository.GetAccountAsync(command.AccountUid);
+            await _accountRepository.GetAccountAsync(_currentUser.Id, command.AccountUid);
 
         if (accountResult.IsFailureOrNull)
         {

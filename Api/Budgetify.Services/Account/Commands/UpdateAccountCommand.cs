@@ -3,11 +3,11 @@
 using System;
 using System.Threading.Tasks;
 
+using Budgetify.Common.CurrentUser;
 using Budgetify.Common.Results;
 using Budgetify.Contracts.Account.Repositories;
 using Budgetify.Contracts.Currency.Repositories;
 using Budgetify.Contracts.Infrastructure.Storage;
-using Budgetify.Contracts.User.Repositories;
 using Budgetify.Entities.Account.Domain;
 using Budgetify.Entities.Currency.Domain;
 using Budgetify.Services.Common.Extensions;
@@ -24,20 +24,20 @@ public record UpdateAccountCommand(
 
 public class UpdateAccountCommandHandler : ICommandHandler<UpdateAccountCommand>
 {
-    private readonly IUserRepository _userRepository;
-    private readonly ICurrencyRepository _currencyRepository;
     private readonly IAccountRepository _accountRepository;
+    private readonly ICurrencyRepository _currencyRepository;
+    private readonly ICurrentUser _currentUser;
     private readonly IUnitOfWork _unitOfWork;
 
     public UpdateAccountCommandHandler(
-        IUserRepository userRepository,
-        ICurrencyRepository currencyRepository,
         IAccountRepository accountRepository,
+        ICurrentUser currentUser,
+        ICurrencyRepository currencyRepository,
         IUnitOfWork unitOfWork)
     {
-        _userRepository = userRepository;
-        _currencyRepository = currencyRepository;
         _accountRepository = accountRepository;
+        _currentUser = currentUser;
+        _currencyRepository = currencyRepository;
         _unitOfWork = unitOfWork;
     }
 
@@ -46,7 +46,7 @@ public class UpdateAccountCommandHandler : ICommandHandler<UpdateAccountCommand>
         CommandResultBuilder result = new();
 
         Result<Account> accountResult =
-            await _accountRepository.GetAccountAsync(command.AccountUid);
+            await _accountRepository.GetAccountAsync(_currentUser.Id, command.AccountUid);
 
         if (accountResult.IsFailureOrNull)
         {
