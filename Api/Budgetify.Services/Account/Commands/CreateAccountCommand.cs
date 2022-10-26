@@ -3,11 +3,11 @@
 using System;
 using System.Threading.Tasks;
 
+using Budgetify.Common.CurrentUser;
 using Budgetify.Common.Results;
 using Budgetify.Contracts.Account.Repositories;
 using Budgetify.Contracts.Currency.Repositories;
 using Budgetify.Contracts.Infrastructure.Storage;
-using Budgetify.Contracts.User.Repositories;
 using Budgetify.Entities.Account.Domain;
 using Budgetify.Entities.Currency.Domain;
 using Budgetify.Services.Common.Extensions;
@@ -23,21 +23,21 @@ public record CreateAccountCommand(
 
 public class CreateAccountCommandHandler : ICommandHandler<CreateAccountCommand>
 {
-    private readonly IUserRepository _userRepository;
     private readonly ICurrencyRepository _currencyRepository;
     private readonly IAccountRepository _accountRepository;
+    private readonly ICurrentUser _currentUser;
     private readonly IUnitOfWork _unitOfWork;
 
     public CreateAccountCommandHandler(
-        IUserRepository userRepository,
         ICurrencyRepository currencyRepository,
         IAccountRepository accountRepository,
+        ICurrentUser currentUser,
         IUnitOfWork unitOfWork)
     {
-        _userRepository = userRepository;
         _currencyRepository = currencyRepository;
         _accountRepository = accountRepository;
         _unitOfWork = unitOfWork;
+        _currentUser = currentUser;
     }
 
     public async Task<CommandResult<EmptyValue>> ExecuteAsync(CreateAccountCommand command)
@@ -55,7 +55,7 @@ public class CreateAccountCommandHandler : ICommandHandler<CreateAccountCommand>
         Result<Account> accountResult =
             Account.Create(
                 createdOn: DateTime.UtcNow,
-                userId: 1, // TODO: Fix the hardcoded 1 by implementing Current User logic
+                userId: _currentUser.Id,
                 name: command.Name,
                 type: command.Type,
                 balance: command.Balance,
