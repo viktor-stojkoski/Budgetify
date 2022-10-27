@@ -15,4 +15,5 @@ BEGIN
     :r .\Budgetify\Tables\User\User.Seed.sql
     :r .\Budgetify\Tables\Currency\Currency.Seed.sql
     :r .\Budgetify\Tables\Account\Account.Seed.sql
+    :r .\Budgetify\Tables\Category\Category.Seed.sql
 END
