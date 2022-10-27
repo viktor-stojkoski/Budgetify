@@ -63,6 +63,7 @@
     <Folder Include="Budgetify\Tables\User" />
     <Folder Include="Budgetify\Tables\Currency" />
     <Folder Include="Budgetify\Tables\Account" />
+    <Folder Include="Budgetify\Tables\Category" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Budgetify\Budgetify.sql" />
@@ -70,6 +71,7 @@
     <Build Include="Budgetify\Tables\User\User.sql" />
     <Build Include="Budgetify\Tables\Currency\Currency.sql" />
     <Build Include="Budgetify\Tables\Account\Account.sql" />
+    <Build Include="Budgetify\Tables\Category\Category.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Budgetify.Database.publish.xml" />
@@ -77,6 +79,7 @@
     <None Include="Budgetify\Tables\User\User.Seed.sql" />
     <None Include="Budgetify\Tables\Currency\Currency.Seed.sql" />
     <None Include="Budgetify\Tables\Account\Account.Seed.sql" />
+    <None Include="Budgetify\Tables\Category\Category.Seed.sql" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PostDeploy Include="Script.PostDeployment.Debug.sql" />

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using Budgetify.Queries.Account.Entities;
 using Budgetify.Queries.Common.Entities;
+using Budgetify.Queries.Currency.Entities;
 
 public class User : Entity
 {
@@ -28,4 +29,6 @@ public class User : Entity
     public string City { get; protected internal set; }
 
     public virtual ICollection<Account> Accounts { get; protected internal set; } = new List<Account>();
+
+    public virtual ICollection<Category> Categories { get; protected internal set; } = new List<Category>();
 }
