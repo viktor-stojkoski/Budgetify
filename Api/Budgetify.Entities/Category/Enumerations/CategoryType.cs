@@ -8,7 +8,7 @@ using Budgetify.Entities.Common.Enumerations;
 public sealed class CategoryType : Enumeration
 {
     public static readonly CategoryType Expense = new(1, "EXPENSE");
-    public static readonly CategoryType Income = new(1, "INCOME");
+    public static readonly CategoryType Income = new(2, "INCOME");
 
     public CategoryType(int id, string name) : base(id, name) { }
 

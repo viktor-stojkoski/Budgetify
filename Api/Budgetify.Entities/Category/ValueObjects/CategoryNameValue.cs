@@ -36,6 +36,6 @@ public sealed class CategoryNameValue : ValueObject
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        throw new System.NotImplementedException();
+        yield return Value;
     }
 }
