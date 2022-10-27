@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 
 using Budgetify.Storage.Account.Entities;
+using Budgetify.Storage.Category.Entities;
 using Budgetify.Storage.Common.Entities;
 
 public class User : AggregateRoot
@@ -33,4 +34,6 @@ public class User : AggregateRoot
     public string City { get; protected internal set; }
 
     public virtual ICollection<Account> Accounts { get; protected internal set; } = new List<Account>();
+
+    public virtual ICollection<Category> Categories { get; protected internal set; } = new List<Category>();
 }
