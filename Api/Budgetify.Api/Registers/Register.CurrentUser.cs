@@ -43,5 +43,4 @@ public static partial class Register
 
     private static string? GetFromValue(ClaimsIdentity? claimsIdentity, string claimType) =>
         claimsIdentity?.FindFirst(claimType)?.Value ?? default;
-
 }

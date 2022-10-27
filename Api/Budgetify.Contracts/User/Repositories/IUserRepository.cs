@@ -26,7 +26,7 @@ public interface IUserRepository
     /// <summary>
     /// Returns user by given email.
     /// </summary>
-    Task<Result<User>> GetUserAsync(string? email);
+    Task<Result<User>> GetUserByEmailAsync(string? email);
 
     /// <summary>
     /// Returns boolean indicating whether user with the given email exists.

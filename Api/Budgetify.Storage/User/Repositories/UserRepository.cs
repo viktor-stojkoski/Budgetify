@@ -45,7 +45,7 @@ public class UserRepository : Repository<Entities.User>, IUserRepository
         return dbUser.CreateUser();
     }
 
-    public async Task<Result<User>> GetUserAsync(string? email)
+    public async Task<Result<User>> GetUserByEmailAsync(string? email)
     {
         Entities.User? dbUser = await AllNoTrackedOf<Entities.User>()
             .SingleOrDefaultAsync(x => x.Email == email);

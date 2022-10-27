@@ -39,7 +39,7 @@ public class CreateUserFunction
     public async Task<IActionResult> CreateUserAsync(
         [HttpTrigger(AuthorizationLevel.Function, "POST", Route = "users")] HttpRequest request)
     {
-        if (!Authorize(request))
+        if (!IsAuthorized(request))
         {
             _logger.LogError("HTTP Basic authentication validation failed.");
 
@@ -69,7 +69,7 @@ public class CreateUserFunction
             : new OkObjectResult(new ResponseContent("ValidationError", result.Message));
     }
 
-    private bool Authorize(HttpRequest request)
+    private bool IsAuthorized(HttpRequest request)
     {
         if (!request.Headers.ContainsKey("Authorization"))
         {

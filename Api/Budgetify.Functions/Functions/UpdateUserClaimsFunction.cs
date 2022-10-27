@@ -44,7 +44,7 @@ public class UpdateUserClaimsFunction
     public async Task<IActionResult> UpdateUserClaimsAsync(
         [HttpTrigger(AuthorizationLevel.Function, "post", Route = "users/update-claims")] HttpRequest request)
     {
-        if (!Authorize(request))
+        if (!IsAuthorized(request))
         {
             _logger.LogError("Http Basic authentication validation failed.");
 
@@ -62,7 +62,7 @@ public class UpdateUserClaimsFunction
             return new BadRequestResult();
         }
 
-        Result<User> userResult = await _userRepository.GetUserAsync(updateUserClaimsRequest.Email);
+        Result<User> userResult = await _userRepository.GetUserByEmailAsync(updateUserClaimsRequest.Email);
 
         if (userResult.IsFailureOrNull)
         {
@@ -77,7 +77,7 @@ public class UpdateUserClaimsFunction
         });
     }
 
-    private bool Authorize(HttpRequest request)
+    private bool IsAuthorized(HttpRequest request)
     {
         if (!request.Headers.ContainsKey("Authorization"))
         {
