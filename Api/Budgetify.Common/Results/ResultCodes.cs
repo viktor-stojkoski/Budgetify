@@ -38,4 +38,12 @@ public static class ResultCodes
     public const string AccountNotFound = "ACCOUNT_NOT_FOUND";
 
     #endregion
+
+    #region Category
+
+    public const string CategoryNameInvalid = "CATEGORY_NAME_INVALID";
+    public const string CategoryNameInvalidLength = "CATEGORY_NAME_INVALID_LENGTH";
+    public const string CategoryTypeInvalid = "CATEGORY_TYPE_INVALID";
+
+    #endregion
 }
