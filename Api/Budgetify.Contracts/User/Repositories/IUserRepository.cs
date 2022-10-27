@@ -24,6 +24,11 @@ public interface IUserRepository
     Task<Result<User>> GetUserAsync(Guid userUid);
 
     /// <summary>
+    /// Returns user by given email.
+    /// </summary>
+    Task<Result<User>> GetUserByEmailAsync(string? email);
+
+    /// <summary>
     /// Returns boolean indicating whether user with the given email exists.
     /// </summary>
     Task<bool> DoesUserWithEmailExists(string? email);

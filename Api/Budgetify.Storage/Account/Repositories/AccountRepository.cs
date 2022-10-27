@@ -32,10 +32,10 @@ public class AccountRepository : Repository<Entities.Account>, IAccountRepositor
         AttachOrUpdate(dbAccount, account.State.GetState());
     }
 
-    public async Task<Result<Account>> GetAccountAsync(Guid accountUid)
+    public async Task<Result<Account>> GetAccountAsync(int userId, Guid accountUid)
     {
         Entities.Account? dbAccount = await AllNoTrackedOf<Entities.Account>()
-            .SingleOrDefaultAsync(x => x.Uid == accountUid);
+            .SingleOrDefaultAsync(x => x.UserId == userId && x.Uid == accountUid);
 
         if (dbAccount is null)
         {

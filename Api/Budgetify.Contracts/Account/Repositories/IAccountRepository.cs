@@ -19,7 +19,7 @@ public interface IAccountRepository
     void Update(Account account);
 
     /// <summary>
-    /// Returns account by given accountUid.
+    /// Returns account by given userId and accountUid.
     /// </summary>
-    Task<Result<Account>> GetAccountAsync(Guid accountUid);
+    Task<Result<Account>> GetAccountAsync(int userId, Guid accountUid);
 }

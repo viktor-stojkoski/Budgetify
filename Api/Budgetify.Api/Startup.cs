@@ -38,7 +38,8 @@ public class Startup
             .RegisterSwagger(Configuration)
             .RegisterAuthentication(Configuration)
             .RegisterServices()
-            .RegisterCors();
+            .RegisterCors()
+            .RegisterCurrentUser();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

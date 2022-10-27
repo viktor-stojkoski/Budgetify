@@ -24,7 +24,8 @@
     -ClientId "<GUID_HERE>"" `
     -ClientSecret "<SECRET_HERE>"" `
     -TenantId "budgetify.onmicrosoft.com" `
-    -ApiConnector @{}
+    -CreateUserApiConnector @{} `
+    -UpdateUserClaimsApiConnector @{}
 #>
 
 Param(
@@ -38,7 +39,10 @@ Param(
   [string] $TenantId,
 
   [Parameter(Mandatory = $true)]
-  [hashtable] $ApiConnector
+  [hashtable] $CreateUserApiConnector,
+
+  [Parameter(Mandatory = $true)]
+  [hashtable] $UpdateUserClaimsApiConnector
 )
 
 Import-Module $PSScriptRoot\..\Utilities\Modules\GetGraphApiAccessToken.psm1 -Force
@@ -46,25 +50,42 @@ Import-Module $PSScriptRoot\Modules\NewApiConnector.psm1 -Force
 Import-Module $PSScriptRoot\Modules\NewSignInSignUpUserFlow.psm1 -Force
 Import-Module $PSScriptRoot\Modules\NewProfileEditUserFlow.psm1 -Force
 Import-Module $PSScriptRoot\Modules\NewPasswordResetUserFlow.psm1 -Force
+Import-Module $PSScriptRoot\Modules\NewB2CIdentityUserFlowAttribute.psm1 -Force
 
 $accessToken = Get-MicrosoftGraphApiAccessToken `
   -ClientId $ClientId `
   -ClientSecret $ClientSecret `
   -TenantId $TenantId
 
-$apiConnectorResponse = New-ApiConnector `
+$createUserApiConnectorResponse = New-ApiConnector `
   -AccessToken $accessToken `
-  -DisplayName $ApiConnector.DisplayName `
-  -TargetUrl $ApiConnector.TargetUrl `
-  -Username $ApiConnector.Username `
-  -Password $ApiConnector.Password
+  -DisplayName $CreateUserApiConnector.DisplayName `
+  -TargetUrl $CreateUserApiConnector.TargetUrl `
+  -Username $CreateUserApiConnector.Username `
+  -Password $CreateUserApiConnector.Password
+
+# Requires manually assigning the API Connector to the SignUpIn User flow
+# Before including application claims in token (preview)
+New-ApiConnector `
+  -AccessToken $accessToken `
+  -DisplayName $UpdateUserClaimsApiConnector.DisplayName `
+  -TargetUrl $UpdateUserClaimsApiConnector.TargetUrl `
+  -Username $UpdateUserClaimsApiConnector.Username `
+  -Password $UpdateUserClaimsApiConnector.Password
+
+# Create ID User flow attribute
+New-B2CIdentityUserFlowAttribute `
+  -AccessToken $accessToken `
+  -DisplayName "Id" `
+  -Description "User id from Budgetify Database" `
+  -DataType "int64"
 
 New-SignInSignUpUserFlow `
-  -AccessToken $AccessToken `
-  -ApiConnectorId $apiConnectorResponse.id
+  -AccessToken $accessToken `
+  -ApiConnectorId $createUserApiConnectorResponse.id
 
 New-ProfileEditUserFlow `
-  -AccessToken $AccessToken
+  -AccessToken $accessToken
 
 New-PasswordResetUserFlow `
-  -AccessToken $AccessToken
+  -AccessToken $accessToken

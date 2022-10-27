@@ -4,10 +4,12 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
+using Budgetify.Common.Results;
 using Budgetify.Contracts.Settings;
+using Budgetify.Contracts.User.Repositories;
 using Budgetify.Contracts.User.Requests;
+using Budgetify.Entities.User.Domain;
 using Budgetify.Functions.Contracts.AzureADB2C;
-using Budgetify.Services.User.Commands;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,54 +21,60 @@ using Newtonsoft.Json;
 
 using VS.Commands;
 
-public class CreateUserFunction
+public class UpdateUserClaimsFunction
 {
     private readonly ICommandDispatcher _commandDispatcher;
     private readonly IAzureADB2CApiConnectorSettings _azureADB2CApiConnectorSettings;
-    private readonly ILogger<CreateUserFunction> _logger;
+    private readonly ILogger<UpdateUserClaimsFunction> _logger;
+    private readonly IUserRepository _userRepository;
 
-    public CreateUserFunction(
+    public UpdateUserClaimsFunction(
         ICommandDispatcher commandDispatcher,
         IAzureADB2CApiConnectorSettings azureADB2CApiConnectorSettings,
-        ILogger<CreateUserFunction> logger)
+        ILogger<UpdateUserClaimsFunction> logger,
+        IUserRepository userRepository)
     {
         _commandDispatcher = commandDispatcher;
         _azureADB2CApiConnectorSettings = azureADB2CApiConnectorSettings;
         _logger = logger;
+        _userRepository = userRepository;
     }
 
-    [FunctionName(nameof(CreateUserFunction))]
-    public async Task<IActionResult> CreateUserAsync(
-        [HttpTrigger(AuthorizationLevel.Function, "POST", Route = "users")] HttpRequest request)
+    [FunctionName(nameof(UpdateUserClaimsFunction))]
+    public async Task<IActionResult> UpdateUserClaimsAsync(
+        [HttpTrigger(AuthorizationLevel.Function, "post", Route = "users/update-claims")] HttpRequest request)
     {
         if (!IsAuthorized(request))
         {
-            _logger.LogError("HTTP Basic authentication validation failed.");
+            _logger.LogError("Http Basic authentication validation failed.");
 
             return new UnauthorizedResult();
         }
 
         string requestBody = await new StreamReader(request.Body).ReadToEndAsync();
-        CreateUserRequest? createUserRequest = JsonConvert.DeserializeObject<CreateUserRequest>(requestBody);
+        UpdateUserClaimsRequest? updateUserClaimsRequest =
+            JsonConvert.DeserializeObject<UpdateUserClaimsRequest>(requestBody);
 
-        if (createUserRequest is null)
+        if (updateUserClaimsRequest is null)
         {
             _logger.LogError("Request invalid.");
 
             return new BadRequestResult();
         }
 
-        CommandResult<EmptyValue> result =
-            await _commandDispatcher.ExecuteAsync(
-                new CreateUserCommand(
-                    Email: createUserRequest.Email,
-                    FirstName: createUserRequest.FirstName,
-                    LastName: createUserRequest.LastName,
-                    City: createUserRequest.City));
+        Result<User> userResult = await _userRepository.GetUserByEmailAsync(updateUserClaimsRequest.Email);
 
-        return result.Value is not null
-            ? new OkObjectResult(new ResponseContent())
-            : new OkObjectResult(new ResponseContent("ValidationError", result.Message));
+        if (userResult.IsFailureOrNull)
+        {
+            _logger.LogError(userResult.Message);
+
+            return new BadRequestResult();
+        }
+
+        return new OkObjectResult(new ResponseContent
+        {
+            Id = userResult.Value.Id
+        });
     }
 
     private bool IsAuthorized(HttpRequest request)

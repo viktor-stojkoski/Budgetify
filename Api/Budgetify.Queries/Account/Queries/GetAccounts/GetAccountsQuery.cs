@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Budgetify.Common.CurrentUser;
 using Budgetify.Queries.Account.Entities;
 using Budgetify.Queries.Infrastructure.Context;
 
@@ -16,10 +17,14 @@ public record GetAccountsQuery() : IQuery<IEnumerable<AccountResponse>>;
 public class GetAccountsQueryHandler : IQueryHandler<GetAccountsQuery, IEnumerable<AccountResponse>>
 {
     private readonly IBudgetifyReadonlyDbContext _budgetifyReadonlyDbContext;
+    private readonly ICurrentUser _currentUser;
 
-    public GetAccountsQueryHandler(IBudgetifyReadonlyDbContext budgetifyReadonlyDbContext)
+    public GetAccountsQueryHandler(
+        IBudgetifyReadonlyDbContext budgetifyReadonlyDbContext,
+        ICurrentUser currentUser)
     {
         _budgetifyReadonlyDbContext = budgetifyReadonlyDbContext;
+        _currentUser = currentUser;
     }
 
     public async Task<QueryResult<IEnumerable<AccountResponse>>> ExecuteAsync(GetAccountsQuery query)
@@ -29,7 +34,7 @@ public class GetAccountsQueryHandler : IQueryHandler<GetAccountsQuery, IEnumerab
         IEnumerable<AccountResponse> accounts =
             await _budgetifyReadonlyDbContext.AllNoTrackedOf<Account>()
                 .Include(x => x.Currency)
-                .Where(x => x.UserId == 1) // TODO: Fix the hardcoded 1 by implementing Current User logic
+                .Where(x => x.UserId == _currentUser.Id)
                 .Select(x => new AccountResponse(
                     x.Uid,
                     x.Name,
