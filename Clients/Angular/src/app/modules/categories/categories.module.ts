@@ -10,8 +10,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from '@budgetify/core';
-import { SharedModule } from '@budgetify/shared';
+import { DialogService, SharedModule } from '@budgetify/shared';
 import { CategoriesTableComponent } from './components/categories-table/categories-table.component';
+import { CreateCategoryComponent } from './components/create-category/create-category.component';
 import { routes } from './routes';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { routes } from './routes';
     MatProgressSpinnerModule,
     MatTooltipModule
   ],
-  declarations: [CategoriesTableComponent]
+  declarations: [CategoriesTableComponent, CreateCategoryComponent],
+  providers: [DialogService]
 })
 export class CategoriesModule {}

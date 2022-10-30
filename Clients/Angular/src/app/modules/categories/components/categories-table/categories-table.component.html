@@ -1,5 +1,13 @@
 <mat-toolbar>
   <span>{{ translationKeys.toolbarName | translate }}</span>
+
+  <span class="toolbar-spacer"></span>
+
+  <span>
+    <button mat-raised-button color="primary" (click)="openCreateCategoryDialog()">
+      {{ translationKeys.toolbarActionCreateCategory | translate }}
+    </button>
+  </span>
 </mat-toolbar>
 
 <div class="spinner-container" *ngIf="isLoading">

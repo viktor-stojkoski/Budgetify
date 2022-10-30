@@ -1,23 +1,17 @@
 export class TranslationKeys {
   public static readonly toolbarName = 'categories.toolbarName';
-  // public static readonly toolbarActionCreateAccount = 'accounts.toolbarActionCreateAccount';
+  public static readonly toolbarActionCreateCategory = 'categories.toolbarActionCreateCategory';
 
   public static readonly tableFilterLabel = 'categories.tableFilterLabel';
   public static readonly tableNoDataFound = 'categories.tableNoDataFound';
   public static readonly tableNameHeader = 'categories.tableNameHeader';
   public static readonly tableTypeHeader = 'categories.tableTypeHeader';
-  // public static readonly tableBalanceHeader = 'accounts.tableBalanceHeader';
-  // public static readonly tableCurrencyCodeHeader = 'accounts.tableCurrencyCodeHeader';
-  // public static readonly tableDescriptionHeader = 'accounts.tableDescriptionHeader';
   // public static readonly tableDeleteAccountTooltip = 'accounts.tableDeleteAccountTooltip';
 
-  // public static readonly createFormHeader = 'accounts.createFormHeader';
-  // public static readonly createFormNameLabel = 'accounts.createFormNameLabel';
-  // public static readonly createFormTypeLabel = 'accounts.createFormTypeLabel';
-  // public static readonly createFormBalanceLabel = 'accounts.createFormBalanceLabel';
-  // public static readonly createFormCurrencyLabel = 'accounts.createFormCurrencyLabel';
-  // public static readonly createFormDescriptionLabel = 'accounts.createFormDescriptionLabel';
-  // public static readonly createAccountSuccessful = 'successMessages.accounts.create';
+  public static readonly createFormHeader = 'categories.createFormHeader';
+  public static readonly createFormNameLabel = 'categories.createFormNameLabel';
+  public static readonly createFormTypeLabel = 'categories.createFormTypeLabel';
+  public static readonly createCategorySuccessful = 'successMessages.categories.create';
 
   // public static readonly detailsHeader = 'accounts.detailsHeader';
   // public static readonly detailsToolbarActionUpdateAccount = 'accounts.detailsToolbarActionUpdateAccount';
