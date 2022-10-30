@@ -43,6 +43,9 @@
       "create": "Account has been successfully created.",
       "edit": "Account has been successfully updated.",
       "delete": "Account has been successfully deleted."
+    },
+    "categories": {
+      "create": "Category has been successfully created."
     }
   },
 
@@ -84,6 +87,7 @@
 
   "categories": {
     "toolbarName": "Categories",
+    "toolbarActionCreateCategory": "Create category",
 
     "tableFilterLabel": "Filter",
     "tableNoDataFound": "No data was found.",
@@ -91,6 +95,10 @@
     "tableTypeHeader": "Type",
 
     "typeExpense": "Expense",
-    "typeIncome": "Income"
+    "typeIncome": "Income",
+
+    "createFormHeader": "Create category",
+    "createFormNameLabel": "Name",
+    "createFormTypeLabel": "Type"
   }
 }

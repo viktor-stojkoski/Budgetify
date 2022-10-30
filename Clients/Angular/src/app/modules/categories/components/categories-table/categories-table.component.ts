@@ -2,12 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { DestroyBaseComponent, SnackbarService } from '@budgetify/shared';
-import { take } from 'rxjs';
+import { DestroyBaseComponent, DialogService, SnackbarService } from '@budgetify/shared';
+import { take, takeUntil } from 'rxjs';
 import { CategoryType } from '../../models/category.enum';
 import { ICategoryResponse } from '../../models/category.model';
 import { CategoryService } from '../../services/category.service';
 import { TranslationKeys } from '../../static/translationKeys';
+import { CreateCategoryComponent } from '../create-category/create-category.component';
 
 @Component({
   selector: 'app-categories-table',
@@ -36,12 +37,26 @@ export class CategoriesTableComponent extends DestroyBaseComponent implements On
     }
   }
 
-  constructor(private categoryService: CategoryService, private snackbarService: SnackbarService) {
+  constructor(
+    private categoryService: CategoryService,
+    private snackbarService: SnackbarService,
+    private dialogService: DialogService
+  ) {
     super();
   }
 
   public ngOnInit(): void {
     this.getCategories();
+  }
+
+  public openCreateCategoryDialog(): void {
+    this.dialogService
+      .open(CreateCategoryComponent)
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: () => this.getCategories()
+      });
   }
 
   public applyFilter(event: Event): void {

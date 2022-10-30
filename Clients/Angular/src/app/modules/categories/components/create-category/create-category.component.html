@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>{{ translationKeys.createFormHeader | translate }}</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="categoryForm">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormNameLabel | translate }}</mat-label>
+      <input type="text" matInput formControlName="name" cdkFocusInitial />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormTypeLabel | translate }}</mat-label>
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let type of types" [value]="type.value">
+          {{ type.translationKey | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="secondary" (click)="onCancelClick()">
+    {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="createCategory()">
+    {{ sharedTranslationKeys.mainActionButtonOk | translate }}
+  </button>
+</div>

@@ -43,6 +43,9 @@
       "create": "Сметката е успешно искреирана.",
       "edit": "Сметката е успешно уредена.",
       "delete": "Сметката е успешно избришана."
+    },
+    "categories": {
+      "create": "Категоријата е успешно искреирана."
     }
   },
 
@@ -84,6 +87,7 @@
 
   "categories": {
     "toolbarName": "Категории",
+    "toolbarActionCreateCategory": "Креирај категорија",
 
     "tableFilterLabel": "Филтер",
     "tableNoDataFound": "Не беа пронајдени податоци.",
@@ -91,6 +95,10 @@
     "tableTypeHeader": "Тип",
 
     "typeExpense": "Трошок",
-    "typeIncome": "Приход"
+    "typeIncome": "Приход",
+
+    "createFormHeader": "Креирај категорија",
+    "createFormNameLabel": "Име",
+    "createFormTypeLabel": "Тип"
   }
 }
