@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Budgetify.Common.CurrentUser;
 using Budgetify.Common.Results;
 using Budgetify.Queries.Account.Entities;
+using Budgetify.Queries.Common.Extensions;
 using Budgetify.Queries.Infrastructure.Context;
 
 using Microsoft.EntityFrameworkCore;
@@ -46,7 +47,7 @@ public class GetAccountQueryHandler : IQueryHandler<GetAccountQuery, AccountResp
 
         if (account is null)
         {
-            return result.FailWith(ResultCodes.AccountNotFound);
+            return result.FailWith(Result.NotFound(ResultCodes.AccountNotFound));
         }
 
         result.SetValue(account);

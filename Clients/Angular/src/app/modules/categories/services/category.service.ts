@@ -16,6 +16,10 @@ export class CategoryService {
     return this.baseApiService.get<IResult<ICategoryResponse[]>>(this.categoriesApiRoute);
   }
 
+  public getCategory(uid: string | null): Observable<IResult<ICategoryResponse>> {
+    return this.baseApiService.get<IResult<ICategoryResponse>>(`${this.categoriesApiRoute}/${uid}`);
+  }
+
   public createCategory(request: ICreateCategoryRequest): Observable<void> {
     return this.baseApiService.post<void>(this.categoriesApiRoute, request);
   }

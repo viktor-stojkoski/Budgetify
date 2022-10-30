@@ -1,9 +1,11 @@
 ﻿namespace Budgetify.Api.Controllers;
 
+using System;
 using System.Threading.Tasks;
 
 using Budgetify.Contracts.Category.Requests;
 using Budgetify.Queries.Category.Queries.GetCategories;
+using Budgetify.Queries.Category.Queries.GetCategory;
 using Budgetify.Services.Category.Commands;
 
 using Microsoft.AspNetCore.Authorization;
@@ -31,6 +33,10 @@ public class CategoriesController : ExtendedApiController
     [HttpGet]
     public async Task<IActionResult> GetCategoriesAsync() =>
         OkOrError(await _queryDispatcher.ExecuteAsync(new GetCategoriesQuery()));
+
+    [HttpGet("{categoryUid:Guid}")]
+    public async Task<IActionResult> GetCategoryAsync([FromRoute] Guid categoryUid) =>
+        OkOrError(await _queryDispatcher.ExecuteAsync(new GetCategoryQuery(categoryUid)));
 
     [HttpPost]
     public async Task<IActionResult> CreateCategoryAsync([FromBody] CreateCategoryRequest request) =>

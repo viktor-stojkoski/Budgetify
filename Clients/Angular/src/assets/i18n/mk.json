@@ -35,7 +35,12 @@
     "ACCOUNT_NAME_INVALID": "Името на сметката е невалидно.",
     "ACCOUNT_NAME_INVALID_LENGTH": "Должината на името на сметката е невалидно.",
     "ACCOUNT_TYPE_INVALID": "Типот на сметката е невалиден.",
-    "ACCOUNT_NOT_FOUND": "Сметката не е пронајдена."
+    "ACCOUNT_NOT_FOUND": "Сметката не е пронајдена.",
+
+    "CATEGORY_NAME_INVALID": "Името на категоријата е невалидно.",
+    "CATEGORY_NAME_INVALID_LENGTH": "Должината на името на категоријата е невалидно.",
+    "CATEGORY_TYPE_INVALID": "Типот на категоријата е невалиден.",
+    "CATEGORY_NOT_FOUND": "Категоријата не е пронајдена."
   },
 
   "successMessages": {
@@ -99,6 +104,10 @@
 
     "createFormHeader": "Креирај категорија",
     "createFormNameLabel": "Име",
-    "createFormTypeLabel": "Тип"
+    "createFormTypeLabel": "Тип",
+
+    "detailsHeader": "Детали за категорија",
+    "detailsNameHeader": "Име",
+    "detailsTypeHeader": "Тип"
   }
 }
