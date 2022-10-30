@@ -80,5 +80,17 @@
 
     "deleteAccountHeader": "Delete account",
     "deleteAccountContent": "Are you sure you want to delete the account <strong>{{accountName}}</strong> ?"
+  },
+
+  "categories": {
+    "toolbarName": "Categories",
+
+    "tableFilterLabel": "Filter",
+    "tableNoDataFound": "No data was found.",
+    "tableNameHeader": "Name",
+    "tableTypeHeader": "Type",
+
+    "typeExpense": "Expense",
+    "typeIncome": "Income"
   }
 }
