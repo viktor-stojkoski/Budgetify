@@ -13,13 +13,10 @@ export class TranslationKeys {
   public static readonly createFormTypeLabel = 'categories.createFormTypeLabel';
   public static readonly createCategorySuccessful = 'successMessages.categories.create';
 
-  // public static readonly detailsHeader = 'accounts.detailsHeader';
+  public static readonly detailsHeader = 'categories.detailsHeader';
   // public static readonly detailsToolbarActionUpdateAccount = 'accounts.detailsToolbarActionUpdateAccount';
-  // public static readonly detailsNameHeader = 'accounts.detailsNameHeader';
-  // public static readonly detailsTypeHeader = 'accounts.detailsTypeHeader';
-  // public static readonly detailsBalanceHeader = 'accounts.detailsBalanceHeader';
-  // public static readonly detailsCurrencyHeader = 'accounts.detailsCurrencyHeader';
-  // public static readonly detailsDescriptionHeader = 'accounts.detailsDescriptionHeader';
+  public static readonly detailsNameHeader = 'categories.detailsNameHeader';
+  public static readonly detailsTypeHeader = 'categories.detailsTypeHeader';
   // public static readonly editAccountSuccessful = 'successMessages.accounts.edit';
 
   // public static readonly deleteAccountHeader = 'accounts.deleteAccountHeader';

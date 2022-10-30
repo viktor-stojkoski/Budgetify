@@ -99,6 +99,10 @@
 
     "createFormHeader": "Create category",
     "createFormNameLabel": "Name",
-    "createFormTypeLabel": "Type"
+    "createFormTypeLabel": "Type",
+
+    "detailsHeader": "Category details",
+    "detailsNameHeader": "Name",
+    "detailsTypeHeader": "Type"
   }
 }

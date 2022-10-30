@@ -1,0 +1,24 @@
+<mat-toolbar>
+  <span>{{ translationKeys.toolbarName | translate }} > {{ category?.name ?? '' | truncate: 30 }}</span>
+</mat-toolbar>
+
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<mat-card *ngIf="!isLoading && category" class="mat-elevation-z8">
+  <mat-card-title>{{ translationKeys.detailsHeader | translate }}</mat-card-title>
+
+  <mat-card-content>
+    <div class="grid-container">
+      <div class="grid-item">{{ translationKeys.detailsNameHeader | translate }}</div>
+      <div class="grid-item">
+        <span [matTooltip]="category.name" [matTooltipDisabled]="category.name.length < 30">
+          {{ category.name | truncate: 30 }}
+        </span>
+      </div>
+      <div class="grid-item no-border">{{ translationKeys.detailsTypeHeader | translate }}</div>
+      <div class="grid-item no-border">{{ category.type | translateEnum: type }}</div>
+    </div>
+  </mat-card-content>
+</mat-card>

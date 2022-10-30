@@ -99,6 +99,10 @@
 
     "createFormHeader": "Креирај категорија",
     "createFormNameLabel": "Име",
-    "createFormTypeLabel": "Тип"
+    "createFormTypeLabel": "Тип",
+
+    "detailsHeader": "Детали за категорија",
+    "detailsNameHeader": "Име",
+    "detailsTypeHeader": "Тип"
   }
 }
