@@ -50,8 +50,8 @@ public partial class Category
     public static Result<Category> Create(
         DateTime createdOn,
         int userId,
-        string name,
-        string type)
+        string? name,
+        string? type)
     {
         Result<CategoryNameValue> nameValue = CategoryNameValue.Create(name);
         Result<CategoryType> typeValue = CategoryType.Create(type);
