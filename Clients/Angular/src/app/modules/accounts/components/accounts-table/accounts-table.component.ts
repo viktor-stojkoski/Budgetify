@@ -18,9 +18,9 @@ import { DeleteAccountComponent } from '../delete-account/delete-account.compone
   styleUrls: ['./accounts-table.component.scss']
 })
 export class AccountsTableComponent extends DestroyBaseComponent implements OnInit {
+  public readonly translationKeys = TranslationKeys;
   public dataSource!: MatTableDataSource<IAccountResponse>;
   public displayedColumns = ['name', 'type', 'balance', 'currencyCode', 'description', 'actions'];
-  public readonly translationKeys = TranslationKeys;
   public isLoading = true;
   public type = AccountType;
   public filterValue = '';

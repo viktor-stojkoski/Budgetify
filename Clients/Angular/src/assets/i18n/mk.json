@@ -80,5 +80,17 @@
 
     "deleteAccountHeader": "Избриши сметка",
     "deleteAccountContent": "Дали сте сигурни дека сакате да ја избришете сметката <strong>{{accountName}}</strong> ?"
+  },
+
+  "categories": {
+    "toolbarName": "Категории",
+
+    "tableFilterLabel": "Филтер",
+    "tableNoDataFound": "Не беа пронајдени податоци.",
+    "tableNameHeader": "Име",
+    "tableTypeHeader": "Тип",
+
+    "typeExpense": "Трошок",
+    "typeIncome": "Приход"
   }
 }
