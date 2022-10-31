@@ -3,7 +3,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { DestroyBaseComponent, DialogService, SnackbarService } from '@budgetify/shared';
+import {
+  DestroyBaseComponent,
+  DialogActionButton,
+  DialogService,
+  IDialogResponseData,
+  SnackbarService
+} from '@budgetify/shared';
 import { take, takeUntil } from 'rxjs';
 import { AccountType } from '../../models/account.enum';
 import { IAccountResponse, IDeleteAccountDialogData } from '../../models/account.model';
@@ -58,7 +64,12 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
       .afterClosed()
       .pipe(takeUntil(this.destroyed$))
       .subscribe({
-        next: () => this.getAccounts()
+        next: (response: IDialogResponseData) => {
+          console.log(response);
+          if (response.action === DialogActionButton.Ok) {
+            this.getAccounts();
+          }
+        }
       });
   }
 
@@ -73,7 +84,11 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
       .afterClosed()
       .pipe(takeUntil(this.destroyed$))
       .subscribe({
-        next: () => this.getAccounts()
+        next: (response: IDialogResponseData) => {
+          if (response.action === DialogActionButton.Ok) {
+            this.getAccounts();
+          }
+        }
       });
   }
 

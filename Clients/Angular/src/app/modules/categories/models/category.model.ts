@@ -12,3 +12,8 @@ export interface IUpdateCategoryRequest {
   name: string | null;
   type: string | null;
 }
+
+export interface IDeleteCategoryDialogData {
+  name: string;
+  uid: string;
+}

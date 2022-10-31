@@ -27,4 +27,8 @@ export class CategoryService {
   public updateCategory(uid: string | null, request: IUpdateCategoryRequest): Observable<void> {
     return this.baseApiService.put<void>(`${this.categoriesApiRoute}/${uid}`, request);
   }
+
+  public deleteCategory(uid: string | null): Observable<void> {
+    return this.baseApiService.delete<void>(`${this.categoriesApiRoute}/${uid}`);
+  }
 }

@@ -16,6 +16,7 @@ import { CategoriesTableComponent } from './components/categories-table/categori
 import { CategoryDetailsComponent } from './components/category-details/category-details.component';
 import { CreateCategoryComponent } from './components/create-category/create-category.component';
 import { routes } from './routes';
+import { DeleteCategoryComponent } from './components/delete-category/delete-category.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,7 @@ import { routes } from './routes';
     MatTooltipModule,
     MatCardModule
   ],
-  declarations: [CategoriesTableComponent, CreateCategoryComponent, CategoryDetailsComponent],
+  declarations: [CategoriesTableComponent, CreateCategoryComponent, CategoryDetailsComponent, DeleteCategoryComponent],
   providers: [DialogService]
 })
 export class CategoriesModule {}

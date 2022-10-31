@@ -3,7 +3,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import {
   DestroyBaseComponent,
+  DialogActionButton,
   enumToTranslationEnum,
+  IDialogResponseData,
   SnackbarService,
   TranslationKeys as SharedTranslationKeys
 } from '@budgetify/shared';
@@ -46,7 +48,7 @@ export class CreateCategoryComponent extends DestroyBaseComponent {
         .pipe(take(1))
         .subscribe({
           next: () => {
-            this.dialogRef.close();
+            this.dialogRef.close({ action: DialogActionButton.Ok } as IDialogResponseData);
             this.snackbarService.success(this.translationKeys.createCategorySuccessful);
           },
           error: (error) => this.snackbarService.showError(error)
@@ -57,6 +59,6 @@ export class CreateCategoryComponent extends DestroyBaseComponent {
   }
 
   public onCancelClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close({ action: DialogActionButton.Cancel } as IDialogResponseData);
   }
 }
