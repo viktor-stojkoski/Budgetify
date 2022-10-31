@@ -1,5 +1,24 @@
 <mat-toolbar>
   <span>{{ translationKeys.toolbarName | translate }} > {{ category?.name ?? '' | truncate: 30 }}</span>
+
+  <span class="toolbar-spacer"></span>
+
+  <div class="toolbar-buttons">
+    <span *ngIf="!isEditing">
+      <button mat-raised-button color="primary" (click)="toggleEdit()">
+        {{ sharedTranslationKeys.mainActionButtonEdit | translate }}
+      </button>
+    </span>
+
+    <span *ngIf="isEditing">
+      <button mat-raised-button color="secondary" (click)="toggleEdit()">
+        {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
+      </button>
+      <button mat-raised-button color="primary" (click)="editCategory()">
+        {{ sharedTranslationKeys.mainActionButtonSave | translate }}
+      </button>
+    </span>
+  </div>
 </mat-toolbar>
 
 <div class="spinner-container" *ngIf="isLoading">
@@ -10,16 +29,30 @@
   <mat-card-title>{{ translationKeys.detailsHeader | translate }}</mat-card-title>
 
   <mat-card-content>
-    <div class="grid-container">
+    <div [formGroup]="categoryForm" class="grid-container">
       <div class="grid-item">{{ translationKeys.detailsNameHeader | translate }}</div>
-      <div class="grid-item">
+      <div *ngIf="!isEditing" class="grid-item">
         <span [matTooltip]="category.name" [matTooltipDisabled]="category.name.length < 30">
           {{ category.name | truncate: 30 }}
         </span>
       </div>
+      <div *ngIf="isEditing" class="grid-item">
+        <mat-form-field appearance="outline">
+          <input type="text" matInput formControlName="name" cdkFocusInitial />
+        </mat-form-field>
+      </div>
 
       <div class="grid-item no-border">{{ translationKeys.detailsTypeHeader | translate }}</div>
-      <div class="grid-item no-border">{{ category.type | translateEnum: type }}</div>
+      <div *ngIf="!isEditing" class="grid-item no-border">{{ category.type | translateEnum: type }}</div>
+      <div *ngIf="isEditing" class="grid-item no-border">
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="type">
+            <mat-option *ngFor="let type of types" [value]="type.value">
+              {{ type.translationKey | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
   </mat-card-content>
 </mat-card>

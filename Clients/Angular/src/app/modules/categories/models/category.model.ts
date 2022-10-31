@@ -7,3 +7,8 @@ export interface ICreateCategoryRequest {
   name: string | null;
   type: string | null;
 }
+
+export interface IUpdateCategoryRequest {
+  name: string | null;
+  type: string | null;
+}

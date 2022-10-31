@@ -20,13 +20,12 @@ export class TranslationKeys {
   public static readonly createAccountSuccessful = 'successMessages.accounts.create';
 
   public static readonly detailsHeader = 'accounts.detailsHeader';
-  public static readonly detailsToolbarActionUpdateAccount = 'accounts.detailsToolbarActionUpdateAccount';
   public static readonly detailsNameHeader = 'accounts.detailsNameHeader';
   public static readonly detailsTypeHeader = 'accounts.detailsTypeHeader';
   public static readonly detailsBalanceHeader = 'accounts.detailsBalanceHeader';
   public static readonly detailsCurrencyHeader = 'accounts.detailsCurrencyHeader';
   public static readonly detailsDescriptionHeader = 'accounts.detailsDescriptionHeader';
-  public static readonly editAccountSuccessful = 'successMessages.accounts.edit';
+  public static readonly updateAccountSuccessful = 'successMessages.accounts.update';
 
   public static readonly deleteAccountHeader = 'accounts.deleteAccountHeader';
   public static readonly deleteAccountContent = 'accounts.deleteAccountContent';
