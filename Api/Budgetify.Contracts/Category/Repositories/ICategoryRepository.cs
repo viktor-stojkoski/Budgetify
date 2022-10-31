@@ -1,5 +1,9 @@
 ﻿namespace Budgetify.Contracts.Category.Repositories;
 
+using System;
+using System.Threading.Tasks;
+
+using Budgetify.Common.Results;
 using Budgetify.Entities.Category.Domain;
 
 public interface ICategoryRepository
@@ -13,4 +17,9 @@ public interface ICategoryRepository
     /// Updates category.
     /// </summary>
     void Update(Category category);
+
+    /// <summary>
+    /// Returns category by given userId and categoryUid.
+    /// </summary>
+    Task<Result<Category>> GetCategoryAsync(int userId, Guid categoryUid);
 }
