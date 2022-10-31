@@ -1,5 +1,7 @@
 ﻿namespace Budgetify.Entities.Category.Domain;
 
+using System;
+
 using Budgetify.Common.Results;
 using Budgetify.Entities.Category.Enumerations;
 using Budgetify.Entities.Category.ValueObjects;
@@ -23,6 +25,23 @@ public partial class Category
 
         Name = nameValue.Value;
         Type = typeValue.Value;
+
+        MarkModify();
+
+        return Result.Ok();
+    }
+
+    /// <summary>
+    /// Marks category as deleted.
+    /// </summary>
+    public Result Delete(DateTime deletedOn)
+    {
+        if (DeletedOn is not null)
+        {
+            return Result.Ok();
+        }
+
+        DeletedOn = deletedOn;
 
         MarkModify();
 
