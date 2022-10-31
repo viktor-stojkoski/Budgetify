@@ -46,11 +46,12 @@
   "successMessages": {
     "accounts": {
       "create": "Account has been successfully created.",
-      "edit": "Account has been successfully updated.",
+      "update": "Account has been successfully updated.",
       "delete": "Account has been successfully deleted."
     },
     "categories": {
-      "create": "Category has been successfully created."
+      "create": "Category has been successfully created.",
+      "update": "Category has been successfully updated."
     }
   },
 

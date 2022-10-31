@@ -44,4 +44,14 @@ public class CategoriesController : ExtendedApiController
             new CreateCategoryCommand(
                 Name: request.Name,
                 Type: request.Type)));
+
+    [HttpPut("{categoryUid:Guid}")]
+    public async Task<IActionResult> UpdateCategoryAsync(
+        [FromRoute] Guid categoryUid,
+        [FromBody] UpdateCategoryRequest request) =>
+        OkOrError(await _commandDispatcher.ExecuteAsync(
+            new UpdateCategoryCommand(
+                CategoryUid: categoryUid,
+                Name: request.Name,
+                Type: request.Type)));
 }

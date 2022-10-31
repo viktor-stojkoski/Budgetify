@@ -82,7 +82,7 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
         .subscribe({
           next: () => {
             this.account = this.accountForm.value as IAccountResponse;
-            this.snackbarService.success(this.translationKeys.editAccountSuccessful);
+            this.snackbarService.success(this.translationKeys.updateAccountSuccessful);
             this.isEditing = false;
             this.isLoading = false;
           },

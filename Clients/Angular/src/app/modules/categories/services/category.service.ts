@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseApiService } from '@budgetify/core';
 import { IResult } from '@budgetify/shared';
 import { Observable } from 'rxjs';
-import { ICategoryResponse, ICreateCategoryRequest } from '../models/category.model';
+import { ICategoryResponse, ICreateCategoryRequest, IUpdateCategoryRequest } from '../models/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +22,9 @@ export class CategoryService {
 
   public createCategory(request: ICreateCategoryRequest): Observable<void> {
     return this.baseApiService.post<void>(this.categoriesApiRoute, request);
+  }
+
+  public updateCategory(uid: string | null, request: IUpdateCategoryRequest): Observable<void> {
+    return this.baseApiService.put<void>(`${this.categoriesApiRoute}/${uid}`, request);
   }
 }

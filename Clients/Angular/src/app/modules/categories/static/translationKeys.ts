@@ -14,10 +14,9 @@ export class TranslationKeys {
   public static readonly createCategorySuccessful = 'successMessages.categories.create';
 
   public static readonly detailsHeader = 'categories.detailsHeader';
-  // public static readonly detailsToolbarActionUpdateAccount = 'accounts.detailsToolbarActionUpdateAccount';
   public static readonly detailsNameHeader = 'categories.detailsNameHeader';
   public static readonly detailsTypeHeader = 'categories.detailsTypeHeader';
-  // public static readonly editAccountSuccessful = 'successMessages.accounts.edit';
+  public static readonly updateCategorySuccessful = 'successMessages.categories.update';
 
   // public static readonly deleteAccountHeader = 'accounts.deleteAccountHeader';
   // public static readonly deleteAccountContent = 'accounts.deleteAccountContent';
