@@ -47,4 +47,11 @@ public static class ResultCodes
     public const string CategoryNotFound = "CATEGORY_NOT_FOUND";
 
     #endregion
+
+    #region Merchant
+
+    public const string MerchantNameInvalid = "MERCHANT_NAME_INVALID";
+    public const string MerchantNameInvalidLength = "MERCHANT_NAME_INVALID_LENGTH";
+
+    #endregion
 }
