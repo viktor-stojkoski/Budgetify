@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Budgetify.Queries.Account.Entities;
 using Budgetify.Queries.Common.Entities;
 using Budgetify.Queries.Currency.Entities;
+using Budgetify.Queries.Merchant.Entities;
 
 public class User : Entity
 {
@@ -31,4 +32,6 @@ public class User : Entity
     public virtual ICollection<Account> Accounts { get; protected internal set; } = new List<Account>();
 
     public virtual ICollection<Category> Categories { get; protected internal set; } = new List<Category>();
+
+    public virtual ICollection<Merchant> Merchants { get; protected internal set; } = new List<Merchant>();
 }
