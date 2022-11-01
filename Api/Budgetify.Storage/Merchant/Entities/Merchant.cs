@@ -1,35 +1,34 @@
-﻿namespace Budgetify.Storage.Category.Entities;
+﻿namespace Budgetify.Storage.Merchant.Entities;
 
 using System;
-using System.Collections.Generic;
 
+using Budgetify.Storage.Category.Entities;
 using Budgetify.Storage.Common.Entities;
-using Budgetify.Storage.Merchant.Entities;
 using Budgetify.Storage.User.Entities;
 
-public class Category : AggregateRoot
+public class Merchant : AggregateRoot
 {
-    public Category(
+    public Merchant(
         int id,
         Guid uid,
         DateTime createdOn,
         DateTime? deletedOn,
         int userId,
         string name,
-        string type) : base(id, uid, createdOn, deletedOn)
+        int categoryId) : base(id, uid, createdOn, deletedOn)
     {
         UserId = userId;
         Name = name;
-        Type = type;
+        CategoryId = categoryId;
     }
 
     public int UserId { get; protected internal set; }
 
     public string Name { get; protected internal set; }
 
-    public string Type { get; protected internal set; }
+    public int CategoryId { get; protected internal set; }
 
     public virtual User User { get; protected internal set; } = null!;
 
-    public virtual ICollection<Merchant> Merchants { get; protected internal set; } = new List<Merchant>();
+    public virtual Category Category { get; protected internal set; } = null!;
 }
