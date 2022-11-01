@@ -21,5 +21,10 @@ export const routes: Route[] = [
     path: 'categories',
     canActivateChild: [MsalGuard],
     loadChildren: () => import('./modules/categories/categories.module').then((m) => m.CategoriesModule)
+  },
+  {
+    path: 'merchants',
+    canActivateChild: [MsalGuard],
+    loadChildren: () => import('./modules/merchants/merchants.module').then((m) => m.MerchantsModule)
   }
 ];
