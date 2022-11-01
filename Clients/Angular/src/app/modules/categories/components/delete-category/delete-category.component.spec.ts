@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AppModule } from '../../../../app.module';
+import { CategoriesModule } from '../../categories.module';
 
 import { DeleteCategoryComponent } from './delete-category.component';
 
@@ -8,9 +11,10 @@ describe('DeleteCategoryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DeleteCategoryComponent ]
-    })
-    .compileComponents();
+      imports: [CategoriesModule, AppModule],
+      declarations: [DeleteCategoryComponent],
+      providers: [{ provide: MAT_DIALOG_DATA, useValue: {} }]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DeleteCategoryComponent);
     component = fixture.componentInstance;
