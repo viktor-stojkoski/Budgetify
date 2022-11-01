@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
   DestroyBaseComponent,
+  DialogActionButton,
+  DialogService,
   enumToTranslationEnum,
+  IDialogResponseData,
   SnackbarService,
   TranslationKeys as SharedTranslationKeys
 } from '@budgetify/shared';
 import { concatMap, take, takeUntil, tap } from 'rxjs';
 import { CategoryType } from '../../models/category.enum';
-import { ICategoryResponse } from '../../models/category.model';
+import { ICategoryResponse, IDeleteCategoryDialogData } from '../../models/category.model';
 import { CategoryService } from '../../services/category.service';
 import { TranslationKeys } from '../../static/translationKeys';
+import { DeleteCategoryComponent } from '../delete-category/delete-category.component';
 
 @Component({
   selector: 'app-category-details',
@@ -37,7 +41,9 @@ export class CategoryDetailsComponent extends DestroyBaseComponent implements On
     private categoryService: CategoryService,
     private activatedRoute: ActivatedRoute,
     private snackbarService: SnackbarService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dialogService: DialogService,
+    private router: Router
   ) {
     super();
   }
@@ -75,6 +81,25 @@ export class CategoryDetailsComponent extends DestroyBaseComponent implements On
           }
         });
     }
+  }
+
+  public openDeleteCategoryDialog(): void {
+    this.dialogService
+      .open(DeleteCategoryComponent, {
+        data: {
+          name: this.category?.name,
+          uid: this.categoryUid
+        } as IDeleteCategoryDialogData
+      })
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (response: IDialogResponseData) => {
+          if (response.action === DialogActionButton.Ok) {
+            this.router.navigateByUrl('categories');
+          }
+        }
+      });
   }
 
   private getCategory(): void {

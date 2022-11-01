@@ -54,4 +54,8 @@ public class CategoriesController : ExtendedApiController
                 CategoryUid: categoryUid,
                 Name: request.Name,
                 Type: request.Type)));
+
+    [HttpDelete("{categoryUid:Guid}")]
+    public async Task<IActionResult> DeleteCategoryAsync([FromRoute] Guid categoryUid) =>
+        OkOrError(await _commandDispatcher.ExecuteAsync(new DeleteCategoryCommand(categoryUid)));
 }

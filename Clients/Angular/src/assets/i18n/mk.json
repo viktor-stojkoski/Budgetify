@@ -99,6 +99,7 @@
     "tableNoDataFound": "Не беа пронајдени податоци.",
     "tableNameHeader": "Име",
     "tableTypeHeader": "Тип",
+    "tableDeleteCategoryTooltip": "Избриши",
 
     "typeExpense": "Трошок",
     "typeIncome": "Приход",
@@ -109,6 +110,9 @@
 
     "detailsHeader": "Детали за категорија",
     "detailsNameHeader": "Име",
-    "detailsTypeHeader": "Тип"
+    "detailsTypeHeader": "Тип",
+
+    "deleteCategoryHeader": "Избриши категорија",
+    "deleteCategoryContent": "Дали сте сигурни дека сакате да ја избришете категоријата <strong>{{categoryName}}</strong> ?"
   }
 }

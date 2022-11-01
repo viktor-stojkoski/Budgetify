@@ -51,7 +51,8 @@
     },
     "categories": {
       "create": "Category has been successfully created.",
-      "update": "Category has been successfully updated."
+      "update": "Category has been successfully updated.",
+      "delete": "Category has been successfully deleted."
     }
   },
 
@@ -99,6 +100,7 @@
     "tableNoDataFound": "No data was found.",
     "tableNameHeader": "Name",
     "tableTypeHeader": "Type",
+    "tableDeleteCategoryTooltip": "Delete",
 
     "typeExpense": "Expense",
     "typeIncome": "Income",
@@ -109,6 +111,9 @@
 
     "detailsHeader": "Category details",
     "detailsNameHeader": "Name",
-    "detailsTypeHeader": "Type"
+    "detailsTypeHeader": "Type",
+
+    "deleteCategoryHeader": "Delete category",
+    "deleteCategoryContent": "Are you sure you want to delete the category <strong>{{categoryName}}</strong> ?"
   }
 }

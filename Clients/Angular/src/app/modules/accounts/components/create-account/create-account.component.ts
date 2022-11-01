@@ -4,7 +4,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import {
   DestroyBaseComponent,
+  DialogActionButton,
   enumToTranslationEnum,
+  IDialogResponseData,
   SnackbarService,
   TranslationKeys as SharedTranslationKeys
 } from '@budgetify/shared';
@@ -62,7 +64,7 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
         .pipe(take(1))
         .subscribe({
           next: () => {
-            this.dialogRef.close();
+            this.dialogRef.close({ action: DialogActionButton.Ok } as IDialogResponseData);
             this.snackbarService.success(this.translationKeys.createAccountSuccessful);
           },
           error: (error: HttpErrorResponse) => this.snackbarService.showError(error)
@@ -73,7 +75,7 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
   }
 
   public onCancelClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close({ action: DialogActionButton.Cancel } as IDialogResponseData);
   }
 
   public displayCurrency(code: string): string {

@@ -8,6 +8,9 @@
       <button mat-raised-button color="primary" (click)="toggleEdit()">
         {{ sharedTranslationKeys.mainActionButtonEdit | translate }}
       </button>
+      <button mat-raised-button color="warn" (click)="openDeleteCategoryDialog()">
+        {{ sharedTranslationKeys.mainActionButtonDelete | translate }}
+      </button>
     </span>
 
     <span *ngIf="isEditing">

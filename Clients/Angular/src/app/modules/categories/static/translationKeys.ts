@@ -6,7 +6,7 @@ export class TranslationKeys {
   public static readonly tableNoDataFound = 'categories.tableNoDataFound';
   public static readonly tableNameHeader = 'categories.tableNameHeader';
   public static readonly tableTypeHeader = 'categories.tableTypeHeader';
-  // public static readonly tableDeleteAccountTooltip = 'accounts.tableDeleteAccountTooltip';
+  public static readonly tableDeleteCategoryTooltip = 'categories.tableDeleteCategoryTooltip';
 
   public static readonly createFormHeader = 'categories.createFormHeader';
   public static readonly createFormNameLabel = 'categories.createFormNameLabel';
@@ -18,7 +18,7 @@ export class TranslationKeys {
   public static readonly detailsTypeHeader = 'categories.detailsTypeHeader';
   public static readonly updateCategorySuccessful = 'successMessages.categories.update';
 
-  // public static readonly deleteAccountHeader = 'accounts.deleteAccountHeader';
-  // public static readonly deleteAccountContent = 'accounts.deleteAccountContent';
-  // public static readonly deleteAccountSuccessful = 'successMessages.accounts.delete';
+  public static readonly deleteCategoryHeader = 'categories.deleteCategoryHeader';
+  public static readonly deleteCategoryContent = 'categories.deleteCategoryContent';
+  public static readonly deleteCategorySuccessful = 'successMessages.categories.delete';
 }

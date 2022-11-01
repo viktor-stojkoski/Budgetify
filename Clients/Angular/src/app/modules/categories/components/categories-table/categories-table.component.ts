@@ -3,13 +3,20 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { DestroyBaseComponent, DialogService, SnackbarService } from '@budgetify/shared';
+import {
+  DestroyBaseComponent,
+  DialogActionButton,
+  DialogService,
+  IDialogResponseData,
+  SnackbarService
+} from '@budgetify/shared';
 import { take, takeUntil } from 'rxjs';
 import { CategoryType } from '../../models/category.enum';
-import { ICategoryResponse } from '../../models/category.model';
+import { ICategoryResponse, IDeleteCategoryDialogData } from '../../models/category.model';
 import { CategoryService } from '../../services/category.service';
 import { TranslationKeys } from '../../static/translationKeys';
 import { CreateCategoryComponent } from '../create-category/create-category.component';
+import { DeleteCategoryComponent } from '../delete-category/delete-category.component';
 
 @Component({
   selector: 'app-categories-table',
@@ -19,7 +26,7 @@ import { CreateCategoryComponent } from '../create-category/create-category.comp
 export class CategoriesTableComponent extends DestroyBaseComponent implements OnInit {
   public readonly translationKeys = TranslationKeys;
   public dataSource!: MatTableDataSource<ICategoryResponse>;
-  public displayedColumns = ['name', 'type'];
+  public displayedColumns = ['name', 'type', 'actions'];
   public isLoading = true;
   public type = CategoryType;
   public filterValue = '';
@@ -57,7 +64,30 @@ export class CategoriesTableComponent extends DestroyBaseComponent implements On
       .afterClosed()
       .pipe(takeUntil(this.destroyed$))
       .subscribe({
-        next: () => this.getCategories()
+        next: (response: IDialogResponseData) => {
+          if (response.action === DialogActionButton.Ok) {
+            this.getCategories();
+          }
+        }
+      });
+  }
+
+  public openDeleteCategoryDialog(name: string, uid: string): void {
+    this.dialogService
+      .open(DeleteCategoryComponent, {
+        data: {
+          name: name,
+          uid: uid
+        } as IDeleteCategoryDialogData
+      })
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (response: IDialogResponseData) => {
+          if (response.action === DialogActionButton.Ok) {
+            this.getCategories();
+          }
+        }
       });
   }
 
