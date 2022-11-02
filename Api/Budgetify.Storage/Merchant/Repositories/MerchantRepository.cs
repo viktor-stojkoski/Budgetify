@@ -9,7 +9,7 @@ using Budgetify.Storage.Merchant.Factories;
 
 public class MerchantRepository : Repository<Entities.Merchant>, IMerchantRepository
 {
-    protected MerchantRepository(IBudgetifyDbContext budgetifyDbContext)
+    public MerchantRepository(IBudgetifyDbContext budgetifyDbContext)
         : base(budgetifyDbContext) { }
 
     public void Insert(Merchant merchant)

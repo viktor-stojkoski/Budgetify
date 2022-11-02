@@ -8,7 +8,7 @@ import {
   SnackbarService,
   TranslationKeys as SharedTranslationKeys
 } from '@budgetify/shared';
-import { distinctUntilChanged, map, Observable, take, takeUntil } from 'rxjs';
+import { distinctUntilChanged, map, Observable, startWith, take, takeUntil } from 'rxjs';
 import { ICategoryResponse } from '../../models/merchant.model';
 import { MerchantService } from '../../services/merchant.service';
 import { TranslationKeys } from '../../static/translationKeys';
@@ -41,7 +41,6 @@ export class CreateMerchantComponent extends DestroyBaseComponent implements OnI
 
   public ngOnInit(): void {
     this.getCategories();
-    this.filterCategories();
   }
 
   public createMerchant(): void {
@@ -80,6 +79,7 @@ export class CreateMerchantComponent extends DestroyBaseComponent implements OnI
         next: (result) => {
           this.categories = result.value;
           this.isLoading = false;
+          this.filterCategories();
         },
         error: (error) => {
           this.snackbarService.showError(error);
@@ -90,6 +90,7 @@ export class CreateMerchantComponent extends DestroyBaseComponent implements OnI
 
   private filterCategories(): void {
     this.filteredCategories$ = this.merchantForm.controls.categoryUid.valueChanges.pipe(
+      startWith(''),
       distinctUntilChanged(),
       takeUntil(this.destroyed$),
       map((value) => this.filter(value || ''))

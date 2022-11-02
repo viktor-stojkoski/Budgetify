@@ -54,6 +54,9 @@
       "create": "Category has been successfully created.",
       "update": "Category has been successfully updated.",
       "delete": "Category has been successfully deleted."
+    },
+    "merchants": {
+      "create": "Merchant has been successfully created."
     }
   },
 
@@ -120,10 +123,15 @@
 
   "merchants": {
     "toolbarName": "Merchants",
+    "toolbarActionCreateMerchant": "Create merchant",
 
     "tableFilterLabel": "Filter",
     "tableNoDataFound": "No data was found.",
     "tableNameHeader": "Name",
-    "tableCategoryHeader": "Category"
+    "tableCategoryHeader": "Category",
+
+    "createFormHeader": "Create merchant",
+    "createFormNameLabel": "Name",
+    "createFormCategoryLabel": "Category"
   }
 }
