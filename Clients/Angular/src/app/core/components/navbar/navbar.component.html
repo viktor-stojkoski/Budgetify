@@ -16,6 +16,9 @@
       <a mat-button [routerLink]="'/categories'" routerLinkActive="mat-accent">
         {{ translationKeys.navbarCategoriesMenu | translate }}
       </a>
+      <a mat-button [routerLink]="'/merchants'" routerLinkActive="mat-accent">
+        {{ translationKeys.navbarMerchantsMenu | translate }}
+      </a>
     </div>
 
     <span class="menu-spacer"></span>
@@ -51,6 +54,9 @@
         </a>
         <a [routerLink]="'/categories'" routerLinkActive="mat-accent" mat-list-item (click)="sidenav.toggle()">
           {{ translationKeys.navbarCategoriesMenu | translate }}
+        </a>
+        <a [routerLink]="'/merchants'" routerLinkActive="mat-accent" mat-list-item (click)="sidenav.toggle()">
+          {{ translationKeys.navbarMerchantsMenu | translate }}
         </a>
 
         <mat-divider></mat-divider>

@@ -2,6 +2,7 @@
   "navbarAccountsMenu": "Accounts",
   "navbarTransactionsMenu": "Transactions",
   "navbarCategoriesMenu": "Categories",
+  "navbarMerchantsMenu": "Merchants",
   "navbarLoginOrRegister": "Log In Or Register",
   "navbarLogout": "Log out",
   "navbarLanguages": "Languages",
@@ -115,5 +116,14 @@
 
     "deleteCategoryHeader": "Delete category",
     "deleteCategoryContent": "Are you sure you want to delete the category <strong>{{categoryName}}</strong> ?"
+  },
+
+  "merchants": {
+    "toolbarName": "Merchants",
+
+    "tableFilterLabel": "Filter",
+    "tableNoDataFound": "No data was found.",
+    "tableNameHeader": "Name",
+    "tableCategoryHeader": "Category"
   }
 }

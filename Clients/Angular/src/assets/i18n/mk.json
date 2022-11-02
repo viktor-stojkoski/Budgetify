@@ -2,6 +2,7 @@
   "navbarAccountsMenu": "Сметки",
   "navbarTransactionsMenu": "Трансакции",
   "navbarCategoriesMenu": "Категории",
+  "navbarMerchantsMenu": "Трговци",
   "navbarLoginOrRegister": "Најави се или креирај сметка",
   "navbarLogout": "Одјави се",
   "navbarLanguages": "Јазици",
@@ -114,5 +115,14 @@
 
     "deleteCategoryHeader": "Избриши категорија",
     "deleteCategoryContent": "Дали сте сигурни дека сакате да ја избришете категоријата <strong>{{categoryName}}</strong> ?"
+  },
+
+  "merchants": {
+    "toolbarName": "Трговци",
+
+    "tableFilterLabel": "Филтер",
+    "tableNoDataFound": "Не беа пронајдени податоци.",
+    "tableNameHeader": "Име",
+    "tableCategoryHeader": "Категорија"
   }
 }
