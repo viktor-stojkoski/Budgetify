@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -10,7 +11,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from '@budgetify/core';
-import { SharedModule } from '@budgetify/shared';
+import { DialogService, SharedModule } from '@budgetify/shared';
+import { CreateMerchantComponent } from './components/create-merchant/create-merchant.component';
 import { MerchantsTableComponent } from './components/merchants-table/merchants-table.component';
 import { routes } from './routes';
 
@@ -27,8 +29,10 @@ import { routes } from './routes';
     MatSortModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatAutocompleteModule
   ],
-  declarations: [MerchantsTableComponent]
+  declarations: [MerchantsTableComponent, CreateMerchantComponent],
+  providers: [DialogService]
 })
 export class MerchantsModule {}

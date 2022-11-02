@@ -98,7 +98,7 @@ export class CreateAccountComponent extends DestroyBaseComponent implements OnIn
       });
   }
 
-  private filterCurrencies() {
+  private filterCurrencies(): void {
     this.filteredCurrencies$ = this.accountForm.controls.currencyCode.valueChanges.pipe(
       distinctUntilChanged(),
       takeUntil(this.destroyed$),
