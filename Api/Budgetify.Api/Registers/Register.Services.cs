@@ -3,10 +3,12 @@
 using Budgetify.Contracts.Account.Repositories;
 using Budgetify.Contracts.Category.Repositories;
 using Budgetify.Contracts.Currency.Repositories;
+using Budgetify.Contracts.Merchant.Repositories;
 using Budgetify.Contracts.User.Repositories;
 using Budgetify.Storage.Account.Repositories;
 using Budgetify.Storage.Category.Repositories;
 using Budgetify.Storage.Currency.Repositories;
+using Budgetify.Storage.Merchant.Repositories;
 using Budgetify.Storage.Test.Repositories;
 using Budgetify.Storage.User.Repositories;
 
@@ -21,6 +23,7 @@ public static partial class Register
         services.AddScoped<ICurrencyRepository, CurrencyRepository>();
         services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IMerchantRepository, MerchantRepository>();
 
         return services;
     }
