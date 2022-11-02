@@ -34,7 +34,7 @@ export class MerchantsTableComponent extends DestroyBaseComponent implements OnI
     }
   }
 
-  constructor(private merchantsService: MerchantService, private snackbarService: SnackbarService) {
+  constructor(private merchantService: MerchantService, private snackbarService: SnackbarService) {
     super();
   }
 
@@ -48,7 +48,7 @@ export class MerchantsTableComponent extends DestroyBaseComponent implements OnI
   }
 
   private getMerchants(): void {
-    this.merchantsService
+    this.merchantService
       .getMerchants()
       .pipe(take(1))
       .subscribe({
