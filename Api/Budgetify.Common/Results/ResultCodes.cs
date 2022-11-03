@@ -52,6 +52,7 @@ public static class ResultCodes
 
     public const string MerchantNameInvalid = "MERCHANT_NAME_INVALID";
     public const string MerchantNameInvalidLength = "MERCHANT_NAME_INVALID_LENGTH";
+    public const string MerchantNotFound = "MERCHANT_NOT_FOUND";
 
     #endregion
 }

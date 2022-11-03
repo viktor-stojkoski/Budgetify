@@ -1,8 +1,10 @@
 ﻿namespace Budgetify.Api.Controllers;
 
+using System;
 using System.Threading.Tasks;
 
 using Budgetify.Contracts.Merchant.Requests;
+using Budgetify.Queries.Merchant.Queries.GetMerchant;
 using Budgetify.Queries.Merchant.Queries.GetMerchants;
 using Budgetify.Services.Merchant.Commands;
 
@@ -31,6 +33,10 @@ public class MerchantsController : ExtendedApiController
     [HttpGet]
     public async Task<IActionResult> GetMerchantsAsync() =>
         OkOrError(await _queryDispatcher.ExecuteAsync(new GetMerchantsQuery()));
+
+    [HttpGet("{merchantUid:Guid}")]
+    public async Task<IActionResult> GetMerchantAsync(Guid merchantUid) =>
+        OkOrError(await _queryDispatcher.ExecuteAsync(new GetMerchantQuery(merchantUid)));
 
     [HttpPost]
     public async Task<IActionResult> CreateMerchantAsync([FromBody] CreateMerchantRequest request) =>
