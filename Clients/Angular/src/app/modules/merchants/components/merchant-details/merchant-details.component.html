@@ -1,0 +1,25 @@
+<mat-toolbar>
+  <span>{{ translationKeys.toolbarName | translate }} > {{ merchant?.name ?? '' | truncate: 30 }}</span>
+</mat-toolbar>
+
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<mat-card *ngIf="!isLoading && merchant" class="mat-elevation-z8">
+  <mat-card-title>{{ translationKeys.detailsHeader | translate }}</mat-card-title>
+
+  <mat-card-content>
+    <div class="grid-container">
+      <div class="grid-item">{{ translationKeys.detailsNameHeader | translate }}</div>
+      <div class="grid-item">
+        <span [matTooltip]="merchant.name" [matTooltipDisabled]="merchant.name.length < 30">
+          {{ merchant.name | truncate: 30 }}
+        </span>
+      </div>
+
+      <div class="grid-item no-border">{{ translationKeys.detailsCategoryHeader | translate }}</div>
+      <div class="grid-item no-border">{{ merchant.categoryName }}</div>
+    </div>
+  </mat-card-content>
+</mat-card>
