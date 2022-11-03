@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>{{ translationKeys.createFormHeader | translate }}</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="merchantForm">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormNameLabel | translate }}</mat-label>
+      <input type="text" matInput formControlName="name" cdkFocusInitial />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormCategoryLabel | translate }}</mat-label>
+      <input type="text" matInput formControlName="categoryUid" [matAutocomplete]="category" />
+      <mat-autocomplete #category="matAutocomplete" [displayWith]="displayCategory.bind(this)">
+        <mat-option *ngFor="let category of filteredCategories$ | async" [value]="category.uid">
+          {{ category.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="secondary" (click)="onCancelClick()">
+    {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="createMerchant()">
+    {{ sharedTranslationKeys.mainActionButtonOk | translate }}
+  </button>
+</div>

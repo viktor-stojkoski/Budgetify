@@ -52,7 +52,11 @@
     },
     "categories": {
       "create": "Категоријата е успешно искреирана.",
-      "update": "Категоријата е успешно уредена."
+      "update": "Категоријата е успешно уредена.",
+      "delete": "Категоријата е успешно избришана."
+    },
+    "merchants": {
+      "create": "Трговецот е успешно искреиран."
     }
   },
 
@@ -119,10 +123,15 @@
 
   "merchants": {
     "toolbarName": "Трговци",
+    "toolbarActionCreateMerchant": "Креирај трговец",
 
     "tableFilterLabel": "Филтер",
     "tableNoDataFound": "Не беа пронајдени податоци.",
     "tableNameHeader": "Име",
-    "tableCategoryHeader": "Категорија"
+    "tableCategoryHeader": "Категорија",
+
+    "createFormHeader": "Креирај трговец",
+    "createFormNameLabel": "Име",
+    "createFormCategoryLabel": "Категорија"
   }
 }
