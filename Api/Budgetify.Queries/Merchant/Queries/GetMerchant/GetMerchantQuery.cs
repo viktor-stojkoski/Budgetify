@@ -35,7 +35,7 @@ public class GetMerchantQueryHandler : IQueryHandler<GetMerchantQuery, MerchantR
 
         MerchantResponse? merchant =
             await _budgetifyReadonlyDbContext.AllNoTrackedOf<Merchant>()
-                //.Include(x => x.Category)
+                .Include(x => x.Category)
                 .Where(x => x.UserId == _currentUser.Id && x.Uid == query.MerchantUid)
                 .Select(x => new MerchantResponse(
                     x.Name,
