@@ -9,8 +9,8 @@
 
     <mat-form-field appearance="outline">
       <mat-label>{{ translationKeys.createFormCategoryLabel | translate }}</mat-label>
-      <input type="text" matInput formControlName="categoryUid" [matAutocomplete]="currency" />
-      <mat-autocomplete #currency="matAutocomplete" [displayWith]="displayCategory.bind(this)">
+      <input type="text" matInput formControlName="categoryUid" [matAutocomplete]="category" />
+      <mat-autocomplete #category="matAutocomplete" [displayWith]="displayCategory.bind(this)">
         <mat-option *ngFor="let category of filteredCategories$ | async" [value]="category.uid">
           {{ category.name }}
         </mat-option>
