@@ -41,7 +41,7 @@
   </tr>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="openMerchantDetails(row.uid)"></tr>
 </table>
 
 <mat-paginator *ngIf="!isLoading" [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>

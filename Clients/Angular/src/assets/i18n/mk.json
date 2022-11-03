@@ -41,7 +41,11 @@
     "CATEGORY_NAME_INVALID": "Името на категоријата е невалидно.",
     "CATEGORY_NAME_INVALID_LENGTH": "Должината на името на категоријата е невалидно.",
     "CATEGORY_TYPE_INVALID": "Типот на категоријата е невалиден.",
-    "CATEGORY_NOT_FOUND": "Категоријата не е пронајдена."
+    "CATEGORY_NOT_FOUND": "Категоријата не е пронајдена.",
+
+    "MERCHANT_NAME_INVALID": "Името на трговецот е невалидно.",
+    "MERCHANT_NAME_INVALID_LENGTH": "Должината на името на трговецот е невалидно.",
+    "MERCHANT_NOT_FOUND": "Трговецот не е пронајден."
   },
 
   "successMessages": {
@@ -132,6 +136,10 @@
 
     "createFormHeader": "Креирај трговец",
     "createFormNameLabel": "Име",
-    "createFormCategoryLabel": "Категорија"
+    "createFormCategoryLabel": "Категорија",
+
+    "detailsHeader": "Детали за трговецот",
+    "detailsNameHeader": "Име",
+    "detailsCategoryHeader": "Категорија"
   }
 }

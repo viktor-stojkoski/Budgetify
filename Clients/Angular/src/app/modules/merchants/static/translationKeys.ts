@@ -13,9 +13,9 @@ export class TranslationKeys {
   public static readonly createFormCategoryLabel = 'merchants.createFormCategoryLabel';
   public static readonly createMerchantSuccessful = 'successMessages.merchants.create';
 
-  // public static readonly detailsHeader = 'merchants.detailsHeader';
-  // public static readonly detailsNameHeader = 'merchants.detailsNameHeader';
-  // public static readonly detailsCategoryHeader = 'merchants.detailsCategoryHeader';
+  public static readonly detailsHeader = 'merchants.detailsHeader';
+  public static readonly detailsNameHeader = 'merchants.detailsNameHeader';
+  public static readonly detailsCategoryHeader = 'merchants.detailsCategoryHeader';
   // public static readonly updateMerchantSuccessful = 'successMessages.merchants.update';
 
   // public static readonly deleteMerchantHeader = 'merchants.deleteMerchantHeader';

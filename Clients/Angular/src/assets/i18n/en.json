@@ -41,7 +41,11 @@
     "CATEGORY_NAME_INVALID": "Category name invalid.",
     "CATEGORY_NAME_INVALID_LENGTH": "Category name invalid length.",
     "CATEGORY_TYPE_INVALID": "Category type invalid.",
-    "CATEGORY_NOT_FOUND": "Category not found."
+    "CATEGORY_NOT_FOUND": "Category not found.",
+
+    "MERCHANT_NAME_INVALID": "Merchant name invalid.",
+    "MERCHANT_NAME_INVALID_LENGTH": "Merchant name invalid length.",
+    "MERCHANT_NOT_FOUND": "Merchant not found."
   },
 
   "successMessages": {
@@ -132,6 +136,10 @@
 
     "createFormHeader": "Create merchant",
     "createFormNameLabel": "Name",
-    "createFormCategoryLabel": "Category"
+    "createFormCategoryLabel": "Category",
+
+    "detailsHeader": "Merchant details",
+    "detailsNameHeader": "Name",
+    "detailsCategoryHeader": "Category"
   }
 }

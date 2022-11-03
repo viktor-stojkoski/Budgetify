@@ -16,6 +16,10 @@ export class MerchantService {
     return this.baseApiService.get<IResult<IMerchantResponse[]>>(this.merchantsApiRoute);
   }
 
+  public getMerchant(uid: string | null): Observable<IResult<IMerchantResponse>> {
+    return this.baseApiService.get<IResult<IMerchantResponse>>(`${this.merchantsApiRoute}/${uid}`);
+  }
+
   public createMerchant(request: ICreateMerchantRequest): Observable<void> {
     return this.baseApiService.post<void>(this.merchantsApiRoute, request);
   }
