@@ -72,4 +72,3 @@ public class UpdateMerchantCommandHandler : ICommandHandler<UpdateMerchantComman
         return result.Build();
     }
 }
-
