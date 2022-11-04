@@ -1,5 +1,24 @@
 <mat-toolbar>
   <span>{{ translationKeys.toolbarName | translate }} > {{ merchant?.name ?? '' | truncate: 30 }}</span>
+
+  <span class="toolbar-spacer"></span>
+
+  <div class="toolbar-buttons">
+    <span *ngIf="!isEditing">
+      <button mat-raised-button color="primary" (click)="toggleEdit()">
+        {{ sharedTranslationKeys.mainActionButtonEdit | translate }}
+      </button>
+    </span>
+
+    <span *ngIf="isEditing">
+      <button mat-raised-button color="secondary" (click)="toggleEdit()">
+        {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
+      </button>
+      <button mat-raised-button color="primary" (click)="editMerchant()">
+        {{ sharedTranslationKeys.mainActionButtonSave | translate }}
+      </button>
+    </span>
+  </div>
 </mat-toolbar>
 
 <div class="spinner-container" *ngIf="isLoading">
@@ -10,16 +29,31 @@
   <mat-card-title>{{ translationKeys.detailsHeader | translate }}</mat-card-title>
 
   <mat-card-content>
-    <div class="grid-container">
+    <div [formGroup]="merchantForm" class="grid-container">
       <div class="grid-item">{{ translationKeys.detailsNameHeader | translate }}</div>
-      <div class="grid-item">
+      <div *ngIf="!isEditing" class="grid-item">
         <span [matTooltip]="merchant.name" [matTooltipDisabled]="merchant.name.length < 30">
           {{ merchant.name | truncate: 30 }}
         </span>
       </div>
+      <div *ngIf="isEditing" class="grid-item">
+        <mat-form-field appearance="outline">
+          <input type="text" matInput formControlName="name" cdkFocusInitial />
+        </mat-form-field>
+      </div>
 
       <div class="grid-item no-border">{{ translationKeys.detailsCategoryHeader | translate }}</div>
-      <div class="grid-item no-border">{{ merchant.categoryName }}</div>
+      <div *ngIf="!isEditing" class="grid-item no-border">{{ merchant.categoryName }}</div>
+      <div *ngIf="isEditing" class="grid-item no-border">
+        <mat-form-field appearance="outline">
+          <input type="text" matInput formControlName="categoryUid" [matAutocomplete]="category" />
+          <mat-autocomplete #category="matAutocomplete" [displayWith]="displayCategory.bind(this)">
+            <mat-option *ngFor="let category of filteredCategories$ | async" [value]="category.uid">
+              {{ category.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
     </div>
   </mat-card-content>
 </mat-card>

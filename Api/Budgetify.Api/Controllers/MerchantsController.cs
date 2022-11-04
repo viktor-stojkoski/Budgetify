@@ -45,4 +45,13 @@ public class MerchantsController : ExtendedApiController
                 Name: request.Name,
                 CategoryUid: request.CategoryUid)));
 
+    [HttpPut("{merchantUid:Guid}")]
+    public async Task<IActionResult> UpdateMerchantAsync(
+        [FromRoute] Guid merchantUid,
+        [FromBody] UpdateMerchantRequest request) =>
+        OkOrError(await _commandDispatcher.ExecuteAsync(
+            new UpdateMerchantCommand(
+                MerchantUid: merchantUid,
+                Name: request.Name,
+                CategoryUid: request.CategoryUid)));
 }

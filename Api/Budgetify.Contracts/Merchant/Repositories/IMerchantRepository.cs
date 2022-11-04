@@ -1,5 +1,9 @@
 ﻿namespace Budgetify.Contracts.Merchant.Repositories;
 
+using System;
+using System.Threading.Tasks;
+
+using Budgetify.Common.Results;
 using Budgetify.Entities.Merchant.Domain;
 
 public interface IMerchantRepository
@@ -13,4 +17,9 @@ public interface IMerchantRepository
     /// Updates merchant.
     /// </summary>
     void Update(Merchant merchant);
+
+    /// <summary>
+    /// Returns merchant by given userId and merchantUid.
+    /// </summary>
+    Task<Result<Merchant>> GetMerchantAsync(int userId, Guid merchantUid);
 }
