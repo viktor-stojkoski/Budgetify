@@ -54,5 +54,4 @@ public class MerchantsController : ExtendedApiController
                 MerchantUid: merchantUid,
                 Name: request.Name,
                 CategoryUid: request.CategoryUid)));
-
 }
