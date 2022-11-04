@@ -11,7 +11,7 @@ import {
   SnackbarService,
   TranslationKeys as SharedTranslationKeys
 } from '@budgetify/shared';
-import { concatMap, distinctUntilChanged, map, Observable, take, takeUntil, tap } from 'rxjs';
+import { concatMap, distinctUntilChanged, map, Observable, startWith, take, takeUntil, tap } from 'rxjs';
 import { AccountType } from '../../models/account.enum';
 import { IAccountResponse, ICurrencyResponse, IDeleteAccountDialogData } from '../../models/account.model';
 import { AccountService } from '../../services/account.service';
@@ -57,7 +57,6 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
   public ngOnInit(): void {
     this.getAccount();
     this.getCurrencies();
-    this.filterCurrencies();
   }
 
   public toggleEdit(): void {
@@ -126,6 +125,7 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
         next: (result) => {
           this.currencies = result.value;
           this.isLoading = false;
+          this.filterCurrencies();
         },
         error: (error) => {
           this.snackbarService.showError(error);
@@ -136,6 +136,7 @@ export class AccountDetailsComponent extends DestroyBaseComponent implements OnI
 
   private filterCurrencies() {
     this.filteredCurrencies$ = this.accountForm.controls.currencyCode.valueChanges.pipe(
+      startWith(''),
       distinctUntilChanged(),
       takeUntil(this.destroyed$),
       map((value) => this.filter(value || ''))
