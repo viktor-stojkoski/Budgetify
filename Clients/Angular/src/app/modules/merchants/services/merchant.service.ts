@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { BaseApiService } from '@budgetify/core';
 import { IResult } from '@budgetify/shared';
 import { Observable } from 'rxjs';
-import { ICategoryResponse, ICreateMerchantRequest, IMerchantResponse } from '../models/merchant.model';
+import {
+  ICategoryResponse,
+  ICreateMerchantRequest,
+  IMerchantResponse,
+  IUpdateMerchantRequest
+} from '../models/merchant.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +31,9 @@ export class MerchantService {
 
   public getCategories(): Observable<IResult<ICategoryResponse[]>> {
     return this.baseApiService.get<IResult<ICategoryResponse[]>>(this.categoriesApiRoute);
+  }
+
+  public updateMerchant(uid: string | null, request: IUpdateMerchantRequest): Observable<void> {
+    return this.baseApiService.put<void>(`${this.merchantsApiRoute}/${uid}`, request);
   }
 }

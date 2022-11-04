@@ -39,6 +39,7 @@ public class GetMerchantQueryHandler : IQueryHandler<GetMerchantQuery, MerchantR
                 .Where(x => x.UserId == _currentUser.Id && x.Uid == query.MerchantUid)
                 .Select(x => new MerchantResponse(
                     x.Name,
+                    x.Category.Uid,
                     x.Category.Name))
                 .SingleOrDefaultAsync();
 

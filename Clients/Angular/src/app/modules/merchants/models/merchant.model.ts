@@ -1,9 +1,15 @@
 export interface IMerchantResponse {
+  uid: string;
   name: string;
   categoryName: string;
 }
 
 export interface ICreateMerchantRequest {
+  name: string | null;
+  categoryUid: string | null;
+}
+
+export interface IUpdateMerchantRequest {
   name: string | null;
   categoryUid: string | null;
 }
