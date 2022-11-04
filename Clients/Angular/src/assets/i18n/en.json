@@ -60,7 +60,8 @@
       "delete": "Category has been successfully deleted."
     },
     "merchants": {
-      "create": "Merchant has been successfully created."
+      "create": "Merchant has been successfully created.",
+      "update": "Merchant has been successfully updated."
     }
   },
 
