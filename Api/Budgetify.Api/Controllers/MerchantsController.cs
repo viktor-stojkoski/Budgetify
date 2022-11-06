@@ -54,4 +54,8 @@ public class MerchantsController : ExtendedApiController
                 MerchantUid: merchantUid,
                 Name: request.Name,
                 CategoryUid: request.CategoryUid)));
+
+    [HttpDelete("{merchantUid:Guid}")]
+    public async Task<IActionResult> DeleteMerchantAsync([FromRoute] Guid merchantUid) =>
+        OkOrError(await _commandDispatcher.ExecuteAsync(new DeleteMerchantCommand(merchantUid)));
 }
