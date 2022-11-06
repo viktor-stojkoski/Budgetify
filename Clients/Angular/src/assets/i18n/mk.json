@@ -61,7 +61,8 @@
     },
     "merchants": {
       "create": "Трговецот е успешно искреиран.",
-      "update": "Трговецот е успешно уреден."
+      "update": "Трговецот е успешно уреден.",
+      "delete": "Трговецот е успешно избришан."
     }
   },
 
@@ -134,6 +135,7 @@
     "tableNoDataFound": "Не беа пронајдени податоци.",
     "tableNameHeader": "Име",
     "tableCategoryHeader": "Категорија",
+    "tableDeleteMerchantTooltip": "Избриши",
 
     "createFormHeader": "Креирај трговец",
     "createFormNameLabel": "Име",
@@ -141,6 +143,9 @@
 
     "detailsHeader": "Детали за трговецот",
     "detailsNameHeader": "Име",
-    "detailsCategoryHeader": "Категорија"
+    "detailsCategoryHeader": "Категорија",
+
+    "deleteMerchantHeader": "Избриши трговец",
+    "deleteMerchantContent": "Дали сте сигурни дека сакате да го избришете трговецот <strong>{{merchantName}}</strong> ?"
   }
 }

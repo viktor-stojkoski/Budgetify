@@ -11,10 +11,11 @@ import {
   SnackbarService
 } from '@budgetify/shared';
 import { take, takeUntil } from 'rxjs';
-import { IMerchantResponse } from '../../models/merchant.model';
+import { IDeleteMerchantDialogData, IMerchantResponse } from '../../models/merchant.model';
 import { MerchantService } from '../../services/merchant.service';
 import { TranslationKeys } from '../../static/translationKeys';
 import { CreateMerchantComponent } from '../create-merchant/create-merchant.component';
+import { DeleteMerchantComponent } from '../delete-merchant/delete-merchant.component';
 
 @Component({
   selector: 'app-merchants-table',
@@ -24,7 +25,7 @@ import { CreateMerchantComponent } from '../create-merchant/create-merchant.comp
 export class MerchantsTableComponent extends DestroyBaseComponent implements OnInit {
   public readonly translationKeys = TranslationKeys;
   public dataSource!: MatTableDataSource<IMerchantResponse>;
-  public displayedColumns = ['name', 'category'];
+  public displayedColumns = ['name', 'category', 'actions'];
   public isLoading = true;
   public filterValue = '';
 
@@ -58,6 +59,25 @@ export class MerchantsTableComponent extends DestroyBaseComponent implements OnI
   public openCreateMerchantDialog(): void {
     this.dialogService
       .open(CreateMerchantComponent)
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (response: IDialogResponseData) => {
+          if (response.action === DialogActionButton.Ok) {
+            this.getMerchants();
+          }
+        }
+      });
+  }
+
+  public openDeleteMerchantDialog(name: string, uid: string): void {
+    this.dialogService
+      .open(DeleteMerchantComponent, {
+        data: {
+          name: name,
+          uid: uid
+        } as IDeleteMerchantDialogData
+      })
       .afterClosed()
       .pipe(takeUntil(this.destroyed$))
       .subscribe({

@@ -61,7 +61,8 @@
     },
     "merchants": {
       "create": "Merchant has been successfully created.",
-      "update": "Merchant has been successfully updated."
+      "update": "Merchant has been successfully updated.",
+      "delete": "Merchant has been successfully deleted."
     }
   },
 
@@ -134,6 +135,7 @@
     "tableNoDataFound": "No data was found.",
     "tableNameHeader": "Name",
     "tableCategoryHeader": "Category",
+    "tableDeleteMerchantTooltip": "Delete",
 
     "createFormHeader": "Create merchant",
     "createFormNameLabel": "Name",
@@ -141,6 +143,9 @@
 
     "detailsHeader": "Merchant details",
     "detailsNameHeader": "Name",
-    "detailsCategoryHeader": "Category"
+    "detailsCategoryHeader": "Category",
+
+    "deleteMerchantHeader": "Delete merchant",
+    "deleteMerchantContent": "Are you sure you want to delete the merchant <strong>{{merchantName}}</strong> ?"
   }
 }

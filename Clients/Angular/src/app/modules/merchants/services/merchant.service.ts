@@ -36,4 +36,8 @@ export class MerchantService {
   public updateMerchant(uid: string | null, request: IUpdateMerchantRequest): Observable<void> {
     return this.baseApiService.put<void>(`${this.merchantsApiRoute}/${uid}`, request);
   }
+
+  public deleteMerchant(uid: string | null): Observable<void> {
+    return this.baseApiService.delete<void>(`${this.merchantsApiRoute}/${uid}`);
+  }
 }

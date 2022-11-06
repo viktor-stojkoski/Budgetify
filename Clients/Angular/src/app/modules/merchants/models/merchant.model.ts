@@ -19,3 +19,8 @@ export interface ICategoryResponse {
   name: string;
   type: string;
 }
+
+export interface IDeleteMerchantDialogData {
+  name: string;
+  uid: string;
+}
