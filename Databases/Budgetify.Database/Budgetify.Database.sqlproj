@@ -59,7 +59,6 @@
     <Folder Include="Properties" />
     <Folder Include="Budgetify" />
     <Folder Include="Budgetify\Tables" />
-    <Folder Include="Budgetify\Tables\Test" />
     <Folder Include="Budgetify\Tables\User" />
     <Folder Include="Budgetify\Tables\Currency" />
     <Folder Include="Budgetify\Tables\Account" />
@@ -68,7 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Budgetify\Budgetify.sql" />
-    <Build Include="Budgetify\Tables\Test\Test.sql" />
     <Build Include="Budgetify\Tables\User\User.sql" />
     <Build Include="Budgetify\Tables\Currency\Currency.sql" />
     <Build Include="Budgetify\Tables\Account\Account.sql" />
@@ -77,7 +75,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Budgetify.Database.publish.xml" />
-    <None Include="Budgetify\Tables\Test\Test.Seed.sql" />
     <None Include="Budgetify\Tables\User\User.Seed.sql" />
     <None Include="Budgetify\Tables\Currency\Currency.Seed.sql" />
     <None Include="Budgetify\Tables\Account\Account.Seed.sql" />

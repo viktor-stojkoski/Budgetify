@@ -13,7 +13,6 @@ public class BudgetifyDbContext : DbContext, IBudgetifyDbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.ApplyConfiguration(new TestConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new CurrencyConfiguration());
         modelBuilder.ApplyConfiguration(new AccountConfiguration());
