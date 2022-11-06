@@ -2,7 +2,7 @@
 
 <div
   mat-dialog-content
-  [innerHtml]="translationKeys.deleteAccountContent | translate: { accountName: account.name }"
+  [innerHtml]="translationKeys.deleteAccountContent | translate: { accountName: account.name | truncate: 30 }"
 ></div>
 
 <div mat-dialog-actions align="end">

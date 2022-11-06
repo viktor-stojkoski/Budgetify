@@ -1,15 +1,15 @@
-<h1 mat-dialog-title>{{ translationKeys.deleteCategoryHeader | translate }}</h1>
+<h1 mat-dialog-title>{{ translationKeys.deleteMerchantHeader | translate }}</h1>
 
 <div
   mat-dialog-content
-  [innerHtml]="translationKeys.deleteCategoryContent | translate: { categoryName: category.name | truncate: 30 }"
+  [innerHtml]="translationKeys.deleteMerchantContent | translate: { merchantName: merchant.name | truncate: 30 }"
 ></div>
 
 <div mat-dialog-actions align="end">
   <button mat-raised-button color="secondary" (click)="onCancelClick()">
     {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="deleteCategory()">
+  <button mat-raised-button color="primary" (click)="deleteMerchant()">
     {{ sharedTranslationKeys.mainActionButtonOk | translate }}
   </button>
 </div>

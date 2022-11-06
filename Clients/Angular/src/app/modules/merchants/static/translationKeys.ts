@@ -6,7 +6,7 @@ export class TranslationKeys {
   public static readonly tableNoDataFound = 'merchants.tableNoDataFound';
   public static readonly tableNameHeader = 'merchants.tableNameHeader';
   public static readonly tableCategoryHeader = 'merchants.tableCategoryHeader';
-  // public static readonly tableDeleteMerchantTooltip = 'merchants.tableDeleteMerchantTooltip';
+  public static readonly tableDeleteMerchantTooltip = 'merchants.tableDeleteMerchantTooltip';
 
   public static readonly createFormHeader = 'merchants.createFormHeader';
   public static readonly createFormNameLabel = 'merchants.createFormNameLabel';
@@ -18,7 +18,7 @@ export class TranslationKeys {
   public static readonly detailsCategoryHeader = 'merchants.detailsCategoryHeader';
   public static readonly updateMerchantSuccessful = 'successMessages.merchants.update';
 
-  // public static readonly deleteMerchantHeader = 'merchants.deleteMerchantHeader';
-  // public static readonly deleteMerchantContent = 'merchants.deleteMerchantContent';
-  // public static readonly deleteMerchantSuccessful = 'successMessages.merchants.delete';
+  public static readonly deleteMerchantHeader = 'merchants.deleteMerchantHeader';
+  public static readonly deleteMerchantContent = 'merchants.deleteMerchantContent';
+  public static readonly deleteMerchantSuccessful = 'successMessages.merchants.delete';
 }

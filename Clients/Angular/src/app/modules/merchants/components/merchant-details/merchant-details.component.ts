@@ -1,11 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { DestroyBaseComponent, SnackbarService, TranslationKeys as SharedTranslationKeys } from '@budgetify/shared';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import {
+  DestroyBaseComponent,
+  DialogActionButton,
+  DialogService,
+  IDialogResponseData,
+  SnackbarService,
+  TranslationKeys as SharedTranslationKeys
+} from '@budgetify/shared';
 import { concatMap, distinctUntilChanged, map, Observable, startWith, take, takeUntil, tap } from 'rxjs';
-import { ICategoryResponse, IMerchantResponse } from '../../models/merchant.model';
+import { ICategoryResponse, IDeleteMerchantDialogData, IMerchantResponse } from '../../models/merchant.model';
 import { MerchantService } from '../../services/merchant.service';
 import { TranslationKeys } from '../../static/translationKeys';
+import { DeleteMerchantComponent } from '../delete-merchant/delete-merchant.component';
 
 @Component({
   selector: 'app-merchant-details',
@@ -31,7 +39,9 @@ export class MerchantDetailsComponent extends DestroyBaseComponent implements On
     private merchantService: MerchantService,
     private activatedRoute: ActivatedRoute,
     private snackbarService: SnackbarService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dialogService: DialogService,
+    private router: Router
   ) {
     super();
   }
@@ -74,6 +84,25 @@ export class MerchantDetailsComponent extends DestroyBaseComponent implements On
           }
         });
     }
+  }
+
+  public openDeleteMerchantDialog(): void {
+    this.dialogService
+      .open(DeleteMerchantComponent, {
+        data: {
+          name: this.merchant?.name,
+          uid: this.merchantUid
+        } as IDeleteMerchantDialogData
+      })
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (response: IDialogResponseData) => {
+          if (response.action === DialogActionButton.Ok) {
+            this.router.navigateByUrl('merchants');
+          }
+        }
+      });
   }
 
   public displayCategory(uid: string): string {

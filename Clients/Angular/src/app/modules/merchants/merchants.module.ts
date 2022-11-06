@@ -17,6 +17,7 @@ import { CreateMerchantComponent } from './components/create-merchant/create-mer
 import { MerchantDetailsComponent } from './components/merchant-details/merchant-details.component';
 import { MerchantsTableComponent } from './components/merchants-table/merchants-table.component';
 import { routes } from './routes';
+import { DeleteMerchantComponent } from './components/delete-merchant/delete-merchant.component';
 
 @NgModule({
   imports: [
@@ -35,7 +36,7 @@ import { routes } from './routes';
     MatAutocompleteModule,
     MatCardModule
   ],
-  declarations: [MerchantsTableComponent, CreateMerchantComponent, MerchantDetailsComponent],
+  declarations: [MerchantsTableComponent, CreateMerchantComponent, MerchantDetailsComponent, DeleteMerchantComponent],
   providers: [DialogService]
 })
 export class MerchantsModule {}
