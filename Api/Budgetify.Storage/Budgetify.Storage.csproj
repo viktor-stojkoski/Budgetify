@@ -19,9 +19,5 @@
     <ProjectReference Include="..\Budgetify.Common\Budgetify.Common.csproj" />
     <ProjectReference Include="..\Budgetify.Contracts\Budgetify.Contracts.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Test\Factories\" />
-  </ItemGroup>
   
 </Project>
