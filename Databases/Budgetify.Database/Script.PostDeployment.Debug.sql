@@ -17,4 +17,5 @@ BEGIN
     :r .\Budgetify\Tables\Account\Account.Seed.sql
     :r .\Budgetify\Tables\Category\Category.Seed.sql
     :r .\Budgetify\Tables\Merchant\Merchant.Seed.sql
+    :r .\Budgetify\Tables\Transaction\Transaction.Seed.sql
 END
