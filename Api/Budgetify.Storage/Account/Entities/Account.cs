@@ -1,9 +1,11 @@
 ﻿namespace Budgetify.Storage.Account.Entities;
 
 using System;
+using System.Collections.Generic;
 
 using Budgetify.Storage.Common.Entities;
 using Budgetify.Storage.Currency.Entities;
+using Budgetify.Storage.Transaction.Entities;
 using Budgetify.Storage.User.Entities;
 
 public class Account : AggregateRoot
@@ -43,4 +45,6 @@ public class Account : AggregateRoot
     public virtual User User { get; protected internal set; } = null!;
 
     public virtual Currency Currency { get; protected internal set; } = null!;
+
+    public virtual ICollection<Transaction> Transactions { get; protected internal set; } = new List<Transaction>();
 }

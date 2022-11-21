@@ -1,9 +1,11 @@
 ﻿namespace Budgetify.Storage.Merchant.Entities;
 
 using System;
+using System.Collections.Generic;
 
 using Budgetify.Storage.Category.Entities;
 using Budgetify.Storage.Common.Entities;
+using Budgetify.Storage.Transaction.Entities;
 using Budgetify.Storage.User.Entities;
 
 public class Merchant : AggregateRoot
@@ -31,4 +33,6 @@ public class Merchant : AggregateRoot
     public virtual User User { get; protected internal set; } = null!;
 
     public virtual Category Category { get; protected internal set; } = null!;
+
+    public virtual ICollection<Transaction> Transactions { get; protected internal set; } = new List<Transaction>();
 }
