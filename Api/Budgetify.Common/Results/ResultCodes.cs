@@ -55,4 +55,10 @@ public static class ResultCodes
     public const string MerchantNotFound = "MERCHANT_NOT_FOUND";
 
     #endregion
+
+    #region Transaction
+
+    public const string TransactionTypeInvalid = "TRANSACTION_TYPE_INVALID";
+
+    #endregion
 }
