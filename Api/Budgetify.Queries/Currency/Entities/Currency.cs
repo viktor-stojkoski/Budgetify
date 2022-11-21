@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using Budgetify.Queries.Account.Entities;
 using Budgetify.Queries.Common.Entities;
+using Budgetify.Queries.Transaction.Entities;
 
 public class Currency : Entity
 {
@@ -24,4 +25,6 @@ public class Currency : Entity
     public string? Symbol { get; protected internal set; }
 
     public virtual ICollection<Account> Accounts { get; protected internal set; } = new List<Account>();
+
+    public virtual ICollection<Transaction> Transactions { get; protected internal set; } = new List<Transaction>();
 }
