@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Budgetify.Common.CurrentUser;
-using Budgetify.Queries.Currency.Entities;
+using Budgetify.Queries.Category.Entities;
 using Budgetify.Queries.Infrastructure.Context;
 
 using Microsoft.EntityFrameworkCore;

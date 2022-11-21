@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 using Budgetify.Common.CurrentUser;
 using Budgetify.Common.Results;
+using Budgetify.Queries.Category.Entities;
 using Budgetify.Queries.Common.Extensions;
-using Budgetify.Queries.Currency.Entities;
 using Budgetify.Queries.Infrastructure.Context;
 
 using Microsoft.EntityFrameworkCore;

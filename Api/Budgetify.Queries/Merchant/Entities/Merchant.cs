@@ -1,7 +1,10 @@
 ﻿namespace Budgetify.Queries.Merchant.Entities;
 
+using System.Collections.Generic;
+
+using Budgetify.Queries.Category.Entities;
 using Budgetify.Queries.Common.Entities;
-using Budgetify.Queries.Currency.Entities;
+using Budgetify.Queries.Transaction.Entities;
 using Budgetify.Queries.User.Entities;
 
 public class Merchant : Entity
@@ -25,4 +28,6 @@ public class Merchant : Entity
     public virtual User User { get; protected internal set; } = null!;
 
     public virtual Category Category { get; protected internal set; } = null!;
+
+    public virtual ICollection<Transaction> Transactions { get; protected internal set; } = new List<Transaction>();
 }

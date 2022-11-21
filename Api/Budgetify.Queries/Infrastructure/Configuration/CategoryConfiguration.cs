@@ -1,7 +1,7 @@
 ﻿namespace Budgetify.Queries.Infrastructure.Configuration;
 
+using Budgetify.Queries.Category.Entities;
 using Budgetify.Queries.Common.Configuration;
-using Budgetify.Queries.Currency.Entities;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

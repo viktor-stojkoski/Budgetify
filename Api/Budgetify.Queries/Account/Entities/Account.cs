@@ -1,7 +1,10 @@
 ﻿namespace Budgetify.Queries.Account.Entities;
 
+using System.Collections.Generic;
+
 using Budgetify.Queries.Common.Entities;
 using Budgetify.Queries.Currency.Entities;
+using Budgetify.Queries.Transaction.Entities;
 using Budgetify.Queries.User.Entities;
 
 public class Account : Entity
@@ -37,4 +40,6 @@ public class Account : Entity
     public virtual User User { get; protected internal set; } = null!;
 
     public virtual Currency Currency { get; protected internal set; } = null!;
+
+    public virtual ICollection<Transaction> Transactions { get; protected internal set; } = new List<Transaction>();
 }
