@@ -42,7 +42,7 @@ public class GetTransactionsQueryHandler : IQueryHandler<GetTransactionsQuery, I
                     x.Uid,
                     x.Account.Name,
                     x.Category.Name,
-                    x.Currency.Name,
+                    x.Currency.Code,
                     x.Merchant.Name,
                     x.Type,
                     x.Amount,

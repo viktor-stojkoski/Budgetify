@@ -147,5 +147,24 @@
 
     "deleteMerchantHeader": "Delete merchant",
     "deleteMerchantContent": "Are you sure you want to delete the merchant <strong>{{merchantName}}</strong> ?"
+  },
+
+  "transactions": {
+    "toolbarName": "Transactions",
+
+    "tableFilterLabel": "Filter",
+    "tableNoDataFound": "No data was found.",
+    "tableAccountHeader": "Account",
+    "tableCategoryHeader": "Category",
+    "tableCurrencyCodeHeader": "Currency code",
+    "tableMerchantHeader": "Merchant",
+    "tableTypeHeader": "Type",
+    "tableAmountHeader": "Amount",
+    "tableDateHeader": "Date",
+    "tableDescriptionHeader": "Description",
+
+    "typeExpense": "Expense",
+    "typeIncome": "Income",
+    "typeTransfer": "Transfer"
   }
 }
