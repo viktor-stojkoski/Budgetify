@@ -36,7 +36,7 @@ public class GetTransactionsQueryHandler : IQueryHandler<GetTransactionsQuery, I
                 .Include(x => x.Account)
                 .Include(x => x.Category)
                 .Include(x => x.Currency)
-                .Include(x => x.Merchant)
+                .Include(x => x.Merchant).DefaultIfEmpty()
                 .Where(x => x.UserId == _currentUser.Id)
                 .Select(x => new TransactionResponse(
                     x.Uid,
