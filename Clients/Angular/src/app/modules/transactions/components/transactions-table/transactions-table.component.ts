@@ -1,0 +1,79 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { DestroyBaseComponent, SnackbarService } from '@budgetify/shared';
+import { take } from 'rxjs';
+import { TransactionType } from '../../models/transaction.enum';
+import { ITransactionResponse } from '../../models/transaction.model';
+import { TransactionService } from '../../services/transaction.service';
+import { TranslationKeys } from '../../static/translationKeys';
+
+@Component({
+  selector: 'app-transactions-table',
+  templateUrl: './transactions-table.component.html',
+  styleUrls: ['./transactions-table.component.scss']
+})
+export class TransactionsTableComponent extends DestroyBaseComponent implements OnInit {
+  public readonly translationKeys = TranslationKeys;
+  public dataSource!: MatTableDataSource<ITransactionResponse>;
+  public displayedColumns = [
+    'account',
+    'category',
+    'currencyCode',
+    'merchant',
+    'type',
+    'amount',
+    'date',
+    'description'
+  ];
+  public isLoading = true;
+  public type = TransactionType;
+  public filterValue = '';
+
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild(MatSort) sort?: MatSort;
+
+  @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
+    if (paginator && !this.dataSource.paginator) {
+      this.dataSource.paginator = paginator;
+    }
+  }
+  @ViewChild(MatSort) set matSort(sort: MatSort) {
+    if (sort && !this.dataSource.sort) {
+      this.dataSource.sort = sort;
+    }
+  }
+
+  constructor(private transactionService: TransactionService, private snackbarService: SnackbarService) {
+    super();
+  }
+
+  public ngOnInit(): void {
+    this.getTransactions();
+  }
+
+  public applyFilter(event: Event): void {
+    this.filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = this.filterValue.trim().toLowerCase();
+  }
+
+  private getTransactions(): void {
+    this.transactionService
+      .getTransactions()
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => {
+          this.dataSource = new MatTableDataSource(response.value);
+          this.dataSource.sort = this.sort!;
+          this.dataSource.paginator = this.paginator!;
+          this.filterValue = '';
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.snackbarService.showError(error);
+          this.isLoading = false;
+        }
+      });
+  }
+}

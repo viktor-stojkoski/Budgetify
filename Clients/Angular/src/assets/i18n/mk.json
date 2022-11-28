@@ -147,5 +147,24 @@
 
     "deleteMerchantHeader": "Избриши трговец",
     "deleteMerchantContent": "Дали сте сигурни дека сакате да го избришете трговецот <strong>{{merchantName}}</strong> ?"
+  },
+
+  "transactions": {
+    "toolbarName": "Трансакции",
+
+    "tableFilterLabel": "Филтер",
+    "tableNoDataFound": "Не беа пронајдени податоци.",
+    "tableAccountHeader": "Сметка",
+    "tableCategoryHeader": "Категорија",
+    "tableCurrencyCodeHeader": "Валута",
+    "tableMerchantHeader": "Трговец",
+    "tableTypeHeader": "Тип",
+    "tableAmountHeader": "Износ",
+    "tableDateHeader": "Датум",
+    "tableDescriptionHeader": "Опис",
+
+    "typeExpense": "Трошок",
+    "typeIncome": "Приход",
+    "typeTransfer": "Трансфер"
   }
 }

@@ -1,0 +1,81 @@
+<mat-toolbar>
+  <span>{{ translationKeys.toolbarName | translate }}</span>
+</mat-toolbar>
+
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<mat-form-field *ngIf="!isLoading" appearance="outline">
+  <mat-label>{{ translationKeys.tableFilterLabel | translate }}</mat-label>
+  <input [value]="filterValue" matInput (keyup)="applyFilter($event)" />
+</mat-form-field>
+
+<table mat-table *ngIf="!isLoading" [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  <ng-container matColumnDef="account">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableAccountHeader | translate }}</th>
+    <td mat-cell *matCellDef="let transaction">
+      <span [matTooltip]="transaction.accountName" [matTooltipDisabled]="transaction.accountName.length < 30">
+        {{ transaction.accountName | truncate: 30 }}
+      </span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="category">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableCategoryHeader | translate }}</th>
+    <td mat-cell *matCellDef="let transaction">
+      <span [matTooltip]="transaction.categoryName" [matTooltipDisabled]="transaction.categoryName.length < 30">
+        {{ transaction.categoryName | truncate: 30 }}
+      </span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="currencyCode">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableCurrencyCodeHeader | translate }}</th>
+    <td mat-cell *matCellDef="let transaction">{{ transaction.currencyCode }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="merchant">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableMerchantHeader | translate }}</th>
+    <td mat-cell *matCellDef="let transaction">
+      <span [matTooltip]="transaction.merchantName" [matTooltipDisabled]="transaction.merchantName?.length < 30">
+        {{ transaction.merchantName | truncate: 30 }}
+      </span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableTypeHeader | translate }}</th>
+    <td mat-cell *matCellDef="let transaction">{{ transaction.type | translateEnum: type }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="amount">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableAmountHeader | translate }}</th>
+    <td mat-cell *matCellDef="let transaction">{{ transaction.amount }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableDateHeader | translate }}</th>
+    <td mat-cell *matCellDef="let transaction">{{ transaction.date | date }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableDescriptionHeader | translate }}</th>
+    <td mat-cell *matCellDef="let transaction">
+      <span [matTooltip]="transaction.description" [matTooltipDisabled]="transaction.description?.length < 50">
+        {{ transaction.description | truncate: 50 }}
+      </span>
+    </td>
+  </ng-container>
+
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+      {{ translationKeys.tableNoDataFound | translate }}
+    </td>
+  </tr>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<mat-paginator *ngIf="!isLoading" [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
