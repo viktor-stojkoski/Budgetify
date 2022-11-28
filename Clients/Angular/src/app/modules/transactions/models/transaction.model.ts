@@ -5,6 +5,6 @@ export interface ITransactionResponse {
   merchantName?: string;
   type: string;
   amount: number;
-  date: string; // TODO: DATE,
+  date: Date;
   description: string | null;
 }
