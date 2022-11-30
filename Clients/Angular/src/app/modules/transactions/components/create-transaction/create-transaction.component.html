@@ -1,0 +1,80 @@
+<h1 mat-dialog-title>{{ translationKeys.createFormHeader | translate }}</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="transactionForm">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormAccountLabel | translate }}</mat-label>
+      <input type="text" matInput formControlName="accountUid" [matAutocomplete]="account" />
+      <mat-autocomplete #account="matAutocomplete" [displayWith]="displayAccount.bind(this)">
+        <mat-option *ngFor="let account of filteredAccounts$ | async" [value]="account.uid">
+          {{ account.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormCategoryLabel | translate }}</mat-label>
+      <input type="text" matInput formControlName="categoryUid" [matAutocomplete]="category" />
+      <mat-autocomplete #category="matAutocomplete" [displayWith]="displayCategory.bind(this)">
+        <mat-option *ngFor="let category of filteredCategories$ | async" [value]="category.uid">
+          {{ category.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormCurrencyCodeLabel | translate }}</mat-label>
+      <input type="text" matInput formControlName="currencyCode" [matAutocomplete]="currency" />
+      <mat-autocomplete #currency="matAutocomplete" [displayWith]="displayCurrency.bind(this)">
+        <mat-option *ngFor="let currency of filteredCurrencies$ | async" [value]="currency.code">
+          [{{ currency.code }}] {{ currency.name }} - {{ currency.symbol }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormMerchantLabel | translate }}</mat-label>
+      <input type="text" matInput formControlName="merchantUid" [matAutocomplete]="merchant" />
+      <mat-autocomplete #merchant="matAutocomplete" [displayWith]="displayMerchant.bind(this)">
+        <mat-option *ngFor="let merchant of filteredMerchants$ | async" [value]="merchant.uid">
+          {{ merchant.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormTypeLabel | translate }}</mat-label>
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let type of types" [value]="type.value">
+          {{ type.translationKey | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormAmountLabel | translate }}</mat-label>
+      <input type="number" matInput formControlName="amount" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormDateLabel | translate }}</mat-label>
+      <input matInput formControlName="date" [matDatepicker]="datePicker" />
+      <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+      <mat-datepicker #datePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormDescriptionLabel | translate }}</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="secondary" (click)="onCancelClick()">
+    {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="createTransaction()">
+    {{ sharedTranslationKeys.mainActionButtonOk | translate }}
+  </button>
+</div>

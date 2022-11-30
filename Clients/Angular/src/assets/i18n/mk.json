@@ -63,6 +63,9 @@
       "create": "Трговецот е успешно искреиран.",
       "update": "Трговецот е успешно уреден.",
       "delete": "Трговецот е успешно избришан."
+    },
+    "transactions": {
+      "create": "Трансакцијата е успешно искреирана."
     }
   },
 
@@ -151,6 +154,7 @@
 
   "transactions": {
     "toolbarName": "Трансакции",
+    "toolbarActionCreateTransaction": "Креирај трансакција",
 
     "tableFilterLabel": "Филтер",
     "tableNoDataFound": "Не беа пронајдени податоци.",
@@ -165,6 +169,16 @@
 
     "typeExpense": "Трошок",
     "typeIncome": "Приход",
-    "typeTransfer": "Трансфер"
+    "typeTransfer": "Трансфер",
+
+    "createFormHeader": "Креирај трансакција",
+    "createFormAccountLabel": "Сметка",
+    "createFormCategoryLabel": "Категорија",
+    "createFormCurrencyCodeLabel": "Валута",
+    "createFormMerchantLabel": "Трговец",
+    "createFormTypeLabel": "Тип",
+    "createFormAmountLabel": "Износ",
+    "createFormDateLabel": "Датум",
+    "createFormDescriptionLabel": "Опис"
   }
 }
