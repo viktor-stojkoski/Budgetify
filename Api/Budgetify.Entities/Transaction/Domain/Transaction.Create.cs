@@ -21,7 +21,7 @@ public partial class Transaction
         int categoryId,
         int currencyId,
         int? merchantId,
-        TransactionType type,
+        string type,
         decimal amount,
         DateTime date,
         string? description)
@@ -62,7 +62,7 @@ public partial class Transaction
         int categoryId,
         int currencyId,
         int? merchantId,
-        TransactionType type,
+        string? type,
         decimal amount,
         DateTime date,
         string? description)

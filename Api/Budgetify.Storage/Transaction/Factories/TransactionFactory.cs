@@ -1,0 +1,49 @@
+﻿namespace Budgetify.Storage.Transaction.Factories;
+
+using Budgetify.Common.Results;
+using Budgetify.Entities.Transaction.Domain;
+
+internal static class TransactionFactory
+{
+    /// <summary>
+    /// Creates <see cref="Transaction"/> domain entity for a given <see cref="Entities.Transaction"/> storage entity.
+    /// </summary>
+    internal static Result<Transaction> CreateTransaction(this Entities.Transaction dbTransaction)
+    {
+        return Transaction.Create(
+            id: dbTransaction.Id,
+            uid: dbTransaction.Uid,
+            createdOn: dbTransaction.CreatedOn,
+            deletedOn: dbTransaction.DeletedOn,
+            userId: dbTransaction.UserId,
+            accountId: dbTransaction.AccountId,
+            categoryId: dbTransaction.CategoryId,
+            currencyId: dbTransaction.CurrencyId,
+            merchantId: dbTransaction.MerchantId,
+            type: dbTransaction.Type,
+            amount: dbTransaction.Amount,
+            date: dbTransaction.Date,
+            description: dbTransaction.Description);
+    }
+
+    /// <summary>
+    /// Creates <see cref="Entities.Transaction"/> storage entity for a given <see cref="Transaction"/> domain entity.
+    /// </summary>
+    internal static Entities.Transaction CreateTransaction(this Transaction transaction)
+    {
+        return new(
+            id: transaction.Id,
+            uid: transaction.Uid,
+            createdOn: transaction.CreatedOn,
+            deletedOn: transaction.DeletedOn,
+            userId: transaction.UserId,
+            accountId: transaction.AccountId,
+            categoryId: transaction.CategoryId,
+            currencyId: transaction.CurrencyId,
+            merchantId: transaction.MerchantId,
+            type: transaction.Type,
+            amount: transaction.Amount,
+            date: transaction.Date,
+            description: transaction.Description);
+    }
+}
