@@ -33,6 +33,11 @@ public partial class Transaction
             return Result.FromError<Transaction>(typeValue);
         }
 
+        if (typeValue.Value != TransactionType.Income && merchantId is null)
+        {
+            return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
+        }
+
         return Result.Ok(
             new Transaction(
                 userId: userId,
@@ -72,6 +77,11 @@ public partial class Transaction
         if (typeValue.IsFailureOrNull)
         {
             return Result.FromError<Transaction>(typeValue);
+        }
+
+        if (typeValue.Value != TransactionType.Income && merchantId is null)
+        {
+            return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
         }
 
         return Result.Ok(
