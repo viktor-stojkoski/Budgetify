@@ -111,7 +111,7 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
                 merchantId: merchantId,
                 type: command.Type,
                 amount: command.Amount,
-                date: command.Date,
+                date: command.Date.ToLocalTime(),
                 description: command.Description);
 
         if (transactionResult.IsFailureOrNull)
