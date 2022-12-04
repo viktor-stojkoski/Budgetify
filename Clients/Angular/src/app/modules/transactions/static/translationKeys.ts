@@ -1,6 +1,6 @@
 export class TranslationKeys {
   public static readonly toolbarName = 'transactions.toolbarName';
-  // public static readonly toolbarActionCreateTransaction = 'transactions.toolbarActionCreateTransaction';
+  public static readonly toolbarActionCreateTransaction = 'transactions.toolbarActionCreateTransaction';
 
   public static readonly tableFilterLabel = 'transactions.tableFilterLabel';
   public static readonly tableNoDataFound = 'transactions.tableNoDataFound';
@@ -14,16 +14,16 @@ export class TranslationKeys {
   public static readonly tableDescriptionHeader = 'transactions.tableDescriptionHeader';
   // public static readonly tableDeleteTransactionTooltip = 'transactions.tableDeleteTransactionTooltip';
 
-  // public static readonly createFormHeader = 'transactions.createFormHeader';
-  // public static readonly createFormAccountLabel = 'transactions.createFormAccountLabel';
-  // public static readonly createFormCategoryLabel = 'transactions.createFormCategoryLabel';
-  // public static readonly createFormCurrencyCodeLabel = 'transactions.createFormCurrencyCodeLabel';
-  // public static readonly createFormMerchantLabel = 'transactions.createFormMerchantLabel';
-  // public static readonly createFormTypeLabel = 'transactions.createFormTypeLabel';
-  // public static readonly createFormAmountLabel = 'transactions.createFormAmountLabel';
-  // public static readonly createFormDateLabel = 'transactions.createFormDateLabel';
-  // public static readonly createFormDescriptionLabel = 'transactions.createFormDescriptionLabel';
-  // public static readonly createTransactionSuccessful = 'successMessages.transactions.create';
+  public static readonly createFormHeader = 'transactions.createFormHeader';
+  public static readonly createFormAccountLabel = 'transactions.createFormAccountLabel';
+  public static readonly createFormCategoryLabel = 'transactions.createFormCategoryLabel';
+  public static readonly createFormCurrencyCodeLabel = 'transactions.createFormCurrencyCodeLabel';
+  public static readonly createFormMerchantLabel = 'transactions.createFormMerchantLabel';
+  public static readonly createFormTypeLabel = 'transactions.createFormTypeLabel';
+  public static readonly createFormAmountLabel = 'transactions.createFormAmountLabel';
+  public static readonly createFormDateLabel = 'transactions.createFormDateLabel';
+  public static readonly createFormDescriptionLabel = 'transactions.createFormDescriptionLabel';
+  public static readonly createTransactionSuccessful = 'successMessages.transactions.create';
 
   // public static readonly detailsHeader = 'transactions.detailsHeader';
   // public static readonly detailsAccountHeader = 'transactions.detailsAccountHeader';

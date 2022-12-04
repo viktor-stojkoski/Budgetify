@@ -59,6 +59,7 @@ public static class ResultCodes
     #region Transaction
 
     public const string TransactionTypeInvalid = "TRANSACTION_TYPE_INVALID";
+    public const string TransactionEmptyMerchantTypeInvalid = "TRANSACTION_EMPTY_MERCHANT_TYPE_INVALID";
 
     #endregion
 }

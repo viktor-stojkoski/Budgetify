@@ -21,7 +21,7 @@ public partial class Transaction
         int categoryId,
         int currencyId,
         int? merchantId,
-        TransactionType type,
+        string type,
         decimal amount,
         DateTime date,
         string? description)
@@ -31,6 +31,11 @@ public partial class Transaction
         if (typeValue.IsFailureOrNull)
         {
             return Result.FromError<Transaction>(typeValue);
+        }
+
+        if (typeValue.Value != TransactionType.Income && merchantId is null)
+        {
+            return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
         }
 
         return Result.Ok(
@@ -62,7 +67,7 @@ public partial class Transaction
         int categoryId,
         int currencyId,
         int? merchantId,
-        TransactionType type,
+        string? type,
         decimal amount,
         DateTime date,
         string? description)
@@ -72,6 +77,11 @@ public partial class Transaction
         if (typeValue.IsFailureOrNull)
         {
             return Result.FromError<Transaction>(typeValue);
+        }
+
+        if (typeValue.Value != TransactionType.Income && merchantId is null)
+        {
+            return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
         }
 
         return Result.Ok(

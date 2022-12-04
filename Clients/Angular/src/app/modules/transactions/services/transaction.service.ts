@@ -2,17 +2,48 @@ import { Injectable } from '@angular/core';
 import { BaseApiService } from '@budgetify/core';
 import { IResult } from '@budgetify/shared';
 import { Observable } from 'rxjs';
-import { ITransactionResponse } from '../models/transaction.model';
+import {
+  IAccountResponse,
+  ICategoryResponse,
+  ICreateTransactionRequest,
+  ICurrencyResponse,
+  IMerchantResponse,
+  ITransactionResponse
+} from '../models/transaction.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionService {
   private transactionsApiRoute = 'transactions';
+  private accountsApiRoute = 'accounts';
+  private categoriesApiRoute = 'categories';
+  private currenciesApiRoute = 'currencies';
+  private merchantsApiRoute = 'merchants';
 
   constructor(private baseApiService: BaseApiService) {}
 
   public getTransactions(): Observable<IResult<ITransactionResponse[]>> {
     return this.baseApiService.get<IResult<ITransactionResponse[]>>(this.transactionsApiRoute);
+  }
+
+  public createTransaction(request: ICreateTransactionRequest): Observable<void> {
+    return this.baseApiService.post<void>(this.transactionsApiRoute, request);
+  }
+
+  public getAccounts(): Observable<IResult<IAccountResponse[]>> {
+    return this.baseApiService.get<IResult<IAccountResponse[]>>(this.accountsApiRoute);
+  }
+
+  public getCategories(): Observable<IResult<ICategoryResponse[]>> {
+    return this.baseApiService.get<IResult<ICategoryResponse[]>>(this.categoriesApiRoute);
+  }
+
+  public getCurrencies(): Observable<IResult<ICurrencyResponse[]>> {
+    return this.baseApiService.get<IResult<ICurrencyResponse[]>>(this.currenciesApiRoute);
+  }
+
+  public getMerchants(): Observable<IResult<IMerchantResponse[]>> {
+    return this.baseApiService.get<IResult<IMerchantResponse[]>>(this.merchantsApiRoute);
   }
 }
