@@ -1,8 +1,10 @@
 ﻿namespace Budgetify.Api.Controllers;
 
+using System;
 using System.Threading.Tasks;
 
 using Budgetify.Contracts.Transaction.Requests;
+using Budgetify.Queries.Transaction.Queries.GetTransaction;
 using Budgetify.Queries.Transaction.Queries.GetTransactions;
 using Budgetify.Services.Transaction.Commands;
 
@@ -31,6 +33,10 @@ public class TransactionsController : ExtendedApiController
     [HttpGet]
     public async Task<IActionResult> GetTransactionsAsync() =>
         OkOrError(await _queryDispatcher.ExecuteAsync(new GetTransactionsQuery()));
+
+    [HttpGet("{transactionUid:Guid}")]
+    public async Task<IActionResult> GetTransactionAsync([FromRoute] Guid transactionUid) =>
+        OkOrError(await _queryDispatcher.ExecuteAsync(new GetTransactionQuery(transactionUid)));
 
     [HttpPost]
     public async Task<IActionResult> CreateTransactionAsync([FromBody] CreateTransactionRequest request) =>

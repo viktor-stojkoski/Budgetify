@@ -35,7 +35,7 @@ public class MerchantsController : ExtendedApiController
         OkOrError(await _queryDispatcher.ExecuteAsync(new GetMerchantsQuery()));
 
     [HttpGet("{merchantUid:Guid}")]
-    public async Task<IActionResult> GetMerchantAsync(Guid merchantUid) =>
+    public async Task<IActionResult> GetMerchantAsync([FromRoute] Guid merchantUid) =>
         OkOrError(await _queryDispatcher.ExecuteAsync(new GetMerchantQuery(merchantUid)));
 
     [HttpPost]
