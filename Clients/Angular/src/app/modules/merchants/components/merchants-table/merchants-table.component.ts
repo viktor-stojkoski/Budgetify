@@ -25,7 +25,7 @@ import { DeleteMerchantComponent } from '../delete-merchant/delete-merchant.comp
 export class MerchantsTableComponent extends DestroyBaseComponent implements OnInit {
   public readonly translationKeys = TranslationKeys;
   public dataSource!: MatTableDataSource<IMerchantResponse>;
-  public displayedColumns = ['name', 'category', 'actions'];
+  public displayedColumns = ['name', 'categoryName', 'actions'];
   public isLoading = true;
   public filterValue = '';
 

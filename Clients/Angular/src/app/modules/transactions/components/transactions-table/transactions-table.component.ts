@@ -26,10 +26,10 @@ export class TransactionsTableComponent extends DestroyBaseComponent implements 
   public readonly translationKeys = TranslationKeys;
   public dataSource!: MatTableDataSource<ITransactionResponse>;
   public displayedColumns = [
-    'account',
-    'category',
+    'accountName',
+    'categoryName',
     'currencyCode',
-    'merchant',
+    'merchantName',
     'type',
     'amount',
     'date',
