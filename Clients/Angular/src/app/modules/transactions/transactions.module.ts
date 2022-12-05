@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatCardModule } from '@angular/material/card';
 import {
   DateAdapter,
   MatDateFormats,
@@ -23,6 +24,7 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from '@budgetify/core';
 import { DialogService, SharedModule } from '@budgetify/shared';
 import { CreateTransactionComponent } from './components/create-transaction/create-transaction.component';
+import { TransactionDetailsComponent } from './components/transaction-details/transaction-details.component';
 import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
 import { routes } from './routes';
 
@@ -54,9 +56,10 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     MatTooltipModule,
     MatAutocompleteModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCardModule
   ],
-  declarations: [TransactionsTableComponent, CreateTransactionComponent],
+  declarations: [TransactionsTableComponent, CreateTransactionComponent, TransactionDetailsComponent],
   providers: [
     DialogService,
     { provide: DateAdapter, useClass: NativeDateAdapter, deps: [MAT_DATE_LOCALE] },
