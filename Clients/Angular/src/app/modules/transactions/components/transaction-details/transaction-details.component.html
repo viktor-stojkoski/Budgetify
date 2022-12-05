@@ -1,0 +1,61 @@
+<mat-toolbar>
+  <span>{{ translationKeys.toolbarName | translate }}</span>
+</mat-toolbar>
+
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<mat-card *ngIf="!isLoading && transaction" class="mat-elevation-z8">
+  <mat-card-title>{{ translationKeys.detailsHeader | translate }}</mat-card-title>
+
+  <mat-card-content>
+    <div class="grid-container">
+      <div class="grid-item">{{ translationKeys.detailsAccountHeader | translate }}</div>
+      <div class="grid-item">
+        <span [matTooltip]="transaction.accountName" [matTooltipDisabled]="transaction.accountName.length < 30">
+          {{ transaction.accountName | truncate: 30 }}
+        </span>
+      </div>
+
+      <div class="grid-item">{{ translationKeys.detailsCategoryHeader | translate }}</div>
+      <div class="grid-item">
+        <span [matTooltip]="transaction.categoryName" [matTooltipDisabled]="transaction.categoryName.length < 30">
+          {{ transaction.categoryName | truncate: 30 }}
+        </span>
+      </div>
+
+      <div class="grid-item">{{ translationKeys.detailsCurrencyCodeHeader | translate }}</div>
+      <div class="grid-item">{{ transaction.currencyCode }}</div>
+
+      <div class="grid-item">{{ translationKeys.detailsMerchantHeader | translate }}</div>
+      <div class="grid-item">
+        <span
+          [matTooltip]="transaction.merchantName ?? ''"
+          [matTooltipDisabled]="(transaction.merchantName?.length ?? 0) < 30"
+        >
+          {{ transaction.merchantName ?? '' | truncate: 30 }}
+        </span>
+      </div>
+
+      <div class="grid-item">{{ translationKeys.detailsTypeHeader | translate }}</div>
+      <div class="grid-item">{{ transaction.type | translateEnum: type }}</div>
+
+      <div class="grid-item">{{ translationKeys.detailsAmountHeader | translate }}</div>
+      <div class="grid-item">{{ transaction.amount }}</div>
+
+      <div class="grid-item">{{ translationKeys.detailsDateHeader | translate }}</div>
+      <div class="grid-item">{{ transaction.date | date }}</div>
+
+      <div class="grid-item no-border">{{ translationKeys.detailsDescriptionHeader | translate }}</div>
+      <div class="grid-item no-border">
+        <span
+          [matTooltip]="transaction.description ?? ''"
+          [matTooltipDisabled]="(transaction.description?.length ?? 0) < 50"
+        >
+          {{ transaction.description ?? '' | truncate: 50 }}
+        </span>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

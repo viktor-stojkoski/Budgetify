@@ -45,7 +45,11 @@
 
     "MERCHANT_NAME_INVALID": "Merchant name invalid.",
     "MERCHANT_NAME_INVALID_LENGTH": "Merchant name invalid length.",
-    "MERCHANT_NOT_FOUND": "Merchant not found."
+    "MERCHANT_NOT_FOUND": "Merchant not found.",
+
+    "TRANSACTION_TYPE_INVALID": "Transaction type invalid.",
+    "TRANSACTION_EMPTY_MERCHANT_TYPE_INVALID": "Cannot create expense transaction without merchant.",
+    "TRANSACTION_NOT_FOUND": "Transaction not found."
   },
 
   "successMessages": {
@@ -179,6 +183,16 @@
     "createFormTypeLabel": "Type",
     "createFormAmountLabel": "Amount",
     "createFormDateLabel": "Date",
-    "createFormDescriptionLabel": "Description"
+    "createFormDescriptionLabel": "Description",
+
+    "detailsHeader": "Transaction details",
+    "detailsAccountHeader": "Account",
+    "detailsCategoryHeader": "Category",
+    "detailsCurrencyCodeHeader": "Currency code",
+    "detailsMerchantHeader": "Merchant",
+    "detailsTypeHeader": "Type",
+    "detailsAmountHeader": "Amount",
+    "detailsDateHeader": "Date",
+    "detailsDescriptionHeader": "Description"
   }
 }

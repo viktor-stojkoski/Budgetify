@@ -25,15 +25,15 @@ export class TranslationKeys {
   public static readonly createFormDescriptionLabel = 'transactions.createFormDescriptionLabel';
   public static readonly createTransactionSuccessful = 'successMessages.transactions.create';
 
-  // public static readonly detailsHeader = 'transactions.detailsHeader';
-  // public static readonly detailsAccountHeader = 'transactions.detailsAccountHeader';
-  // public static readonly detailsCategoryHeader = 'transactions.detailsCategoryHeader';
-  // public static readonly detailsCurrencyCodeHeader = 'transactions.detailsCurrencyCodeHeader';
-  // public static readonly detailsMerchantHeader = 'transactions.detailsMerchantHeader';
-  // public static readonly detailsTypeHeader = 'transactions.detailsTypeHeader';
-  // public static readonly detailsAmountHeader = 'transactions.detailsAmountHeader';
-  // public static readonly detailsDateHeader = 'transactions.detailsDateHeader';
-  // public static readonly detailsDescriptionHeader = 'transactions.detailsDescriptionHeader';
+  public static readonly detailsHeader = 'transactions.detailsHeader';
+  public static readonly detailsAccountHeader = 'transactions.detailsAccountHeader';
+  public static readonly detailsCategoryHeader = 'transactions.detailsCategoryHeader';
+  public static readonly detailsCurrencyCodeHeader = 'transactions.detailsCurrencyCodeHeader';
+  public static readonly detailsMerchantHeader = 'transactions.detailsMerchantHeader';
+  public static readonly detailsTypeHeader = 'transactions.detailsTypeHeader';
+  public static readonly detailsAmountHeader = 'transactions.detailsAmountHeader';
+  public static readonly detailsDateHeader = 'transactions.detailsDateHeader';
+  public static readonly detailsDescriptionHeader = 'transactions.detailsDescriptionHeader';
   // public static readonly updateTransactionSuccessful = 'successMessages.transactions.update';
 
   // public static readonly deleteTransactionHeader = 'transactions.deleteTransactionHeader';

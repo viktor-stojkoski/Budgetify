@@ -45,7 +45,11 @@
 
     "MERCHANT_NAME_INVALID": "Името на трговецот е невалидно.",
     "MERCHANT_NAME_INVALID_LENGTH": "Должината на името на трговецот е невалидно.",
-    "MERCHANT_NOT_FOUND": "Трговецот не е пронајден."
+    "MERCHANT_NOT_FOUND": "Трговецот не е пронајден.",
+
+    "TRANSACTION_TYPE_INVALID": "Типот на трансакцијата е невалиден.",
+    "TRANSACTION_EMPTY_MERCHANT_TYPE_INVALID": "Не е возможно да искреирате трошок без трговец.",
+    "TRANSACTION_NOT_FOUND": "Трансакцијата не е пронајдена."
   },
 
   "successMessages": {
@@ -179,6 +183,16 @@
     "createFormTypeLabel": "Тип",
     "createFormAmountLabel": "Износ",
     "createFormDateLabel": "Датум",
-    "createFormDescriptionLabel": "Опис"
+    "createFormDescriptionLabel": "Опис",
+
+    "detailsHeader": "Детали за трансакцијата",
+    "detailsAccountHeader": "Сметка",
+    "detailsCategoryHeader": "Категорија",
+    "detailsCurrencyCodeHeader": "Валута",
+    "detailsMerchantHeader": "Трговец",
+    "detailsTypeHeader": "Тип",
+    "detailsAmountHeader": "Износ",
+    "detailsDateHeader": "Датум",
+    "detailsDescriptionHeader": "Опис"
   }
 }

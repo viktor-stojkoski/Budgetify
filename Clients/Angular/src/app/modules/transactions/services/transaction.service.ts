@@ -27,6 +27,10 @@ export class TransactionService {
     return this.baseApiService.get<IResult<ITransactionResponse[]>>(this.transactionsApiRoute);
   }
 
+  public getTransaction(uid: string | null): Observable<IResult<ITransactionResponse>> {
+    return this.baseApiService.get<IResult<ITransactionResponse>>(`${this.transactionsApiRoute}/${uid}`);
+  }
+
   public createTransaction(request: ICreateTransactionRequest): Observable<void> {
     return this.baseApiService.post<void>(this.transactionsApiRoute, request);
   }
