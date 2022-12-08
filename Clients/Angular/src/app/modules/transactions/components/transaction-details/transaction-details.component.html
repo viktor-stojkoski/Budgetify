@@ -1,5 +1,24 @@
 <mat-toolbar>
   <span>{{ translationKeys.toolbarName | translate }}</span>
+
+  <span class="toolbar-spacer"></span>
+
+  <div class="toolbar-buttons">
+    <span *ngIf="!isEditing">
+      <button mat-raised-button color="primary" (click)="toggleEdit()">
+        {{ sharedTranslationKeys.mainActionButtonEdit | translate }}
+      </button>
+    </span>
+
+    <span *ngIf="isEditing">
+      <button mat-raised-button color="secondary" (click)="toggleEdit()">
+        {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
+      </button>
+      <button mat-raised-button color="primary" (click)="editTransaction()">
+        {{ sharedTranslationKeys.mainActionButtonSave | translate }}
+      </button>
+    </span>
+  </div>
 </mat-toolbar>
 
 <div class="spinner-container" *ngIf="isLoading">
@@ -10,26 +29,56 @@
   <mat-card-title>{{ translationKeys.detailsHeader | translate }}</mat-card-title>
 
   <mat-card-content>
-    <div class="grid-container">
+    <div [formGroup]="transactionForm" class="grid-container">
       <div class="grid-item">{{ translationKeys.detailsAccountHeader | translate }}</div>
-      <div class="grid-item">
+      <div *ngIf="!isEditing" class="grid-item">
         <span [matTooltip]="transaction.accountName" [matTooltipDisabled]="transaction.accountName.length < 30">
           {{ transaction.accountName | truncate: 30 }}
         </span>
       </div>
+      <div *ngIf="isEditing" class="grid-item">
+        <mat-form-field appearance="outline">
+          <input type="text" matInput formControlName="accountUid" [matAutocomplete]="account" />
+          <mat-autocomplete #account="matAutocomplete" [displayWith]="displayAccount.bind(this)">
+            <mat-option *ngFor="let account of filteredAccounts$ | async" [value]="account.uid">
+              {{ account.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
 
       <div class="grid-item">{{ translationKeys.detailsCategoryHeader | translate }}</div>
-      <div class="grid-item">
+      <div *ngIf="!isEditing" class="grid-item">
         <span [matTooltip]="transaction.categoryName" [matTooltipDisabled]="transaction.categoryName.length < 30">
           {{ transaction.categoryName | truncate: 30 }}
         </span>
       </div>
+      <div *ngIf="isEditing" class="grid-item">
+        <mat-form-field appearance="outline">
+          <input type="text" matInput formControlName="categoryUid" [matAutocomplete]="category" />
+          <mat-autocomplete #category="matAutocomplete" [displayWith]="displayCategory.bind(this)">
+            <mat-option *ngFor="let category of filteredCategories$ | async" [value]="category.uid">
+              {{ category.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
 
       <div class="grid-item">{{ translationKeys.detailsCurrencyCodeHeader | translate }}</div>
-      <div class="grid-item">{{ transaction.currencyCode }}</div>
+      <div *ngIf="!isEditing" class="grid-item">{{ transaction.currencyCode }}</div>
+      <div *ngIf="isEditing" class="grid-item">
+        <mat-form-field appearance="outline">
+          <input type="text" matInput formControlName="currencyCode" [matAutocomplete]="currency" />
+          <mat-autocomplete #currency="matAutocomplete" [displayWith]="displayCurrency.bind(this)">
+            <mat-option *ngFor="let currency of filteredCurrencies$ | async" [value]="currency.code">
+              [{{ currency.code }}] {{ currency.name }} - {{ currency.symbol }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
 
       <div class="grid-item">{{ translationKeys.detailsMerchantHeader | translate }}</div>
-      <div class="grid-item">
+      <div *ngIf="!isEditing" class="grid-item">
         <span
           [matTooltip]="transaction.merchantName ?? ''"
           [matTooltipDisabled]="(transaction.merchantName?.length ?? 0) < 30"
@@ -37,24 +86,61 @@
           {{ transaction.merchantName ?? '' | truncate: 30 }}
         </span>
       </div>
+      <div *ngIf="isEditing" class="grid-item">
+        <mat-form-field appearance="outline">
+          <input type="text" matInput formControlName="merchantUid" [matAutocomplete]="merchant" />
+          <mat-autocomplete #merchant="matAutocomplete" [displayWith]="displayMerchant.bind(this)">
+            <mat-option *ngFor="let merchant of filteredMerchants$ | async" [value]="merchant.uid">
+              {{ merchant.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
 
       <div class="grid-item">{{ translationKeys.detailsTypeHeader | translate }}</div>
-      <div class="grid-item">{{ transaction.type | translateEnum: type }}</div>
+      <div *ngIf="!isEditing" class="grid-item">{{ transaction.type | translateEnum: type }}</div>
+      <div *ngIf="isEditing" class="grid-item">
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="type">
+            <mat-option *ngFor="let type of types" [value]="type.value">
+              {{ type.translationKey | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
       <div class="grid-item">{{ translationKeys.detailsAmountHeader | translate }}</div>
-      <div class="grid-item">{{ transaction.amount }}</div>
+      <div *ngIf="!isEditing" class="grid-item">{{ transaction.amount }}</div>
+      <div *ngIf="isEditing" class="grid-item">
+        <mat-form-field appearance="outline">
+          <input type="number" matInput formControlName="amount" />
+        </mat-form-field>
+      </div>
 
       <div class="grid-item">{{ translationKeys.detailsDateHeader | translate }}</div>
-      <div class="grid-item">{{ transaction.date | date }}</div>
+      <div *ngIf="!isEditing" class="grid-item">{{ transaction.date | date }}</div>
+      <div *ngIf="isEditing" class="grid-item">
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="date" [matDatepicker]="datePicker" />
+          <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+          <mat-datepicker #datePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
 
       <div class="grid-item no-border">{{ translationKeys.detailsDescriptionHeader | translate }}</div>
-      <div class="grid-item no-border">
+      <div *ngIf="!isEditing" class="grid-item no-border">
         <span
           [matTooltip]="transaction.description ?? ''"
           [matTooltipDisabled]="(transaction.description?.length ?? 0) < 50"
         >
           {{ transaction.description ?? '' | truncate: 50 }}
         </span>
+      </div>
+      <div *ngIf="isEditing" class="grid-item no-border">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ translationKeys.createFormDescriptionLabel | translate }}</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
       </div>
     </div>
   </mat-card-content>

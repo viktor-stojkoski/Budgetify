@@ -41,3 +41,14 @@ export interface ICreateTransactionRequest {
   date: Date | null;
   description: string | null;
 }
+
+export interface IUpdateTransactionRequest {
+  accountUid: string | null;
+  categoryUid: string | null;
+  currencyCode: string | null;
+  merchantUid: string | null;
+  type: string | null;
+  amount: number | null;
+  date: Date | null;
+  description: string | null;
+}

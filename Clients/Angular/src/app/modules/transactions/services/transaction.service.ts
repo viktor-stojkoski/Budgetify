@@ -8,7 +8,8 @@ import {
   ICreateTransactionRequest,
   ICurrencyResponse,
   IMerchantResponse,
-  ITransactionResponse
+  ITransactionResponse,
+  IUpdateTransactionRequest
 } from '../models/transaction.model';
 
 @Injectable({
@@ -33,6 +34,10 @@ export class TransactionService {
 
   public createTransaction(request: ICreateTransactionRequest): Observable<void> {
     return this.baseApiService.post<void>(this.transactionsApiRoute, request);
+  }
+
+  public updateTransaction(uid: string | null, request: IUpdateTransactionRequest): Observable<void> {
+    return this.baseApiService.put<void>(`${this.transactionsApiRoute}/${uid}`, request);
   }
 
   public getAccounts(): Observable<IResult<IAccountResponse[]>> {

@@ -1,9 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { DestroyBaseComponent, SnackbarService } from '@budgetify/shared';
-import { concatMap, takeUntil, tap } from 'rxjs';
+import {
+  DestroyBaseComponent,
+  enumToTranslationEnum,
+  SnackbarService,
+  TranslationKeys as SharedTranslationKeys
+} from '@budgetify/shared';
+import { concatMap, distinctUntilChanged, map, Observable, startWith, take, takeUntil, tap } from 'rxjs';
 import { TransactionType } from '../../models/transaction.enum';
-import { ITransactionResponse } from '../../models/transaction.model';
+import {
+  IAccountResponse,
+  ICategoryResponse,
+  ICurrencyResponse,
+  IMerchantResponse,
+  ITransactionResponse
+} from '../../models/transaction.model';
 import { TransactionService } from '../../services/transaction.service';
 import { TranslationKeys } from '../../static/translationKeys';
 
@@ -14,21 +26,101 @@ import { TranslationKeys } from '../../static/translationKeys';
 })
 export class TransactionDetailsComponent extends DestroyBaseComponent implements OnInit {
   public readonly translationKeys = TranslationKeys;
+  public readonly sharedTranslationKeys = SharedTranslationKeys;
   public transactionUid: string | null = '';
   public transaction?: ITransactionResponse;
   public isLoading = false;
+  public isEditing = false;
   public type = TransactionType;
+  public types = enumToTranslationEnum(TransactionType);
+  public accounts?: IAccountResponse[];
+  public categories?: ICategoryResponse[];
+  public currencies?: ICurrencyResponse[];
+  public merchants?: IMerchantResponse[];
+  public filteredAccounts$?: Observable<IAccountResponse[] | undefined>;
+  public filteredCategories$?: Observable<ICategoryResponse[] | undefined>;
+  public filteredCurrencies$?: Observable<ICurrencyResponse[] | undefined>;
+  public filteredMerchants$?: Observable<IMerchantResponse[] | undefined>;
+
+  public transactionForm = this.formBuilder.group({
+    accountUid: ['', Validators.required],
+    categoryUid: ['', Validators.required],
+    currencyCode: ['', Validators.required],
+    merchantUid: [null],
+    type: ['', Validators.required],
+    amount: [0, Validators.required],
+    date: [new Date(), Validators.required],
+    description: ['']
+  });
 
   constructor(
     private transactionService: TransactionService,
     private activatedRoute: ActivatedRoute,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private formBuilder: FormBuilder
   ) {
     super();
   }
 
   public ngOnInit(): void {
     this.getTransaction();
+    this.getAccounts();
+    this.getCategories();
+    this.getCurrencies();
+    this.getMerchants();
+  }
+
+  public toggleEdit(): void {
+    this.isEditing = !this.isEditing;
+    if (this.transaction) {
+      this.transactionForm.patchValue(this.transaction);
+    }
+  }
+
+  public editTransaction(): void {
+    this.isLoading = true;
+    if (this.transactionForm.valid) {
+      this.transactionService
+        .updateTransaction(this.transactionUid, {
+          accountUid: this.transactionForm.controls.accountUid.value,
+          categoryUid: this.transactionForm.controls.categoryUid.value,
+          currencyCode: this.transactionForm.controls.currencyCode.value,
+          merchantUid: this.transactionForm.controls.merchantUid.value || null,
+          type: this.transactionForm.controls.type.value,
+          amount: this.transactionForm.controls.amount.value,
+          date: this.transactionForm.controls.date.value,
+          description: this.transactionForm.controls.description.value
+        })
+        .pipe(take(1))
+        .subscribe({
+          next: () => {
+            this.transaction = this.transactionForm.value as ITransactionResponse;
+            this.snackbarService.success(this.translationKeys.updateTransactionSuccessful);
+            this.isEditing = false;
+            this.isLoading = false;
+          },
+          error: (error) => {
+            this.snackbarService.showError(error);
+            this.isLoading = false;
+          }
+        });
+    }
+  }
+
+  public displayCurrency(code: string): string {
+    return this.currencies?.find((x) => x.code === code)?.name || '';
+  }
+
+  public displayAccount(uid: string): string {
+    return this.accounts?.find((x) => x.uid === uid)?.name || '';
+  }
+
+  public displayCategory(uid: string): string {
+    return this.categories?.find((x) => x.uid === uid)?.name || '';
+  }
+
+  public displayMerchant(uid: string): string {
+    return this.merchants?.find((x) => x.uid === uid)?.name || '';
   }
 
   private getTransaction(): void {
@@ -42,6 +134,9 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
       .subscribe({
         next: (result) => {
           this.transaction = result.value;
+          if (this.transaction) {
+            this.transactionForm.patchValue(this.transaction);
+          }
           this.isLoading = false;
         },
         error: (error) => {
@@ -49,5 +144,135 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
           this.isLoading = false;
         }
       });
+  }
+
+  private getMerchants(): void {
+    this.transactionService
+      .getMerchants()
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.merchants = result.value;
+          this.isLoading = false;
+          this.filterMerchants();
+        },
+        error: (error) => {
+          this.snackbarService.showError(error);
+          this.isLoading = false;
+        }
+      });
+  }
+
+  private filterMerchants(): void {
+    this.filteredMerchants$ = this.transactionForm.controls.merchantUid.valueChanges.pipe(
+      startWith(''),
+      distinctUntilChanged(),
+      takeUntil(this.destroyed$),
+      map((value) => this.filterMerchant(value || ''))
+    );
+  }
+
+  private filterMerchant(value: string): IMerchantResponse[] | undefined {
+    const filterValue = value.toLowerCase();
+
+    return this.merchants?.filter((option) => option.name.toLowerCase().includes(filterValue));
+  }
+
+  private getCategories(): void {
+    this.transactionService
+      .getCategories()
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.categories = result.value;
+          this.isLoading = false;
+          this.filterCategories();
+        },
+        error: (error) => {
+          this.snackbarService.showError(error);
+          this.isLoading = false;
+        }
+      });
+  }
+
+  private filterCategories(): void {
+    this.filteredCategories$ = this.transactionForm.controls.categoryUid.valueChanges.pipe(
+      startWith(''),
+      distinctUntilChanged(),
+      takeUntil(this.destroyed$),
+      map((value) => this.filterCategory(value || ''))
+    );
+  }
+
+  private filterCategory(value: string): ICategoryResponse[] | undefined {
+    const filterValue = value.toLowerCase();
+
+    return this.categories?.filter((option) => option.name.toLowerCase().includes(filterValue));
+  }
+
+  private getAccounts(): void {
+    this.transactionService
+      .getAccounts()
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.accounts = result.value;
+          this.isLoading = false;
+          this.filterAccounts();
+        },
+        error: (error) => {
+          this.snackbarService.showError(error);
+          this.isLoading = false;
+        }
+      });
+  }
+
+  private filterAccounts(): void {
+    this.filteredAccounts$ = this.transactionForm.controls.accountUid.valueChanges.pipe(
+      startWith(''),
+      distinctUntilChanged(),
+      takeUntil(this.destroyed$),
+      map((value) => this.filterAccount(value || ''))
+    );
+  }
+
+  private filterAccount(value: string): IAccountResponse[] | undefined {
+    const filterValue = value.toLowerCase();
+
+    return this.accounts?.filter((option) => option.name.toLowerCase().includes(filterValue));
+  }
+
+  private getCurrencies(): void {
+    this.transactionService
+      .getCurrencies()
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.currencies = result.value;
+          this.isLoading = false;
+          this.filterCurrencies();
+        },
+        error: (error) => {
+          this.snackbarService.showError(error);
+          this.isLoading = false;
+        }
+      });
+  }
+
+  private filterCurrencies(): void {
+    this.filteredCurrencies$ = this.transactionForm.controls.currencyCode.valueChanges.pipe(
+      startWith(''),
+      distinctUntilChanged(),
+      takeUntil(this.destroyed$),
+      map((value) => this.filterCurrency(value || ''))
+    );
+  }
+
+  private filterCurrency(value: string): ICurrencyResponse[] | undefined {
+    const filterValue = value.toLowerCase();
+
+    return this.currencies?.filter(
+      (option) => option.name.toLowerCase().includes(filterValue) || option.code.toLowerCase().includes(filterValue)
+    );
   }
 }
