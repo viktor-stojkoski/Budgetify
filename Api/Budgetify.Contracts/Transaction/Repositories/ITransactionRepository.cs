@@ -1,5 +1,9 @@
 ﻿namespace Budgetify.Contracts.Transaction.Repositories;
 
+using System;
+using System.Threading.Tasks;
+
+using Budgetify.Common.Results;
 using Budgetify.Entities.Transaction.Domain;
 
 public interface ITransactionRepository
@@ -13,4 +17,9 @@ public interface ITransactionRepository
     /// Updates transaction.
     /// </summary>
     void Update(Transaction transaction);
+
+    /// <summary>
+    /// Returns transaction by given userId and transactionUid.
+    /// </summar>
+    Task<Result<Transaction>> GetTransactionAsync(int userId, Guid transactionUid);
 }

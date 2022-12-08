@@ -50,4 +50,20 @@ public class TransactionsController : ExtendedApiController
                 Amount: request.Amount,
                 Date: request.Date,
                 Description: request.Description)));
+
+    [HttpPut("{transactionUid:Guid}")]
+    public async Task<IActionResult> UpdateTransactionAsync(
+        [FromRoute] Guid transactionUid,
+        [FromBody] UpdateTransactionRequest request) =>
+        OkOrError(await _commandDispatcher.ExecuteAsync(
+            new UpdateTransactionCommand(
+                TransactionUid: transactionUid,
+                AccountUid: request.AccountUid,
+                CategoryUid: request.CategoryUid,
+                CurrencyCode: request.CurrencyCode,
+                MerchantUid: request.MerchantUid,
+                Type: request.Type,
+                Amount: request.Amount,
+                Date: request.Date,
+                Description: request.Description)));
 }
