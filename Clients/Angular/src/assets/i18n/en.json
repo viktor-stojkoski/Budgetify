@@ -69,7 +69,8 @@
       "delete": "Merchant has been successfully deleted."
     },
     "transactions": {
-      "create": "Transaction has been successfully created."
+      "create": "Transaction has been successfully created.",
+      "update": "Transaction has been successfully updated."
     }
   },
 
