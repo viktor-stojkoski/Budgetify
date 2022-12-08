@@ -94,7 +94,6 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
         .pipe(take(1))
         .subscribe({
           next: () => {
-            this.transaction = this.transactionForm.value as ITransactionResponse;
             this.transaction = {
               ...(this.transactionForm.value as ITransactionResponse),
               accountName: this.displayAccount(this.transactionForm.controls.accountUid.value as string),

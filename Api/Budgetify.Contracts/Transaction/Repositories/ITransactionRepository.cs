@@ -20,6 +20,6 @@ public interface ITransactionRepository
 
     /// <summary>
     /// Returns transaction by given userId and transactionUid.
-    /// </summar>
+    /// </summary>
     Task<Result<Transaction>> GetTransactionAsync(int userId, Guid transactionUid);
 }
