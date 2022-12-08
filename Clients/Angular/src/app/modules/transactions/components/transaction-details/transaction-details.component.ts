@@ -46,7 +46,7 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
     accountUid: ['', Validators.required],
     categoryUid: ['', Validators.required],
     currencyCode: ['', Validators.required],
-    merchantUid: [null],
+    merchantUid: [''],
     type: ['', Validators.required],
     amount: [0, Validators.required],
     date: [new Date(), Validators.required],
@@ -95,6 +95,12 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
         .subscribe({
           next: () => {
             this.transaction = this.transactionForm.value as ITransactionResponse;
+            this.transaction = {
+              ...(this.transactionForm.value as ITransactionResponse),
+              accountName: this.displayAccount(this.transactionForm.controls.accountUid.value as string),
+              categoryName: this.displayCategory(this.transactionForm.controls.categoryUid.value as string),
+              merchantName: this.displayMerchant(this.transactionForm.controls.merchantUid.value as string)
+            };
             this.snackbarService.success(this.translationKeys.updateTransactionSuccessful);
             this.isEditing = false;
             this.isLoading = false;

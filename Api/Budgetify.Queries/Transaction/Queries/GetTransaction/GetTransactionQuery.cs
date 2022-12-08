@@ -41,9 +41,12 @@ public class GetTransactionQueryHandler : IQueryHandler<GetTransactionQuery, Tra
                 .Include(x => x.Merchant).DefaultIfEmpty()
                 .Where(x => x.UserId == _currentUser.Id && x.Uid == query.TransactionUid)
                 .Select(x => new TransactionResponse(
+                    x.Account.Uid,
                     x.Account.Name,
+                    x.Category.Uid,
                     x.Category.Name,
                     x.Currency.Code,
+                    x.Merchant.Uid,
                     x.Merchant.Name,
                     x.Type,
                     x.Amount,

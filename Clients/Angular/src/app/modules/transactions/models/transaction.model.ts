@@ -1,7 +1,10 @@
 export interface ITransactionResponse {
+  accountUid: string;
   accountName: string;
+  categoryUid: string;
   categoryName: string;
   currencyCode: string;
+  merchantUid?: string;
   merchantName?: string;
   type: string;
   amount: number;
