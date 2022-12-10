@@ -45,4 +45,21 @@ public partial class Transaction
 
         return Result.Ok();
     }
+
+    /// <summary>
+    /// Marks transaction as deleted.
+    /// </summary>
+    public Result Delete(DateTime deletedOn)
+    {
+        if (DeletedOn is not null)
+        {
+            return Result.Ok();
+        }
+
+        DeletedOn = deletedOn;
+
+        MarkModify();
+
+        return Result.Ok();
+    }
 }

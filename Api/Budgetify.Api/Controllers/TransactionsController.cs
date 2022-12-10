@@ -66,4 +66,8 @@ public class TransactionsController : ExtendedApiController
                 Amount: request.Amount,
                 Date: request.Date,
                 Description: request.Description)));
+
+    [HttpDelete("{transactionUid:Guid}")]
+    public async Task<IActionResult> DeleteTransactionAsync([FromRoute] Guid transactionUid) =>
+        OkOrError(await _commandDispatcher.ExecuteAsync(new DeleteTransactionCommand(transactionUid)));
 }
