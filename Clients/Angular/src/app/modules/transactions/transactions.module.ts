@@ -27,6 +27,7 @@ import { CreateTransactionComponent } from './components/create-transaction/crea
 import { TransactionDetailsComponent } from './components/transaction-details/transaction-details.component';
 import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
 import { routes } from './routes';
+import { DeleteTransactionComponent } from './components/delete-transaction/delete-transaction.component';
 
 export const MY_DATE_FORMATS: MatDateFormats = {
   ...MAT_NATIVE_DATE_FORMATS,
@@ -59,7 +60,7 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     MatNativeDateModule,
     MatCardModule
   ],
-  declarations: [TransactionsTableComponent, CreateTransactionComponent, TransactionDetailsComponent],
+  declarations: [TransactionsTableComponent, CreateTransactionComponent, TransactionDetailsComponent, DeleteTransactionComponent],
   providers: [
     DialogService,
     { provide: DateAdapter, useClass: NativeDateAdapter, deps: [MAT_DATE_LOCALE] },

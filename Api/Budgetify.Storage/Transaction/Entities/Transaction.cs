@@ -63,5 +63,5 @@ public class Transaction : AggregateRoot
 
     public virtual Currency Currency { get; protected internal set; } = null!;
 
-    public virtual Merchant Merchant { get; protected internal set; } = null!;
+    public virtual Merchant? Merchant { get; protected internal set; } = null;
 }

@@ -70,7 +70,8 @@
     },
     "transactions": {
       "create": "Transaction has been successfully created.",
-      "update": "Transaction has been successfully updated."
+      "update": "Transaction has been successfully updated.",
+      "delete": "Transaction has been successfully deleted."
     }
   },
 
@@ -171,6 +172,7 @@
     "tableAmountHeader": "Amount",
     "tableDateHeader": "Date",
     "tableDescriptionHeader": "Description",
+    "tableDeleteTransactionTooltip": "Delete",
 
     "typeExpense": "Expense",
     "typeIncome": "Income",
@@ -194,6 +196,9 @@
     "detailsTypeHeader": "Type",
     "detailsAmountHeader": "Amount",
     "detailsDateHeader": "Date",
-    "detailsDescriptionHeader": "Description"
+    "detailsDescriptionHeader": "Description",
+
+    "deleteTransactionHeader": "Delete transaction",
+    "deleteTransactionContent": "Are you sure you want to delete this transaction ?"
   }
 }

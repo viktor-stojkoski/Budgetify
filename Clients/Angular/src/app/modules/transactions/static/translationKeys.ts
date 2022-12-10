@@ -12,7 +12,7 @@ export class TranslationKeys {
   public static readonly tableAmountHeader = 'transactions.tableAmountHeader';
   public static readonly tableDateHeader = 'transactions.tableDateHeader';
   public static readonly tableDescriptionHeader = 'transactions.tableDescriptionHeader';
-  // public static readonly tableDeleteTransactionTooltip = 'transactions.tableDeleteTransactionTooltip';
+  public static readonly tableDeleteTransactionTooltip = 'transactions.tableDeleteTransactionTooltip';
 
   public static readonly createFormHeader = 'transactions.createFormHeader';
   public static readonly createFormAccountLabel = 'transactions.createFormAccountLabel';
@@ -36,7 +36,7 @@ export class TranslationKeys {
   public static readonly detailsDescriptionHeader = 'transactions.detailsDescriptionHeader';
   public static readonly updateTransactionSuccessful = 'successMessages.transactions.update';
 
-  // public static readonly deleteTransactionHeader = 'transactions.deleteTransactionHeader';
-  // public static readonly deleteTransactionContent = 'transactions.deleteTransactionContent';
-  // public static readonly deleteTransactionSuccessful = 'successMessages.transactions.delete';
+  public static readonly deleteTransactionHeader = 'transactions.deleteTransactionHeader';
+  public static readonly deleteTransactionContent = 'transactions.deleteTransactionContent';
+  public static readonly deleteTransactionSuccessful = 'successMessages.transactions.delete';
 }

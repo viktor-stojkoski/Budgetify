@@ -40,6 +40,10 @@ export class TransactionService {
     return this.baseApiService.put<void>(`${this.transactionsApiRoute}/${uid}`, request);
   }
 
+  public deleteTransaction(uid: string | null): Observable<void> {
+    return this.baseApiService.delete<void>(`${this.transactionsApiRoute}/${uid}`);
+  }
+
   public getAccounts(): Observable<IResult<IAccountResponse[]>> {
     return this.baseApiService.get<IResult<IAccountResponse[]>>(this.accountsApiRoute);
   }

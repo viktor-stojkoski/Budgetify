@@ -43,7 +43,7 @@ public class GetTransactionsQueryHandler : IQueryHandler<GetTransactionsQuery, I
                     x.Account.Name,
                     x.Category.Name,
                     x.Currency.Code,
-                    x.Merchant.Name,
+                    x.Merchant == null ? null : x.Merchant.Name,
                     x.Type,
                     x.Amount,
                     x.Date,

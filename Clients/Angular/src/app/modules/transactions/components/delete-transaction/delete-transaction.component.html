@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>{{ translationKeys.deleteTransactionHeader | translate }}</h1>
+
+<div mat-dialog-content [innerHtml]="translationKeys.deleteTransactionContent | translate"></div>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="secondary" (click)="onCancelClick()">
+    {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="deleteTransaction()">
+    {{ sharedTranslationKeys.mainActionButtonOk | translate }}
+  </button>
+</div>

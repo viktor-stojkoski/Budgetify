@@ -70,7 +70,8 @@
     },
     "transactions": {
       "create": "Трансакцијата е успешно искреирана.",
-      "update": "Трансакцијата е успешно уредена."
+      "update": "Трансакцијата е успешно уредена.",
+      "delete": "Трансакцијата е успешно избришана."
     }
   },
 
@@ -171,6 +172,7 @@
     "tableAmountHeader": "Износ",
     "tableDateHeader": "Датум",
     "tableDescriptionHeader": "Опис",
+    "tableDeleteTransactionTooltip": "Избриши",
 
     "typeExpense": "Трошок",
     "typeIncome": "Приход",
@@ -194,6 +196,9 @@
     "detailsTypeHeader": "Тип",
     "detailsAmountHeader": "Износ",
     "detailsDateHeader": "Датум",
-    "detailsDescriptionHeader": "Опис"
+    "detailsDescriptionHeader": "Опис",
+
+    "deleteTransactionHeader": "Избриши трансакција",
+    "deleteTransactionContent": "Дали сте сигурни дека сакате да ја избришете оваа трансакција ?"
   }
 }

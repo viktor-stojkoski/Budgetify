@@ -55,3 +55,7 @@ export interface IUpdateTransactionRequest {
   date: Date | null;
   description: string | null;
 }
+
+export interface IDeleteTransactionDialogData {
+  uid: string;
+}
