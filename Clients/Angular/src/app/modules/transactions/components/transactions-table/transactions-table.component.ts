@@ -12,10 +12,11 @@ import {
 } from '@budgetify/shared';
 import { take, takeUntil } from 'rxjs';
 import { TransactionType } from '../../models/transaction.enum';
-import { ITransactionResponse } from '../../models/transaction.model';
+import { IDeleteTransactionDialogData, ITransactionResponse } from '../../models/transaction.model';
 import { TransactionService } from '../../services/transaction.service';
 import { TranslationKeys } from '../../static/translationKeys';
 import { CreateTransactionComponent } from '../create-transaction/create-transaction.component';
+import { DeleteTransactionComponent } from '../delete-transaction/delete-transaction.component';
 
 @Component({
   selector: 'app-transactions-table',
@@ -33,7 +34,8 @@ export class TransactionsTableComponent extends DestroyBaseComponent implements 
     'type',
     'amount',
     'date',
-    'description'
+    'description',
+    'actions'
   ];
   public isLoading = true;
   public type = TransactionType;
@@ -69,6 +71,24 @@ export class TransactionsTableComponent extends DestroyBaseComponent implements 
   public openCreateTransactionDialog(): void {
     this.dialogService
       .open(CreateTransactionComponent)
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (response: IDialogResponseData) => {
+          if (response.action === DialogActionButton.Ok) {
+            this.getTransactions();
+          }
+        }
+      });
+  }
+
+  public openDeleteTransactionDialog(uid: string): void {
+    this.dialogService
+      .open(DeleteTransactionComponent, {
+        data: {
+          uid: uid
+        } as IDeleteTransactionDialogData
+      })
       .afterClosed()
       .pipe(takeUntil(this.destroyed$))
       .subscribe({

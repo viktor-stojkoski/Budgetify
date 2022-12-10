@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
   DestroyBaseComponent,
+  DialogActionButton,
+  DialogService,
   enumToTranslationEnum,
+  IDialogResponseData,
   SnackbarService,
   TranslationKeys as SharedTranslationKeys
 } from '@budgetify/shared';
@@ -13,11 +16,13 @@ import {
   IAccountResponse,
   ICategoryResponse,
   ICurrencyResponse,
+  IDeleteTransactionDialogData,
   IMerchantResponse,
   ITransactionResponse
 } from '../../models/transaction.model';
 import { TransactionService } from '../../services/transaction.service';
 import { TranslationKeys } from '../../static/translationKeys';
+import { DeleteTransactionComponent } from '../delete-transaction/delete-transaction.component';
 
 @Component({
   selector: 'app-transaction-details',
@@ -57,7 +62,9 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
     private transactionService: TransactionService,
     private activatedRoute: ActivatedRoute,
     private snackbarService: SnackbarService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dialogService: DialogService,
+    private router: Router
   ) {
     super();
   }
@@ -110,6 +117,24 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
           }
         });
     }
+  }
+
+  public openDeleteTransactionDialog(): void {
+    this.dialogService
+      .open(DeleteTransactionComponent, {
+        data: {
+          uid: this.transactionUid
+        } as IDeleteTransactionDialogData
+      })
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (response: IDialogResponseData) => {
+          if (response.action === DialogActionButton.Ok) {
+            this.router.navigateByUrl('transactions');
+          }
+        }
+      });
   }
 
   public displayCurrency(code: string): string {
