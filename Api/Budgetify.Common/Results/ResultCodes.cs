@@ -63,4 +63,10 @@ public static class ResultCodes
     public const string TransactionNotFound = "TRANSACTION_NOT_FOUND";
 
     #endregion
+
+    #region Exchange Rate
+
+    public const string ExchangeRateFromAndToCurrencyCannotBeEqual = "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL";
+
+    #endregion
 }
