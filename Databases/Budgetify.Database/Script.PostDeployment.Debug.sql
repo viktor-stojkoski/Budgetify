@@ -18,4 +18,5 @@ BEGIN
     :r .\Budgetify\Tables\Category\Category.Seed.sql
     :r .\Budgetify\Tables\Merchant\Merchant.Seed.sql
     :r .\Budgetify\Tables\Transaction\Transaction.Seed.sql
+    :r .\Budgetify\Tables\ExchangeRate\ExchangeRate.Seed.sql
 END
