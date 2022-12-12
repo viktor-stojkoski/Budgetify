@@ -20,7 +20,7 @@ internal class ExchangeRateConfiguration : EntityTypeConfigurationBase<ExchangeR
         builder.Property(x => x.Rate).HasColumnName("Rate").HasColumnType("decimal(10,4)").IsRequired();
 
         builder.HasOne(x => x.User).WithMany(x => x.ExchangeRates).HasForeignKey(x => x.UserId);
-        builder.HasOne(x => x.FromCurrency).WithMany(x => x.ExchangeRateFromCurrencies).HasForeignKey(x => x.FromCurrencyId);
-        builder.HasOne(x => x.ToCurrency).WithMany(x => x.ExchangeRateToCurrencies).HasForeignKey(x => x.ToCurrencyId);
+        builder.HasOne(x => x.FromCurrency).WithMany(x => x.ExchangeRatesFromCurrency).HasForeignKey(x => x.FromCurrencyId);
+        builder.HasOne(x => x.ToCurrency).WithMany(x => x.ExchangeRatesToCurrency).HasForeignKey(x => x.ToCurrencyId);
     }
 }

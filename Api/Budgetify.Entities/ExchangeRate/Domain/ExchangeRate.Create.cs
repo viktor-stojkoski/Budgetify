@@ -1,4 +1,5 @@
 ﻿namespace Budgetify.Entities.ExchangeRate.Domain;
+
 using System;
 
 using Budgetify.Common.Results;

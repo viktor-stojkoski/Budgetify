@@ -34,7 +34,7 @@ public class Currency : AggregateRoot
 
     public virtual ICollection<Transaction> Transactions { get; protected internal set; } = new List<Transaction>();
 
-    public virtual ICollection<ExchangeRate> ExchangeRateFromCurrencies { get; protected internal set; } = new List<ExchangeRate>();
+    public virtual ICollection<ExchangeRate> ExchangeRatesFromCurrency { get; protected internal set; } = new List<ExchangeRate>();
 
-    public virtual ICollection<ExchangeRate> ExchangeRateToCurrencies { get; protected internal set; } = new List<ExchangeRate>();
+    public virtual ICollection<ExchangeRate> ExchangeRatesToCurrency { get; protected internal set; } = new List<ExchangeRate>();
 }
