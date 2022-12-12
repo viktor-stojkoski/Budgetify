@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 using Budgetify.Storage.Account.Entities;
 using Budgetify.Storage.Common.Entities;
+using Budgetify.Storage.ExchangeRate.Entities;
 using Budgetify.Storage.Transaction.Entities;
 
 public class Currency : AggregateRoot
@@ -32,4 +33,8 @@ public class Currency : AggregateRoot
     public virtual ICollection<Account> Accounts { get; protected internal set; } = new List<Account>();
 
     public virtual ICollection<Transaction> Transactions { get; protected internal set; } = new List<Transaction>();
+
+    public virtual ICollection<ExchangeRate> ExchangeRatesFromCurrency { get; protected internal set; } = new List<ExchangeRate>();
+
+    public virtual ICollection<ExchangeRate> ExchangeRatesToCurrency { get; protected internal set; } = new List<ExchangeRate>();
 }

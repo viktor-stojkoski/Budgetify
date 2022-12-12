@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Budgetify.Queries.Account.Entities;
 using Budgetify.Queries.Category.Entities;
 using Budgetify.Queries.Common.Entities;
+using Budgetify.Queries.ExchangeRate.Entities;
 using Budgetify.Queries.Merchant.Entities;
 using Budgetify.Queries.Transaction.Entities;
 
@@ -37,4 +38,6 @@ public class User : Entity
     public virtual ICollection<Merchant> Merchants { get; protected internal set; } = new List<Merchant>();
 
     public virtual ICollection<Transaction> Transactions { get; protected internal set; } = new List<Transaction>();
+
+    public virtual ICollection<ExchangeRate> ExchangeRates { get; protected internal set; } = new List<ExchangeRate>();
 }
