@@ -67,6 +67,7 @@ public static class ResultCodes
     #region Exchange Rate
 
     public const string ExchangeRateFromAndToCurrencyCannotBeEqual = "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL";
+    public const string ExchangeRateFromDateCannotBeGreaterThanToDate = "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE";
 
     #endregion
 }

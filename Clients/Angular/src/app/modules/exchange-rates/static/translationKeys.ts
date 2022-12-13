@@ -6,18 +6,24 @@ export class TranslationKeys {
   public static readonly tableNoDataFound = 'exchangeRates.tableNoDataFound';
   public static readonly tableFromCurrencyCodeHeader = 'exchangeRates.tableFromCurrencyCodeHeader';
   public static readonly tableToCurrencyCodeHeader = 'exchangeRates.tableToCurrencyCodeHeader';
+  public static readonly tableFromDateHeader = 'exchangeRates.tableFromDateHeader';
+  public static readonly tableToDateHeader = 'exchangeRates.tableToDateHeader';
   public static readonly tableRateHeader = 'exchangeRates.tableRateHeader';
   // public static readonly tableDeleteExchangeRateTooltip = 'exchangeRates.tableDeleteExchangeRateTooltip';
 
   // public static readonly createFormHeader = 'exchangeRates.createFormHeader';
   // public static readonly createFormFromCurrencyCodeLabel = 'exchangeRates.createFormFromCurrencyCodeLabel';
   // public static readonly createFormToCurrencyCodeLabel = 'exchangeRates.createFormToCurrencyCodeLabel';
+  // public static readonly createFormFromDateLabel = 'exchangeRates.createFormFromDateLabel';
+  // public static readonly createFormToDateLabel = 'exchangeRates.createFormToDateLabel';
   // public static readonly createFormRateLabel = 'exchangeRates.createFormRateLabel';
   // public static readonly createExchangeRateSuccessful = 'successMessages.exchangeRates.create';
 
   // public static readonly detailsHeader = 'exchangeRates.detailsHeader';
   // public static readonly detailsFromCurrencyCodeHeader = 'exchangeRates.detailsFromCurrencyCodeHeader';
   // public static readonly detailsToCurrencyCodeHeader = 'exchangeRates.detailsToCurrencyCodeHeader';
+  // public static readonly detailsFromDateHeader = 'exchangeRates.detailsFromDateHeader';
+  // public static readonly detailsToDateHeader = 'exchangeRates.detailsToDateHeader';
   // public static readonly detailsRateHeader = 'exchangeRates.detailsRateHeader';
   // public static readonly updateExchangeRateSuccessful = 'successMessages.exchangeRates.update';
 

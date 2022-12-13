@@ -16,7 +16,7 @@ import { TranslationKeys } from '../../static/translationKeys';
 export class ExchangeRatesTableComponent extends DestroyBaseComponent implements OnInit {
   public readonly translationKeys = TranslationKeys;
   public dataSource!: MatTableDataSource<IExchangeRateResponse>;
-  public displayedColumns = ['fromCurrencyCode', 'toCurrencyCode', 'rate'];
+  public displayedColumns = ['fromCurrencyCode', 'toCurrencyCode', 'fromDate', 'toDate', 'rate'];
   public isLoading = true;
   public filterValue = '';
 

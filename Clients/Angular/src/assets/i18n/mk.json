@@ -209,6 +209,8 @@
     "tableNoDataFound": "Не беа пронајдени податоци.",
     "tableFromCurrencyCodeHeader": "Од валута",
     "tableToCurrencyCodeHeader": "До валута",
+    "tableFromDateHeader": "Од датум",
+    "tableToDateHeader": "До датум",
     "tableRateHeader": "Стапка"
   }
 }

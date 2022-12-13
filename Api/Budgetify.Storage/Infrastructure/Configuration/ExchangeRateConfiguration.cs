@@ -17,6 +17,8 @@ internal class ExchangeRateConfiguration : EntityTypeConfigurationBase<ExchangeR
         builder.Property(x => x.UserId).HasColumnName("UserFk").HasColumnType("int").IsRequired();
         builder.Property(x => x.FromCurrencyId).HasColumnName("FromCurrencyFk").HasColumnType("int").IsRequired();
         builder.Property(x => x.ToCurrencyId).HasColumnName("ToCurrencyFk").HasColumnType("int").IsRequired();
+        builder.Property(x => x.FromDate).HasColumnName("FromDate").HasColumnType("datetime2(6)");
+        builder.Property(x => x.ToDate).HasColumnName("ToDate").HasColumnType("datetime2(6)");
         builder.Property(x => x.Rate).HasColumnName("Rate").HasColumnType("decimal(10,4)").IsRequired();
 
         builder.HasOne(x => x.User).WithMany(x => x.ExchangeRates).HasForeignKey(x => x.UserId);

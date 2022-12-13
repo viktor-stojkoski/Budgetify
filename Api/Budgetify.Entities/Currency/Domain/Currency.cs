@@ -19,17 +19,17 @@ public sealed partial class Currency : AggregateRoot
     }
 
     /// <summary>
-    /// Currency name.
+    /// Currency's name.
     /// </summary>
     public CurrencyNameValue Name { get; private set; }
 
     /// <summary>
-    /// Currency code.
+    /// Currency's code.
     /// </summary>
     public CurrencyCodeValue Code { get; private set; }
 
     /// <summary>
-    /// Currency symbol.
+    /// Currency's symbol.
     /// </summary>
     public CurrencySymbolValue Symbol { get; private set; }
 }
