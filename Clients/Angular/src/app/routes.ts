@@ -31,5 +31,10 @@ export const routes: Route[] = [
     path: 'transactions',
     canActivateChild: [MsalGuard],
     loadChildren: () => import('./modules/transactions/transactions.module').then((m) => m.TransactionsModule)
+  },
+  {
+    path: 'exchange-rates',
+    canActivateChild: [MsalGuard],
+    loadChildren: () => import('./modules/exchange-rates/exchange-rates.module').then((m) => m.ExchangeRatesModule)
   }
 ];

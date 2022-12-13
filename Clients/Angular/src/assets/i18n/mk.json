@@ -1,8 +1,9 @@
 {
-  "navbarAccountsMenu": "Сметки",
-  "navbarTransactionsMenu": "Трансакции",
   "navbarCategoriesMenu": "Категории",
+  "navbarAccountsMenu": "Сметки",
+  "navbarExchangeRatesMenu": "Девизни курсеви",
   "navbarMerchantsMenu": "Трговци",
+  "navbarTransactionsMenu": "Трансакции",
   "navbarLoginOrRegister": "Најави се или креирај сметка",
   "navbarLogout": "Одјави се",
   "navbarLanguages": "Јазици",
@@ -200,5 +201,14 @@
 
     "deleteTransactionHeader": "Избриши трансакција",
     "deleteTransactionContent": "Дали сте сигурни дека сакате да ја избришете оваа трансакција ?"
+  },
+  "exchangeRates": {
+    "toolbarName": "Девизни курсеви",
+
+    "tableFilterLabel": "Филтер",
+    "tableNoDataFound": "Не беа пронајдени податоци.",
+    "tableFromCurrencyCodeHeader": "Од валута",
+    "tableToCurrencyCodeHeader": "До валута",
+    "tableRateHeader": "Стапка"
   }
 }

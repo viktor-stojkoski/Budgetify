@@ -1,8 +1,9 @@
 {
-  "navbarAccountsMenu": "Accounts",
-  "navbarTransactionsMenu": "Transactions",
   "navbarCategoriesMenu": "Categories",
+  "navbarAccountsMenu": "Accounts",
+  "navbarExchangeRatesMenu": "Exchange rates",
   "navbarMerchantsMenu": "Merchants",
+  "navbarTransactionsMenu": "Transactions",
   "navbarLoginOrRegister": "Log In Or Register",
   "navbarLogout": "Log out",
   "navbarLanguages": "Languages",
@@ -200,5 +201,14 @@
 
     "deleteTransactionHeader": "Delete transaction",
     "deleteTransactionContent": "Are you sure you want to delete this transaction ?"
+  },
+  "exchangeRates": {
+    "toolbarName": "Exchange rates",
+
+    "tableFilterLabel": "Filter",
+    "tableNoDataFound": "No data was found.",
+    "tableFromCurrencyCodeHeader": "From currency code",
+    "tableToCurrencyCodeHeader": "To currency code",
+    "tableRateHeader": "Rate"
   }
 }
