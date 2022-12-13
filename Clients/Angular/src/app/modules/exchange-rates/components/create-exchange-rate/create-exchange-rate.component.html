@@ -1,0 +1,57 @@
+<h1 mat-dialog-title>{{ translationKeys.createFormHeader | translate }}</h1>
+
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div mat-dialog-content *ngIf="!isLoading">
+  <form [formGroup]="exchangeRateForm">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormFromCurrencyCodeLabel | translate }}</mat-label>
+      <input type="text" matInput formControlName="fromCurrencyCode" [matAutocomplete]="fromCurrencyCode" />
+      <mat-autocomplete #fromCurrencyCode="matAutocomplete" [displayWith]="displayCurrency.bind(this)">
+        <mat-option *ngFor="let currency of filteredFromCurrencies$ | async" [value]="currency.code">
+          [{{ currency.code }}] {{ currency.name }} - {{ currency.symbol }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormToCurrencyCodeLabel | translate }}</mat-label>
+      <input type="text" matInput formControlName="toCurrencyCode" [matAutocomplete]="toCurrencyCode" />
+      <mat-autocomplete #toCurrencyCode="matAutocomplete" [displayWith]="displayCurrency.bind(this)">
+        <mat-option *ngFor="let currency of filteredToCurrencies$ | async" [value]="currency.code">
+          [{{ currency.code }}] {{ currency.name }} - {{ currency.symbol }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormFromDateLabel | translate }}</mat-label>
+      <input matInput formControlName="fromDate" [matDatepicker]="fromDatePicker" />
+      <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormToDateLabel | translate }}</mat-label>
+      <input matInput formControlName="toDate" [matDatepicker]="toDatePicker" />
+      <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #toDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormRateLabel | translate }}</mat-label>
+      <input type="number" matInput formControlName="rate" />
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="secondary" (click)="onCancelClick()">
+    {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="createExchangeRate()">
+    {{ sharedTranslationKeys.mainActionButtonOk | translate }}
+  </button>
+</div>

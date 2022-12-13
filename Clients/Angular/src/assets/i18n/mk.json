@@ -50,7 +50,10 @@
 
     "TRANSACTION_TYPE_INVALID": "Типот на трансакцијата е невалиден.",
     "TRANSACTION_EMPTY_MERCHANT_TYPE_INVALID": "Не е возможно да искреирате трошок без трговец.",
-    "TRANSACTION_NOT_FOUND": "Трансакцијата не е пронајдена."
+    "TRANSACTION_NOT_FOUND": "Трансакцијата не е пронајдена.",
+
+    "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL": "Од валута и до валута на курсот не можат да бидат еднакви.",
+    "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Од датумот на курсот не може да биде поголем од до датумот."
   },
 
   "successMessages": {
@@ -73,6 +76,9 @@
       "create": "Трансакцијата е успешно искреирана.",
       "update": "Трансакцијата е успешно уредена.",
       "delete": "Трансакцијата е успешно избришана."
+    },
+    "exchangeRates": {
+      "create": "Девизниот курс е успешно искреиран."
     }
   },
 
@@ -204,6 +210,7 @@
   },
   "exchangeRates": {
     "toolbarName": "Девизни курсеви",
+    "toolbarActionCreateExchangeRate": "Креирај девизен курс",
 
     "tableFilterLabel": "Филтер",
     "tableNoDataFound": "Не беа пронајдени податоци.",
@@ -211,6 +218,13 @@
     "tableToCurrencyCodeHeader": "До валута",
     "tableFromDateHeader": "Од датум",
     "tableToDateHeader": "До датум",
-    "tableRateHeader": "Стапка"
+    "tableRateHeader": "Стапка",
+
+    "createFormHeader": "Креирај девизен курс",
+    "createFormFromCurrencyCodeLabel": "Од валута",
+    "createFormToCurrencyCodeLabel": "До валута",
+    "createFormFromDateLabel": "Од датум",
+    "createFormToDateLabel": "До датум",
+    "createFormRateLabel": "Стапка"
   }
 }

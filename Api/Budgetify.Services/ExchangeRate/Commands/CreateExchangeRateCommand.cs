@@ -66,7 +66,7 @@ public class CreateExchangeRateCommandHandler : ICommandHandler<CreateExchangeRa
                 userId: _currentUser.Id,
                 fromCurrencyId: fromCurrencyResult.Value.Id,
                 toCurrencyId: toCurrencyResult.Value.Id,
-                fromDate: command.ToDate?.ToLocalTime(),
+                fromDate: command.FromDate?.ToLocalTime(),
                 toDate: command.ToDate?.ToLocalTime(),
                 rate: command.Rate);
 
