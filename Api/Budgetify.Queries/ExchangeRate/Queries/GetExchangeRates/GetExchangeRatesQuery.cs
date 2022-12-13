@@ -40,6 +40,8 @@ public class GetExchangeRatesQueryHandler : IQueryHandler<GetExchangeRatesQuery,
                     x.Uid,
                     x.FromCurrency.Code,
                     x.ToCurrency.Code,
+                    x.FromDate,
+                    x.ToDate,
                     x.Rate))
                 .ToListAsync();
 

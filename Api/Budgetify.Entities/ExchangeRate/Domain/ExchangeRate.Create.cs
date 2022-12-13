@@ -4,6 +4,7 @@ using System;
 
 using Budgetify.Common.Results;
 using Budgetify.Entities.Common.Enumerations;
+using Budgetify.Entities.ExchangeRate.ValueObjects;
 
 public partial class ExchangeRate
 {
@@ -18,8 +19,17 @@ public partial class ExchangeRate
         int userId,
         int fromCurrencyId,
         int toCurrencyId,
+        DateTime? fromDate,
+        DateTime? toDate,
         decimal rate)
     {
+        Result<ExchangeRateDateRangeValue> dateRangeValue = ExchangeRateDateRangeValue.Create(fromDate, toDate);
+
+        if (dateRangeValue.IsFailureOrNull)
+        {
+            return Result.FromError<ExchangeRate>(dateRangeValue);
+        }
+
         if (fromCurrencyId == toCurrencyId)
         {
             return Result.Invalid<ExchangeRate>(ResultCodes.ExchangeRateFromAndToCurrencyCannotBeEqual);
@@ -30,6 +40,7 @@ public partial class ExchangeRate
                 userId: userId,
                 fromCurrencyId: fromCurrencyId,
                 toCurrencyId: toCurrencyId,
+                dateRange: dateRangeValue.Value,
                 rate: rate)
             {
                 Id = id,
@@ -47,8 +58,17 @@ public partial class ExchangeRate
         int userId,
         int fromCurrencyId,
         int toCurrencyId,
+        DateTime? fromDate,
+        DateTime? toDate,
         decimal rate)
     {
+        Result<ExchangeRateDateRangeValue> dateRangeValue = ExchangeRateDateRangeValue.Create(fromDate, toDate);
+
+        if (dateRangeValue.IsFailureOrNull)
+        {
+            return Result.FromError<ExchangeRate>(dateRangeValue);
+        }
+
         if (fromCurrencyId == toCurrencyId)
         {
             return Result.Invalid<ExchangeRate>(ResultCodes.ExchangeRateFromAndToCurrencyCannotBeEqual);
@@ -59,6 +79,7 @@ public partial class ExchangeRate
                 userId: userId,
                 fromCurrencyId: fromCurrencyId,
                 toCurrencyId: toCurrencyId,
+                dateRange: dateRangeValue.Value,
                 rate: rate)
             {
                 Uid = Guid.NewGuid(),

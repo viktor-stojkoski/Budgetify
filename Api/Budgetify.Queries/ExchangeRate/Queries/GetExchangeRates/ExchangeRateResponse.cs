@@ -8,11 +8,15 @@ public class ExchangeRateResponse
         Guid uid,
         string fromCurrencyCode,
         string toCurrencyCode,
+        DateTime? fromDate,
+        DateTime? toDate,
         decimal rate)
     {
         Uid = uid;
         FromCurrencyCode = fromCurrencyCode;
         ToCurrencyCode = toCurrencyCode;
+        FromDate = fromDate;
+        ToDate = toDate;
         Rate = rate;
     }
 
@@ -21,6 +25,10 @@ public class ExchangeRateResponse
     public string FromCurrencyCode { get; set; }
 
     public string ToCurrencyCode { get; set; }
+
+    public DateTime? FromDate { get; set; }
+
+    public DateTime? ToDate { get; set; }
 
     public decimal Rate { get; set; }
 }
