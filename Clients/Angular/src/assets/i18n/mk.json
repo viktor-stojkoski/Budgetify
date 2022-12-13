@@ -200,5 +200,14 @@
 
     "deleteTransactionHeader": "Избриши трансакција",
     "deleteTransactionContent": "Дали сте сигурни дека сакате да ја избришете оваа трансакција ?"
+  },
+  "exchangeRates": {
+    "toolbarName": "Девизни курсеви",
+
+    "tableFilterLabel": "Филтер",
+    "tableNoDataFound": "Не беа пронајдени податоци.",
+    "tableFromCurrencyCodeHeader": "Од валута",
+    "tableToCurrencyCodeHeader": "До валута",
+    "tableRateHeader": "Стапка"
   }
 }
