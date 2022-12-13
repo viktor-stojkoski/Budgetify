@@ -1,8 +1,9 @@
 {
-  "navbarAccountsMenu": "Accounts",
-  "navbarTransactionsMenu": "Transactions",
   "navbarCategoriesMenu": "Categories",
+  "navbarAccountsMenu": "Accounts",
+  "navbarExchangeRatesMenu": "Exchange rates",
   "navbarMerchantsMenu": "Merchants",
+  "navbarTransactionsMenu": "Transactions",
   "navbarLoginOrRegister": "Log In Or Register",
   "navbarLogout": "Log out",
   "navbarLanguages": "Languages",

@@ -1,8 +1,9 @@
 {
-  "navbarAccountsMenu": "Сметки",
-  "navbarTransactionsMenu": "Трансакции",
   "navbarCategoriesMenu": "Категории",
+  "navbarAccountsMenu": "Сметки",
+  "navbarExchangeRatesMenu": "Девизни курсеви",
   "navbarMerchantsMenu": "Трговци",
+  "navbarTransactionsMenu": "Трансакции",
   "navbarLoginOrRegister": "Најави се или креирај сметка",
   "navbarLogout": "Одјави се",
   "navbarLanguages": "Јазици",

@@ -7,17 +7,20 @@
     <!-- <img /> -->
 
     <div fxShow="true" fxHide.lt-md *ngIf="isAuthenticated">
-      <a mat-button [routerLink]="'/accounts'" routerLinkActive="mat-accent">
-        {{ translationKeys.navbarAccountsMenu | translate }}
-      </a>
-      <a mat-button [routerLink]="'/transactions'" routerLinkActive="mat-accent">
-        {{ translationKeys.navbarTransactionsMenu | translate }}
-      </a>
       <a mat-button [routerLink]="'/categories'" routerLinkActive="mat-accent">
         {{ translationKeys.navbarCategoriesMenu | translate }}
       </a>
+      <a mat-button [routerLink]="'/exchange-rates'" routerLinkActive="mat-accent">
+        {{ translationKeys.navbarExchangeRatesMenu | translate }}
+      </a>
+      <a mat-button [routerLink]="'/accounts'" routerLinkActive="mat-accent">
+        {{ translationKeys.navbarAccountsMenu | translate }}
+      </a>
       <a mat-button [routerLink]="'/merchants'" routerLinkActive="mat-accent">
         {{ translationKeys.navbarMerchantsMenu | translate }}
+      </a>
+      <a mat-button [routerLink]="'/transactions'" routerLinkActive="mat-accent">
+        {{ translationKeys.navbarTransactionsMenu | translate }}
       </a>
     </div>
 
@@ -46,17 +49,20 @@
   <mat-sidenav #sidenav>
     <mat-nav-list>
       <div *ngIf="isAuthenticated">
-        <a [routerLink]="'/accounts'" routerLinkActive="mat-accent" mat-list-item (click)="sidenav.toggle()">
-          {{ translationKeys.navbarAccountsMenu | translate }}
-        </a>
-        <a [routerLink]="'/transactions'" routerLinkActive="mat-accent" mat-list-item (click)="sidenav.toggle()">
-          {{ translationKeys.navbarTransactionsMenu | translate }}
-        </a>
         <a [routerLink]="'/categories'" routerLinkActive="mat-accent" mat-list-item (click)="sidenav.toggle()">
           {{ translationKeys.navbarCategoriesMenu | translate }}
         </a>
+        <a [routerLink]="'/exchange-rates'" routerLinkActive="mat-accent" mat-list-item (click)="sidenav.toggle()">
+          {{ translationKeys.navbarExchangeRatesMenu | translate }}
+        </a>
+        <a [routerLink]="'/accounts'" routerLinkActive="mat-accent" mat-list-item (click)="sidenav.toggle()">
+          {{ translationKeys.navbarAccountsMenu | translate }}
+        </a>
         <a [routerLink]="'/merchants'" routerLinkActive="mat-accent" mat-list-item (click)="sidenav.toggle()">
           {{ translationKeys.navbarMerchantsMenu | translate }}
+        </a>
+        <a [routerLink]="'/transactions'" routerLinkActive="mat-accent" mat-list-item (click)="sidenav.toggle()">
+          {{ translationKeys.navbarTransactionsMenu | translate }}
         </a>
 
         <mat-divider></mat-divider>

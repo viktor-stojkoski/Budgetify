@@ -1,4 +1,5 @@
 ﻿namespace Budgetify.Queries.ExchangeRate.Queries.GetExchangeRates;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
