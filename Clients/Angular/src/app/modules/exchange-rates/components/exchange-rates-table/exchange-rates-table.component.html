@@ -26,6 +26,16 @@
     <td mat-cell *matCellDef="let exchangeRate">{{ exchangeRate.toCurrencyCode }}</td>
   </ng-container>
 
+  <ng-container matColumnDef="fromDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableFromDateHeader | translate }}</th>
+    <td mat-cell *matCellDef="let exchangeRate">{{ exchangeRate.fromDate | date }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="toDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableToDateHeader | translate }}</th>
+    <td mat-cell *matCellDef="let exchangeRate">{{ exchangeRate.toDate | date }}</td>
+  </ng-container>
+
   <ng-container matColumnDef="rate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableRateHeader | translate }}</th>
     <td mat-cell *matCellDef="let exchangeRate">{{ exchangeRate.rate }}</td>

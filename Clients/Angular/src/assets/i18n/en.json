@@ -209,6 +209,8 @@
     "tableNoDataFound": "No data was found.",
     "tableFromCurrencyCodeHeader": "From currency code",
     "tableToCurrencyCodeHeader": "To currency code",
+    "tableFromDateHeader": "From date",
+    "tableToDateHeader": "To date",
     "tableRateHeader": "Rate"
   }
 }
