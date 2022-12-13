@@ -2,11 +2,14 @@
 
 using System.Threading.Tasks;
 
+using Budgetify.Contracts.ExchangeRate.Requests;
 using Budgetify.Queries.ExchangeRate.Queries.GetExchangeRates;
+using Budgetify.Services.ExchangeRate.Commands;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using VS.Commands;
 using VS.Queries;
 
 [Route("api/exchange-rates")]
@@ -15,13 +18,28 @@ using VS.Queries;
 public class ExchangeRatesController : ExtendedApiController
 {
     private readonly IQueryDispatcher _queryDispatcher;
+    private readonly ICommandDispatcher _commandDispatcher;
 
-    public ExchangeRatesController(IQueryDispatcher queryDispatcher)
+    public ExchangeRatesController(
+        IQueryDispatcher queryDispatcher,
+        ICommandDispatcher commandDispatcher)
     {
         _queryDispatcher = queryDispatcher;
+        _commandDispatcher = commandDispatcher;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetExchangeRatesAsync() =>
         OkOrError(await _queryDispatcher.ExecuteAsync(new GetExchangeRatesQuery()));
+
+    [HttpPost]
+    public async Task<IActionResult> CreateExchangeRateAsync([FromBody] CreateExchangeRateRequest request) =>
+        OkOrError(await _commandDispatcher.ExecuteAsync(
+            new CreateExchangeRateCommand(
+                FromCurrencyCode: request.FromCurrencyCode,
+                ToCurrencyCode: request.ToCurrencyCode,
+                FromDate: request.FromDate,
+                ToDate: request.ToDate,
+                Rate: request.Rate)));
+
 }
