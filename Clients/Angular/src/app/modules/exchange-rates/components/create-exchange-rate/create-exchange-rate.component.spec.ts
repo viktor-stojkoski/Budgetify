@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AppModule } from '../../../../app.module';
+import { ExchangeRatesModule } from '../../exchange-rates.module';
 
 import { CreateExchangeRateComponent } from './create-exchange-rate.component';
 
@@ -8,9 +10,9 @@ describe('CreateExchangeRateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateExchangeRateComponent ]
-    })
-    .compileComponents();
+      imports: [ExchangeRatesModule, AppModule],
+      declarations: [CreateExchangeRateComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CreateExchangeRateComponent);
     component = fixture.componentInstance;
