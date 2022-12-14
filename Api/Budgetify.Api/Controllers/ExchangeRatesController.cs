@@ -39,7 +39,6 @@ public class ExchangeRatesController : ExtendedApiController
                 FromCurrencyCode: request.FromCurrencyCode,
                 ToCurrencyCode: request.ToCurrencyCode,
                 FromDate: request.FromDate,
-                ToDate: request.ToDate,
                 Rate: request.Rate)));
 
 }

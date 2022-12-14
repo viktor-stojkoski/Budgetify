@@ -16,6 +16,5 @@ export interface ICreateExchangeRateRequest {
   fromCurrencyCode: string | null;
   toCurrencyCode: string | null;
   fromDate: Date | null;
-  toDate: Date | null;
   rate: number | null;
 }

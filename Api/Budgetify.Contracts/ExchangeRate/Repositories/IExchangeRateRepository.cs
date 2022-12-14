@@ -1,5 +1,8 @@
 ﻿namespace Budgetify.Contracts.ExchangeRate.Repositories;
 
+using System.Threading.Tasks;
+
+using Budgetify.Common.Results;
 using Budgetify.Entities.ExchangeRate.Domain;
 
 public interface IExchangeRateRepository
@@ -13,4 +16,9 @@ public interface IExchangeRateRepository
     /// Updates exchange rate.
     /// </summary>
     void Update(ExchangeRate exchangeRate);
+
+    /// <summary>
+    /// Returns exchange rate from the given currencies id.
+    /// </summary>
+    Task<Result<ExchangeRate>> GetExchangeRateByCurrencies(int fromCurrencyId, int toCurrencyId);
 }

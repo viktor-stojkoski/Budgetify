@@ -59,10 +59,9 @@ public partial class ExchangeRate
         int fromCurrencyId,
         int toCurrencyId,
         DateTime? fromDate,
-        DateTime? toDate,
         decimal rate)
     {
-        Result<ExchangeRateDateRangeValue> dateRangeValue = ExchangeRateDateRangeValue.Create(fromDate, toDate);
+        Result<ExchangeRateDateRangeValue> dateRangeValue = ExchangeRateDateRangeValue.Create(fromDate, null);
 
         if (dateRangeValue.IsFailureOrNull)
         {

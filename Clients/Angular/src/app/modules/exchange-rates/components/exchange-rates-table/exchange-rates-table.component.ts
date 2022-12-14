@@ -60,7 +60,7 @@ export class ExchangeRatesTableComponent extends DestroyBaseComponent implements
       .pipe(takeUntil(this.destroyed$))
       .subscribe({
         next: (response: IDialogResponseData) => {
-          if (response.action === DialogActionButton.Ok) {
+          if (response?.action === DialogActionButton.Ok) {
             this.getExchangeRates();
           }
         }

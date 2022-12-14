@@ -15,7 +15,6 @@ export class TranslationKeys {
   public static readonly createFormFromCurrencyCodeLabel = 'exchangeRates.createFormFromCurrencyCodeLabel';
   public static readonly createFormToCurrencyCodeLabel = 'exchangeRates.createFormToCurrencyCodeLabel';
   public static readonly createFormFromDateLabel = 'exchangeRates.createFormFromDateLabel';
-  public static readonly createFormToDateLabel = 'exchangeRates.createFormToDateLabel';
   public static readonly createFormRateLabel = 'exchangeRates.createFormRateLabel';
   public static readonly createExchangeRateSuccessful = 'successMessages.exchangeRates.create';
 

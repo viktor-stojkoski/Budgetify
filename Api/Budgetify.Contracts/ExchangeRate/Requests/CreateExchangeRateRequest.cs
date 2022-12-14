@@ -10,7 +10,5 @@ public class CreateExchangeRateRequest
 
     public DateTime? FromDate { get; set; }
 
-    public DateTime? ToDate { get; set; }
-
     public decimal Rate { get; set; }
 }

@@ -31,7 +31,6 @@ export class CreateExchangeRateComponent extends DestroyBaseComponent implements
     fromCurrencyCode: ['', Validators.required],
     toCurrencyCode: ['', Validators.required],
     fromDate: [new Date()],
-    toDate: [new Date()],
     rate: [0, Validators.required]
   });
 
@@ -55,7 +54,6 @@ export class CreateExchangeRateComponent extends DestroyBaseComponent implements
           fromCurrencyCode: this.exchangeRateForm.controls.fromCurrencyCode.value,
           toCurrencyCode: this.exchangeRateForm.controls.toCurrencyCode.value,
           fromDate: this.exchangeRateForm.controls.fromDate.value,
-          toDate: this.exchangeRateForm.controls.toDate.value,
           rate: this.exchangeRateForm.controls.rate.value
         })
         .pipe(take(1))

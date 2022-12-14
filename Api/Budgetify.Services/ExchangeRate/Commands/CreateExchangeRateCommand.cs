@@ -18,7 +18,6 @@ public record CreateExchangeRateCommand(
     string? FromCurrencyCode,
     string? ToCurrencyCode,
     DateTime? FromDate,
-    DateTime? ToDate,
     decimal Rate) : ICommand;
 
 public class CreateExchangeRateCommandHandler : ICommandHandler<CreateExchangeRateCommand>
@@ -60,6 +59,34 @@ public class CreateExchangeRateCommandHandler : ICommandHandler<CreateExchangeRa
             return result.FailWith(toCurrencyResult);
         }
 
+        Result<ExchangeRate> existingExchangeRateResult =
+            await _exchangeRateRepository.GetExchangeRateByCurrencies(
+                fromCurrencyId: fromCurrencyResult.Value.Id,
+                toCurrencyId: toCurrencyResult.Value.Id);
+
+        if (existingExchangeRateResult.IsFailureOrNull && !existingExchangeRateResult.IsNotFound)
+        {
+            return result.FailWith(existingExchangeRateResult);
+        }
+
+        if (existingExchangeRateResult.IsSuccess)
+        {
+            if (!command.FromDate.HasValue)
+            {
+                return result.FailWith(Result.Invalid(ResultCodes.ExchangeRateExistsFromDateCannotBeEmpty));
+            }
+
+            Result closedResult =
+                existingExchangeRateResult.Value.Close(command.FromDate.Value.ToLocalTime().AddDays(-1));
+
+            if (closedResult.IsFailureOrNull)
+            {
+                return result.FailWith(closedResult);
+            }
+
+            _exchangeRateRepository.Update(existingExchangeRateResult.Value);
+        }
+
         Result<ExchangeRate> exchangeRateResult =
             ExchangeRate.Create(
                 createdOn: DateTime.UtcNow,
@@ -67,7 +94,6 @@ public class CreateExchangeRateCommandHandler : ICommandHandler<CreateExchangeRa
                 fromCurrencyId: fromCurrencyResult.Value.Id,
                 toCurrencyId: toCurrencyResult.Value.Id,
                 fromDate: command.FromDate?.ToLocalTime(),
-                toDate: command.ToDate?.ToLocalTime(),
                 rate: command.Rate);
 
         if (exchangeRateResult.IsFailureOrNull)
