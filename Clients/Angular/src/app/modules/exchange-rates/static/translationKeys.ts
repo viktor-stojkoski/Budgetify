@@ -18,12 +18,12 @@ export class TranslationKeys {
   public static readonly createFormRateLabel = 'exchangeRates.createFormRateLabel';
   public static readonly createExchangeRateSuccessful = 'successMessages.exchangeRates.create';
 
-  // public static readonly detailsHeader = 'exchangeRates.detailsHeader';
-  // public static readonly detailsFromCurrencyCodeHeader = 'exchangeRates.detailsFromCurrencyCodeHeader';
-  // public static readonly detailsToCurrencyCodeHeader = 'exchangeRates.detailsToCurrencyCodeHeader';
-  // public static readonly detailsFromDateHeader = 'exchangeRates.detailsFromDateHeader';
-  // public static readonly detailsToDateHeader = 'exchangeRates.detailsToDateHeader';
-  // public static readonly detailsRateHeader = 'exchangeRates.detailsRateHeader';
+  public static readonly detailsHeader = 'exchangeRates.detailsHeader';
+  public static readonly detailsFromCurrencyCodeHeader = 'exchangeRates.detailsFromCurrencyCodeHeader';
+  public static readonly detailsToCurrencyCodeHeader = 'exchangeRates.detailsToCurrencyCodeHeader';
+  public static readonly detailsFromDateHeader = 'exchangeRates.detailsFromDateHeader';
+  public static readonly detailsToDateHeader = 'exchangeRates.detailsToDateHeader';
+  public static readonly detailsRateHeader = 'exchangeRates.detailsRateHeader';
   // public static readonly updateExchangeRateSuccessful = 'successMessages.exchangeRates.update';
 
   // public static readonly deleteExchangeRateHeader = 'exchangeRates.deleteExchangeRateHeader';

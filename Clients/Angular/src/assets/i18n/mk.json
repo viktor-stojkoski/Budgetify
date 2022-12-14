@@ -226,6 +226,13 @@
     "createFormFromCurrencyCodeLabel": "Од валута",
     "createFormToCurrencyCodeLabel": "До валута",
     "createFormFromDateLabel": "Од датум",
-    "createFormRateLabel": "Стапка"
+    "createFormRateLabel": "Стапка",
+
+    "detailsHeader": "Детали за девизниот курс",
+    "detailsFromCurrencyCodeHeader": "Од валута",
+    "detailsToCurrencyCodeHeader": "До валута",
+    "detailsFromDateHeader": "Од датум",
+    "detailsToDateHeader": "До датум",
+    "detailsRateHeader": "Стапка"
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import {
   DestroyBaseComponent,
   DialogActionButton,
@@ -44,7 +45,8 @@ export class ExchangeRatesTableComponent extends DestroyBaseComponent implements
   constructor(
     private exchangeRateService: ExchangeRateService,
     private snackbarService: SnackbarService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private router: Router
   ) {
     super();
   }
@@ -65,6 +67,10 @@ export class ExchangeRatesTableComponent extends DestroyBaseComponent implements
           }
         }
       });
+  }
+
+  public openExchangeRateDetails(uid: string): void {
+    this.router.navigateByUrl(`exchange-rates/${uid}`);
   }
 
   public applyFilter(event: Event): void {

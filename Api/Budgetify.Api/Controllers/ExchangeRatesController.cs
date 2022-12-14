@@ -1,8 +1,10 @@
 ﻿namespace Budgetify.Api.Controllers;
 
+using System;
 using System.Threading.Tasks;
 
 using Budgetify.Contracts.ExchangeRate.Requests;
+using Budgetify.Queries.ExchangeRate.Queries.GetExchangeRate;
 using Budgetify.Queries.ExchangeRate.Queries.GetExchangeRates;
 using Budgetify.Services.ExchangeRate.Commands;
 
@@ -31,6 +33,10 @@ public class ExchangeRatesController : ExtendedApiController
     [HttpGet]
     public async Task<IActionResult> GetExchangeRatesAsync() =>
         OkOrError(await _queryDispatcher.ExecuteAsync(new GetExchangeRatesQuery()));
+
+    [HttpGet("{exchangeRateUid:Guid}")]
+    public async Task<IActionResult> GetExchangeRateAsync([FromRoute] Guid exchangeRateUid) =>
+        OkOrError(await _queryDispatcher.ExecuteAsync(new GetExchangeRateQuery(exchangeRateUid)));
 
     [HttpPost]
     public async Task<IActionResult> CreateExchangeRateAsync([FromBody] CreateExchangeRateRequest request) =>
