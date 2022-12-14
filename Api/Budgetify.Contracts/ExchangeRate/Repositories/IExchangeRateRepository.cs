@@ -20,5 +20,5 @@ public interface IExchangeRateRepository
     /// <summary>
     /// Returns exchange rate from the given currencies id.
     /// </summary>
-    Task<Result<ExchangeRate>> GetExchangeRateByCurrencies(int fromCurrencyId, int toCurrencyId);
+    Task<Result<ExchangeRate>> GetExchangeRateByCurrenciesWithoutToDate(int fromCurrencyId, int toCurrencyId);
 }

@@ -17,24 +17,26 @@ public class ExchangeRateRepository : Repository<Entities.ExchangeRate>, IExchan
     public ExchangeRateRepository(IBudgetifyDbContext budgetifyDbContext)
         : base(budgetifyDbContext) { }
 
-    public void Insert(Budgetify.Entities.ExchangeRate.Domain.ExchangeRate exchangeRate)
+    public void Insert(ExchangeRate exchangeRate)
     {
         Entities.ExchangeRate dbExchangeRate = exchangeRate.CreateExchangeRate();
 
         Insert(dbExchangeRate);
     }
 
-    public void Update(Budgetify.Entities.ExchangeRate.Domain.ExchangeRate exchangeRate)
+    public void Update(ExchangeRate exchangeRate)
     {
         Entities.ExchangeRate dbExchangeRate = exchangeRate.CreateExchangeRate();
 
         AttachOrUpdate(dbExchangeRate, exchangeRate.State.GetState());
     }
 
-    public async Task<Result<ExchangeRate>> GetExchangeRateByCurrencies(int fromCurrencyId, int toCurrencyId)
+    public async Task<Result<ExchangeRate>> GetExchangeRateByCurrenciesWithoutToDate(int fromCurrencyId, int toCurrencyId)
     {
         Entities.ExchangeRate? dbExchangeRate = await AllNoTrackedOf<Entities.ExchangeRate>()
-            .SingleOrDefaultAsync(x => x.FromCurrencyId == fromCurrencyId && x.ToCurrencyId == toCurrencyId);
+            .SingleOrDefaultAsync(x => x.FromCurrencyId == fromCurrencyId
+                && x.ToCurrencyId == toCurrencyId
+                    && !x.ToDate.HasValue);
 
         if (dbExchangeRate is null)
         {
