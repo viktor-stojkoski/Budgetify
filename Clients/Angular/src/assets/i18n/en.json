@@ -50,7 +50,12 @@
 
     "TRANSACTION_TYPE_INVALID": "Transaction type invalid.",
     "TRANSACTION_EMPTY_MERCHANT_TYPE_INVALID": "Cannot create expense transaction without merchant.",
-    "TRANSACTION_NOT_FOUND": "Transaction not found."
+    "TRANSACTION_NOT_FOUND": "Transaction not found.",
+
+    "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL": "Exchange rate from and to currency cannot be equal.",
+    "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Exchange rate from date cannot be greater than to date.",
+    "EXCHANGE_RATE_NOT_FOUND": "Exchange rate not found.",
+    "EXCHANGE_RATE_EXISTS_FROM_DATE_CANNOT_BE_EMPTY": "Exchange rate exists and for the new exchange rate from date cannot be empty."
   },
 
   "successMessages": {
@@ -73,6 +78,9 @@
       "create": "Transaction has been successfully created.",
       "update": "Transaction has been successfully updated.",
       "delete": "Transaction has been successfully deleted."
+    },
+    "exchangeRates": {
+      "create": "Exchange rate has been successfully created."
     }
   },
 
@@ -204,6 +212,7 @@
   },
   "exchangeRates": {
     "toolbarName": "Exchange rates",
+    "toolbarActionCreateExchangeRate": "Create exchange rate",
 
     "tableFilterLabel": "Filter",
     "tableNoDataFound": "No data was found.",
@@ -211,6 +220,12 @@
     "tableToCurrencyCodeHeader": "To currency code",
     "tableFromDateHeader": "From date",
     "tableToDateHeader": "To date",
-    "tableRateHeader": "Rate"
+    "tableRateHeader": "Rate",
+
+    "createFormHeader": "Create exchange rate",
+    "createFormFromCurrencyCodeLabel": "From currency code",
+    "createFormToCurrencyCodeLabel": "To currency code",
+    "createFormFromDateLabel": "From date",
+    "createFormRateLabel": "Rate"
   }
 }

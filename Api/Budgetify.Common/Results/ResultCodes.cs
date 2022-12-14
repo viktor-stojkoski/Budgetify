@@ -68,6 +68,8 @@ public static class ResultCodes
 
     public const string ExchangeRateFromAndToCurrencyCannotBeEqual = "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL";
     public const string ExchangeRateFromDateCannotBeGreaterThanToDate = "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE";
+    public const string ExchangeRateNotFound = "EXCHANGE_RATE_NOT_FOUND";
+    public const string ExchangeRateExistsFromDateCannotBeEmpty = "EXCHANGE_RATE_EXISTS_FROM_DATE_CANNOT_BE_EMPTY";
 
     #endregion
 }

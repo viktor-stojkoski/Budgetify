@@ -9,12 +9,16 @@ using Budgetify.Storage.User.Entities;
 public class ExchangeRate : AggregateRoot
 {
     public ExchangeRate(
+        int id,
+        Guid uid,
+        DateTime createdOn,
+        DateTime? deletedOn,
         int userId,
         int fromCurrencyId,
         int toCurrencyId,
         DateTime? fromDate,
         DateTime? toDate,
-        decimal rate)
+        decimal rate) : base(id, uid, createdOn, deletedOn)
     {
         UserId = userId;
         FromCurrencyId = fromCurrencyId;

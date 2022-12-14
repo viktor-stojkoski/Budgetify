@@ -2,11 +2,18 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { DestroyBaseComponent, SnackbarService } from '@budgetify/shared';
-import { take } from 'rxjs';
+import {
+  DestroyBaseComponent,
+  DialogActionButton,
+  DialogService,
+  IDialogResponseData,
+  SnackbarService
+} from '@budgetify/shared';
+import { take, takeUntil } from 'rxjs';
 import { IExchangeRateResponse } from '../../models/exchange-rate.model';
 import { ExchangeRateService } from '../../services/exchange-rate.service';
 import { TranslationKeys } from '../../static/translationKeys';
+import { CreateExchangeRateComponent } from '../create-exchange-rate/create-exchange-rate.component';
 
 @Component({
   selector: 'app-exchange-rates-table',
@@ -34,12 +41,30 @@ export class ExchangeRatesTableComponent extends DestroyBaseComponent implements
     }
   }
 
-  constructor(private exchangeRateService: ExchangeRateService, private snackbarService: SnackbarService) {
+  constructor(
+    private exchangeRateService: ExchangeRateService,
+    private snackbarService: SnackbarService,
+    private dialogService: DialogService
+  ) {
     super();
   }
 
   public ngOnInit(): void {
     this.getExchangeRates();
+  }
+
+  public openCreateExchangeRateDialog(): void {
+    this.dialogService
+      .open(CreateExchangeRateComponent)
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (response: IDialogResponseData) => {
+          if (response?.action === DialogActionButton.Ok) {
+            this.getExchangeRates();
+          }
+        }
+      });
   }
 
   public applyFilter(event: Event): void {

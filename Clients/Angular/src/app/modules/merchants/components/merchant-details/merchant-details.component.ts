@@ -98,7 +98,7 @@ export class MerchantDetailsComponent extends DestroyBaseComponent implements On
       .pipe(takeUntil(this.destroyed$))
       .subscribe({
         next: (response: IDialogResponseData) => {
-          if (response.action === DialogActionButton.Ok) {
+          if (response?.action === DialogActionButton.Ok) {
             this.router.navigateByUrl('merchants');
           }
         }

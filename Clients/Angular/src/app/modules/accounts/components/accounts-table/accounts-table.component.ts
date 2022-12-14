@@ -65,7 +65,7 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
       .pipe(takeUntil(this.destroyed$))
       .subscribe({
         next: (response: IDialogResponseData) => {
-          if (response.action === DialogActionButton.Ok) {
+          if (response?.action === DialogActionButton.Ok) {
             this.getAccounts();
           }
         }
@@ -84,7 +84,7 @@ export class AccountsTableComponent extends DestroyBaseComponent implements OnIn
       .pipe(takeUntil(this.destroyed$))
       .subscribe({
         next: (response: IDialogResponseData) => {
-          if (response.action === DialogActionButton.Ok) {
+          if (response?.action === DialogActionButton.Ok) {
             this.getAccounts();
           }
         }

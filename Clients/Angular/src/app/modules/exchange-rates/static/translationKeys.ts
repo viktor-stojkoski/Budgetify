@@ -1,6 +1,6 @@
 export class TranslationKeys {
   public static readonly toolbarName = 'exchangeRates.toolbarName';
-  // public static readonly toolbarActionCreateExchangeRate = 'exchangeRates.toolbarActionCreateExchangeRate';
+  public static readonly toolbarActionCreateExchangeRate = 'exchangeRates.toolbarActionCreateExchangeRate';
 
   public static readonly tableFilterLabel = 'exchangeRates.tableFilterLabel';
   public static readonly tableNoDataFound = 'exchangeRates.tableNoDataFound';
@@ -11,13 +11,12 @@ export class TranslationKeys {
   public static readonly tableRateHeader = 'exchangeRates.tableRateHeader';
   // public static readonly tableDeleteExchangeRateTooltip = 'exchangeRates.tableDeleteExchangeRateTooltip';
 
-  // public static readonly createFormHeader = 'exchangeRates.createFormHeader';
-  // public static readonly createFormFromCurrencyCodeLabel = 'exchangeRates.createFormFromCurrencyCodeLabel';
-  // public static readonly createFormToCurrencyCodeLabel = 'exchangeRates.createFormToCurrencyCodeLabel';
-  // public static readonly createFormFromDateLabel = 'exchangeRates.createFormFromDateLabel';
-  // public static readonly createFormToDateLabel = 'exchangeRates.createFormToDateLabel';
-  // public static readonly createFormRateLabel = 'exchangeRates.createFormRateLabel';
-  // public static readonly createExchangeRateSuccessful = 'successMessages.exchangeRates.create';
+  public static readonly createFormHeader = 'exchangeRates.createFormHeader';
+  public static readonly createFormFromCurrencyCodeLabel = 'exchangeRates.createFormFromCurrencyCodeLabel';
+  public static readonly createFormToCurrencyCodeLabel = 'exchangeRates.createFormToCurrencyCodeLabel';
+  public static readonly createFormFromDateLabel = 'exchangeRates.createFormFromDateLabel';
+  public static readonly createFormRateLabel = 'exchangeRates.createFormRateLabel';
+  public static readonly createExchangeRateSuccessful = 'successMessages.exchangeRates.create';
 
   // public static readonly detailsHeader = 'exchangeRates.detailsHeader';
   // public static readonly detailsFromCurrencyCodeHeader = 'exchangeRates.detailsFromCurrencyCodeHeader';
