@@ -52,8 +52,8 @@
     "TRANSACTION_EMPTY_MERCHANT_TYPE_INVALID": "Не е возможно да искреирате трошок без трговец.",
     "TRANSACTION_NOT_FOUND": "Трансакцијата не е пронајдена.",
 
-    "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL": "Од валута и до валута на курсот не можат да бидат еднакви.",
-    "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Од датумот на курсот не може да биде поголем од до датумот.",
+    "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL": "Од валута и до валута на девизниот курс не можат да бидат еднакви.",
+    "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Од датумот на девизниот курс не може да биде поголем од до датумот.",
     "EXCHANGE_RATE_NOT_FOUND": "Девизниот курс не е пронајден.",
     "EXCHANGE_RATE_EXISTS_FROM_DATE_CANNOT_BE_EMPTY": "Девизниот курс постои, за новиот девизен курс од датумот не може да остане празен."
   },
