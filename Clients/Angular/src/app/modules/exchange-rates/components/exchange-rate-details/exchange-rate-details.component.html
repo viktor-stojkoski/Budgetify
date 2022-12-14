@@ -1,0 +1,33 @@
+<mat-toolbar *ngIf="!isLoading">
+  <span
+    >{{ translationKeys.toolbarName | translate }} >
+    {{ exchangeRate?.fromCurrencyCode + ' → ' + exchangeRate?.toCurrencyCode }}
+  </span>
+</mat-toolbar>
+
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<mat-card *ngIf="!isLoading && exchangeRate" class="mat-elevation-z8">
+  <mat-card-title>{{ translationKeys.detailsHeader | translate }}</mat-card-title>
+
+  <mat-card-content>
+    <div class="grid-container">
+      <div class="grid-item">{{ translationKeys.detailsFromCurrencyCodeHeader | translate }}</div>
+      <div class="grid-item">{{ exchangeRate.fromCurrencyCode }}</div>
+
+      <div class="grid-item">{{ translationKeys.detailsToCurrencyCodeHeader | translate }}</div>
+      <div class="grid-item">{{ exchangeRate.toCurrencyCode }}</div>
+
+      <div class="grid-item">{{ translationKeys.detailsFromDateHeader | translate }}</div>
+      <div class="grid-item">{{ exchangeRate.fromDate | date }}</div>
+
+      <div class="grid-item">{{ translationKeys.detailsToDateHeader | translate }}</div>
+      <div class="grid-item">{{ exchangeRate.toDate | date }}</div>
+
+      <div class="grid-item no-border">{{ translationKeys.detailsRateHeader | translate }}</div>
+      <div class="grid-item no-border">{{ exchangeRate.rate }}</div>
+    </div>
+  </mat-card-content>
+</mat-card>

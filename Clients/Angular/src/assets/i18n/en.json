@@ -226,6 +226,13 @@
     "createFormFromCurrencyCodeLabel": "From currency code",
     "createFormToCurrencyCodeLabel": "To currency code",
     "createFormFromDateLabel": "From date",
-    "createFormRateLabel": "Rate"
+    "createFormRateLabel": "Rate",
+
+    "detailsHeader": "Exchange rate details",
+    "detailsFromCurrencyCodeHeader": "From currency code",
+    "detailsToCurrencyCodeHeader": "To currency code",
+    "detailsFromDateHeader": "From date",
+    "detailsToDateHeader": "To date",
+    "detailsRateHeader": "Rate"
   }
 }

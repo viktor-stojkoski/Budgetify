@@ -1,0 +1,27 @@
+.mat-card {
+  margin: 20px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  padding: 10px;
+}
+
+.grid-item {
+  font-size: 14px;
+  padding: 20px;
+  text-align: left;
+
+  &:nth-of-type(n+1) {
+    border-bottom: 1px solid rgba(0,0,0,.12);
+  }
+
+  &:nth-of-type(2n+1) {
+    color: rgba(0,0,0,.54);
+  }
+}
+
+.no-border {
+  border-bottom: none !important;
+}

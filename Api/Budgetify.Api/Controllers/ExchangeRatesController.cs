@@ -34,7 +34,7 @@ public class ExchangeRatesController : ExtendedApiController
     public async Task<IActionResult> GetExchangeRatesAsync() =>
         OkOrError(await _queryDispatcher.ExecuteAsync(new GetExchangeRatesQuery()));
 
-    [HttpGet("{exhangeRateUid:Guid}")]
+    [HttpGet("{exchangeRateUid:Guid}")]
     public async Task<IActionResult> GetExchangeRateAsync([FromRoute] Guid exchangeRateUid) =>
         OkOrError(await _queryDispatcher.ExecuteAsync(new GetExchangeRateQuery(exchangeRateUid)));
 

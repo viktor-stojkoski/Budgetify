@@ -17,6 +17,10 @@ export class ExchangeRateService {
     return this.baseApiService.get<IResult<IExchangeRateResponse[]>>(this.exchangeRatesApiRoute);
   }
 
+  public getExchangeRate(uid: string | null): Observable<IResult<IExchangeRateResponse>> {
+    return this.baseApiService.get<IResult<IExchangeRateResponse>>(`${this.exchangeRatesApiRoute}/${uid}`);
+  }
+
   public createExchangeRate(request: ICreateExchangeRateRequest): Observable<void> {
     return this.baseApiService.post<void>(this.exchangeRatesApiRoute, request);
   }
