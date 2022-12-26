@@ -8,6 +8,32 @@ using Budgetify.Entities.ExchangeRate.ValueObjects;
 public partial class ExchangeRate
 {
     /// <summary>
+    /// Updates exchange rate.
+    /// </summary>
+    public Result Update(DateTime? fromDate, decimal rate)
+    {
+        if (DateRange.ToDate.HasValue)
+        {
+            return Result.Invalid<ExchangeRate>(ResultCodes.ExchangeRateClosed);
+        }
+
+        Result<ExchangeRateDateRangeValue> dateRangeResult =
+            ExchangeRateDateRangeValue.Create(fromDate, DateRange.ToDate);
+
+        if (dateRangeResult.IsFailureOrNull)
+        {
+            return Result.FromError<ExchangeRate>(dateRangeResult);
+        }
+
+        DateRange = dateRangeResult.Value;
+        Rate = rate;
+
+        MarkModify();
+
+        return Result.Ok();
+    }
+
+    /// <summary>
     /// Closes exchange rate.
     /// </summary>
     public Result Close(DateTime closedOn)

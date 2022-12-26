@@ -47,4 +47,8 @@ public class ExchangeRatesController : ExtendedApiController
                 FromDate: request.FromDate,
                 Rate: request.Rate)));
 
+    [HttpPut]
+    public async Task<IActionResult> UpdateExchangeRateAsync([FromBody] UpdateExchangeRateRequest request) =>
+    OkOrError(await _commandDispatcher.ExecuteAsync(
+        new UpdateExchangeRateCommand(request.FromDate, request.Rate)));
 }

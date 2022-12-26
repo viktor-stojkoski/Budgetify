@@ -61,6 +61,7 @@ public class CreateExchangeRateCommandHandler : ICommandHandler<CreateExchangeRa
 
         Result<ExchangeRate> existingExchangeRateResult =
             await _exchangeRateRepository.GetExchangeRateByCurrenciesWithoutToDate(
+                userId: _currentUser.Id,
                 fromCurrencyId: fromCurrencyResult.Value.Id,
                 toCurrencyId: toCurrencyResult.Value.Id);
 

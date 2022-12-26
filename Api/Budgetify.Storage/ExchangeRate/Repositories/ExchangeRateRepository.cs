@@ -1,5 +1,7 @@
 ﻿namespace Budgetify.Storage.ExchangeRate.Repositories;
 
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Budgetify.Common.Results;
@@ -31,12 +33,44 @@ public class ExchangeRateRepository : Repository<Entities.ExchangeRate>, IExchan
         AttachOrUpdate(dbExchangeRate, exchangeRate.State.GetState());
     }
 
-    public async Task<Result<ExchangeRate>> GetExchangeRateByCurrenciesWithoutToDate(int fromCurrencyId, int toCurrencyId)
+    public async Task<Result<ExchangeRate>> GetExchangeRateAsync(int userId, Guid exchangeRateUid)
+    {
+        Entities.ExchangeRate? dbExhangeRate = await AllNoTrackedOf<Entities.ExchangeRate>()
+            .SingleOrDefaultAsync(x => x.UserId == userId && x.Uid == exchangeRateUid);
+
+        if (dbExhangeRate is null)
+        {
+            return Result.NotFound<ExchangeRate>(ResultCodes.ExchangeRateNotFound);
+        }
+
+        return dbExhangeRate.CreateExchangeRate();
+    }
+
+    public async Task<Result<ExchangeRate>> GetExchangeRateByCurrenciesWithoutToDate(int userId, int fromCurrencyId, int toCurrencyId)
     {
         Entities.ExchangeRate? dbExchangeRate = await AllNoTrackedOf<Entities.ExchangeRate>()
-            .SingleOrDefaultAsync(x => x.FromCurrencyId == fromCurrencyId
-                && x.ToCurrencyId == toCurrencyId
-                    && !x.ToDate.HasValue);
+            .SingleOrDefaultAsync(x => x.UserId == userId
+                && x.FromCurrencyId == fromCurrencyId
+                    && x.ToCurrencyId == toCurrencyId
+                        && !x.ToDate.HasValue);
+
+        if (dbExchangeRate is null)
+        {
+            return Result.NotFound<ExchangeRate>(ResultCodes.ExchangeRateNotFound);
+        }
+
+        return dbExchangeRate.CreateExchangeRate();
+    }
+
+    public async Task<Result<ExchangeRate>> GetLastClosedExchangeRateByCurrencies(int userId, int fromCurrencyId, int toCurrencyId)
+    {
+        Entities.ExchangeRate? dbExchangeRate = await AllNoTrackedOf<Entities.ExchangeRate>()
+            .Where(x => x.UserId == userId
+                && x.FromCurrencyId == fromCurrencyId
+                    && x.ToCurrencyId == toCurrencyId
+                        && x.ToDate.HasValue)
+            .OrderByDescending(x => x.ToDate)
+            .SingleOrDefaultAsync();
 
         if (dbExchangeRate is null)
         {
