@@ -18,3 +18,8 @@ export interface ICreateExchangeRateRequest {
   fromDate: Date | null;
   rate: number | null;
 }
+
+export interface IUpdateExchangeRateRequest {
+  fromDate: Date | null;
+  rate: number | null;
+}

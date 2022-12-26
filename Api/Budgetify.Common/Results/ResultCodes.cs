@@ -70,6 +70,7 @@ public static class ResultCodes
     public const string ExchangeRateFromDateCannotBeGreaterThanToDate = "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE";
     public const string ExchangeRateNotFound = "EXCHANGE_RATE_NOT_FOUND";
     public const string ExchangeRateExistsFromDateCannotBeEmpty = "EXCHANGE_RATE_EXISTS_FROM_DATE_CANNOT_BE_EMPTY";
+    public const string ExchangeRateClosed = "EXCHANGE_RATE_CLOSED";
 
     #endregion
 }

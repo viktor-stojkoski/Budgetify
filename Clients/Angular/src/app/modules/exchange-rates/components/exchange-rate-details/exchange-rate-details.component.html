@@ -3,6 +3,25 @@
     >{{ translationKeys.toolbarName | translate }} >
     {{ exchangeRate?.fromCurrencyCode + ' → ' + exchangeRate?.toCurrencyCode }}
   </span>
+
+  <span class="toolbar-spacer"></span>
+
+  <div class="toolbar-buttons">
+    <span *ngIf="!isEditing">
+      <button mat-raised-button color="primary" (click)="toggleEdit()">
+        {{ sharedTranslationKeys.mainActionButtonEdit | translate }}
+      </button>
+    </span>
+
+    <span *ngIf="isEditing">
+      <button mat-raised-button color="secondary" (click)="toggleEdit()">
+        {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
+      </button>
+      <button mat-raised-button color="primary" (click)="editExchangeRate()">
+        {{ sharedTranslationKeys.mainActionButtonSave | translate }}
+      </button>
+    </span>
+  </div>
 </mat-toolbar>
 
 <div class="spinner-container" *ngIf="isLoading">
@@ -13,21 +32,50 @@
   <mat-card-title>{{ translationKeys.detailsHeader | translate }}</mat-card-title>
 
   <mat-card-content>
-    <div class="grid-container">
+    <div [formGroup]="exchangeRateForm" class="grid-container">
       <div class="grid-item">{{ translationKeys.detailsFromCurrencyCodeHeader | translate }}</div>
-      <div class="grid-item">{{ exchangeRate.fromCurrencyCode }}</div>
+      <div *ngIf="!isEditing" class="grid-item">{{ exchangeRate.fromCurrencyCode }}</div>
+      <div *ngIf="isEditing" class="grid-item">
+        <mat-form-field appearance="outline">
+          <input type="text" matInput formControlName="fromCurrencyCode" />
+        </mat-form-field>
+      </div>
 
       <div class="grid-item">{{ translationKeys.detailsToCurrencyCodeHeader | translate }}</div>
-      <div class="grid-item">{{ exchangeRate.toCurrencyCode }}</div>
+      <div *ngIf="!isEditing" class="grid-item">{{ exchangeRate.toCurrencyCode }}</div>
+      <div *ngIf="isEditing" class="grid-item">
+        <mat-form-field appearance="outline">
+          <input type="text" matInput formControlName="toCurrencyCode" />
+        </mat-form-field>
+      </div>
 
       <div class="grid-item">{{ translationKeys.detailsFromDateHeader | translate }}</div>
-      <div class="grid-item">{{ exchangeRate.fromDate | date }}</div>
+      <div *ngIf="!isEditing" class="grid-item">{{ exchangeRate.fromDate | date }}</div>
+      <div *ngIf="isEditing" class="grid-item">
+        <mat-form-field appearance="outline">
+          <input readonly matInput formControlName="fromDate" [matDatepicker]="fromDatePicker" />
+          <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #fromDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
 
       <div class="grid-item">{{ translationKeys.detailsToDateHeader | translate }}</div>
-      <div class="grid-item">{{ exchangeRate.toDate | date }}</div>
+      <div *ngIf="!isEditing" class="grid-item">{{ exchangeRate.toDate | date }}</div>
+      <div *ngIf="isEditing" class="grid-item">
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="toDate" [matDatepicker]="toDatePicker" />
+          <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #toDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
 
       <div class="grid-item no-border">{{ translationKeys.detailsRateHeader | translate }}</div>
-      <div class="grid-item no-border">{{ exchangeRate.rate }}</div>
+      <div *ngIf="!isEditing" class="grid-item no-border">{{ exchangeRate.rate }}</div>
+      <div *ngIf="isEditing" class="grid-item no-border">
+        <mat-form-field appearance="outline">
+          <input type="number" matInput formControlName="rate" step="0.01" />
+        </mat-form-field>
+      </div>
     </div>
   </mat-card-content>
 </mat-card>
