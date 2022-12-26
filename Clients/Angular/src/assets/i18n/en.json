@@ -55,7 +55,8 @@
     "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL": "Exchange rate from and to currency cannot be equal.",
     "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Exchange rate from date cannot be greater than to date.",
     "EXCHANGE_RATE_NOT_FOUND": "Exchange rate not found.",
-    "EXCHANGE_RATE_EXISTS_FROM_DATE_CANNOT_BE_EMPTY": "Exchange rate exists and for the new exchange rate from date cannot be empty."
+    "EXCHANGE_RATE_EXISTS_FROM_DATE_CANNOT_BE_EMPTY": "Exchange rate exists and for the new exchange rate from date cannot be empty.",
+    "EXCHANGE_RATE_CLOSED": "Exchange rate closed. Modifications are not allowed."
   },
 
   "successMessages": {

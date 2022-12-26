@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { DestroyBaseComponent, SnackbarService, TranslationKeys as SharedTranslationKeys } from '@budgetify/shared';
-import { concatMap, Observable, take, takeUntil, tap } from 'rxjs';
-import { ICurrencyResponse, IExchangeRateResponse } from '../../models/exchange-rate.model';
+import { concatMap, take, takeUntil, tap } from 'rxjs';
+import { IExchangeRateResponse } from '../../models/exchange-rate.model';
 import { ExchangeRateService } from '../../services/exchange-rate.service';
 import { TranslationKeys } from '../../static/translationKeys';
 
@@ -19,8 +19,6 @@ export class ExchangeRateDetailsComponent extends DestroyBaseComponent implement
   public exchangeRate?: IExchangeRateResponse;
   public isLoading = false;
   public isEditing = false;
-  public currencies?: ICurrencyResponse[];
-  public filteredFromCurrencies$?: Observable<ICurrencyResponse[] | undefined>;
 
   public exchangeRateForm = this.formBuilder.group({
     fromCurrencyCode: ['', Validators.required],
@@ -44,7 +42,6 @@ export class ExchangeRateDetailsComponent extends DestroyBaseComponent implement
     this.exchangeRateForm.controls.fromCurrencyCode.disable();
     this.exchangeRateForm.controls.toCurrencyCode.disable();
     this.exchangeRateForm.controls.toDate.disable();
-    // this.getCurrencies();
   }
 
   public toggleEdit(): void {
@@ -83,10 +80,6 @@ export class ExchangeRateDetailsComponent extends DestroyBaseComponent implement
     }
   }
 
-  public displayCurrency(code: string): string {
-    return this.currencies?.find((x) => x.code === code)?.name || '';
-  }
-
   private getExchangeRate(): void {
     this.isLoading = true;
     this.activatedRoute.paramMap
@@ -106,38 +99,4 @@ export class ExchangeRateDetailsComponent extends DestroyBaseComponent implement
         }
       });
   }
-
-  // private getCurrencies(): void {
-  //   this.exchangeRateService
-  //     .getCurrencies()
-  //     .pipe(take(1))
-  //     .subscribe({
-  //       next: (result) => {
-  //         this.currencies = result.value;
-  //         this.isLoading = false;
-  //         this.filterCurrencies();
-  //       },
-  //       error: (error) => {
-  //         this.snackbarService.showError(error);
-  //         this.isLoading = false;
-  //       }
-  //     });
-  // }
-
-  // private filterCurrencies(): void {
-  //   this.filteredFromCurrencies$ = this.exchangeRateForm.controls.fromCurrencyCode.valueChanges.pipe(
-  //     startWith(''),
-  //     distinctUntilChanged(),
-  //     takeUntil(this.destroyed$),
-  //     map((value) => this.filterCurrency(value || ''))
-  //   );
-  // }
-
-  // private filterCurrency(value: string): ICurrencyResponse[] | undefined {
-  //   const filterValue = value.toLowerCase();
-
-  //   return this.currencies?.filter(
-  //     (option) => option.name.toLowerCase().includes(filterValue) || option.code.toLowerCase().includes(filterValue)
-  //   );
-  // }
 }

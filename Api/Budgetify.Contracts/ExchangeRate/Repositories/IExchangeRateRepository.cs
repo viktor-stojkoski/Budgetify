@@ -24,12 +24,12 @@ public interface IExchangeRateRepository
     Task<Result<ExchangeRate>> GetExchangeRateAsync(int userId, Guid exchangeRateUid);
 
     /// <summary>
-    /// Returns exchange rate from the given currencies id without to date.
+    /// Returns exchange rate by the given userId and currencies id without to date.
     /// </summary>
     Task<Result<ExchangeRate>> GetExchangeRateByCurrenciesWithoutToDate(int userId, int fromCurrencyId, int toCurrencyId);
 
     /// <summary>
-    /// Returns exchange rate from the given currencies id.
+    /// Returns exchange rate by the given userId and currencies id.
     /// </summary>
     Task<Result<ExchangeRate>> GetLastClosedExchangeRateByCurrencies(int userId, int fromCurrencyId, int toCurrencyId);
 }

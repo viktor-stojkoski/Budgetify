@@ -55,7 +55,8 @@
     "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL": "Од валута и до валута на девизниот курс не можат да бидат еднакви.",
     "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Од датумот на девизниот курс не може да биде поголем од до датумот.",
     "EXCHANGE_RATE_NOT_FOUND": "Девизниот курс не е пронајден.",
-    "EXCHANGE_RATE_EXISTS_FROM_DATE_CANNOT_BE_EMPTY": "Девизниот курс постои, за новиот девизен курс од датумот не може да остане празен."
+    "EXCHANGE_RATE_EXISTS_FROM_DATE_CANNOT_BE_EMPTY": "Девизниот курс постои, за новиот девизен курс од датумот не може да остане празен.",
+    "EXCHANGE_RATE_CLOSED": "Девизниот курс е затворен. Модификации не се дозволени."
   },
 
   "successMessages": {
