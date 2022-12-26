@@ -72,7 +72,7 @@ public class UpdateExchangeRateCommandHandler : ICommandHandler<UpdateExchangeRa
         }
 
         Result updateResult =
-            exchangeRateResult.Value.Update(command.FromDate, command.Rate);
+            exchangeRateResult.Value.Update(command.FromDate?.ToLocalTime(), command.Rate);
 
         if (updateResult.IsFailureOrNull)
         {

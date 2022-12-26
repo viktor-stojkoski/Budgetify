@@ -80,7 +80,8 @@
       "delete": "Transaction has been successfully deleted."
     },
     "exchangeRates": {
-      "create": "Exchange rate has been successfully created."
+      "create": "Exchange rate has been successfully created.",
+      "update": "Exchange rate has been successfully updated."
     }
   },
 

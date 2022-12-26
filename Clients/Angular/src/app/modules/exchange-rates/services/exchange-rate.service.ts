@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { BaseApiService } from '@budgetify/core';
 import { IResult } from '@budgetify/shared';
 import { Observable } from 'rxjs';
-import { ICreateExchangeRateRequest, ICurrencyResponse, IExchangeRateResponse } from '../models/exchange-rate.model';
+import {
+  ICreateExchangeRateRequest,
+  ICurrencyResponse,
+  IExchangeRateResponse,
+  IUpdateExchangeRateRequest
+} from '../models/exchange-rate.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +28,10 @@ export class ExchangeRateService {
 
   public createExchangeRate(request: ICreateExchangeRateRequest): Observable<void> {
     return this.baseApiService.post<void>(this.exchangeRatesApiRoute, request);
+  }
+
+  public updateExchangeRate(uid: string | null, request: IUpdateExchangeRateRequest): Observable<void> {
+    return this.baseApiService.put<void>(`${this.exchangeRatesApiRoute}/${uid}`, request);
   }
 
   public getCurrencies(): Observable<IResult<ICurrencyResponse[]>> {

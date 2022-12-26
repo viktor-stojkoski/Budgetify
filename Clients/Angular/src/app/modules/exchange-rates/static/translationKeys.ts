@@ -24,7 +24,7 @@ export class TranslationKeys {
   public static readonly detailsFromDateHeader = 'exchangeRates.detailsFromDateHeader';
   public static readonly detailsToDateHeader = 'exchangeRates.detailsToDateHeader';
   public static readonly detailsRateHeader = 'exchangeRates.detailsRateHeader';
-  // public static readonly updateExchangeRateSuccessful = 'successMessages.exchangeRates.update';
+  public static readonly updateExchangeRateSuccessful = 'successMessages.exchangeRates.update';
 
   // public static readonly deleteExchangeRateHeader = 'exchangeRates.deleteExchangeRateHeader';
   // public static readonly deleteExchangeRateContent = 'exchangeRates.deleteExchangeRateContent';

@@ -70,7 +70,7 @@ public class ExchangeRateRepository : Repository<Entities.ExchangeRate>, IExchan
                     && x.ToCurrencyId == toCurrencyId
                         && x.ToDate.HasValue)
             .OrderByDescending(x => x.ToDate)
-            .SingleOrDefaultAsync();
+            .FirstOrDefaultAsync();
 
         if (dbExchangeRate is null)
         {
