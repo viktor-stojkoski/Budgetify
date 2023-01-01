@@ -44,4 +44,10 @@ public class CategoryRepository : Repository<Entities.Category>, ICategoryReposi
 
         return dbCategory.CreateCategory();
     }
+
+    public async Task<bool> DoesCategoryNameExistAsync(string? name)
+    {
+        return await AllNoTrackedOf<Entities.Category>()
+            .AnyAsync(x => x.Name == name);
+    }
 }

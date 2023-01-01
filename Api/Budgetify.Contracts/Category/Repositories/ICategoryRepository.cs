@@ -22,4 +22,9 @@ public interface ICategoryRepository
     /// Returns category by given userId and categoryUid.
     /// </summary>
     Task<Result<Category>> GetCategoryAsync(int userId, Guid categoryUid);
+
+    /// <summary>
+    /// Returns boolean indicating whether category with the given name exists.
+    /// </summary>
+    Task<bool> DoesCategoryNameExistAsync(string? name);
 }

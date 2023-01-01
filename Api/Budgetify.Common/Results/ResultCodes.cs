@@ -45,6 +45,7 @@ public static class ResultCodes
     public const string CategoryNameInvalidLength = "CATEGORY_NAME_INVALID_LENGTH";
     public const string CategoryTypeInvalid = "CATEGORY_TYPE_INVALID";
     public const string CategoryNotFound = "CATEGORY_NOT_FOUND";
+    public const string CategoryWithSameNameAlreadyExist = "CATEGORY_WITH_SAME_NAME_ALREADY_EXIST";
 
     #endregion
 

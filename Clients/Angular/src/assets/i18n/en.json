@@ -43,6 +43,7 @@
     "CATEGORY_NAME_INVALID_LENGTH": "Category name invalid length.",
     "CATEGORY_TYPE_INVALID": "Category type invalid.",
     "CATEGORY_NOT_FOUND": "Category not found.",
+    "CATEGORY_WITH_SAME_NAME_ALREADY_EXIST": "Category with same name already exist.",
 
     "MERCHANT_NAME_INVALID": "Merchant name invalid.",
     "MERCHANT_NAME_INVALID_LENGTH": "Merchant name invalid length.",
