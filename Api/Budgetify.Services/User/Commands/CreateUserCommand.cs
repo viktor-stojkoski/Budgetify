@@ -31,7 +31,7 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand>
     {
         CommandResultBuilder result = new();
 
-        if (await _userRepository.DoesUserWithEmailExists(command.Email))
+        if (await _userRepository.DoesUserEmailExistAsync(command.Email))
         {
             return result.FailWith(ResultCodes.UserAlreadyExists);
         }
