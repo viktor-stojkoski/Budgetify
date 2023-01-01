@@ -37,6 +37,7 @@ public static class ResultCodes
     public const string AccountTypeInvalid = "ACCOUNT_TYPE_INVALID";
     public const string AccountNotFound = "ACCOUNT_NOT_FOUND";
     public const string AccountWithSameNameAlreadyExist = "ACCOUNT_WITH_SAME_NAME_ALREADY_EXIST";
+    public const string AccountInvalidForDeletion = "ACCOUNT_INVALID_FOR_DELETION";
 
     #endregion
 

@@ -27,4 +27,9 @@ public interface IAccountRepository
     /// Returns boolean indicating whether account with the given userId and name exists.
     /// </summary>
     Task<bool> DoesAccountNameExistAsync(int userId, string? name);
+
+    /// <summary>
+    /// Returns boolean indicating whether account with the given userId and accountUid is valid for deletion.
+    /// </summary>
+    Task<bool> IsAccountValidForDeletionAsync(int userId, Guid accountUid);
 }

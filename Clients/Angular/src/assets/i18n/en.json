@@ -39,6 +39,7 @@
     "ACCOUNT_TYPE_INVALID": "Account type invalid.",
     "ACCOUNT_NOT_FOUND": "Account not found.",
     "ACCOUNT_WITH_SAME_NAME_ALREADY_EXIST": "Account with same name already exist.",
+    "ACCOUNT_INVALID_FOR_DELETION": "Account is used in transactions and cannot be deleted.",
 
     "CATEGORY_NAME_INVALID": "Category name invalid.",
     "CATEGORY_NAME_INVALID_LENGTH": "Category name invalid length.",

@@ -42,6 +42,11 @@ public class DeleteAccountCommandHandler : ICommandHandler<DeleteAccountCommand>
             return result.FailWith(accountResult);
         }
 
+        if (!await _accountRepository.IsAccountValidForDeletionAsync(_currentUser.Id, command.AccountUid))
+        {
+            return result.FailWith(Result.Invalid(ResultCodes.AccountInvalidForDeletion));
+        }
+
         Result deleteResult = accountResult.Value.Delete(DateTime.UtcNow);
 
         if (deleteResult.IsFailureOrNull)

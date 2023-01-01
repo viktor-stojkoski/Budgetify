@@ -39,6 +39,7 @@
     "ACCOUNT_TYPE_INVALID": "Типот на сметката е невалиден.",
     "ACCOUNT_NOT_FOUND": "Сметката не е пронајдена.",
     "ACCOUNT_WITH_SAME_NAME_ALREADY_EXIST": "Сметка со исто име веќе постои.",
+    "ACCOUNT_INVALID_FOR_DELETION": "Сметката е искористена во трансакции и не може да се избрише.",
 
     "CATEGORY_NAME_INVALID": "Името на категоријата е невалидно.",
     "CATEGORY_NAME_INVALID_LENGTH": "Должината на името на категоријата е невалидно.",
