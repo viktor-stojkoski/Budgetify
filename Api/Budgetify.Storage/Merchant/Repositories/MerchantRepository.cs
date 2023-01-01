@@ -1,6 +1,7 @@
 ﻿namespace Budgetify.Storage.Merchant.Repositories;
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Budgetify.Common.Results;
@@ -49,5 +50,12 @@ public class MerchantRepository : Repository<Entities.Merchant>, IMerchantReposi
     {
         return await AllNoTrackedOf<Entities.Merchant>()
             .AnyAsync(x => x.UserId == userId && x.Name == name);
+    }
+
+    public async Task<bool> IsMerchantValidForDeletionAsync(int userId, Guid merchantUid)
+    {
+        return await AllNoTrackedOf<Entities.Merchant>()
+            .AnyAsync(x => x.UserId == userId && x.Uid == merchantUid
+                && !x.Transactions.Any(x => x.DeletedOn == null));
     }
 }

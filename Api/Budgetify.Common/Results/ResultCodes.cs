@@ -58,6 +58,7 @@ public static class ResultCodes
     public const string MerchantNameInvalidLength = "MERCHANT_NAME_INVALID_LENGTH";
     public const string MerchantNotFound = "MERCHANT_NOT_FOUND";
     public const string MerchantWithSameNameAlreadyExist = "MERCHANT_WITH_SAME_NAME_ALREADY_EXIST";
+    public const string MerchantInvalidForDeletion = "MERCHANT_INVALID_FOR_DELETION";
 
     #endregion
 

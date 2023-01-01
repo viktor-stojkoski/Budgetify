@@ -42,6 +42,11 @@ public class DeleteMerchantCommandHandler : ICommandHandler<DeleteMerchantComman
             return result.FailWith(merchantResult);
         }
 
+        if (!await _merchantRepository.IsMerchantValidForDeletionAsync(_currentUser.Id, command.MerchantUid))
+        {
+            return result.FailWith(Result.Invalid(ResultCodes.MerchantInvalidForDeletion));
+        }
+
         Result deleteResult = merchantResult.Value.Delete(DateTime.UtcNow);
 
         if (deleteResult.IsFailureOrNull)
