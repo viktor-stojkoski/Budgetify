@@ -24,7 +24,7 @@ public interface ICategoryRepository
     Task<Result<Category>> GetCategoryAsync(int userId, Guid categoryUid);
 
     /// <summary>
-    /// Returns boolean indicating whether category with the given name exists.
+    /// Returns boolean indicating whether category with the given userId and name exists.
     /// </summary>
-    Task<bool> DoesCategoryNameExistAsync(string? name);
+    Task<bool> DoesCategoryNameExistAsync(int userId, string? name);
 }

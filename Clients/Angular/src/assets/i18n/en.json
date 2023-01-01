@@ -38,6 +38,7 @@
     "ACCOUNT_NAME_INVALID_LENGTH": "Account name invalid length.",
     "ACCOUNT_TYPE_INVALID": "Account type invalid.",
     "ACCOUNT_NOT_FOUND": "Account not found.",
+    "ACCOUNT_WITH_SAME_NAME_ALREADY_EXIST": "Account with same name already exist.",
 
     "CATEGORY_NAME_INVALID": "Category name invalid.",
     "CATEGORY_NAME_INVALID_LENGTH": "Category name invalid length.",

@@ -38,6 +38,7 @@
     "ACCOUNT_NAME_INVALID_LENGTH": "Должината на името на сметката е невалидно.",
     "ACCOUNT_TYPE_INVALID": "Типот на сметката е невалиден.",
     "ACCOUNT_NOT_FOUND": "Сметката не е пронајдена.",
+    "ACCOUNT_WITH_SAME_NAME_ALREADY_EXIST": "Сметка со исто име веќе постои.",
 
     "CATEGORY_NAME_INVALID": "Името на категоријата е невалидно.",
     "CATEGORY_NAME_INVALID_LENGTH": "Должината на името на категоријата е невалидно.",

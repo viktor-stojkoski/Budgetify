@@ -44,4 +44,10 @@ public class AccountRepository : Repository<Entities.Account>, IAccountRepositor
 
         return dbAccount.CreateAccount();
     }
+
+    public async Task<bool> DoesAccountNameExistAsync(int userId, string? name)
+    {
+        return await AllNoTrackedOf<Entities.Account>()
+            .AnyAsync(x => x.UserId == userId && x.Name == name);
+    }
 }
