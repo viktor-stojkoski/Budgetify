@@ -36,6 +36,8 @@ public static class ResultCodes
     public const string AccountNameInvalidLength = "ACCOUNT_NAME_INVALID_LENGTH";
     public const string AccountTypeInvalid = "ACCOUNT_TYPE_INVALID";
     public const string AccountNotFound = "ACCOUNT_NOT_FOUND";
+    public const string AccountWithSameNameAlreadyExist = "ACCOUNT_WITH_SAME_NAME_ALREADY_EXIST";
+    public const string AccountInvalidForDeletion = "ACCOUNT_INVALID_FOR_DELETION";
 
     #endregion
 
@@ -45,6 +47,8 @@ public static class ResultCodes
     public const string CategoryNameInvalidLength = "CATEGORY_NAME_INVALID_LENGTH";
     public const string CategoryTypeInvalid = "CATEGORY_TYPE_INVALID";
     public const string CategoryNotFound = "CATEGORY_NOT_FOUND";
+    public const string CategoryWithSameNameAlreadyExist = "CATEGORY_WITH_SAME_NAME_ALREADY_EXIST";
+    public const string CategoryInvalidForDeletion = "CATEGORY_INVALID_FOR_DELETION";
 
     #endregion
 
@@ -53,6 +57,8 @@ public static class ResultCodes
     public const string MerchantNameInvalid = "MERCHANT_NAME_INVALID";
     public const string MerchantNameInvalidLength = "MERCHANT_NAME_INVALID_LENGTH";
     public const string MerchantNotFound = "MERCHANT_NOT_FOUND";
+    public const string MerchantWithSameNameAlreadyExist = "MERCHANT_WITH_SAME_NAME_ALREADY_EXIST";
+    public const string MerchantInvalidForDeletion = "MERCHANT_INVALID_FOR_DELETION";
 
     #endregion
 

@@ -34,6 +34,11 @@ public class CreateCategoryCommandHandler : ICommandHandler<CreateCategoryComman
     {
         CommandResultBuilder result = new();
 
+        if (await _categoryRepository.DoesCategoryNameExistAsync(_currentUser.Id, command.Name))
+        {
+            return result.FailWith(Result.Conflicted(ResultCodes.CategoryWithSameNameAlreadyExist));
+        }
+
         Result<Category> categoryResult =
             Category.Create(
                 createdOn: DateTime.UtcNow,

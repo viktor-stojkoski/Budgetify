@@ -43,7 +43,7 @@ public class UpdateExchangeRateCommandHandler : ICommandHandler<UpdateExchangeRa
         }
 
         Result<ExchangeRate> lastClosedExchangeRateResult =
-            await _exchangeRateRepository.GetLastClosedExchangeRateByCurrencies(
+            await _exchangeRateRepository.GetLastClosedExchangeRateByCurrenciesAsync(
                 userId: _currentUser.Id,
                 fromCurrencyId: exchangeRateResult.Value.FromCurrencyId,
                 toCurrencyId: exchangeRateResult.Value.ToCurrencyId);

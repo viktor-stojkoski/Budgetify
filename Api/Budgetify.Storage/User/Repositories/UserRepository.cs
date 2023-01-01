@@ -58,7 +58,7 @@ public class UserRepository : Repository<Entities.User>, IUserRepository
         return dbUser.CreateUser();
     }
 
-    public async Task<bool> DoesUserWithEmailExists(string? email)
+    public async Task<bool> DoesUserEmailExistAsync(string? email)
     {
         return await AllNoTrackedOf<Entities.User>()
             .AnyAsync(x => x.Email == email);

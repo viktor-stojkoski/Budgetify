@@ -1,6 +1,7 @@
 ﻿namespace Budgetify.Storage.Account.Repositories;
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Budgetify.Common.Results;
@@ -43,5 +44,18 @@ public class AccountRepository : Repository<Entities.Account>, IAccountRepositor
         }
 
         return dbAccount.CreateAccount();
+    }
+
+    public async Task<bool> DoesAccountNameExistAsync(int userId, string? name)
+    {
+        return await AllNoTrackedOf<Entities.Account>()
+            .AnyAsync(x => x.UserId == userId && x.Name == name);
+    }
+
+    public async Task<bool> IsAccountValidForDeletionAsync(int userId, Guid accountUid)
+    {
+        return await AllNoTrackedOf<Entities.Account>()
+            .AnyAsync(x => x.UserId == userId && x.Uid == accountUid
+                && !x.Transactions.Any(x => x.DeletedOn == null));
     }
 }

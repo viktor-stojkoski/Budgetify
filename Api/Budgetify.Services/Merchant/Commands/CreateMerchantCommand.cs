@@ -39,6 +39,11 @@ public class CreateMerchantCommandHandler : ICommandHandler<CreateMerchantComman
     {
         CommandResultBuilder result = new();
 
+        if (await _merchantRepository.DoesMerchantNameExistAsync(_currentUser.Id, command.Name))
+        {
+            return result.FailWith(Result.Conflicted(ResultCodes.MerchantWithSameNameAlreadyExist));
+        }
+
         Result<Category> categoryResult =
             await _categoryRepository.GetCategoryAsync(_currentUser.Id, command.CategoryUid);
 

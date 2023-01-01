@@ -38,15 +38,21 @@
     "ACCOUNT_NAME_INVALID_LENGTH": "Должината на името на сметката е невалидно.",
     "ACCOUNT_TYPE_INVALID": "Типот на сметката е невалиден.",
     "ACCOUNT_NOT_FOUND": "Сметката не е пронајдена.",
+    "ACCOUNT_WITH_SAME_NAME_ALREADY_EXIST": "Сметка со исто име веќе постои.",
+    "ACCOUNT_INVALID_FOR_DELETION": "Сметката е искористена во трансакции и не може да се избрише.",
 
     "CATEGORY_NAME_INVALID": "Името на категоријата е невалидно.",
     "CATEGORY_NAME_INVALID_LENGTH": "Должината на името на категоријата е невалидно.",
     "CATEGORY_TYPE_INVALID": "Типот на категоријата е невалиден.",
     "CATEGORY_NOT_FOUND": "Категоријата не е пронајдена.",
+    "CATEGORY_WITH_SAME_NAME_ALREADY_EXIST": "Категорија со исто име веќе постои.",
+    "CATEGORY_INVALID_FOR_DELETION": "Категоријата е искористена во трговци и/или трансакции и не може да се избрише.",
 
     "MERCHANT_NAME_INVALID": "Името на трговецот е невалидно.",
     "MERCHANT_NAME_INVALID_LENGTH": "Должината на името на трговецот е невалидно.",
     "MERCHANT_NOT_FOUND": "Трговецот не е пронајден.",
+    "MERCHANT_WITH_SAME_NAME_ALREADY_EXIST": "Трговец со исто име веќе постои.",
+    "MERCHANT_INVALID_FOR_DELETION": "Трговецот е искористен во трансакции и не може да се избрише.",
 
     "TRANSACTION_TYPE_INVALID": "Типот на трансакцијата е невалиден.",
     "TRANSACTION_EMPTY_MERCHANT_TYPE_INVALID": "Не е возможно да искреирате трошок без трговец.",

@@ -26,10 +26,10 @@ public interface IExchangeRateRepository
     /// <summary>
     /// Returns exchange rate by given userId and currencies id without to date.
     /// </summary>
-    Task<Result<ExchangeRate>> GetExchangeRateByCurrenciesWithoutToDate(int userId, int fromCurrencyId, int toCurrencyId);
+    Task<Result<ExchangeRate>> GetExchangeRateByCurrenciesWithoutToDateAsync(int userId, int fromCurrencyId, int toCurrencyId);
 
     /// <summary>
     /// Returns exchange rate by given userId and currencies id.
     /// </summary>
-    Task<Result<ExchangeRate>> GetLastClosedExchangeRateByCurrencies(int userId, int fromCurrencyId, int toCurrencyId);
+    Task<Result<ExchangeRate>> GetLastClosedExchangeRateByCurrenciesAsync(int userId, int fromCurrencyId, int toCurrencyId);
 }

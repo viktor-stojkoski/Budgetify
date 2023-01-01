@@ -4,7 +4,7 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div mat-dialog-content>
+<div mat-dialog-content *ngIf="!isLoading">
   <form [formGroup]="merchantForm">
     <mat-form-field appearance="outline">
       <mat-label>{{ translationKeys.createFormNameLabel | translate }}</mat-label>

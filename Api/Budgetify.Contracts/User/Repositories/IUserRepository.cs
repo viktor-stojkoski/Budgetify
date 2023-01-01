@@ -31,5 +31,5 @@ public interface IUserRepository
     /// <summary>
     /// Returns boolean indicating whether user with the given email exists.
     /// </summary>
-    Task<bool> DoesUserWithEmailExists(string? email);
+    Task<bool> DoesUserEmailExistAsync(string? email);
 }
