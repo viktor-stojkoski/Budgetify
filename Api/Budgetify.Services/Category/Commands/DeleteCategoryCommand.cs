@@ -42,6 +42,11 @@ public class DeleteCategoryCommandHandler : ICommandHandler<DeleteCategoryComman
             return result.FailWith(categoryResult);
         }
 
+        if (!await _categoryRepository.IsCategoryValidForDeletionAsync(_currentUser.Id, command.CategoryUid))
+        {
+            return result.FailWith(Result.Invalid(ResultCodes.CategoryInvalidForDeletion));
+        }
+
         Result deleteResult = categoryResult.Value.Delete(DateTime.UtcNow);
 
         if (deleteResult.IsFailureOrNull)

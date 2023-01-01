@@ -39,7 +39,10 @@ export class DeleteAccountComponent extends DestroyBaseComponent {
           this.dialogRef.close({ action: DialogActionButton.Ok } as IDialogResponseData);
           this.snackbarService.success(this.translationKeys.deleteAccountSuccessful);
         },
-        error: (error) => this.snackbarService.showError(error)
+        error: (error) => {
+          this.dialogRef.close({ action: DialogActionButton.Cancel } as IDialogResponseData);
+          this.snackbarService.showError(error);
+        }
       });
   }
 

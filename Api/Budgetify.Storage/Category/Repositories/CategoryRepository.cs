@@ -1,6 +1,7 @@
 ﻿namespace Budgetify.Storage.Category.Repositories;
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Budgetify.Common.Results;
@@ -49,5 +50,13 @@ public class CategoryRepository : Repository<Entities.Category>, ICategoryReposi
     {
         return await AllNoTrackedOf<Entities.Category>()
             .AnyAsync(x => x.UserId == userId && x.Name == name);
+    }
+
+    public async Task<bool> IsCategoryValidForDeletionAsync(int userId, Guid categoryUid)
+    {
+        return await AllNoTrackedOf<Entities.Category>()
+            .AnyAsync(x => x.UserId == userId && x.Uid == categoryUid
+                && !x.Merchants.Any(x => x.DeletedOn == null)
+                    && !x.Transactions.Any(x => x.DeletedOn == null));
     }
 }
