@@ -44,4 +44,10 @@ public class MerchantRepository : Repository<Entities.Merchant>, IMerchantReposi
 
         return dbMerchant.CreateMerchant();
     }
+
+    public async Task<bool> DoesMerchantNameExistAsync(int userId, string? name)
+    {
+        return await AllNoTrackedOf<Entities.Merchant>()
+            .AnyAsync(x => x.UserId == userId && x.Name == name);
+    }
 }

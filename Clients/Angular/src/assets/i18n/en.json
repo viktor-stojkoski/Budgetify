@@ -49,6 +49,7 @@
     "MERCHANT_NAME_INVALID": "Merchant name invalid.",
     "MERCHANT_NAME_INVALID_LENGTH": "Merchant name invalid length.",
     "MERCHANT_NOT_FOUND": "Merchant not found.",
+    "MERCHANT_WITH_SAME_NAME_ALREADY_EXIST": "Merchant with same name already exist.",
 
     "TRANSACTION_TYPE_INVALID": "Transaction type invalid.",
     "TRANSACTION_EMPTY_MERCHANT_TYPE_INVALID": "Cannot create expense transaction without merchant.",

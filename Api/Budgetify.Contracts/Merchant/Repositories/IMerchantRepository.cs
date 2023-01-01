@@ -22,4 +22,9 @@ public interface IMerchantRepository
     /// Returns merchant by given userId and merchantUid.
     /// </summary>
     Task<Result<Merchant>> GetMerchantAsync(int userId, Guid merchantUid);
+
+    /// <summary>
+    /// Returns boolean indicating whether merchant with the given userId and name exists.
+    /// </summary>
+    Task<bool> DoesMerchantNameExistAsync(int userId, string? name);
 }
