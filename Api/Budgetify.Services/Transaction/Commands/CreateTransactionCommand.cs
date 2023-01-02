@@ -8,12 +8,14 @@ using Budgetify.Common.Results;
 using Budgetify.Contracts.Account.Repositories;
 using Budgetify.Contracts.Category.Repositories;
 using Budgetify.Contracts.Currency.Repositories;
+using Budgetify.Contracts.ExchangeRate.Repositories;
 using Budgetify.Contracts.Infrastructure.Storage;
 using Budgetify.Contracts.Merchant.Repositories;
 using Budgetify.Contracts.Transaction.Repositories;
 using Budgetify.Entities.Account.Domain;
 using Budgetify.Entities.Category.Domain;
 using Budgetify.Entities.Currency.Domain;
+using Budgetify.Entities.ExchangeRate.Domain;
 using Budgetify.Entities.Merchant.Domain;
 using Budgetify.Entities.Transaction.Domain;
 using Budgetify.Services.Common.Extensions;
@@ -37,6 +39,7 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
     private readonly ICategoryRepository _categoryRepository;
     private readonly ICurrencyRepository _currencyRepository;
     private readonly IMerchantRepository _merchantRepository;
+    private readonly IExchangeRateRepository _exchangeRateRepository;
     private readonly ITransactionRepository _transactionRepository;
     private readonly IUnitOfWork _unitOfWork;
 
@@ -46,6 +49,7 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
         ICategoryRepository categoryRepository,
         ICurrencyRepository currencyRepository,
         IMerchantRepository merchantRepository,
+        IExchangeRateRepository exchangeRateRepository,
         ITransactionRepository transactionRepository,
         IUnitOfWork unitOfWork)
     {
@@ -54,6 +58,7 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
         _categoryRepository = categoryRepository;
         _currencyRepository = currencyRepository;
         _merchantRepository = merchantRepository;
+        _exchangeRateRepository = exchangeRateRepository;
         _transactionRepository = transactionRepository;
         _unitOfWork = unitOfWork;
     }
@@ -101,6 +106,25 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
             merchantId = merchantResult.Value.Id;
         }
 
+        decimal amount = command.Amount;
+
+        if (currencyResult.Value.Id != accountResult.Value.CurrencyId)
+        {
+            Result<ExchangeRate> exchangeRateResult =
+                await _exchangeRateRepository.GetExchangeRateInDateRangeByCurrenciesAsync(
+                    userId: _currentUser.Id,
+                    fromCurrencyId: currencyResult.Value.Id,
+                    toCurrencyId: accountResult.Value.CurrencyId,
+                    date: command.Date);
+
+            if (exchangeRateResult.IsFailureOrNull)
+            {
+                return result.FailWith(exchangeRateResult);
+            }
+
+            amount *= exchangeRateResult.Value.Rate;
+        }
+
         Result<Transaction> transactionResult =
             Transaction.Create(
                 createdOn: DateTime.UtcNow,
@@ -110,7 +134,7 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
                 currencyId: currencyResult.Value.Id,
                 merchantId: merchantId,
                 type: command.Type,
-                amount: command.Amount,
+                amount: amount,
                 date: command.Date.ToLocalTime(),
                 description: command.Description);
 
