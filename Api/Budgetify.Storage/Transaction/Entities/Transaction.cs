@@ -16,8 +16,31 @@ public class Transaction : AggregateRoot
 {
     protected internal Transaction() { }
 
-    protected internal Transaction(IEnumerable<IDomainEvent> domainEvents) : base(domainEvents)
+    protected internal Transaction(
+        int id,
+        Guid uid,
+        DateTime createdOn,
+        DateTime? deletedOn,
+        IEnumerable<IDomainEvent> domainEvents,
+        int userId,
+        int accountId,
+        int categoryId,
+        int currencyId,
+        int? merchantId,
+        string type,
+        decimal amount,
+        DateTime date,
+        string? description) : base(id, uid, createdOn, deletedOn, domainEvents)
     {
+        UserId = userId;
+        AccountId = accountId;
+        CategoryId = categoryId;
+        CurrencyId = currencyId;
+        MerchantId = merchantId;
+        Type = type;
+        Amount = amount;
+        Date = date;
+        Description = description;
     }
 
     public int UserId { get; protected internal set; }
@@ -30,7 +53,7 @@ public class Transaction : AggregateRoot
 
     public int? MerchantId { get; protected internal set; }
 
-    public string? Type { get; protected internal set; }
+    public string Type { get; protected internal set; } = null!;
 
     public decimal Amount { get; protected internal set; }
 

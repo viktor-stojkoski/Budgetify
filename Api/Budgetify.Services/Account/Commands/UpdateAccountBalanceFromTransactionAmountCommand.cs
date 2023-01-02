@@ -13,9 +13,12 @@ using Budgetify.Services.Common.Extensions;
 
 using VS.Commands;
 
-public record UpdateAccountBalanceFromTransactionAmountCommand(Guid TransactionUid) : ICommand;
+public record UpdateAccountBalanceFromTransactionAmountCommand(
+    Guid TransactionUid,
+    decimal? DifferenceAmount) : ICommand;
 
-public class UpdateAccountBalanceFromTransactionAmountCommandHandler : ICommandHandler<UpdateAccountBalanceFromTransactionAmountCommand>
+public class UpdateAccountBalanceFromTransactionAmountCommandHandler
+    : ICommandHandler<UpdateAccountBalanceFromTransactionAmountCommand>
 {
     private readonly ITransactionRepository _transactionRepository;
     private readonly IAccountRepository _accountRepository;
@@ -52,7 +55,7 @@ public class UpdateAccountBalanceFromTransactionAmountCommandHandler : ICommandH
         }
 
         Result updateResult =
-            accountResult.Value.DeductBalance(transactionResult.Value.Amount);
+            accountResult.Value.DeductBalance(command.DifferenceAmount ?? transactionResult.Value.Amount);
 
         if (updateResult.IsFailureOrNull)
         {

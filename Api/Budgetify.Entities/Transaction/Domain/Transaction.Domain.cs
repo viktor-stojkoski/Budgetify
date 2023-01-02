@@ -33,6 +33,11 @@ public partial class Transaction
             return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
         }
 
+        AddDomainEvent(
+            new TransactionUpdatedDomainEvent(
+                TransactionUid: Uid,
+                DifferenceAmount: Amount > amount ? -Math.Abs(Amount - amount) : Math.Abs(Amount - amount)));
+
         AccountId = accountId;
         CategoryId = categoryId;
         CurrencyId = currencyId;
@@ -43,8 +48,6 @@ public partial class Transaction
         Description = description;
 
         MarkModify();
-
-        AddDomainEvent(new TransactionUpdatedDomainEvent(Uid));
 
         return Result.Ok();
     }
