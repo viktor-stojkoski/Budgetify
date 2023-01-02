@@ -55,4 +55,16 @@ public partial class Account
 
         return Result.Ok();
     }
+
+    /// <summary>
+    /// Deducts the given amount from balance.
+    /// </summary>
+    public Result DeductBalance(decimal amount)
+    {
+        Balance -= amount;
+
+        MarkModify();
+
+        return Result.Ok();
+    }
 }

@@ -3,6 +3,7 @@
 using System;
 
 using Budgetify.Common.Results;
+using Budgetify.Entities.Transaction.DomainEvents;
 using Budgetify.Entities.Transaction.Enumerations;
 
 public partial class Transaction
@@ -43,6 +44,8 @@ public partial class Transaction
 
         MarkModify();
 
+        AddDomainEvent(new TransactionUpdatedDomainEvent(Uid));
+
         return Result.Ok();
     }
 
@@ -59,6 +62,8 @@ public partial class Transaction
         DeletedOn = deletedOn;
 
         MarkModify();
+
+        //AddDomainEvent(new TransactionDeletedDomainEvent(Amount));
 
         return Result.Ok();
     }

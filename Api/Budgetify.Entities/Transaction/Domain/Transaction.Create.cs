@@ -4,6 +4,7 @@ using System;
 
 using Budgetify.Common.Results;
 using Budgetify.Entities.Common.Enumerations;
+using Budgetify.Entities.Transaction.DomainEvents;
 using Budgetify.Entities.Transaction.Enumerations;
 
 public partial class Transaction
@@ -84,21 +85,24 @@ public partial class Transaction
             return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
         }
 
-        return Result.Ok(
-            new Transaction(
-                userId: userId,
-                accountId: accountId,
-                categoryId: categoryId,
-                currencyId: currencyId,
-                merchantId: merchantId,
-                type: typeValue.Value,
-                amount: amount,
-                date: date,
-                description: description)
-            {
-                Uid = Guid.NewGuid(),
-                CreatedOn = createdOn,
-                State = EntityState.Added
-            });
+        Transaction transaction = new(
+            userId: userId,
+            accountId: accountId,
+            categoryId: categoryId,
+            currencyId: currencyId,
+            merchantId: merchantId,
+            type: typeValue.Value,
+            amount: amount,
+            date: date,
+            description: description)
+        {
+            Uid = Guid.NewGuid(),
+            CreatedOn = createdOn,
+            State = EntityState.Added
+        };
+
+        transaction.AddDomainEvent(new TransactionCreatedDomainEvent(transaction.Uid));
+
+        return Result.Ok(transaction);
     }
 }

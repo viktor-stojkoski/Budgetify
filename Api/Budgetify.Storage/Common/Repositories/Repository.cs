@@ -54,7 +54,7 @@ public class Repository<TAggregate> where TAggregate : AggregateRoot
     protected void AttachOrUpdate<TEntity>(TEntity entity, EntityState entityState) where TEntity : Entity
     {
         TEntity? existingEntity =
-            _budgetifyDbContext.Set<TEntity>().SingleOrDefault(x => x.Id == entity.Id);
+            _budgetifyDbContext.Set<TEntity>().Local.SingleOrDefault(x => x.Id == entity.Id);
 
         if (existingEntity is null)
         {

@@ -46,6 +46,19 @@ public class AccountRepository : Repository<Entities.Account>, IAccountRepositor
         return dbAccount.CreateAccount();
     }
 
+    public async Task<Result<Account>> GetAccountByIdAsync(int accountId)
+    {
+        Entities.Account? dbAccount = await AllNoTrackedOf<Entities.Account>()
+            .SingleOrDefaultAsync(x => x.Id == accountId);
+
+        if (dbAccount is null)
+        {
+            return Result.NotFound<Account>(ResultCodes.AccountNotFound);
+        }
+
+        return dbAccount.CreateAccount();
+    }
+
     public async Task<bool> DoesAccountNameExistAsync(int userId, string? name)
     {
         return await AllNoTrackedOf<Entities.Account>()

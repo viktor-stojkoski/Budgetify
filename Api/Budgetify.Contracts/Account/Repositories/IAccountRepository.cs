@@ -24,6 +24,11 @@ public interface IAccountRepository
     Task<Result<Account>> GetAccountAsync(int userId, Guid accountUid);
 
     /// <summary>
+    /// Returns account by given accountId.
+    /// </summary>
+    Task<Result<Account>> GetAccountByIdAsync(int accountId);
+
+    /// <summary>
     /// Returns boolean indicating whether account with the given userId and name exists.
     /// </summary>
     Task<bool> DoesAccountNameExistAsync(int userId, string? name);

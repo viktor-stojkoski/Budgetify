@@ -20,7 +20,7 @@ internal static class TransactionFactory
             categoryId: dbTransaction.CategoryId,
             currencyId: dbTransaction.CurrencyId,
             merchantId: dbTransaction.MerchantId,
-            type: dbTransaction.Type,
+            type: dbTransaction.Type!,
             amount: dbTransaction.Amount,
             date: dbTransaction.Date,
             description: dbTransaction.Description);
@@ -31,19 +31,21 @@ internal static class TransactionFactory
     /// </summary>
     internal static Entities.Transaction CreateTransaction(this Transaction transaction)
     {
-        return new(
-            id: transaction.Id,
-            uid: transaction.Uid,
-            createdOn: transaction.CreatedOn,
-            deletedOn: transaction.DeletedOn,
-            userId: transaction.UserId,
-            accountId: transaction.AccountId,
-            categoryId: transaction.CategoryId,
-            currencyId: transaction.CurrencyId,
-            merchantId: transaction.MerchantId,
-            type: transaction.Type,
-            amount: transaction.Amount,
-            date: transaction.Date,
-            description: transaction.Description);
+        return new(domainEvents: transaction.DomainEvents)
+        {
+            Id = transaction.Id,
+            Uid = transaction.Uid,
+            CreatedOn = transaction.CreatedOn,
+            DeletedOn = transaction.DeletedOn,
+            UserId = transaction.UserId,
+            AccountId = transaction.AccountId,
+            CategoryId = transaction.CategoryId,
+            CurrencyId = transaction.CurrencyId,
+            MerchantId = transaction.MerchantId,
+            Type = transaction.Type,
+            Amount = transaction.Amount,
+            Date = transaction.Date,
+            Description = transaction.Description,
+        };
     }
 }

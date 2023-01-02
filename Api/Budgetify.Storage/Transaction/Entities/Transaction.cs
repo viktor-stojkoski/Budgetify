@@ -1,6 +1,7 @@
 ﻿namespace Budgetify.Storage.Transaction.Entities;
 
 using System;
+using System.Collections.Generic;
 
 using Budgetify.Storage.Account.Entities;
 using Budgetify.Storage.Category.Entities;
@@ -9,32 +10,14 @@ using Budgetify.Storage.Currency.Entities;
 using Budgetify.Storage.Merchant.Entities;
 using Budgetify.Storage.User.Entities;
 
+using VS.DomainEvents;
+
 public class Transaction : AggregateRoot
 {
-    public Transaction(
-        int id,
-        Guid uid,
-        DateTime createdOn,
-        DateTime? deletedOn,
-        int userId,
-        int accountId,
-        int categoryId,
-        int currencyId,
-        int? merchantId,
-        string type,
-        decimal amount,
-        DateTime date,
-        string? description) : base(id, uid, createdOn, deletedOn)
+    protected internal Transaction() { }
+
+    protected internal Transaction(IEnumerable<IDomainEvent> domainEvents) : base(domainEvents)
     {
-        UserId = userId;
-        AccountId = accountId;
-        CategoryId = categoryId;
-        CurrencyId = currencyId;
-        MerchantId = merchantId;
-        Type = type;
-        Amount = amount;
-        Date = date;
-        Description = description;
     }
 
     public int UserId { get; protected internal set; }
@@ -47,7 +30,7 @@ public class Transaction : AggregateRoot
 
     public int? MerchantId { get; protected internal set; }
 
-    public string Type { get; protected internal set; }
+    public string? Type { get; protected internal set; }
 
     public decimal Amount { get; protected internal set; }
 
