@@ -27,7 +27,7 @@ public class TransactionUpdatedDomainEventHandler : IDomainEventHandler<Transact
     {
         _jobService.Enqueue(() => _syncCommandDispatcher.Execute(
             new UpdateAccountBalanceFromTransactionAmountCommand(
-                @event.TransactionUid, @event.DifferenceAmount)));
+                @event.AccountId, @event.DifferenceAmount)));
 
         return Task.CompletedTask;
     }

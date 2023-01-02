@@ -101,7 +101,8 @@ public partial class Transaction
             State = EntityState.Added
         };
 
-        transaction.AddDomainEvent(new TransactionCreatedDomainEvent(transaction.Uid));
+        transaction.AddDomainEvent(
+            new TransactionCreatedDomainEvent(transaction.AccountId, transaction.Amount));
 
         return Result.Ok(transaction);
     }

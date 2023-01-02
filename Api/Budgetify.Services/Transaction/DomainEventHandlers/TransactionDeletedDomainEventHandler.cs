@@ -10,12 +10,12 @@ using Budgetify.Services.Account.Commands;
 using VS.Commands;
 using VS.DomainEvents;
 
-public class TransactionCreatedDomainEventHandler : IDomainEventHandler<TransactionCreatedDomainEvent>
+public class TransactionDeletedDomainEventHandler : IDomainEventHandler<TransactionDeletedDomainEvent>
 {
     private readonly IJobService _jobService;
     private readonly ISyncCommandDispatcher _syncCommandDispatcher;
 
-    public TransactionCreatedDomainEventHandler(
+    public TransactionDeletedDomainEventHandler(
         IJobService jobService,
         ISyncCommandDispatcher syncCommandDispatcher)
     {
@@ -23,7 +23,7 @@ public class TransactionCreatedDomainEventHandler : IDomainEventHandler<Transact
         _syncCommandDispatcher = syncCommandDispatcher;
     }
 
-    public Task HandleAsync(TransactionCreatedDomainEvent @event, CancellationToken cancellationToken)
+    public Task HandleAsync(TransactionDeletedDomainEvent @event, CancellationToken cancellationToken)
     {
         _jobService.Enqueue(() => _syncCommandDispatcher.Execute(
             new UpdateAccountBalanceFromTransactionAmountCommand(

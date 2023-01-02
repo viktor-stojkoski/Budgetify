@@ -35,7 +35,7 @@ public partial class Transaction
 
         AddDomainEvent(
             new TransactionUpdatedDomainEvent(
-                TransactionUid: Uid,
+                AccountId: AccountId,
                 DifferenceAmount: Amount > amount ? -Math.Abs(Amount - amount) : Math.Abs(Amount - amount)));
 
         AccountId = accountId;
@@ -66,7 +66,7 @@ public partial class Transaction
 
         MarkModify();
 
-        //AddDomainEvent(new TransactionDeletedDomainEvent(Amount));
+        AddDomainEvent(new TransactionDeletedDomainEvent(AccountId, -Amount));
 
         return Result.Ok();
     }
