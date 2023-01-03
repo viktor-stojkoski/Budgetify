@@ -1,6 +1,8 @@
 ﻿namespace Budgetify.Storage.Transaction.Repositories;
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Budgetify.Common.Results;
@@ -56,5 +58,25 @@ public class TransactionRepository : Repository<Entities.Transaction>, ITransact
         }
 
         return dbTransaction.CreateTransaction();
+    }
+
+    public async Task<Result<IEnumerable<Transaction>>> GetTransactionsInDateRangeAsync(DateTime? fromDate, DateTime? toDate)
+    {
+        IEnumerable<Entities.Transaction> dbTransactions =
+            await AllNoTrackedOf<Entities.Transaction>()
+                .Where(x => (!fromDate.HasValue || fromDate.Value.Date <= x.Date)
+                    && (!toDate.HasValue || toDate.Value.Date >= x.Date))
+                .ToListAsync();
+
+        IEnumerable<Result<Transaction>> dbTransactionsResults = dbTransactions.CreateTransactions();
+
+        Result dbTransactionsResult = Result.FirstFailureNullOrOk(dbTransactionsResults);
+
+        if (dbTransactionsResult.IsFailureOrNull)
+        {
+            return Result.FromError<IEnumerable<Transaction>>(dbTransactionsResult);
+        }
+
+        return Result.Ok(dbTransactionsResults.Select(x => x.Value).ToArray().AsEnumerable());
     }
 }

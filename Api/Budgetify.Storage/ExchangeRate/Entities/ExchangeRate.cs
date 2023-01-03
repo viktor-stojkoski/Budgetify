@@ -1,24 +1,30 @@
 ﻿namespace Budgetify.Storage.ExchangeRate.Entities;
 
 using System;
+using System.Collections.Generic;
 
 using Budgetify.Storage.Common.Entities;
 using Budgetify.Storage.Currency.Entities;
 using Budgetify.Storage.User.Entities;
 
+using VS.DomainEvents;
+
 public class ExchangeRate : AggregateRoot
 {
-    public ExchangeRate(
+    protected internal ExchangeRate() { }
+
+    protected internal ExchangeRate(
         int id,
         Guid uid,
         DateTime createdOn,
         DateTime? deletedOn,
+        IEnumerable<IDomainEvent> domainEvents,
         int userId,
         int fromCurrencyId,
         int toCurrencyId,
         DateTime? fromDate,
         DateTime? toDate,
-        decimal rate) : base(id, uid, createdOn, deletedOn)
+        decimal rate) : base(id, uid, createdOn, deletedOn, domainEvents)
     {
         UserId = userId;
         FromCurrencyId = fromCurrencyId;

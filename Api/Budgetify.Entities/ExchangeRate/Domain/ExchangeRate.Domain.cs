@@ -3,6 +3,7 @@
 using System;
 
 using Budgetify.Common.Results;
+using Budgetify.Entities.ExchangeRate.DomainEvents;
 using Budgetify.Entities.ExchangeRate.ValueObjects;
 
 public partial class ExchangeRate
@@ -29,6 +30,8 @@ public partial class ExchangeRate
         Rate = rate;
 
         MarkModify();
+
+        AddDomainEvent(new ExchangeRateUpdatedDomainEvent(Uid));
 
         return Result.Ok();
     }

@@ -1,6 +1,7 @@
 ﻿namespace Budgetify.Contracts.Transaction.Repositories;
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Budgetify.Common.Results;
@@ -27,4 +28,9 @@ public interface ITransactionRepository
     /// Returns transaction by given transactionUid.
     /// </summary>
     Task<Result<Transaction>> GetTransactionByUidAsync(Guid transactionUid);
+
+    /// <summary>
+    /// Returns transactions in the given date range.
+    /// </summary>
+    Task<Result<IEnumerable<Transaction>>> GetTransactionsInDateRangeAsync(DateTime? fromDate, DateTime? toDate);
 }
