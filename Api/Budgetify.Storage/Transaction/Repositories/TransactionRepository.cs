@@ -47,19 +47,6 @@ public class TransactionRepository : Repository<Entities.Transaction>, ITransact
         return dbTransaction.CreateTransaction();
     }
 
-    public async Task<Result<Transaction>> GetTransactionByUidAsync(Guid transactionUid)
-    {
-        Entities.Transaction? dbTransaction = await AllNoTrackedOf<Entities.Transaction>()
-            .SingleOrDefaultAsync(x => x.Uid == transactionUid);
-
-        if (dbTransaction is null)
-        {
-            return Result.NotFound<Transaction>(ResultCodes.TransactionNotFound);
-        }
-
-        return dbTransaction.CreateTransaction();
-    }
-
     public async Task<Result<IEnumerable<Transaction>>> GetTransactionsInDateRangeAsync(int userId, DateTime? fromDate, DateTime? toDate)
     {
         IEnumerable<Entities.Transaction> dbTransactions =

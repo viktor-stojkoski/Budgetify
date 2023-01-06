@@ -46,19 +46,6 @@ public class ExchangeRateRepository : Repository<Entities.ExchangeRate>, IExchan
         return dbExchangeRate.CreateExchangeRate();
     }
 
-    public async Task<Result<ExchangeRate>> GetExchangeRateByUidAsync(Guid exchangeRateUid)
-    {
-        Entities.ExchangeRate? dbExchangeRate = await AllNoTrackedOf<Entities.ExchangeRate>()
-            .SingleOrDefaultAsync(x => x.Uid == exchangeRateUid);
-
-        if (dbExchangeRate is null)
-        {
-            return Result.NotFound<ExchangeRate>(ResultCodes.ExchangeRateNotFound);
-        }
-
-        return dbExchangeRate.CreateExchangeRate();
-    }
-
     public async Task<Result<ExchangeRate>> GetExchangeRateByCurrenciesWithoutToDateAsync(int userId, int fromCurrencyId, int toCurrencyId)
     {
         Entities.ExchangeRate? dbExchangeRate = await AllNoTrackedOf<Entities.ExchangeRate>()

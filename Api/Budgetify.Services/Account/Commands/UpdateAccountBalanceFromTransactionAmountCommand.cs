@@ -50,7 +50,7 @@ public class UpdateAccountBalanceFromTransactionAmountCommandHandler
         }
 
         Result<Account> accountResult =
-            await _accountRepository.GetAccountByIdAsync(transactionResult.Value.AccountId);
+            await _accountRepository.GetAccountByIdAsync(command.UserId, transactionResult.Value.AccountId);
 
         if (accountResult.IsFailureOrNull)
         {

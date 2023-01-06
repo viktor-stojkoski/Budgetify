@@ -75,13 +75,4 @@ public partial class Transaction
 
         return Result.Ok();
     }
-
-    public Result UpdateAmount(decimal amount)
-    {
-        Amount = amount;
-
-        MarkModify();
-
-        return Result.Ok();
-    }
 }

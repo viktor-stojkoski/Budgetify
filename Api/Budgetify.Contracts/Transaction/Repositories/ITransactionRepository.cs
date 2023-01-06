@@ -25,11 +25,6 @@ public interface ITransactionRepository
     Task<Result<Transaction>> GetTransactionAsync(int userId, Guid transactionUid);
 
     /// <summary>
-    /// Returns transaction by given transactionUid.
-    /// </summary>
-    Task<Result<Transaction>> GetTransactionByUidAsync(Guid transactionUid);
-
-    /// <summary>
     /// Returns transactions in the given date range.
     /// </summary>
     Task<Result<IEnumerable<Transaction>>> GetTransactionsInDateRangeAsync(int userId, DateTime? fromDate, DateTime? toDate);

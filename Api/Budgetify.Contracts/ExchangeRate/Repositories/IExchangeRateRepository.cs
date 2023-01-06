@@ -24,11 +24,6 @@ public interface IExchangeRateRepository
     Task<Result<ExchangeRate>> GetExchangeRateAsync(int userId, Guid exchangeRateUid);
 
     /// <summary>
-    /// Returns exchange rate by given exchangeRateUid.
-    /// </summary>
-    Task<Result<ExchangeRate>> GetExchangeRateByUidAsync(Guid exchangeRateUid);
-
-    /// <summary>
     /// Returns exchange rate by given userId and currencies id without to date.
     /// </summary>
     Task<Result<ExchangeRate>> GetExchangeRateByCurrenciesWithoutToDateAsync(int userId, int fromCurrencyId, int toCurrencyId);
