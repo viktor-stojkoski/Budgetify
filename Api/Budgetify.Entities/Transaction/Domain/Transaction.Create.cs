@@ -102,7 +102,10 @@ public partial class Transaction
         };
 
         transaction.AddDomainEvent(
-            new TransactionCreatedDomainEvent(transaction.AccountId, transaction.Amount));
+            new TransactionCreatedDomainEvent(
+                UserId: transaction.UserId,
+                TransactionUid: transaction.Uid,
+                DifferenceAmount: transaction.Amount));
 
         return Result.Ok(transaction);
     }

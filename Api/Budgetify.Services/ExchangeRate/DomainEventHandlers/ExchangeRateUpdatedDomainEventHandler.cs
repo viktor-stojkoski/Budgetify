@@ -26,7 +26,8 @@ public class ExchangeRateUpdatedDomainEventHandler : IDomainEventHandler<Exchang
     public Task HandleAsync(ExchangeRateUpdatedDomainEvent @event, CancellationToken cancellationToken)
     {
         _jobService.Enqueue(() => _syncCommandDispatcher.Execute(
-            new UpdateTransactionsAmountByExchangeRateCommand(@event.ExchangeRateUid)));
+            new UpdateTransactionsAmountByExchangeRateCommand(
+                @event.UserId, @event.ExchangeRateUid, @event.PreviousRate)));
 
         return Task.CompletedTask;
     }

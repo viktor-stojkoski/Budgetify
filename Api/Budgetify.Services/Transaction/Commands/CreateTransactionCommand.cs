@@ -8,7 +8,6 @@ using Budgetify.Common.Results;
 using Budgetify.Contracts.Account.Repositories;
 using Budgetify.Contracts.Category.Repositories;
 using Budgetify.Contracts.Currency.Repositories;
-using Budgetify.Contracts.ExchangeRate.Repositories;
 using Budgetify.Contracts.Infrastructure.Storage;
 using Budgetify.Contracts.Merchant.Repositories;
 using Budgetify.Contracts.Transaction.Repositories;
@@ -38,7 +37,6 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
     private readonly ICategoryRepository _categoryRepository;
     private readonly ICurrencyRepository _currencyRepository;
     private readonly IMerchantRepository _merchantRepository;
-    private readonly IExchangeRateRepository _exchangeRateRepository;
     private readonly ITransactionRepository _transactionRepository;
     private readonly IUnitOfWork _unitOfWork;
 
@@ -48,7 +46,6 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
         ICategoryRepository categoryRepository,
         ICurrencyRepository currencyRepository,
         IMerchantRepository merchantRepository,
-        IExchangeRateRepository exchangeRateRepository,
         ITransactionRepository transactionRepository,
         IUnitOfWork unitOfWork)
     {
@@ -57,7 +54,6 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
         _categoryRepository = categoryRepository;
         _currencyRepository = currencyRepository;
         _merchantRepository = merchantRepository;
-        _exchangeRateRepository = exchangeRateRepository;
         _transactionRepository = transactionRepository;
         _unitOfWork = unitOfWork;
     }

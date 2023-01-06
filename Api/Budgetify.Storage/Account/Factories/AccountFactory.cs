@@ -1,5 +1,8 @@
 ﻿namespace Budgetify.Storage.Account.Factories;
 
+using System.Collections.Generic;
+using System.Linq;
+
 using Budgetify.Common.Results;
 using Budgetify.Entities.Account.Domain;
 
@@ -39,5 +42,13 @@ internal static class AccountFactory
             balance: account.Balance,
             currencyId: account.CurrencyId,
             description: account.Description);
+    }
+
+    /// <summary>
+    /// Creates list of <see cref="Account"/> domain entities for a given <see cref="Entities.Account"/> storage entity list.
+    /// </summary>
+    internal static IEnumerable<Result<Account>> CreateAccounts(this IEnumerable<Entities.Account> dbAccounts)
+    {
+        return dbAccounts?.Select(CreateAccount).ToArray() ?? Enumerable.Empty<Result<Account>>();
     }
 }

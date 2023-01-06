@@ -1,6 +1,7 @@
 ﻿namespace Budgetify.Storage.Account.Repositories;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -70,5 +71,28 @@ public class AccountRepository : Repository<Entities.Account>, IAccountRepositor
         return await AllNoTrackedOf<Entities.Account>()
             .AnyAsync(x => x.UserId == userId && x.Uid == accountUid
                 && !x.Transactions.Any(x => x.DeletedOn == null));
+    }
+
+    public async Task<Result<IEnumerable<Account>>> GetAccountsByIdsAsync(int userId, IEnumerable<int> accountIds)
+    {
+        IEnumerable<Entities.Account> dbAccounts = await AllNoTrackedOf<Entities.Account>()
+            .Where(x => x.UserId == userId && accountIds.Contains(x.Id))
+            .ToListAsync();
+
+        if (dbAccounts.Count() != accountIds.Count())
+        {
+            return Result.NotFound<IEnumerable<Account>>(ResultCodes.AccountNotFound);
+        }
+
+        IEnumerable<Result<Account>> dbAccountsResults = dbAccounts.CreateAccounts();
+
+        Result dbAccountsResult = Result.FirstFailureNullOrOk(dbAccountsResults);
+
+        if (dbAccountsResult.IsFailureOrNull)
+        {
+            return Result.FromError<IEnumerable<Account>>(dbAccountsResult);
+        }
+
+        return Result.Ok(dbAccountsResults.Select(x => x.Value).ToArray().AsEnumerable());
     }
 }

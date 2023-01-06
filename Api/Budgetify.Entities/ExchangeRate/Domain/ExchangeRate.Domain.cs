@@ -26,12 +26,12 @@ public partial class ExchangeRate
             return Result.FromError<ExchangeRate>(dateRangeResult);
         }
 
+        AddDomainEvent(new ExchangeRateUpdatedDomainEvent(UserId, Uid, Rate));
+
         DateRange = dateRangeResult.Value;
         Rate = rate;
 
         MarkModify();
-
-        AddDomainEvent(new ExchangeRateUpdatedDomainEvent(Uid));
 
         return Result.Ok();
     }

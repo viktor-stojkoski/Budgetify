@@ -32,5 +32,5 @@ public interface ITransactionRepository
     /// <summary>
     /// Returns transactions in the given date range.
     /// </summary>
-    Task<Result<IEnumerable<Transaction>>> GetTransactionsInDateRangeAsync(DateTime? fromDate, DateTime? toDate);
+    Task<Result<IEnumerable<Transaction>>> GetTransactionsInDateRangeAsync(int userId, DateTime? fromDate, DateTime? toDate);
 }

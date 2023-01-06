@@ -38,11 +38,6 @@
     </td>
   </ng-container>
 
-  <ng-container matColumnDef="currencyCode">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableCurrencyCodeHeader | translate }}</th>
-    <td mat-cell *matCellDef="let transaction">{{ transaction.currencyCode }}</td>
-  </ng-container>
-
   <ng-container matColumnDef="merchantName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableMerchantHeader | translate }}</th>
     <td mat-cell *matCellDef="let transaction">
@@ -60,6 +55,11 @@
   <ng-container matColumnDef="amount">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableAmountHeader | translate }}</th>
     <td mat-cell *matCellDef="let transaction">{{ transaction.amount }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="currencyCode">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableCurrencyCodeHeader | translate }}</th>
+    <td mat-cell *matCellDef="let transaction">{{ transaction.currencyCode }}</td>
   </ng-container>
 
   <ng-container matColumnDef="date">

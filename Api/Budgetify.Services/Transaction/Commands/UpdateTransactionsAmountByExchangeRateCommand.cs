@@ -2,34 +2,40 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Budgetify.Common.Results;
+using Budgetify.Contracts.Account.Repositories;
 using Budgetify.Contracts.ExchangeRate.Repositories;
 using Budgetify.Contracts.Infrastructure.Storage;
 using Budgetify.Contracts.Transaction.Repositories;
+using Budgetify.Entities.Account.Domain;
 using Budgetify.Entities.ExchangeRate.Domain;
 using Budgetify.Entities.Transaction.Domain;
 using Budgetify.Services.Common.Extensions;
 
 using VS.Commands;
 
-public record UpdateTransactionsAmountByExchangeRateCommand(Guid ExchangeRateUid) : ICommand;
+public record UpdateTransactionsAmountByExchangeRateCommand(int UserId, Guid ExchangeRateUid, decimal PreviousRate) : ICommand;
 
 public class UpdateTransactionsAmountByExchangeRateCommandHandler
     : ICommandHandler<UpdateTransactionsAmountByExchangeRateCommand>
 {
     private readonly IExchangeRateRepository _exchangeRateRepository;
     private readonly ITransactionRepository _transactionRepository;
+    private readonly IAccountRepository _accountRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public UpdateTransactionsAmountByExchangeRateCommandHandler(
         IExchangeRateRepository exchangeRateRepository,
         ITransactionRepository transactionRepository,
+        IAccountRepository accountRepository,
         IUnitOfWork unitOfWork)
     {
         _exchangeRateRepository = exchangeRateRepository;
         _transactionRepository = transactionRepository;
+        _accountRepository = accountRepository;
         _unitOfWork = unitOfWork;
     }
 
@@ -38,7 +44,7 @@ public class UpdateTransactionsAmountByExchangeRateCommandHandler
         CommandResultBuilder result = new();
 
         Result<ExchangeRate> exchangeRateResult =
-            await _exchangeRateRepository.GetExchangeRateByUidAsync(command.ExchangeRateUid);
+            await _exchangeRateRepository.GetExchangeRateAsync(command.UserId, command.ExchangeRateUid);
 
         if (exchangeRateResult.IsFailureOrNull)
         {
@@ -47,6 +53,7 @@ public class UpdateTransactionsAmountByExchangeRateCommandHandler
 
         Result<IEnumerable<Transaction>> transactionsResult =
             await _transactionRepository.GetTransactionsInDateRangeAsync(
+                userId: command.UserId,
                 fromDate: exchangeRateResult.Value.DateRange.FromDate,
                 toDate: exchangeRateResult.Value.DateRange.ToDate);
 
@@ -55,17 +62,35 @@ public class UpdateTransactionsAmountByExchangeRateCommandHandler
             return result.FailWith(transactionsResult);
         }
 
+        Result<IEnumerable<Account>> accountsResult =
+            await _accountRepository.GetAccountsByIdsAsync(
+                userId: command.UserId,
+                accountIds: transactionsResult.Value.Select(x => x.AccountId).Distinct());
+
+        if (accountsResult.IsFailureOrNull)
+        {
+            return result.FailWith(accountsResult);
+        }
+
         foreach (Transaction transaction in transactionsResult.Value)
         {
-            Result updateResult =
-                transaction.UpdateAmount(transaction.Amount * exchangeRateResult.Value.Rate);
+            Account account = accountsResult.Value.Single(x => x.Id == transaction.AccountId);
 
-            if (updateResult.IsFailureOrNull)
+            if (transaction.CurrencyId != account.CurrencyId)
             {
-                return result.FailWith(updateResult);
-            }
+                decimal previousAmount = transaction.Amount * command.PreviousRate;
+                decimal newAmount = transaction.Amount * exchangeRateResult.Value.Rate;
 
-            _transactionRepository.Update(transaction);
+                Result updateResult =
+                    account.DeductBalance(newAmount - previousAmount);
+
+                if (updateResult.IsFailureOrNull)
+                {
+                    return result.FailWith(updateResult);
+                }
+
+                _accountRepository.Update(account);
+            }
         }
 
         await _unitOfWork.SaveAsync();
