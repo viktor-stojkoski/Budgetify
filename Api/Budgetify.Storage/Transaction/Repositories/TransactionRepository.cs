@@ -65,6 +65,6 @@ public class TransactionRepository : Repository<Entities.Transaction>, ITransact
             return Result.FromError<IEnumerable<Transaction>>(dbTransactionsResult);
         }
 
-        return Result.Ok(dbTransactionsResults.Select(x => x.Value).ToArray().AsEnumerable());
+        return Result.Ok(dbTransactionsResults.Select(x => x.Value));
     }
 }

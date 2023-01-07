@@ -93,6 +93,6 @@ public class AccountRepository : Repository<Entities.Account>, IAccountRepositor
             return Result.FromError<IEnumerable<Account>>(dbAccountsResult);
         }
 
-        return Result.Ok(dbAccountsResults.Select(x => x.Value).ToArray().AsEnumerable());
+        return Result.Ok(dbAccountsResults.Select(x => x.Value));
     }
 }

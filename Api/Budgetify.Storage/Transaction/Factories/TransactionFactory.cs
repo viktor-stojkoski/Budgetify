@@ -56,6 +56,6 @@ internal static class TransactionFactory
     /// </summary>
     internal static IEnumerable<Result<Transaction>> CreateTransactions(this IEnumerable<Entities.Transaction> dbTransactions)
     {
-        return dbTransactions?.Select(CreateTransaction).ToArray() ?? Enumerable.Empty<Result<Transaction>>();
+        return dbTransactions?.Select(CreateTransaction) ?? Enumerable.Empty<Result<Transaction>>();
     }
 }

@@ -49,6 +49,6 @@ internal static class AccountFactory
     /// </summary>
     internal static IEnumerable<Result<Account>> CreateAccounts(this IEnumerable<Entities.Account> dbAccounts)
     {
-        return dbAccounts?.Select(CreateAccount).ToArray() ?? Enumerable.Empty<Result<Account>>();
+        return dbAccounts?.Select(CreateAccount) ?? Enumerable.Empty<Result<Account>>();
     }
 }
