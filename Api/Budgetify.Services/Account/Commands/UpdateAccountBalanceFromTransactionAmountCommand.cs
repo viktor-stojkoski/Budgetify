@@ -15,26 +15,29 @@ using Budgetify.Services.Common.Extensions;
 
 using VS.Commands;
 
-public record UpdateAccountBalanceFromTransactionAmountCommand(int UserId, Guid TransactionUid, decimal DifferenceAmount) : ICommand;
+public record UpdateAccountBalanceFromTransactionAmountCommand(
+    int UserId,
+    Guid TransactionUid,
+    decimal DifferenceAmount) : ICommand;
 
 public class UpdateAccountBalanceFromTransactionAmountCommandHandler
     : ICommandHandler<UpdateAccountBalanceFromTransactionAmountCommand>
 {
-    private readonly IAccountRepository _accountRepository;
     private readonly ITransactionRepository _transactionRepository;
+    private readonly IAccountRepository _accountRepository;
     private readonly IExchangeRateRepository _exchangeRateRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public UpdateAccountBalanceFromTransactionAmountCommandHandler(
-        IAccountRepository accountRepository,
-        IUnitOfWork unitOfWork,
         ITransactionRepository transactionRepository,
-        IExchangeRateRepository exchangeRateRepository)
+        IAccountRepository accountRepository,
+        IExchangeRateRepository exchangeRateRepository,
+        IUnitOfWork unitOfWork)
     {
-        _accountRepository = accountRepository;
-        _unitOfWork = unitOfWork;
         _transactionRepository = transactionRepository;
+        _accountRepository = accountRepository;
         _exchangeRateRepository = exchangeRateRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<CommandResult<EmptyValue>> ExecuteAsync(UpdateAccountBalanceFromTransactionAmountCommand command)

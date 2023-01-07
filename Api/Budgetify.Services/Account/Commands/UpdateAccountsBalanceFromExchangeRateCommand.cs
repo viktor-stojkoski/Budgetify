@@ -17,7 +17,10 @@ using Budgetify.Services.Common.Extensions;
 
 using VS.Commands;
 
-public record UpdateAccountsBalanceFromExchangeRateCommand(int UserId, Guid ExchangeRateUid, decimal PreviousRate) : ICommand;
+public record UpdateAccountsBalanceFromExchangeRateCommand(
+    int UserId,
+    Guid ExchangeRateUid,
+    decimal PreviousRate) : ICommand;
 
 public class UpdateAccountsBalanceFromExchangeRateCommandHandler
     : ICommandHandler<UpdateAccountsBalanceFromExchangeRateCommand>
