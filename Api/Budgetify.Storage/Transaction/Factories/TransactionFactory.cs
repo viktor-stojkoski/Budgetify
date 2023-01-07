@@ -1,5 +1,8 @@
 ﻿namespace Budgetify.Storage.Transaction.Factories;
 
+using System.Collections.Generic;
+using System.Linq;
+
 using Budgetify.Common.Results;
 using Budgetify.Entities.Transaction.Domain;
 
@@ -36,6 +39,7 @@ internal static class TransactionFactory
             uid: transaction.Uid,
             createdOn: transaction.CreatedOn,
             deletedOn: transaction.DeletedOn,
+            domainEvents: transaction.DomainEvents,
             userId: transaction.UserId,
             accountId: transaction.AccountId,
             categoryId: transaction.CategoryId,
@@ -45,5 +49,13 @@ internal static class TransactionFactory
             amount: transaction.Amount,
             date: transaction.Date,
             description: transaction.Description);
+    }
+
+    /// <summary>
+    /// Creates list of <see cref="Transaction"/> domain entities for a given <see cref="Entities.Transaction"/> storage entity list.
+    /// </summary>
+    internal static IEnumerable<Result<Transaction>> CreateTransactions(this IEnumerable<Entities.Transaction> dbTransactions)
+    {
+        return dbTransactions?.Select(CreateTransaction) ?? Enumerable.Empty<Result<Transaction>>();
     }
 }

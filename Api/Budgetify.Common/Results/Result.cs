@@ -51,5 +51,8 @@ public class Result : ResultBase
     public static Result FirstFailureOrOk<T>(IEnumerable<Result<T>> results) =>
         results.Any(x => x.IsFailure) ? results.First(x => x.IsFailure) : Ok();
 
+    public static Result FirstFailureNullOrOk<T>(IEnumerable<Result<T>> results) =>
+        results.Any(x => x.IsFailure || x.IsFailureOrNull) ? results.First(x => x.IsFailure || x.IsFailureOrNull) : Ok();
+
     public static Result<T> FromError<T>(ResultBase result) => new(result.ResultType, result.Message);
 }

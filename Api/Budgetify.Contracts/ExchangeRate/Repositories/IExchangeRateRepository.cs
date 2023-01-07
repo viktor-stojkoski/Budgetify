@@ -32,4 +32,9 @@ public interface IExchangeRateRepository
     /// Returns exchange rate by given userId and currencies id.
     /// </summary>
     Task<Result<ExchangeRate>> GetLastClosedExchangeRateByCurrenciesAsync(int userId, int fromCurrencyId, int toCurrencyId);
+
+    /// <summary>
+    /// Returns exchange rate by given userId, currencies id and date.
+    /// </summary>
+    Task<Result<ExchangeRate>> GetExchangeRateByDateAndCurrenciesAsync(int userId, int fromCurrencyId, int toCurrencyId, DateTime date);
 }

@@ -12,6 +12,6 @@ public class AggregateRoot : Entity
     protected AggregateRoot(int id, Guid uid, DateTime createdOn, DateTime? deletedOn)
         : base(id, uid, createdOn, deletedOn) { }
 
-    protected AggregateRoot(IEnumerable<IDomainEvent> domainEvents)
-        : base(domainEvents) { }
+    protected AggregateRoot(int id, Guid uid, DateTime createdOn, DateTime? deletedOn, IEnumerable<IDomainEvent> domainEvents)
+        : base(id, uid, createdOn, deletedOn, domainEvents) { }
 }

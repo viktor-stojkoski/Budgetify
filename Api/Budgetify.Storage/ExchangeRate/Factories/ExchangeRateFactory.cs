@@ -33,6 +33,7 @@ internal static class ExchangeRateFactory
             uid: exchangeRate.Uid,
             createdOn: exchangeRate.CreatedOn,
             deletedOn: exchangeRate.DeletedOn,
+            domainEvents: exchangeRate.DomainEvents,
             userId: exchangeRate.UserId,
             fromCurrencyId: exchangeRate.FromCurrencyId,
             toCurrencyId: exchangeRate.ToCurrencyId,

@@ -18,12 +18,17 @@ public abstract class Entity
         DeletedOn = deletedOn;
     }
 
-    protected Entity(IEnumerable<IDomainEvent> domainEvents)
+    protected Entity(int id, Guid uid, DateTime createdOn, DateTime? deletedOn, IEnumerable<IDomainEvent> domainEvents)
     {
         if (domainEvents is null)
         {
             throw new ArgumentNullException(nameof(domainEvents), "Domain events cannot be null.");
         }
+
+        Id = id;
+        Uid = uid;
+        CreatedOn = createdOn;
+        DeletedOn = deletedOn;
 
         _domainEvents.AddRange(domainEvents);
     }

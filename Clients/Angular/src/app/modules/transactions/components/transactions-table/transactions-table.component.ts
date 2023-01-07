@@ -29,10 +29,10 @@ export class TransactionsTableComponent extends DestroyBaseComponent implements 
   public displayedColumns = [
     'accountName',
     'categoryName',
-    'currencyCode',
     'merchantName',
     'type',
     'amount',
+    'currencyCode',
     'date',
     'description',
     'actions'

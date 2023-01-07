@@ -3,6 +3,7 @@
 using System;
 
 using Budgetify.Common.Results;
+using Budgetify.Entities.Transaction.DomainEvents;
 using Budgetify.Entities.Transaction.Enumerations;
 
 public partial class Transaction
@@ -32,6 +33,12 @@ public partial class Transaction
             return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
         }
 
+        AddDomainEvent(
+            new TransactionUpdatedDomainEvent(
+                UserId: UserId,
+                TransactionUid: Uid,
+                DifferenceAmount: Amount > amount ? -Math.Abs(Amount - amount) : Math.Abs(Amount - amount)));
+
         AccountId = accountId;
         CategoryId = categoryId;
         CurrencyId = currencyId;
@@ -59,6 +66,12 @@ public partial class Transaction
         DeletedOn = deletedOn;
 
         MarkModify();
+
+        AddDomainEvent(
+            new TransactionDeletedDomainEvent(
+                UserId: UserId,
+                TransactionUid: Uid,
+                DifferenceAmount: -Amount));
 
         return Result.Ok();
     }
