@@ -47,13 +47,15 @@ public class TransactionRepository : Repository<Entities.Transaction>, ITransact
         return dbTransaction.CreateTransaction();
     }
 
-    public async Task<Result<IEnumerable<Transaction>>> GetTransactionsInDateRangeAsync(int userId, DateTime? fromDate, DateTime? toDate)
+    public async Task<Result<IEnumerable<Transaction>>> GetTransactionsWithConversionsInDateRangeAsync(int userId, DateTime? fromDate, DateTime? toDate)
     {
         IEnumerable<Entities.Transaction> dbTransactions =
             await AllNoTrackedOf<Entities.Transaction>()
+                .Include(x => x.Account)
                 .Where(x => x.UserId == userId
                     && (!fromDate.HasValue || fromDate.Value.Date <= x.Date)
-                        && (!toDate.HasValue || toDate.Value.Date >= x.Date))
+                        && (!toDate.HasValue || toDate.Value.Date >= x.Date)
+                            && x.Account.CurrencyId != x.CurrencyId)
                 .ToListAsync();
 
         IEnumerable<Result<Transaction>> dbTransactionsResults = dbTransactions.CreateTransactions();

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using Budgetify.Common.Jobs;
 using Budgetify.Entities.ExchangeRate.DomainEvents;
-using Budgetify.Services.Transaction.Commands;
+using Budgetify.Services.Account.Commands;
 
 using VS.Commands;
 using VS.DomainEvents;
@@ -26,7 +26,7 @@ public class ExchangeRateUpdatedDomainEventHandler : IDomainEventHandler<Exchang
     public Task HandleAsync(ExchangeRateUpdatedDomainEvent @event, CancellationToken cancellationToken)
     {
         _jobService.Enqueue(() => _syncCommandDispatcher.Execute(
-            new UpdateTransactionsAmountByExchangeRateCommand(
+            new UpdateAccountsBalanceFromExchangeRateCommand(
                 @event.UserId, @event.ExchangeRateUid, @event.PreviousRate)));
 
         return Task.CompletedTask;

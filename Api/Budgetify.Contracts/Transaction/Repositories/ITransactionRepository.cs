@@ -25,7 +25,8 @@ public interface ITransactionRepository
     Task<Result<Transaction>> GetTransactionAsync(int userId, Guid transactionUid);
 
     /// <summary>
-    /// Returns transactions in the given date range.
+    /// Returns transactions with conversions (different currency for transaction and account)
+    /// for the account in the given date range.
     /// </summary>
-    Task<Result<IEnumerable<Transaction>>> GetTransactionsInDateRangeAsync(int userId, DateTime? fromDate, DateTime? toDate);
+    Task<Result<IEnumerable<Transaction>>> GetTransactionsWithConversionsInDateRangeAsync(int userId, DateTime? fromDate, DateTime? toDate);
 }

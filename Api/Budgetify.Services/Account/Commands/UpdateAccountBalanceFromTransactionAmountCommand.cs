@@ -62,7 +62,7 @@ public class UpdateAccountBalanceFromTransactionAmountCommandHandler
         if (transactionResult.Value.CurrencyId != accountResult.Value.CurrencyId)
         {
             Result<ExchangeRate> exchangeRateResult =
-                await _exchangeRateRepository.GetExchangeRateInDateRangeByCurrenciesAsync(
+                await _exchangeRateRepository.GetExchangeRateByDateAndCurrenciesAsync(
                     userId: command.UserId,
                     fromCurrencyId: transactionResult.Value.CurrencyId,
                     toCurrencyId: accountResult.Value.CurrencyId,

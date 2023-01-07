@@ -1,4 +1,4 @@
-﻿namespace Budgetify.Services.Transaction.Commands;
+﻿namespace Budgetify.Services.Account.Commands;
 
 using System;
 using System.Collections.Generic;
@@ -17,17 +17,17 @@ using Budgetify.Services.Common.Extensions;
 
 using VS.Commands;
 
-public record UpdateTransactionsAmountByExchangeRateCommand(int UserId, Guid ExchangeRateUid, decimal PreviousRate) : ICommand;
+public record UpdateAccountsBalanceFromExchangeRateCommand(int UserId, Guid ExchangeRateUid, decimal PreviousRate) : ICommand;
 
-public class UpdateTransactionsAmountByExchangeRateCommandHandler
-    : ICommandHandler<UpdateTransactionsAmountByExchangeRateCommand>
+public class UpdateAccountsBalanceFromExchangeRateCommandHandler
+    : ICommandHandler<UpdateAccountsBalanceFromExchangeRateCommand>
 {
     private readonly IExchangeRateRepository _exchangeRateRepository;
     private readonly ITransactionRepository _transactionRepository;
     private readonly IAccountRepository _accountRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateTransactionsAmountByExchangeRateCommandHandler(
+    public UpdateAccountsBalanceFromExchangeRateCommandHandler(
         IExchangeRateRepository exchangeRateRepository,
         ITransactionRepository transactionRepository,
         IAccountRepository accountRepository,
@@ -39,7 +39,7 @@ public class UpdateTransactionsAmountByExchangeRateCommandHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<CommandResult<EmptyValue>> ExecuteAsync(UpdateTransactionsAmountByExchangeRateCommand command)
+    public async Task<CommandResult<EmptyValue>> ExecuteAsync(UpdateAccountsBalanceFromExchangeRateCommand command)
     {
         CommandResultBuilder result = new();
 
@@ -52,7 +52,7 @@ public class UpdateTransactionsAmountByExchangeRateCommandHandler
         }
 
         Result<IEnumerable<Transaction>> transactionsResult =
-            await _transactionRepository.GetTransactionsInDateRangeAsync(
+            await _transactionRepository.GetTransactionsWithConversionsInDateRangeAsync(
                 userId: command.UserId,
                 fromDate: exchangeRateResult.Value.DateRange.FromDate,
                 toDate: exchangeRateResult.Value.DateRange.ToDate);
@@ -76,21 +76,18 @@ public class UpdateTransactionsAmountByExchangeRateCommandHandler
         {
             Account account = accountsResult.Value.Single(x => x.Id == transaction.AccountId);
 
-            if (transaction.CurrencyId != account.CurrencyId)
+            decimal previousAmount = transaction.Amount * command.PreviousRate;
+            decimal newAmount = transaction.Amount * exchangeRateResult.Value.Rate;
+
+            Result updateResult =
+                account.DeductBalance(newAmount - previousAmount);
+
+            if (updateResult.IsFailureOrNull)
             {
-                decimal previousAmount = transaction.Amount * command.PreviousRate;
-                decimal newAmount = transaction.Amount * exchangeRateResult.Value.Rate;
-
-                Result updateResult =
-                    account.DeductBalance(newAmount - previousAmount);
-
-                if (updateResult.IsFailureOrNull)
-                {
-                    return result.FailWith(updateResult);
-                }
-
-                _accountRepository.Update(account);
+                return result.FailWith(updateResult);
             }
+
+            _accountRepository.Update(account);
         }
 
         await _unitOfWork.SaveAsync();
