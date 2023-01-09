@@ -1,6 +1,7 @@
 ﻿namespace Budgetify.Queries.Transaction.Entities;
 
 using System;
+using System.Collections.Generic;
 
 using Budgetify.Queries.Account.Entities;
 using Budgetify.Queries.Category.Entities;
@@ -60,4 +61,6 @@ public class Transaction : Entity
     public virtual Currency Currency { get; protected internal set; } = null!;
 
     public virtual Merchant? Merchant { get; protected internal set; } = null;
+
+    public virtual ICollection<TransactionAttachment> TransactionAttachments { get; protected internal set; } = new List<TransactionAttachment>();
 }
