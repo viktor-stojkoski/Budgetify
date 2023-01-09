@@ -79,4 +79,12 @@ public static class ResultCodes
     public const string ExchangeRateClosed = "EXCHANGE_RATE_CLOSED";
 
     #endregion
+
+    #region Transaction Attachment
+
+    public const string TransactionAttachmentFilePathInvalid = "TRANSACTION_ATTACHMENT_FILE_PATH_INVALID";
+    public const string TransactionAttachmentNameInvalid = "TRANSACTION_ATTACHMENT_NAME_INVALID";
+    public const string TransactionAttachmentNameInvalidLength = "TRANSACTION_ATTACHMENT_NAME_INVALID_LENGTH";
+
+    #endregion
 }
