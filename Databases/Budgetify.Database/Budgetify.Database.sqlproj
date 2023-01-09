@@ -66,6 +66,7 @@
     <Folder Include="Budgetify\Tables\Merchant" />
     <Folder Include="Budgetify\Tables\Transaction" />
     <Folder Include="Budgetify\Tables\ExchangeRate" />
+    <Folder Include="Budgetify\Tables\TransactionAttachment" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Budgetify\Budgetify.sql" />
@@ -76,6 +77,7 @@
     <Build Include="Budgetify\Tables\Merchant\Merchant.sql" />
     <Build Include="Budgetify\Tables\Transaction\Transaction.sql" />
     <Build Include="Budgetify\Tables\ExchangeRate\ExchangeRate.sql" />
+    <Build Include="Budgetify\Tables\TransactionAttachment\TransactionAttachment.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Budgetify.Database.publish.xml" />
@@ -86,6 +88,7 @@
     <None Include="Budgetify\Tables\Merchant\Merchant.Seed.sql" />
     <None Include="Budgetify\Tables\Transaction\Transaction.Seed.sql" />
     <None Include="Budgetify\Tables\ExchangeRate\ExchangeRate.Seed.sql" />
+    <None Include="Budgetify\Tables\TransactionAttachment\TransactionAttachment.Seed.sql" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PostDeploy Include="Script.PostDeployment.Debug.sql" />
