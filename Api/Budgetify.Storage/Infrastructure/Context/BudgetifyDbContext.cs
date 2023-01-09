@@ -20,5 +20,6 @@ public class BudgetifyDbContext : DbContext, IBudgetifyDbContext
         modelBuilder.ApplyConfiguration(new MerchantConfiguration());
         modelBuilder.ApplyConfiguration(new TransactionConfiguration());
         modelBuilder.ApplyConfiguration(new ExchangeRateConfiguration());
+        modelBuilder.ApplyConfiguration(new TransactionAttachmentConfiguration());
     }
 }
