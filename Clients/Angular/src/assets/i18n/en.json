@@ -203,6 +203,8 @@
     "createFormTypeLabel": "Type",
     "createFormAmountLabel": "Amount",
     "createFormDateLabel": "Date",
+    "createFormChooseFilesLabel": "Choose file(s)",
+    "createFormFilesUploadedLabel": "{{numberOfFiles}} added",
     "createFormDescriptionLabel": "Description",
 
     "detailsHeader": "Transaction details",

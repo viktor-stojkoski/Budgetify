@@ -203,6 +203,8 @@
     "createFormTypeLabel": "Тип",
     "createFormAmountLabel": "Износ",
     "createFormDateLabel": "Датум",
+    "createFormChooseFilesLabel": "Избери датотека(и)",
+    "createFormFilesUploadedLabel": "{{numberOfFiles}} додадени",
     "createFormDescriptionLabel": "Опис",
 
     "detailsHeader": "Детали за трансакцијата",

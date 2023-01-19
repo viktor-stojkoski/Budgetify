@@ -1,6 +1,9 @@
 ﻿namespace Budgetify.Contracts.Transaction.Requests;
 
 using System;
+using System.Collections.Generic;
+
+using Budgetify.Common.Storage;
 
 public class CreateTransactionRequest
 {
@@ -19,4 +22,6 @@ public class CreateTransactionRequest
     public DateTime Date { get; set; }
 
     public string? Description { get; set; }
+
+    public IEnumerable<FileForUploadRequest> Files { get; set; } = new List<FileForUploadRequest>();
 }

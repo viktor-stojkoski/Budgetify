@@ -7,6 +7,7 @@ import {
   DialogActionButton,
   enumToTranslationEnum,
   IDialogResponseData,
+  IFileForUpload,
   SnackbarService,
   TranslationKeys as SharedTranslationKeys
 } from '@budgetify/shared';
@@ -39,6 +40,7 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
   public filteredCurrencies$?: Observable<ICurrencyResponse[] | undefined>;
   public filteredMerchants$?: Observable<IMerchantResponse[] | undefined>;
   public isLoading = true;
+  public selectedFiles: IFileForUpload[] = [];
 
   public transactionForm = this.formBuilder.group({
     accountUid: ['', Validators.required],
@@ -78,7 +80,8 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
           type: this.transactionForm.controls.type.value,
           amount: this.transactionForm.controls.amount.value,
           date: this.transactionForm.controls.date.value,
-          description: this.transactionForm.controls.description.value
+          description: this.transactionForm.controls.description.value,
+          files: this.selectedFiles
         })
         .pipe(take(1))
         .subscribe({
@@ -111,6 +114,32 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
 
   public displayMerchant(uid: string): string {
     return this.merchants?.find((x) => x.uid === uid)?.name || '';
+  }
+
+  public selectFiles($event: Event): void {
+    const files = ($event.target as HTMLInputElement).files;
+
+    if (files?.length) {
+      for (let i = 0; i < files.length; i++) {
+        const file: File = files[i];
+        const fileReader: FileReader = new FileReader();
+        fileReader.readAsArrayBuffer(file);
+
+        fileReader.onloadend = (readerEvent: ProgressEvent<FileReader>) => {
+          if (readerEvent.target && readerEvent.target.readyState == FileReader.DONE) {
+            const arrayBuffer: ArrayBuffer = readerEvent.target.result as ArrayBuffer;
+            const uintArray: Uint8Array = new Uint8Array(arrayBuffer);
+
+            this.selectedFiles.push({
+              content: Array.from(uintArray),
+              type: file.type,
+              name: file.name,
+              size: file.size
+            });
+          }
+        };
+      }
+    }
   }
 
   private getMerchants(): void {

@@ -1,6 +1,7 @@
 namespace Budgetify.Api;
 
 using Budgetify.Api.Registers;
+using Budgetify.Common.Converters;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,7 +21,12 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllers();
+        services
+            .AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new ByteArrayConverter());
+            });
 
         services
             .RegisterSettings()

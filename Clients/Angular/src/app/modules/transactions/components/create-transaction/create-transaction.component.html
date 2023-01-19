@@ -71,6 +71,20 @@
       <mat-label>{{ translationKeys.createFormDescriptionLabel | translate }}</mat-label>
       <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
+
+    <mat-form-field (click)="fileInput.click()" class="file-upload">
+      <mat-label *ngIf="selectedFiles; else newFile">{{
+        selectedFiles.length === 1
+          ? selectedFiles[0].name
+          : (translationKeys.createFormFilesUploadedLabel | translate: { numberOfFiles: selectedFiles.length })
+      }}</mat-label>
+      <ng-template #newFile>
+        <mat-label class="file-upload">{{ translationKeys.createFormChooseFilesLabel | translate }}</mat-label>
+      </ng-template>
+      <input matInput disabled />
+      <mat-icon matSuffix>attach_file</mat-icon>
+      <input hidden (change)="selectFiles($event)" #fileInput type="file" multiple />
+    </mat-form-field>
   </form>
 </div>
 

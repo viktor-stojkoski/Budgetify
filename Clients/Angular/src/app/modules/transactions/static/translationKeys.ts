@@ -23,6 +23,8 @@ export class TranslationKeys {
   public static readonly createFormAmountLabel = 'transactions.createFormAmountLabel';
   public static readonly createFormDateLabel = 'transactions.createFormDateLabel';
   public static readonly createFormDescriptionLabel = 'transactions.createFormDescriptionLabel';
+  public static readonly createFormChooseFilesLabel = 'transactions.createFormChooseFilesLabel';
+  public static readonly createFormFilesUploadedLabel = 'transactions.createFormFilesUploadedLabel';
   public static readonly createTransactionSuccessful = 'successMessages.transactions.create';
 
   public static readonly detailsHeader = 'transactions.detailsHeader';

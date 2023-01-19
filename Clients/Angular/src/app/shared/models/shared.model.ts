@@ -16,3 +16,10 @@ export interface ITranslationEnum {
 export interface IDialogResponseData {
   action: DialogActionButton;
 }
+
+export interface IFileForUpload {
+  name: string;
+  type: string;
+  size: number;
+  content: number[];
+}

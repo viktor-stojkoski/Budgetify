@@ -49,7 +49,8 @@ public class TransactionsController : ExtendedApiController
                 Type: request.Type,
                 Amount: request.Amount,
                 Date: request.Date,
-                Description: request.Description)));
+                Description: request.Description,
+                Files: request.Files)));
 
     [HttpPut("{transactionUid:Guid}")]
     public async Task<IActionResult> UpdateTransactionAsync(
