@@ -81,7 +81,7 @@ public partial class Transaction
     /// </summary>
     public Result<TransactionAttachment> AddTransactionAttachment(DateTime createdOn, string fileName)
     {
-        string path = $"{Uid}/attachments/{fileName}";
+        string path = $"transactions/{Uid}/attachments/{fileName}";
 
         Result<TransactionAttachment> transactionAttachmentResult =
             TransactionAttachment.Create(
