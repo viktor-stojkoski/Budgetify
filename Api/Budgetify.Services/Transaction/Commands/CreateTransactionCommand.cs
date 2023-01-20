@@ -136,32 +136,25 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
 
             foreach (FileForUploadRequest file in command.Files)
             {
-                filesForUploadTasks.Add(
-                    _storageService.UploadAsync(
-                        containerName: _storageSettings.ContainerName,
-                        fileName: file.Name,
-                        content: file.Content,
-                        contentType: file.Type));
-            }
-
-            UploadedFileResponse[] uploadedFileResponses =
-                await Task.WhenAll(filesForUploadTasks);
-
-            foreach (UploadedFileResponse uploadedFileResponse in uploadedFileResponses)
-            {
-                string filePath = $"{transactionResult.Value.Uid}/attachments/${uploadedFileResponse.FileName}";
-
-                Result addTransactionAttachmentResult =
+                Result<TransactionAttachment> addTransactionAttachmentResult =
                     transactionResult.Value.AddTransactionAttachment(
                         createdOn: DateTime.UtcNow,
-                        filePath: filePath,
-                        fileName: uploadedFileResponse.FileName);
+                        fileName: file.Name);
 
                 if (addTransactionAttachmentResult.IsFailureOrNull)
                 {
                     return result.FailWith(addTransactionAttachmentResult);
                 }
+
+                filesForUploadTasks.Add(
+                    _storageService.UploadAsync(
+                        containerName: _storageSettings.ContainerName,
+                        fileName: addTransactionAttachmentResult.Value.FilePath,
+                        content: file.Content,
+                        contentType: file.Type));
             }
+
+            await Task.WhenAll(filesForUploadTasks);
         }
 
         _transactionRepository.Insert(transactionResult.Value);

@@ -20,6 +20,7 @@ import {
   IMerchantResponse
 } from '../../models/transaction.model';
 import { TransactionService } from '../../services/transaction.service';
+import { fileStatics } from '../../static/fileStatics';
 import { TranslationKeys } from '../../static/translationKeys';
 
 @Component({
@@ -123,22 +124,26 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
     if (files?.length) {
       for (let i = 0; i < files.length; i++) {
         const file: File = files[i];
-        const fileReader: FileReader = new FileReader();
-        fileReader.readAsArrayBuffer(file);
+        if (file.size > fileStatics.maxBytesForUpload) {
+          this.snackbarService.warning(this.translationKeys.uploadFileInvalidSize);
+        } else {
+          const fileReader: FileReader = new FileReader();
+          fileReader.readAsArrayBuffer(file);
 
-        fileReader.onloadend = (readerEvent: ProgressEvent<FileReader>) => {
-          if (readerEvent.target && readerEvent.target.readyState == FileReader.DONE) {
-            const arrayBuffer: ArrayBuffer = readerEvent.target.result as ArrayBuffer;
-            const uintArray: Uint8Array = new Uint8Array(arrayBuffer);
+          fileReader.onloadend = (readerEvent: ProgressEvent<FileReader>) => {
+            if (readerEvent.target && readerEvent.target.readyState == FileReader.DONE) {
+              const arrayBuffer: ArrayBuffer = readerEvent.target.result as ArrayBuffer;
+              const uintArray: Uint8Array = new Uint8Array(arrayBuffer);
 
-            this.selectedFiles.push({
-              content: Array.from(uintArray),
-              type: file.type,
-              name: file.name,
-              size: file.size
-            });
-          }
-        };
+              this.selectedFiles.push({
+                content: Array.from(uintArray),
+                type: file.type,
+                name: file.name,
+                size: file.size
+              });
+            }
+          };
+        }
       }
     }
   }

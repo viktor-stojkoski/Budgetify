@@ -204,8 +204,8 @@
     "createFormAmountLabel": "Износ",
     "createFormDateLabel": "Датум",
     "createFormChooseFilesLabel": "Избери датотека(и)",
-    "createFormFilesUploadedLabel": "{{numberOfFiles}} додадени",
     "createFormDescriptionLabel": "Опис",
+    "uploadFileInvalidSize": "Ве молиме прикачете датотеки со помалку од 1MB.",
 
     "detailsHeader": "Детали за трансакцијата",
     "detailsAccountHeader": "Сметка",
@@ -220,6 +220,7 @@
     "deleteTransactionHeader": "Избриши трансакција",
     "deleteTransactionContent": "Дали сте сигурни дека сакате да ја избришете оваа трансакција ?"
   },
+
   "exchangeRates": {
     "toolbarName": "Девизни курсеви",
     "toolbarActionCreateExchangeRate": "Креирај девизен курс",
