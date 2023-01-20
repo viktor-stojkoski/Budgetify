@@ -70,6 +70,7 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
   }
 
   public createTransaction(): void {
+    this.isLoading = true;
     if (this.transactionForm.valid) {
       this.transactionService
         .createTransaction({
@@ -140,6 +141,10 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
         };
       }
     }
+  }
+
+  public removeFile(fileName: string): void {
+    this.selectedFiles = this.selectedFiles.filter((x) => x.name !== fileName);
   }
 
   private getMerchants(): void {

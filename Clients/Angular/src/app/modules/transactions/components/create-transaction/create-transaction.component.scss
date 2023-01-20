@@ -2,6 +2,16 @@
   width: 100%
 }
 
-.file-upload {
+.cursor-pointer {
   cursor: pointer;
+}
+
+.files {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.display-none {
+  display: none;
 }
