@@ -42,6 +42,7 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
   public filteredMerchants$?: Observable<IMerchantResponse[] | undefined>;
   public isLoading = true;
   public selectedFiles: IFileForUpload[] = [];
+  public isCreating = false;
 
   public transactionForm = this.formBuilder.group({
     accountUid: ['', Validators.required],
@@ -71,7 +72,7 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
   }
 
   public createTransaction(): void {
-    this.isLoading = true;
+    this.isCreating = true;
     if (this.transactionForm.valid) {
       this.transactionService
         .createTransaction({
@@ -91,7 +92,10 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
             this.dialogRef.close({ action: DialogActionButton.Ok } as IDialogResponseData);
             this.snackbarService.success(this.translationKeys.createTransactionSuccessful);
           },
-          error: (error: HttpErrorResponse) => this.snackbarService.showError(error)
+          error: (error: HttpErrorResponse) => {
+            this.snackbarService.showError(error);
+            this.isCreating = false;
+          }
         });
     } else {
       this.transactionForm.markAllAsTouched();
