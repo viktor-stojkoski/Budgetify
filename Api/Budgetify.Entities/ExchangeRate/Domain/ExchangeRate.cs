@@ -6,7 +6,7 @@ using Budgetify.Entities.ExchangeRate.ValueObjects;
 
 public sealed partial class ExchangeRate : AggregateRoot
 {
-    public ExchangeRate(
+    private ExchangeRate(
         int userId,
         int fromCurrencyId,
         int toCurrencyId,

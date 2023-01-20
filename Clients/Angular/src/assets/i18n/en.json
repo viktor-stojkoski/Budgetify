@@ -203,7 +203,9 @@
     "createFormTypeLabel": "Type",
     "createFormAmountLabel": "Amount",
     "createFormDateLabel": "Date",
+    "createFormChooseFilesLabel": "Choose file(s)",
     "createFormDescriptionLabel": "Description",
+    "uploadFileInvalidSize": "Please upload files with less then 1MB.",
 
     "detailsHeader": "Transaction details",
     "detailsAccountHeader": "Account",
@@ -218,6 +220,7 @@
     "deleteTransactionHeader": "Delete transaction",
     "deleteTransactionContent": "Are you sure you want to delete this transaction ?"
   },
+
   "exchangeRates": {
     "toolbarName": "Exchange rates",
     "toolbarActionCreateExchangeRate": "Create exchange rate",

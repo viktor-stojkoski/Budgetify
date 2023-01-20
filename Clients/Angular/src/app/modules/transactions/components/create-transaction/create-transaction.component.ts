@@ -7,6 +7,7 @@ import {
   DialogActionButton,
   enumToTranslationEnum,
   IDialogResponseData,
+  IFileForUpload,
   SnackbarService,
   TranslationKeys as SharedTranslationKeys
 } from '@budgetify/shared';
@@ -19,6 +20,7 @@ import {
   IMerchantResponse
 } from '../../models/transaction.model';
 import { TransactionService } from '../../services/transaction.service';
+import { fileStatics } from '../../static/fileStatics';
 import { TranslationKeys } from '../../static/translationKeys';
 
 @Component({
@@ -39,6 +41,8 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
   public filteredCurrencies$?: Observable<ICurrencyResponse[] | undefined>;
   public filteredMerchants$?: Observable<IMerchantResponse[] | undefined>;
   public isLoading = true;
+  public selectedFiles: IFileForUpload[] = [];
+  public isCreating = false;
 
   public transactionForm = this.formBuilder.group({
     accountUid: ['', Validators.required],
@@ -68,6 +72,7 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
   }
 
   public createTransaction(): void {
+    this.isCreating = true;
     if (this.transactionForm.valid) {
       this.transactionService
         .createTransaction({
@@ -78,7 +83,8 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
           type: this.transactionForm.controls.type.value,
           amount: this.transactionForm.controls.amount.value,
           date: this.transactionForm.controls.date.value,
-          description: this.transactionForm.controls.description.value
+          description: this.transactionForm.controls.description.value,
+          files: this.selectedFiles
         })
         .pipe(take(1))
         .subscribe({
@@ -86,7 +92,10 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
             this.dialogRef.close({ action: DialogActionButton.Ok } as IDialogResponseData);
             this.snackbarService.success(this.translationKeys.createTransactionSuccessful);
           },
-          error: (error: HttpErrorResponse) => this.snackbarService.showError(error)
+          error: (error: HttpErrorResponse) => {
+            this.snackbarService.showError(error);
+            this.isCreating = false;
+          }
         });
     } else {
       this.transactionForm.markAllAsTouched();
@@ -111,6 +120,40 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
 
   public displayMerchant(uid: string): string {
     return this.merchants?.find((x) => x.uid === uid)?.name || '';
+  }
+
+  public selectFiles($event: Event): void {
+    const files = ($event.target as HTMLInputElement).files;
+
+    if (files?.length) {
+      for (let i = 0; i < files.length; i++) {
+        const file: File = files[i];
+        if (file.size > fileStatics.maxBytesForUpload) {
+          this.snackbarService.warning(this.translationKeys.uploadFileInvalidSize);
+        } else {
+          const fileReader: FileReader = new FileReader();
+          fileReader.readAsArrayBuffer(file);
+
+          fileReader.onloadend = (readerEvent: ProgressEvent<FileReader>) => {
+            if (readerEvent.target && readerEvent.target.readyState == FileReader.DONE) {
+              const arrayBuffer: ArrayBuffer = readerEvent.target.result as ArrayBuffer;
+              const uintArray: Uint8Array = new Uint8Array(arrayBuffer);
+
+              this.selectedFiles.push({
+                content: Array.from(uintArray),
+                type: file.type,
+                name: file.name,
+                size: file.size
+              });
+            }
+          };
+        }
+      }
+    }
+  }
+
+  public removeFile(fileName: string): void {
+    this.selectedFiles = this.selectedFiles.filter((x) => x.name !== fileName);
   }
 
   private getMerchants(): void {

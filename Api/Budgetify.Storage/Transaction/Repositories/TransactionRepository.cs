@@ -24,6 +24,17 @@ public class TransactionRepository : Repository<Entities.Transaction>, ITransact
     {
         Entities.Transaction dbTransaction = transaction.CreateTransaction();
 
+        foreach (TransactionAttachment transactionAttachment in transaction.Attachments)
+        {
+            Entities.TransactionAttachment dbTransactionAttachment =
+                transactionAttachment.CreateTransactionAttachment();
+
+            dbTransactionAttachment.Transaction = dbTransaction;
+            dbTransaction.TransactionAttachments.Add(dbTransactionAttachment);
+
+            Insert(dbTransactionAttachment);
+        }
+
         Insert(dbTransaction);
     }
 

@@ -4,7 +4,7 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div mat-dialog-content *ngIf="!isLoading">
+<div mat-dialog-content *ngIf="!isLoading" [ngClass]="{ 'cursor-disabled': isCreating }">
   <form [formGroup]="transactionForm">
     <mat-form-field appearance="outline">
       <mat-label>{{ translationKeys.createFormAccountLabel | translate }}</mat-label>
@@ -71,10 +71,25 @@
       <mat-label>{{ translationKeys.createFormDescriptionLabel | translate }}</mat-label>
       <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
+
+    <mat-form-field>
+      <mat-label *ngIf="selectedFiles?.length === 0">
+        {{ translationKeys.createFormChooseFilesLabel | translate }}
+      </mat-label>
+
+      <div *ngFor="let selectedFile of selectedFiles" class="files">
+        <span>{{ selectedFile.name }}</span>
+        <mat-icon (click)="removeFile(selectedFile.name)" class="cursor-pointer">clear</mat-icon>
+      </div>
+
+      <input matInput disabled [ngClass]="{ 'display-none': selectedFiles.length !== 0 }" />
+      <mat-icon matSuffix class="cursor-pointer" (click)="fileInput.click()">attach_file</mat-icon>
+      <input hidden (change)="selectFiles($event)" #fileInput type="file" multiple />
+    </mat-form-field>
   </form>
 </div>
 
-<div mat-dialog-actions align="end">
+<div mat-dialog-actions align="end" [ngClass]="{ 'cursor-disabled': isCreating }">
   <button mat-raised-button color="secondary" (click)="onCancelClick()">
     {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
   </button>

@@ -1,6 +1,7 @@
 ﻿namespace Budgetify.Entities.Transaction.Domain;
 
 using System;
+using System.Collections.Generic;
 
 using Budgetify.Entities.Common.Entities;
 using Budgetify.Entities.Common.Enumerations;
@@ -8,7 +9,7 @@ using Budgetify.Entities.Transaction.Enumerations;
 
 public sealed partial class Transaction : AggregateRoot
 {
-    public Transaction(
+    private Transaction(
         int userId,
         int accountId,
         int categoryId,
@@ -31,6 +32,13 @@ public sealed partial class Transaction : AggregateRoot
         Date = date;
         Description = description;
     }
+
+    private readonly List<TransactionAttachment> _attachments = new();
+
+    /// <summary>
+    /// Attachments for the transaction.
+    /// </summary>
+    public IReadOnlyList<TransactionAttachment> Attachments => _attachments;
 
     /// <summary>
     /// User that owns this transaction.

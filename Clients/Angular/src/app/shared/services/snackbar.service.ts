@@ -29,11 +29,15 @@ export class SnackbarService {
     );
   }
 
-  public warning(message: string): void {
-    this.snackBar.open(message, this.translateService.instant(this.translationKeys.mainActionButtonOk), {
-      ...this.snackBarConfig,
-      panelClass: 'snackbar-warning'
-    });
+  public warning(message: string, translate = true): void {
+    this.snackBar.open(
+      translate ? this.translateService.instant(message) : message,
+      this.translateService.instant(this.translationKeys.mainActionButtonOk),
+      {
+        ...this.snackBarConfig,
+        panelClass: 'snackbar-warning'
+      }
+    );
   }
 
   public error(message: string): void {
@@ -48,6 +52,6 @@ export class SnackbarService {
 
     isServerError
       ? this.error(this.translateService.instant(this.translationKeys.internalServerError))
-      : this.warning(this.translateService.instant(`errorCodes.${error.error}`));
+      : this.warning(`errorCodes.${error.error}`);
   }
 }

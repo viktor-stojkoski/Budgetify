@@ -33,5 +33,6 @@ public class BudgetifyReadonlyDbContext : DbContext, IBudgetifyReadonlyDbContext
         modelBuilder.ApplyConfiguration(new MerchantConfiguration());
         modelBuilder.ApplyConfiguration(new TransactionConfiguration());
         modelBuilder.ApplyConfiguration(new ExchangeRateConfiguration());
+        modelBuilder.ApplyConfiguration(new TransactionAttachmentConfiguration());
     }
 }

@@ -1,15 +1,19 @@
 ﻿namespace Budgetify.Services.Transaction.Commands;
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Budgetify.Common.CurrentUser;
 using Budgetify.Common.Results;
+using Budgetify.Common.Storage;
 using Budgetify.Contracts.Account.Repositories;
 using Budgetify.Contracts.Category.Repositories;
 using Budgetify.Contracts.Currency.Repositories;
 using Budgetify.Contracts.Infrastructure.Storage;
 using Budgetify.Contracts.Merchant.Repositories;
+using Budgetify.Contracts.Settings;
 using Budgetify.Contracts.Transaction.Repositories;
 using Budgetify.Entities.Account.Domain;
 using Budgetify.Entities.Category.Domain;
@@ -28,7 +32,8 @@ public record CreateTransactionCommand(
     string? Type,
     decimal Amount,
     DateTime Date,
-    string? Description) : ICommand;
+    string? Description,
+    IEnumerable<FileForUploadRequest> Files) : ICommand;
 
 public class CreateTransactionCommandHandler : ICommandHandler<CreateTransactionCommand>
 {
@@ -37,6 +42,8 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
     private readonly ICategoryRepository _categoryRepository;
     private readonly ICurrencyRepository _currencyRepository;
     private readonly IMerchantRepository _merchantRepository;
+    private readonly IStorageService _storageService;
+    private readonly IStorageSettings _storageSettings;
     private readonly ITransactionRepository _transactionRepository;
     private readonly IUnitOfWork _unitOfWork;
 
@@ -46,6 +53,8 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
         ICategoryRepository categoryRepository,
         ICurrencyRepository currencyRepository,
         IMerchantRepository merchantRepository,
+        IStorageService storageService,
+        IStorageSettings storageSettings,
         ITransactionRepository transactionRepository,
         IUnitOfWork unitOfWork)
     {
@@ -54,6 +63,8 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
         _categoryRepository = categoryRepository;
         _currencyRepository = currencyRepository;
         _merchantRepository = merchantRepository;
+        _storageService = storageService;
+        _storageSettings = storageSettings;
         _transactionRepository = transactionRepository;
         _unitOfWork = unitOfWork;
     }
@@ -117,6 +128,33 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
         if (transactionResult.IsFailureOrNull)
         {
             return result.FailWith(transactionResult);
+        }
+
+        if (command.Files.Any())
+        {
+            List<Task<UploadedFileResponse>> filesForUploadTasks = new();
+
+            foreach (FileForUploadRequest file in command.Files)
+            {
+                Result<TransactionAttachment> addTransactionAttachmentResult =
+                    transactionResult.Value.AddTransactionAttachment(
+                        createdOn: DateTime.UtcNow,
+                        fileName: file.Name);
+
+                if (addTransactionAttachmentResult.IsFailureOrNull)
+                {
+                    return result.FailWith(addTransactionAttachmentResult);
+                }
+
+                filesForUploadTasks.Add(
+                    _storageService.UploadAsync(
+                        containerName: _storageSettings.ContainerName,
+                        fileName: addTransactionAttachmentResult.Value.FilePath,
+                        content: file.Content,
+                        contentType: file.Type));
+            }
+
+            await Task.WhenAll(filesForUploadTasks);
         }
 
         _transactionRepository.Insert(transactionResult.Value);

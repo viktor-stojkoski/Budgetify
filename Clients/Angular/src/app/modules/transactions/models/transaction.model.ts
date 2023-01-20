@@ -1,3 +1,5 @@
+import { IFileForUpload } from '@budgetify/shared';
+
 export interface ITransactionResponse {
   accountUid: string;
   accountName: string;
@@ -43,6 +45,7 @@ export interface ICreateTransactionRequest {
   amount: number | null;
   date: Date | null;
   description: string | null;
+  files: IFileForUpload[];
 }
 
 export interface IUpdateTransactionRequest {

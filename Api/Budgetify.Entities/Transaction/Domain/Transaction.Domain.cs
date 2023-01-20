@@ -75,4 +75,30 @@ public partial class Transaction
 
         return Result.Ok();
     }
+
+    /// <summary>
+    /// Adds attachment to the transaction.
+    /// </summary>
+    public Result<TransactionAttachment> AddTransactionAttachment(DateTime createdOn, string fileName)
+    {
+        string path = $"transactions/{Uid}/attachments/{fileName}";
+
+        Result<TransactionAttachment> transactionAttachmentResult =
+            TransactionAttachment.Create(
+                createdOn: createdOn,
+                transactionId: Id,
+                filePath: path,
+                name: fileName);
+
+        if (transactionAttachmentResult.IsFailureOrNull)
+        {
+            return transactionAttachmentResult;
+        }
+
+        _attachments.Add(transactionAttachmentResult.Value);
+
+        MarkModify();
+
+        return Result.Ok(transactionAttachmentResult.Value);
+    }
 }

@@ -7,7 +7,7 @@ using Budgetify.Entities.Common.Enumerations;
 
 public sealed partial class Category : AggregateRoot
 {
-    public Category(
+    private Category(
         int userId,
         CategoryNameValue name,
         CategoryType type)
