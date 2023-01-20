@@ -6,7 +6,7 @@ using Budgetify.Entities.Merchant.ValueObjects;
 
 public sealed partial class Merchant : AggregateRoot
 {
-    public Merchant(
+    private Merchant(
         int userId,
         MerchantNameValue name,
         int categoryId)

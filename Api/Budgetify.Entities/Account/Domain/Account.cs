@@ -7,7 +7,7 @@ using Budgetify.Entities.Common.Enumerations;
 
 public sealed partial class Account : AggregateRoot
 {
-    public Account(
+    private Account(
         int userId,
         AccountNameValue name,
         AccountType type,

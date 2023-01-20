@@ -6,7 +6,7 @@ using Budgetify.Entities.Transaction.ValueObjects;
 
 public sealed partial class TransactionAttachment : Entity
 {
-    public TransactionAttachment(
+    private TransactionAttachment(
         int transactionId,
         FilePathValue filePath,
         TransactionAttachmentNameValue name)
