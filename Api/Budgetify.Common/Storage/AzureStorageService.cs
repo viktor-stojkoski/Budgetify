@@ -80,7 +80,7 @@ public class AzureStorageService : IStorageService
         return stream.Value.Content.ToStream();
     }
 
-    public async Task<Uri> GetSignedUrlAsync(string containerName, string fileName, DateTime expiresOn)
+    public async Task<SignedUrlResponse> GetSignedUrlAsync(string containerName, string fileName, DateTime expiresOn)
     {
         CheckStringArgument(containerName, nameof(containerName));
         CheckStringArgument(fileName, nameof(fileName));
@@ -110,7 +110,7 @@ public class AzureStorageService : IStorageService
 
         sasBuilder.SetPermissions(BlobSasPermissions.Read);
 
-        return blob.GenerateSasUri(sasBuilder);
+        return new(fileName, blob.GenerateSasUri(sasBuilder));
     }
 
     public async Task<UploadedFileResponse> UploadAsync(string containerName, string fileName, byte[] content, string contentType)

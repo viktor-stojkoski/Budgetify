@@ -1,6 +1,7 @@
 ﻿namespace Budgetify.Queries.Transaction.Queries.GetTransaction;
 
 using System;
+using System.Collections.Generic;
 
 public class TransactionResponse
 {
@@ -15,7 +16,8 @@ public class TransactionResponse
         string type,
         decimal amount,
         DateTime date,
-        string? description)
+        string? description,
+        IEnumerable<TransactionAttachmentResponse> transactionAttachments)
     {
         AccountUid = accountUid;
         AccountName = accountName;
@@ -28,6 +30,7 @@ public class TransactionResponse
         Amount = amount;
         Date = date;
         Description = description;
+        TransactionAttachments = transactionAttachments;
     }
 
     public Guid AccountUid { get; set; }
@@ -51,4 +54,6 @@ public class TransactionResponse
     public DateTime Date { get; set; }
 
     public string? Description { get; set; }
+
+    public IEnumerable<TransactionAttachmentResponse> TransactionAttachments { get; set; } = new List<TransactionAttachmentResponse>();
 }

@@ -216,6 +216,11 @@
     "detailsAmountHeader": "Износ",
     "detailsDateHeader": "Датум",
     "detailsDescriptionHeader": "Опис",
+    "detailsAttachmentHeader": "Прилози",
+    "detailsAttachmentNameHeader": "Име",
+    "detailsAttachmentCreatedOnHeader": "Креиран на",
+    "detailsDownloadAttachmentTooltip": "Преземи",
+    "detailsAttachmentNoDataFound": "Не беа пронајдени податоци.",
 
     "deleteTransactionHeader": "Избриши трансакција",
     "deleteTransactionContent": "Дали сте сигурни дека сакате да ја избришете оваа трансакција ?"

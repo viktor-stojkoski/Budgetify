@@ -12,7 +12,7 @@ public class ByteArrayConverter : JsonConverter<byte[]>
 
         if (sByteArray is null)
         {
-            throw new JsonException("Invalid JSON");
+            throw new JsonException("Invalid JSON.");
         }
 
         byte[] byteArray = new byte[sByteArray.Length];

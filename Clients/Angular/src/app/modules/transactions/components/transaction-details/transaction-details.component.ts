@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
   DestroyBaseComponent,
@@ -18,6 +21,8 @@ import {
   ICurrencyResponse,
   IDeleteTransactionDialogData,
   IMerchantResponse,
+  ITransactionAttachmentResponse,
+  ITransactionDetailsResponse,
   ITransactionResponse
 } from '../../models/transaction.model';
 import { TransactionService } from '../../services/transaction.service';
@@ -33,7 +38,7 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
   public readonly translationKeys = TranslationKeys;
   public readonly sharedTranslationKeys = SharedTranslationKeys;
   public transactionUid: string | null = '';
-  public transaction?: ITransactionResponse;
+  public transaction?: ITransactionDetailsResponse;
   public isLoading = false;
   public isEditing = false;
   public type = TransactionType;
@@ -46,6 +51,8 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
   public filteredCategories$?: Observable<ICategoryResponse[] | undefined>;
   public filteredCurrencies$?: Observable<ICurrencyResponse[] | undefined>;
   public filteredMerchants$?: Observable<IMerchantResponse[] | undefined>;
+  public dataSource!: MatTableDataSource<ITransactionAttachmentResponse>;
+  public displayedColumns = ['name', 'createdOn', 'actions'];
 
   public transactionForm = this.formBuilder.group({
     accountUid: ['', Validators.required],
@@ -57,6 +64,20 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
     date: [new Date(), Validators.required],
     description: ['']
   });
+
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild(MatSort) sort?: MatSort;
+
+  @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
+    if (paginator && !this.dataSource.paginator) {
+      this.dataSource.paginator = paginator;
+    }
+  }
+  @ViewChild(MatSort) set matSort(sort: MatSort) {
+    if (sort && !this.dataSource.sort) {
+      this.dataSource.sort = sort;
+    }
+  }
 
   constructor(
     private transactionService: TransactionService,
@@ -102,6 +123,7 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
         .subscribe({
           next: () => {
             this.transaction = {
+              ...(this.transaction?.transactionAttachments ?? []),
               ...(this.transactionForm.value as ITransactionResponse),
               accountName: this.displayAccount(this.transactionForm.controls.accountUid.value as string),
               categoryName: this.displayCategory(this.transactionForm.controls.categoryUid.value as string),
@@ -137,6 +159,10 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
       });
   }
 
+  public downloadAttachment(url: string): void {
+    window.open(url, '_blank');
+  }
+
   public displayCurrency(code: string): string {
     return this.currencies?.find((x) => x.code === code)?.name || '';
   }
@@ -166,6 +192,9 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
           this.transaction = result.value;
           if (this.transaction) {
             this.transactionForm.patchValue(this.transaction);
+            this.dataSource = new MatTableDataSource(this.transaction.transactionAttachments);
+            this.dataSource.sort = this.sort!;
+            this.dataSource.paginator = this.paginator!;
           }
           this.isLoading = false;
         },
