@@ -37,6 +37,11 @@ export class TranslationKeys {
   public static readonly detailsDateHeader = 'transactions.detailsDateHeader';
   public static readonly detailsDescriptionHeader = 'transactions.detailsDescriptionHeader';
   public static readonly updateTransactionSuccessful = 'successMessages.transactions.update';
+  public static readonly detailsAttachmentsHeader = 'transactions.detailsAttachmentsHeader';
+  public static readonly detailsAttachmentsTableNameHeader = 'transactions.detailsAttachmentsTableNameHeader';
+  public static readonly detailsAttachmentsTableCreatedOnHeader = 'transactions.detailsAttachmentsTableCreatedOnHeader';
+  public static readonly detailsDownloadAttachmentTooltip = 'transactions.detailsDownloadAttachmentTooltip';
+  public static readonly detailsAttachmentsTableNoDataFound = 'transactions.detailsAttachmentsTableNoDataFound';
 
   public static readonly deleteTransactionHeader = 'transactions.deleteTransactionHeader';
   public static readonly deleteTransactionContent = 'transactions.deleteTransactionContent';

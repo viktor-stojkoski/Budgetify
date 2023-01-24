@@ -14,6 +14,17 @@ export interface ITransactionResponse {
   description: string | null;
 }
 
+export interface ITransactionDetailsResponse extends ITransactionResponse {
+  transactionAttachments?: ITransactionAttachmentResponse[];
+}
+
+export interface ITransactionAttachmentResponse {
+  uid: string;
+  createdOn: Date;
+  name: string;
+  url: string;
+}
+
 export interface ICurrencyResponse {
   name: string;
   code: string;

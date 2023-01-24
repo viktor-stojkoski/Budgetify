@@ -32,7 +32,7 @@ public interface IStorageService
     /// <param name="fileName">Name of the file.</param>
     /// <param name="expiresOn">DateTime after which the signed URL is no longer valid.</param>
     /// <returns>Signed URL</returns>
-    Task<Uri> GetSignedUrlAsync(string containerName, string fileName, DateTime expiresOn);
+    Task<SignedUrlResponse> GetSignedUrlAsync(string containerName, string fileName, DateTime expiresOn);
 
     /// <summary>
     /// Deletes file from storage.

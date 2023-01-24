@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Budgetify.Common\Budgetify.Common.csproj" />
+    <ProjectReference Include="..\Budgetify.Contracts\Budgetify.Contracts.csproj" />
   </ItemGroup>
   
 </Project>

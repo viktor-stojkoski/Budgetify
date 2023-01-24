@@ -216,6 +216,11 @@
     "detailsAmountHeader": "Amount",
     "detailsDateHeader": "Date",
     "detailsDescriptionHeader": "Description",
+    "detailsAttachmentsHeader": "Attachments",
+    "detailsAttachmentsTableNameHeader": "Name",
+    "detailsAttachmentsTableCreatedOnHeader": "Created on",
+    "detailsDownloadAttachmentTooltip": "Download",
+    "detailsAttachmentsTableNoDataFound": "No data was found.",
 
     "deleteTransactionHeader": "Delete transaction",
     "deleteTransactionContent": "Are you sure you want to delete this transaction ?"

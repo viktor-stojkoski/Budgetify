@@ -8,6 +8,7 @@ import {
   ICreateTransactionRequest,
   ICurrencyResponse,
   IMerchantResponse,
+  ITransactionDetailsResponse,
   ITransactionResponse,
   IUpdateTransactionRequest
 } from '../models/transaction.model';
@@ -28,8 +29,8 @@ export class TransactionService {
     return this.baseApiService.get<IResult<ITransactionResponse[]>>(this.transactionsApiRoute);
   }
 
-  public getTransaction(uid: string | null): Observable<IResult<ITransactionResponse>> {
-    return this.baseApiService.get<IResult<ITransactionResponse>>(`${this.transactionsApiRoute}/${uid}`);
+  public getTransaction(uid: string | null): Observable<IResult<ITransactionDetailsResponse>> {
+    return this.baseApiService.get<IResult<ITransactionDetailsResponse>>(`${this.transactionsApiRoute}/${uid}`);
   }
 
   public createTransaction(request: ICreateTransactionRequest): Observable<void> {
