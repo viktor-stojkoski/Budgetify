@@ -25,6 +25,11 @@ public interface ITransactionRepository
     Task<Result<Transaction>> GetTransactionAsync(int userId, Guid transactionUid);
 
     /// <summary>
+    /// Returns transaction with the attachments by given userId and transactionUid.
+    /// </summary>
+    Task<Result<Transaction>> GetTransactionWithAttachmentsAsync(int userId, Guid transactionUid);
+
+    /// <summary>
     /// Returns transactions with conversions (different currency for transaction and account)
     /// for the account in the given date range.
     /// </summary>

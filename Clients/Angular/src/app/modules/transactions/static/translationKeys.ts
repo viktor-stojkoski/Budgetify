@@ -42,8 +42,14 @@ export class TranslationKeys {
   public static readonly detailsAttachmentsTableCreatedOnHeader = 'transactions.detailsAttachmentsTableCreatedOnHeader';
   public static readonly detailsDownloadAttachmentTooltip = 'transactions.detailsDownloadAttachmentTooltip';
   public static readonly detailsAttachmentsTableNoDataFound = 'transactions.detailsAttachmentsTableNoDataFound';
+  public static readonly detailsAttachmentsTableDeleteAttachmentTooltip =
+    'transactions.detailsAttachmentsTableDeleteAttachmentTooltip';
 
   public static readonly deleteTransactionHeader = 'transactions.deleteTransactionHeader';
   public static readonly deleteTransactionContent = 'transactions.deleteTransactionContent';
   public static readonly deleteTransactionSuccessful = 'successMessages.transactions.delete';
+
+  public static readonly deleteTransactionAttachmentHeader = 'transactions.deleteTransactionAttachmentHeader';
+  public static readonly deleteTransactionAttachmentContent = 'transactions.deleteTransactionAttachmentContent';
+  public static readonly deleteTransactionAttachmentSuccessful = 'successMessages.transactions.attachments.delete';
 }

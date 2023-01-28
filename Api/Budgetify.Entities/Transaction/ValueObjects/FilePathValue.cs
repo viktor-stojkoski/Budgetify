@@ -8,7 +8,7 @@ using Budgetify.Entities.Common.ValueObjects;
 
 public sealed class FilePathValue : ValueObject
 {
-    private string Value { get; }
+    public string Value { get; }
 
     private FilePathValue(string value)
     {

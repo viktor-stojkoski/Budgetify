@@ -73,3 +73,9 @@ export interface IUpdateTransactionRequest {
 export interface IDeleteTransactionDialogData {
   uid: string;
 }
+
+export interface IDeleteTransactionAttachmentDialogData {
+  transactionUid: string;
+  attachmentUid: string;
+  name: string;
+}

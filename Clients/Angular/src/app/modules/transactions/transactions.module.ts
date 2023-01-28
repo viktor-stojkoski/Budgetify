@@ -24,10 +24,11 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from '@budgetify/core';
 import { DialogService, SharedModule } from '@budgetify/shared';
 import { CreateTransactionComponent } from './components/create-transaction/create-transaction.component';
+import { DeleteTransactionAttachmentComponent } from './components/delete-transaction-attachment/delete-transaction-attachment.component';
+import { DeleteTransactionComponent } from './components/delete-transaction/delete-transaction.component';
 import { TransactionDetailsComponent } from './components/transaction-details/transaction-details.component';
 import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
 import { routes } from './routes';
-import { DeleteTransactionComponent } from './components/delete-transaction/delete-transaction.component';
 
 export const MY_DATE_FORMATS: MatDateFormats = {
   ...MAT_NATIVE_DATE_FORMATS,
@@ -60,7 +61,13 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     MatNativeDateModule,
     MatCardModule
   ],
-  declarations: [TransactionsTableComponent, CreateTransactionComponent, TransactionDetailsComponent, DeleteTransactionComponent],
+  declarations: [
+    TransactionsTableComponent,
+    CreateTransactionComponent,
+    TransactionDetailsComponent,
+    DeleteTransactionComponent,
+    DeleteTransactionAttachmentComponent
+  ],
   providers: [
     DialogService,
     { provide: DateAdapter, useClass: NativeDateAdapter, deps: [MAT_DATE_LOCALE] },

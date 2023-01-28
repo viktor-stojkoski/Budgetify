@@ -84,7 +84,11 @@
     "transactions": {
       "create": "Transaction has been successfully created.",
       "update": "Transaction has been successfully updated.",
-      "delete": "Transaction has been successfully deleted."
+      "delete": "Transaction has been successfully deleted.",
+
+      "attachments": {
+        "delete": "Transaction attachment has been successfully deleted."
+      }
     },
     "exchangeRates": {
       "create": "Exchange rate has been successfully created.",
@@ -221,9 +225,13 @@
     "detailsAttachmentsTableCreatedOnHeader": "Created on",
     "detailsDownloadAttachmentTooltip": "Download",
     "detailsAttachmentsTableNoDataFound": "No data was found.",
+    "detailsAttachmentsTableDeleteAttachmentTooltip": "Delete",
 
     "deleteTransactionHeader": "Delete transaction",
-    "deleteTransactionContent": "Are you sure you want to delete this transaction ?"
+    "deleteTransactionContent": "Are you sure you want to delete this transaction ?",
+
+    "deleteTransactionAttachmentHeader": "Delete attachment",
+    "deleteTransactionAttachmentContent": "Are you sure you want to delete the attachment <strong>{{attachmentName}}</strong> ?"
   },
 
   "exchangeRates": {

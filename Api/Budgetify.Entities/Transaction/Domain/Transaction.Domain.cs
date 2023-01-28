@@ -1,6 +1,7 @@
 ﻿namespace Budgetify.Entities.Transaction.Domain;
 
 using System;
+using System.Linq;
 
 using Budgetify.Common.Results;
 using Budgetify.Entities.Transaction.DomainEvents;
@@ -63,6 +64,13 @@ public partial class Transaction
             return Result.Ok();
         }
 
+        Result deleteAttachmentsResult = DeleteTransactionAttachments(deletedOn);
+
+        if (deleteAttachmentsResult.IsFailureOrNull)
+        {
+            return deleteAttachmentsResult;
+        }
+
         DeletedOn = deletedOn;
 
         MarkModify();
@@ -100,5 +108,67 @@ public partial class Transaction
         MarkModify();
 
         return Result.Ok(transactionAttachmentResult.Value);
+    }
+
+    /// <summary>
+    /// Deletes transaction attachment.
+    /// </summary>
+    public Result<TransactionAttachment> DeleteTransactionAttachment(Guid attachmentUid, DateTime deletedOn)
+    {
+        Result<TransactionAttachment> attachmentResult = GetTransactionAttachment(attachmentUid);
+
+        if (attachmentResult.IsFailureOrNull)
+        {
+            return attachmentResult;
+        }
+
+        Result deleteResult = attachmentResult.Value.Delete(deletedOn);
+
+        if (deleteResult.IsFailureOrNull)
+        {
+            return Result.FromError<TransactionAttachment>(deleteResult);
+        }
+
+        MarkModify();
+
+        return Result.Ok(attachmentResult.Value);
+    }
+
+    /// <summary>
+    /// Deletes all the transaction's attachments.
+    /// </summary>
+    public Result DeleteTransactionAttachments(DateTime deletedOn)
+    {
+        foreach (TransactionAttachment transactionAttachment in _attachments)
+        {
+            Result deleteResult = transactionAttachment.Delete(deletedOn);
+
+            if (deleteResult.IsFailureOrNull)
+            {
+                return deleteResult;
+            }
+        }
+        //TODO: Maybe not needed.
+        _attachments.Clear();
+
+        MarkModify();
+
+        return Result.Ok();
+    }
+
+    /// <summary>
+    /// Returns transaction attachment by given attachmentUid.
+    /// </summary>
+    private Result<TransactionAttachment> GetTransactionAttachment(Guid attachmentUid)
+    {
+        TransactionAttachment? transactionAttachment =
+            _attachments.SingleOrDefault(x => x.DeletedOn == null && x.Uid == attachmentUid);
+
+        if (transactionAttachment is null)
+        {
+            return Result.NotFound<TransactionAttachment>(ResultCodes.TransactionAttachmentNotFound);
+        }
+
+        return Result.Ok(transactionAttachment);
     }
 }

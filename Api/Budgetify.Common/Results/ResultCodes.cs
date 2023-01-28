@@ -85,6 +85,7 @@ public static class ResultCodes
     public const string TransactionAttachmentFilePathInvalid = "TRANSACTION_ATTACHMENT_FILE_PATH_INVALID";
     public const string TransactionAttachmentNameInvalid = "TRANSACTION_ATTACHMENT_NAME_INVALID";
     public const string TransactionAttachmentNameInvalidLength = "TRANSACTION_ATTACHMENT_NAME_INVALID_LENGTH";
+    public const string TransactionAttachmentNotFound = "TRANSACTION_ATTACHMENT_NOT_FOUND";
 
     #endregion
 }

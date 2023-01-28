@@ -48,7 +48,8 @@ public class GetTransactionQueryHandler : IQueryHandler<GetTransactionQuery, Tra
                 .Include(x => x.Category)
                 .Include(x => x.Currency)
                 .Include(x => x.Merchant).DefaultIfEmpty()
-                .Include(x => x.TransactionAttachments)
+                .Include(x => x.TransactionAttachments
+                    .Where(attachment => attachment.DeletedOn == null))
                 .Where(x => x.UserId == _currentUser.Id && x.Uid == query.TransactionUid)
                 .SingleOrDefaultAsync();
 

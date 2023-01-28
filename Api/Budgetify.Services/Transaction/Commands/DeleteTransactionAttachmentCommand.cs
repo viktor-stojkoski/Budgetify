@@ -1,8 +1,6 @@
 ﻿namespace Budgetify.Services.Transaction.Commands;
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Budgetify.Common.CurrentUser;
@@ -16,9 +14,9 @@ using Budgetify.Services.Common.Extensions;
 
 using VS.Commands;
 
-public record DeleteTransactionCommand(Guid TransactionUid) : ICommand;
+public record DeleteTransactionAttachmentCommand(Guid TransactionUid, Guid AttachmentUid) : ICommand;
 
-public class DeleteTransactionCommandHandler : ICommandHandler<DeleteTransactionCommand>
+public class DeleteTransactionAttachmentCommandHandler : ICommandHandler<DeleteTransactionAttachmentCommand>
 {
     private readonly ICurrentUser _currentUser;
     private readonly ITransactionRepository _transactionRepository;
@@ -26,7 +24,7 @@ public class DeleteTransactionCommandHandler : ICommandHandler<DeleteTransaction
     private readonly IStorageSettings _storageSettings;
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteTransactionCommandHandler(
+    public DeleteTransactionAttachmentCommandHandler(
         ICurrentUser currentUser,
         ITransactionRepository transactionRepository,
         IStorageService storageService,
@@ -40,49 +38,38 @@ public class DeleteTransactionCommandHandler : ICommandHandler<DeleteTransaction
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<CommandResult<EmptyValue>> ExecuteAsync(DeleteTransactionCommand command)
+    public async Task<CommandResult<EmptyValue>> ExecuteAsync(DeleteTransactionAttachmentCommand command)
     {
         CommandResultBuilder result = new();
 
         Result<Transaction> transactionResult =
-            await _transactionRepository.GetTransactionAsync(_currentUser.Id, command.TransactionUid);
+            await _transactionRepository.GetTransactionWithAttachmentsAsync(
+                userId: _currentUser.Id,
+                transactionUid: command.TransactionUid);
 
         if (transactionResult.IsFailureOrNull)
         {
             return result.FailWith(transactionResult);
         }
 
-        Result deleteResult = transactionResult.Value.Delete(DateTime.UtcNow);
+        Result<TransactionAttachment> deleteTransactionAttachmentResult =
+            transactionResult.Value.DeleteTransactionAttachment(
+                attachmentUid: command.AttachmentUid,
+                deletedOn: DateTime.UtcNow.ToLocalTime());
 
-        if (deleteResult.IsFailureOrNull)
+        if (deleteTransactionAttachmentResult.IsFailureOrNull)
         {
-            return result.FailWith(deleteResult);
+            return result.FailWith(deleteTransactionAttachmentResult);
         }
 
-        await DeleteFilesFromStorageAsync(
-            transactionResult.Value.Attachments
-                .Select(x => x.FilePath)
-                    .Select(x => x.Value));
+        await _storageService.DeleteFileAsync(
+            containerName: _storageSettings.ContainerName,
+            fileName: deleteTransactionAttachmentResult.Value.FilePath);
 
         _transactionRepository.Update(transactionResult.Value);
 
         await _unitOfWork.SaveAsync();
 
         return result.Build();
-    }
-
-    private async Task DeleteFilesFromStorageAsync(IEnumerable<string> attachmentPaths)
-    {
-        List<Task> deleteFilesResult = new();
-
-        foreach (string attachmentPath in attachmentPaths)
-        {
-            deleteFilesResult.Add(
-                _storageService.DeleteFileAsync(
-                    _storageSettings.ContainerName,
-                    attachmentPath));
-        }
-
-        await Task.WhenAll(deleteFilesResult);
     }
 }
