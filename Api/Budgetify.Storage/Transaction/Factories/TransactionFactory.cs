@@ -13,6 +13,16 @@ internal static class TransactionFactory
     /// </summary>
     internal static Result<Transaction> CreateTransaction(this Entities.Transaction dbTransaction)
     {
+        IEnumerable<Result<TransactionAttachment>> attachmentsResults =
+            dbTransaction.TransactionAttachments.CreateTransactionAttachments();
+
+        Result attachmentsResult = Result.FirstFailureNullOrOk(attachmentsResults);
+
+        if (attachmentsResult.IsFailureOrNull)
+        {
+            return Result.FromError<Transaction>(attachmentsResult);
+        }
+
         return Transaction.Create(
             id: dbTransaction.Id,
             uid: dbTransaction.Uid,
@@ -26,7 +36,8 @@ internal static class TransactionFactory
             type: dbTransaction.Type,
             amount: dbTransaction.Amount,
             date: dbTransaction.Date,
-            description: dbTransaction.Description);
+            description: dbTransaction.Description,
+            attachments: attachmentsResults.Select(x => x.Value));
     }
 
     /// <summary>

@@ -45,6 +45,12 @@ export class TransactionService {
     return this.baseApiService.delete<void>(`${this.transactionsApiRoute}/${uid}`);
   }
 
+  public deleteTransactionAttachment(transactionUid: string, attachmentUid: string): Observable<void> {
+    return this.baseApiService.delete<void>(
+      `${this.transactionsApiRoute}/${transactionUid}/attachments/${attachmentUid}`
+    );
+  }
+
   public getAccounts(): Observable<IResult<IAccountResponse[]>> {
     return this.baseApiService.get<IResult<IAccountResponse[]>>(this.accountsApiRoute);
   }

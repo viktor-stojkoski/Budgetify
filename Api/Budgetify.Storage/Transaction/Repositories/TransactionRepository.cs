@@ -42,12 +42,34 @@ public class TransactionRepository : Repository<Entities.Transaction>, ITransact
     {
         Entities.Transaction dbTransaction = transaction.CreateTransaction();
 
+        foreach (TransactionAttachment transactionAttachment in transaction.Attachments)
+        {
+            AttachOrUpdate(
+                transactionAttachment.CreateTransactionAttachment(),
+                transactionAttachment.State.GetState());
+        }
+
         AttachOrUpdate(dbTransaction, transaction.State.GetState());
     }
 
     public async Task<Result<Transaction>> GetTransactionAsync(int userId, Guid transactionUid)
     {
         Entities.Transaction? dbTransaction = await AllNoTrackedOf<Entities.Transaction>()
+            .SingleOrDefaultAsync(x => x.UserId == userId && x.Uid == transactionUid);
+
+        if (dbTransaction is null)
+        {
+            return Result.NotFound<Transaction>(ResultCodes.TransactionNotFound);
+        }
+
+        return dbTransaction.CreateTransaction();
+    }
+
+    public async Task<Result<Transaction>> GetTransactionWithAttachmentsAsync(int userId, Guid transactionUid)
+    {
+        Entities.Transaction? dbTransaction = await AllNoTrackedOf<Entities.Transaction>()
+            .Include(x => x.TransactionAttachments
+                .Where(attachment => attachment.DeletedOn == null))
             .SingleOrDefaultAsync(x => x.UserId == userId && x.Uid == transactionUid);
 
         if (dbTransaction is null)

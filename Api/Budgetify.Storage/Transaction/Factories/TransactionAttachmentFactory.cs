@@ -1,5 +1,8 @@
 ﻿namespace Budgetify.Storage.Transaction.Factories;
 
+using System.Collections.Generic;
+using System.Linq;
+
 using Budgetify.Common.Results;
 using Budgetify.Entities.Transaction.Domain;
 
@@ -33,5 +36,16 @@ internal static class TransactionAttachmentFactory
             transactionId: transactionAttachment.TransactionId,
             filePath: transactionAttachment.FilePath,
             name: transactionAttachment.Name);
+    }
+
+    /// <summary>
+    /// Creates list of <see cref="TransactionAttachment"/> domain entities 
+    /// for a given <see cref="Entities.TransactionAttachment"/> storage entity list.
+    /// </summary>
+    internal static IEnumerable<Result<TransactionAttachment>> CreateTransactionAttachments(
+        this IEnumerable<Entities.TransactionAttachment> dbTransactionAttachments)
+    {
+        return dbTransactionAttachments?.Select(CreateTransactionAttachment)
+            ?? Enumerable.Empty<Result<TransactionAttachment>>();
     }
 }

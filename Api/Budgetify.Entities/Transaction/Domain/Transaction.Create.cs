@@ -1,6 +1,8 @@
 ﻿namespace Budgetify.Entities.Transaction.Domain;
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using Budgetify.Common.Results;
 using Budgetify.Entities.Common.Enumerations;
@@ -25,7 +27,8 @@ public partial class Transaction
         string type,
         decimal amount,
         DateTime date,
-        string? description)
+        string? description,
+        IEnumerable<TransactionAttachment> attachments)
     {
         Result<TransactionType> typeValue = TransactionType.Create(type);
 
@@ -39,23 +42,27 @@ public partial class Transaction
             return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
         }
 
-        return Result.Ok(
-            new Transaction(
-                userId: userId,
-                accountId: accountId,
-                categoryId: categoryId,
-                currencyId: currencyId,
-                merchantId: merchantId,
-                type: typeValue.Value,
-                amount: amount,
-                date: date,
-                description: description)
-            {
-                Id = id,
-                Uid = uid,
-                CreatedOn = createdOn,
-                DeletedOn = deletedOn
-            });
+        Transaction transaction = new(
+            userId: userId,
+            accountId: accountId,
+            categoryId: categoryId,
+            currencyId: currencyId,
+            merchantId: merchantId,
+            type: typeValue.Value,
+            amount: amount,
+            date: date,
+            description: description)
+        {
+            Id = id,
+            Uid = uid,
+            CreatedOn = createdOn,
+            DeletedOn = deletedOn
+        };
+
+        transaction._attachments.AddRange(
+            attachments ?? Enumerable.Empty<TransactionAttachment>());
+
+        return Result.Ok(transaction);
     }
 
     /// <summary>

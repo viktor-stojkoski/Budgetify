@@ -62,7 +62,12 @@
     "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Од датумот на девизниот курс не може да биде поголем од до датумот.",
     "EXCHANGE_RATE_NOT_FOUND": "Девизниот курс не е пронајден.",
     "EXCHANGE_RATE_EXISTS_FROM_DATE_CANNOT_BE_EMPTY": "Девизниот курс постои, за новиот девизен курс од датумот не може да остане празен.",
-    "EXCHANGE_RATE_CLOSED": "Девизниот курс е затворен. Модификации не се дозволени."
+    "EXCHANGE_RATE_CLOSED": "Девизниот курс е затворен. Модификации не се дозволени.",
+
+    "TRANSACTION_ATTACHMENT_FILE_PATH_INVALID": "Патеката на датотеката за прилог на трансакцијата е невалидна.",
+    "TRANSACTION_ATTACHMENT_NAME_INVALID": "Името на прилогот на трансакцијата е невалидно.",
+    "TRANSACTION_ATTACHMENT_NAME_INVALID_LENGTH": "Должина на името на прилогот на трансакцијата е невалидно.",
+    "TRANSACTION_ATTACHMENT_NOT_FOUND": "Прилогот на трансакцијата не е пронајден."
   },
 
   "successMessages": {
@@ -84,7 +89,11 @@
     "transactions": {
       "create": "Трансакцијата е успешно искреирана.",
       "update": "Трансакцијата е успешно уредена.",
-      "delete": "Трансакцијата е успешно избришана."
+      "delete": "Трансакцијата е успешно избришана.",
+
+      "attachments": {
+        "delete": "Прилогот на трансакцијата е успешно избришан."
+      }
     },
     "exchangeRates": {
       "create": "Девизниот курс е успешно искреиран.",
@@ -221,9 +230,13 @@
     "detailsAttachmentsTableCreatedOnHeader": "Креиран на",
     "detailsDownloadAttachmentTooltip": "Преземи",
     "detailsAttachmentsTableNoDataFound": "Не беа пронајдени податоци.",
+    "detailsAttachmentsTableDeleteAttachmentTooltip": "Избриши",
 
     "deleteTransactionHeader": "Избриши трансакција",
-    "deleteTransactionContent": "Дали сте сигурни дека сакате да ја избришете оваа трансакција ?"
+    "deleteTransactionContent": "Дали сте сигурни дека сакате да ја избришете оваа трансакција ?",
+
+    "deleteTransactionAttachmentHeader": "Избриши прилог",
+    "deleteTransactionAttachmentContent": "Дали сте сигурно дека сакате да ги избришете прилогот <strong>{{attachmentName}}</strong> ?"
   },
 
   "exchangeRates": {

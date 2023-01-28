@@ -19,6 +19,7 @@ import {
   IAccountResponse,
   ICategoryResponse,
   ICurrencyResponse,
+  IDeleteTransactionAttachmentDialogData,
   IDeleteTransactionDialogData,
   IMerchantResponse,
   ITransactionAttachmentResponse,
@@ -27,6 +28,7 @@ import {
 } from '../../models/transaction.model';
 import { TransactionService } from '../../services/transaction.service';
 import { TranslationKeys } from '../../static/translationKeys';
+import { DeleteTransactionAttachmentComponent } from '../delete-transaction-attachment/delete-transaction-attachment.component';
 import { DeleteTransactionComponent } from '../delete-transaction/delete-transaction.component';
 
 @Component({
@@ -161,6 +163,26 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
 
   public downloadAttachment(url: string): void {
     window.open(url, '_blank');
+  }
+
+  public openDeleteTransactionAttachmentDialog(attachmentUid: string, name: string): void {
+    this.dialogService
+      .open(DeleteTransactionAttachmentComponent, {
+        data: {
+          transactionUid: this.transactionUid,
+          attachmentUid: attachmentUid,
+          name: name
+        } as IDeleteTransactionAttachmentDialogData
+      })
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (response: IDialogResponseData) => {
+          if (response?.action === DialogActionButton.Ok) {
+            this.getTransaction();
+          }
+        }
+      });
   }
 
   public displayCurrency(code: string): string {

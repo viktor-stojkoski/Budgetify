@@ -181,6 +181,14 @@
           >
             <mat-icon>save_alt</mat-icon>
           </button>
+
+          <button
+            mat-icon-button
+            (click)="openDeleteTransactionAttachmentDialog(attachment.uid, attachment.name)"
+            [matTooltip]="translationKeys.detailsAttachmentsTableDeleteAttachmentTooltip | translate"
+          >
+            <mat-icon>delete_forever</mat-icon>
+          </button>
         </td>
       </ng-container>
 
