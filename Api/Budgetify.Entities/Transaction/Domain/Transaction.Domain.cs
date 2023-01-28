@@ -105,8 +105,6 @@ public partial class Transaction
 
         _attachments.Add(transactionAttachmentResult.Value);
 
-        MarkModify();
-
         return Result.Ok(transactionAttachmentResult.Value);
     }
 
@@ -129,8 +127,6 @@ public partial class Transaction
             return Result.FromError<TransactionAttachment>(deleteResult);
         }
 
-        MarkModify();
-
         return Result.Ok(attachmentResult.Value);
     }
 
@@ -148,8 +144,6 @@ public partial class Transaction
                 return deleteResult;
             }
         }
-
-        MarkModify();
 
         return Result.Ok();
     }
