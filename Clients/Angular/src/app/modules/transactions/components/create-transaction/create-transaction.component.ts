@@ -99,6 +99,7 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
         });
     } else {
       this.transactionForm.markAllAsTouched();
+      this.isCreating = false;
     }
   }
 

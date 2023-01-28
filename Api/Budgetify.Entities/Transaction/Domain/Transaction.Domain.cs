@@ -148,8 +148,6 @@ public partial class Transaction
                 return deleteResult;
             }
         }
-        //TODO: Maybe not needed.
-        _attachments.Clear();
 
         MarkModify();
 

@@ -45,7 +45,9 @@ public class DeleteTransactionCommandHandler : ICommandHandler<DeleteTransaction
         CommandResultBuilder result = new();
 
         Result<Transaction> transactionResult =
-            await _transactionRepository.GetTransactionAsync(_currentUser.Id, command.TransactionUid);
+            await _transactionRepository.GetTransactionWithAttachmentsAsync(
+                userId: _currentUser.Id,
+                transactionUid: command.TransactionUid);
 
         if (transactionResult.IsFailureOrNull)
         {

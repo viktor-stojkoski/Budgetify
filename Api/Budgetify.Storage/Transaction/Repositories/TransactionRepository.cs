@@ -68,7 +68,8 @@ public class TransactionRepository : Repository<Entities.Transaction>, ITransact
     public async Task<Result<Transaction>> GetTransactionWithAttachmentsAsync(int userId, Guid transactionUid)
     {
         Entities.Transaction? dbTransaction = await AllNoTrackedOf<Entities.Transaction>()
-            .Include(x => x.TransactionAttachments)
+            .Include(x => x.TransactionAttachments
+                .Where(attachment => attachment.DeletedOn == null))
             .SingleOrDefaultAsync(x => x.UserId == userId && x.Uid == transactionUid);
 
         if (dbTransaction is null)
