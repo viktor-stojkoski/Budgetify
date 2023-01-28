@@ -62,7 +62,12 @@
     "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Exchange rate from date cannot be greater than to date.",
     "EXCHANGE_RATE_NOT_FOUND": "Exchange rate not found.",
     "EXCHANGE_RATE_EXISTS_FROM_DATE_CANNOT_BE_EMPTY": "Exchange rate exists and for the new exchange rate from date cannot be empty.",
-    "EXCHANGE_RATE_CLOSED": "Exchange rate closed. Modifications are not allowed."
+    "EXCHANGE_RATE_CLOSED": "Exchange rate closed. Modifications are not allowed.",
+
+    "TRANSACTION_ATTACHMENT_FILE_PATH_INVALID": "Transaction attachment file path invalid.",
+    "TRANSACTION_ATTACHMENT_NAME_INVALID": "Transaction attachment name invalid.",
+    "TRANSACTION_ATTACHMENT_NAME_INVALID_LENGTH": "Transaction attachment name invalid length.",
+    "TRANSACTION_ATTACHMENT_NOT_FOUND": "Transaction attachment not found."
   },
 
   "successMessages": {

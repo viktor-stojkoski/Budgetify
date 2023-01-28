@@ -61,10 +61,13 @@ public class DeleteTransactionCommandHandler : ICommandHandler<DeleteTransaction
             return result.FailWith(deleteResult);
         }
 
-        await DeleteFilesFromStorageAsync(
-            transactionResult.Value.Attachments
-                .Select(x => x.FilePath)
-                    .Select(x => x.Value));
+        if (transactionResult.Value.Attachments.Any())
+        {
+            await DeleteFilesFromStorageAsync(
+                transactionResult.Value.Attachments
+                    .Select(x => x.FilePath)
+                        .Select(x => x.Value));
+        }
 
         _transactionRepository.Update(transactionResult.Value);
 
@@ -75,16 +78,16 @@ public class DeleteTransactionCommandHandler : ICommandHandler<DeleteTransaction
 
     private async Task DeleteFilesFromStorageAsync(IEnumerable<string> attachmentPaths)
     {
-        List<Task> deleteFilesResult = new();
+        List<Task> deleteFilesTasks = new();
 
         foreach (string attachmentPath in attachmentPaths)
         {
-            deleteFilesResult.Add(
+            deleteFilesTasks.Add(
                 _storageService.DeleteFileAsync(
                     _storageSettings.ContainerName,
                     attachmentPath));
         }
 
-        await Task.WhenAll(deleteFilesResult);
+        await Task.WhenAll(deleteFilesTasks);
     }
 }
