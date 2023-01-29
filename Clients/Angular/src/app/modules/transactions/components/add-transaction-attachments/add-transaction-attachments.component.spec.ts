@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AppModule } from '../../../../app.module';
+import { TransactionsModule } from '../../transactions.module';
 
 import { AddTransactionAttachmentsComponent } from './add-transaction-attachments.component';
 
@@ -8,9 +11,10 @@ describe('AddTransactionAttachmentsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddTransactionAttachmentsComponent ]
-    })
-    .compileComponents();
+      imports: [TransactionsModule, AppModule],
+      declarations: [AddTransactionAttachmentsComponent],
+      providers: [{ provide: MAT_DIALOG_DATA, useValue: {} }]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddTransactionAttachmentsComponent);
     component = fixture.componentInstance;
