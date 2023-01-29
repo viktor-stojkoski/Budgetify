@@ -4,6 +4,7 @@ import { IResult } from '@budgetify/shared';
 import { Observable } from 'rxjs';
 import {
   IAccountResponse,
+  IAddTransactionAttachmentsRequest,
   ICategoryResponse,
   ICreateTransactionRequest,
   ICurrencyResponse,
@@ -43,6 +44,13 @@ export class TransactionService {
 
   public deleteTransaction(uid: string | null): Observable<void> {
     return this.baseApiService.delete<void>(`${this.transactionsApiRoute}/${uid}`);
+  }
+
+  public addTransactionAttachments(
+    transactionUid: string,
+    request: IAddTransactionAttachmentsRequest
+  ): Observable<void> {
+    return this.baseApiService.post<void>(`${this.transactionsApiRoute}/${transactionUid}/attachments`, request);
   }
 
   public deleteTransactionAttachment(transactionUid: string, attachmentUid: string): Observable<void> {

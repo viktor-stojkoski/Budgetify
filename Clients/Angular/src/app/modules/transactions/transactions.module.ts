@@ -23,6 +23,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from '@budgetify/core';
 import { DialogService, SharedModule } from '@budgetify/shared';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { AddTransactionAttachmentsComponent } from './components/add-transaction-attachments/add-transaction-attachments.component';
 import { CreateTransactionComponent } from './components/create-transaction/create-transaction.component';
 import { DeleteTransactionAttachmentComponent } from './components/delete-transaction-attachment/delete-transaction-attachment.component';
 import { DeleteTransactionComponent } from './components/delete-transaction/delete-transaction.component';
@@ -59,14 +61,16 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     MatAutocompleteModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCardModule
+    MatCardModule,
+    NgxDropzoneModule
   ],
   declarations: [
     TransactionsTableComponent,
     CreateTransactionComponent,
     TransactionDetailsComponent,
     DeleteTransactionComponent,
-    DeleteTransactionAttachmentComponent
+    DeleteTransactionAttachmentComponent,
+    AddTransactionAttachmentsComponent
   ],
   providers: [
     DialogService,

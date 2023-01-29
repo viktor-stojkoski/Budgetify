@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>{{ translationKeys.addTransactionAttachmentsHeader | translate }}</h1>
+
+<div mat-dialog-content>
+  <mat-toolbar-row class="info-box">
+    <mat-icon>info_outlined</mat-icon>
+    <span>{{ translationKeys.addTransactionAttachmentsInfo | translate }}</span>
+  </mat-toolbar-row>
+
+  <ngx-dropzone (change)="selectFiles($event)">
+    <ngx-dropzone-label>{{ translationKeys.addTransactionAttachmentsDropZoneLabel | translate }}</ngx-dropzone-label>
+    <ngx-dropzone-preview *ngFor="let file of nonImages" [removable]="true" (removed)="removeFile(file)">
+      <ngx-dropzone-label>{{ file.name }} ({{ file.type }})</ngx-dropzone-label>
+    </ngx-dropzone-preview>
+
+    <ngx-dropzone-image-preview
+      ngProjectAs="ngx-dropzone-preview"
+      *ngFor="let image of images"
+      [file]="image"
+      [removable]="true"
+      (removed)="removeFile(image)"
+    >
+      <ngx-dropzone-label>{{ image.name }} ({{ image.type }})</ngx-dropzone-label>
+    </ngx-dropzone-image-preview>
+  </ngx-dropzone>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="secondary" (click)="onCancelClick()">
+    {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="addTransactionAttachments()">
+    {{ sharedTranslationKeys.mainActionButtonOk | translate }}
+  </button>
+</div>

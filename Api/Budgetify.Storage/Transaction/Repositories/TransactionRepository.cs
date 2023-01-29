@@ -44,9 +44,17 @@ public class TransactionRepository : Repository<Entities.Transaction>, ITransact
 
         foreach (TransactionAttachment transactionAttachment in transaction.Attachments)
         {
-            AttachOrUpdate(
-                transactionAttachment.CreateTransactionAttachment(),
-                transactionAttachment.State.GetState());
+            Entities.TransactionAttachment dbTransactionAttachment =
+                transactionAttachment.CreateTransactionAttachment();
+
+            if (transactionAttachment.State == Budgetify.Entities.Common.Enumerations.EntityState.Added)
+            {
+                Insert(dbTransactionAttachment);
+            }
+            else
+            {
+                AttachOrUpdate(dbTransactionAttachment, transactionAttachment.State.GetState());
+            }
         }
 
         AttachOrUpdate(dbTransaction, transaction.State.GetState());

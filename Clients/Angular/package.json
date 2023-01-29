@@ -28,6 +28,7 @@
     "@azure/msal-browser": "^2.26.0",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
+    "ngx-dropzone": "^3.1.0",
     "prettier": "^2.7.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

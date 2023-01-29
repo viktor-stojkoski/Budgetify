@@ -70,6 +70,10 @@ export interface IUpdateTransactionRequest {
   description: string | null;
 }
 
+export interface IAddTransactionAttachmentsRequest {
+  attachments: IFileForUpload[];
+}
+
 export interface IDeleteTransactionDialogData {
   uid: string;
 }

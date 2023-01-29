@@ -28,6 +28,7 @@ import {
 } from '../../models/transaction.model';
 import { TransactionService } from '../../services/transaction.service';
 import { TranslationKeys } from '../../static/translationKeys';
+import { AddTransactionAttachmentsComponent } from '../add-transaction-attachments/add-transaction-attachments.component';
 import { DeleteTransactionAttachmentComponent } from '../delete-transaction-attachment/delete-transaction-attachment.component';
 import { DeleteTransactionComponent } from '../delete-transaction/delete-transaction.component';
 
@@ -173,6 +174,22 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
           attachmentUid: attachmentUid,
           name: name
         } as IDeleteTransactionAttachmentDialogData
+      })
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (response: IDialogResponseData) => {
+          if (response?.action === DialogActionButton.Ok) {
+            this.getTransaction();
+          }
+        }
+      });
+  }
+
+  public openAddTransactionAttachmentsDialog(): void {
+    this.dialogService
+      .open(AddTransactionAttachmentsComponent, {
+        data: this.transactionUid
       })
       .afterClosed()
       .pipe(takeUntil(this.destroyed$))

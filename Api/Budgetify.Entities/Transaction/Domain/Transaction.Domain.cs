@@ -85,27 +85,42 @@ public partial class Transaction
     }
 
     /// <summary>
-    /// Adds attachment to the transaction.
+    /// Adds or updates transaction attachment.
     /// </summary>
-    public Result<TransactionAttachment> AddTransactionAttachment(DateTime createdOn, string fileName)
+    public Result<TransactionAttachment> UpsertTransactionAttachment(DateTime createdOn, string fileName)
     {
         string path = $"transactions/{Uid}/attachments/{fileName}";
 
-        Result<TransactionAttachment> transactionAttachmentResult =
-            TransactionAttachment.Create(
-                createdOn: createdOn,
-                transactionId: Id,
-                filePath: path,
-                name: fileName);
+        Result<TransactionAttachment> existingAttachmentResult = GetTransactionAttachmentByName(fileName);
 
-        if (transactionAttachmentResult.IsFailureOrNull)
+        if (existingAttachmentResult.IsNotFound)
         {
-            return transactionAttachmentResult;
+            Result<TransactionAttachment> transactionAttachmentResult =
+                TransactionAttachment.Create(
+                    createdOn: createdOn,
+                    transactionId: Id,
+                    filePath: path,
+                    name: fileName);
+
+            if (transactionAttachmentResult.IsFailureOrNull)
+            {
+                return transactionAttachmentResult;
+            }
+
+            _attachments.Add(transactionAttachmentResult.Value);
+
+            return Result.Ok(transactionAttachmentResult.Value);
         }
 
-        _attachments.Add(transactionAttachmentResult.Value);
+        Result updateResult =
+            existingAttachmentResult.Value.Update(fileName, path);
 
-        return Result.Ok(transactionAttachmentResult.Value);
+        if (updateResult.IsFailureOrNull)
+        {
+            return Result.FromError<TransactionAttachment>(updateResult);
+        }
+
+        return Result.Ok(existingAttachmentResult.Value);
     }
 
     /// <summary>
@@ -155,6 +170,22 @@ public partial class Transaction
     {
         TransactionAttachment? transactionAttachment =
             _attachments.SingleOrDefault(x => x.DeletedOn == null && x.Uid == attachmentUid);
+
+        if (transactionAttachment is null)
+        {
+            return Result.NotFound<TransactionAttachment>(ResultCodes.TransactionAttachmentNotFound);
+        }
+
+        return Result.Ok(transactionAttachment);
+    }
+
+    /// <summary>
+    /// Returns transaction attachment by given fileName.
+    /// </summary>
+    private Result<TransactionAttachment> GetTransactionAttachmentByName(string name)
+    {
+        TransactionAttachment? transactionAttachment =
+            _attachments.SingleOrDefault(x => x.DeletedOn == null && x.Name == name);
 
         if (transactionAttachment is null)
         {

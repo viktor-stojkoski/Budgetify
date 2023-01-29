@@ -137,7 +137,7 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
             foreach (FileForUploadRequest attachments in command.Attachments)
             {
                 Result<TransactionAttachment> addTransactionAttachmentResult =
-                    transactionResult.Value.AddTransactionAttachment(
+                    transactionResult.Value.UpsertTransactionAttachment(
                         createdOn: DateTime.UtcNow.ToLocalTime(),
                         fileName: attachments.Name);
 

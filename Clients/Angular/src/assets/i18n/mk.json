@@ -92,6 +92,7 @@
       "delete": "Трансакцијата е успешно избришана.",
 
       "attachments": {
+        "add": "Прилозите на трансакцијата се успешно додадени.",
         "delete": "Прилогот на трансакцијата е успешно избришан."
       }
     },
@@ -217,6 +218,7 @@
     "uploadFileInvalidSize": "Ве молиме прикачете датотеки со помалку од 1MB.",
 
     "detailsHeader": "Детали за трансакцијата",
+    "detailsActionAddTransactionAttachments": "Додади прилози",
     "detailsAccountHeader": "Сметка",
     "detailsCategoryHeader": "Категорија",
     "detailsCurrencyCodeHeader": "Валута",
@@ -236,7 +238,11 @@
     "deleteTransactionContent": "Дали сте сигурни дека сакате да ја избришете оваа трансакција ?",
 
     "deleteTransactionAttachmentHeader": "Избриши прилог",
-    "deleteTransactionAttachmentContent": "Дали сте сигурно дека сакате да ги избришете прилогот <strong>{{attachmentName}}</strong> ?"
+    "deleteTransactionAttachmentContent": "Дали сте сигурни дека сакате да ги избришете прилогот <strong>{{attachmentName}}</strong> ?",
+
+    "addTransactionAttachmentsHeader": "Додади прилози на трансакцијата",
+    "addTransactionAttachmentsInfo": "Додавањето прилог со исто име ќе го пребрише постоечкиот.",
+    "addTransactionAttachmentsDropZoneLabel": "Прикачете датотека(и) тука."
   },
 
   "exchangeRates": {

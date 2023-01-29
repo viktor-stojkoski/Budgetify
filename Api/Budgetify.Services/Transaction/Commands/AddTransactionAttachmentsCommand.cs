@@ -47,7 +47,9 @@ public class AddTransactionAttachmentsCommandHandler : ICommandHandler<AddTransa
         CommandResultBuilder result = new();
 
         Result<Transaction> transactionResult =
-            await _transactionRepository.GetTransactionAsync(_currentUser.Id, command.TransactionUid);
+            await _transactionRepository.GetTransactionWithAttachmentsAsync(
+                userId: _currentUser.Id,
+                transactionUid: command.TransactionUid);
 
         if (transactionResult.IsFailureOrNull)
         {
@@ -61,7 +63,7 @@ public class AddTransactionAttachmentsCommandHandler : ICommandHandler<AddTransa
             foreach (FileForUploadRequest attachment in command.Attachments)
             {
                 Result<TransactionAttachment> addTransactionAttachmentResult =
-                    transactionResult.Value.AddTransactionAttachment(
+                    transactionResult.Value.UpsertTransactionAttachment(
                         createdOn: DateTime.UtcNow.ToLocalTime(),
                         fileName: attachment.Name);
 
@@ -81,7 +83,7 @@ public class AddTransactionAttachmentsCommandHandler : ICommandHandler<AddTransa
             await Task.WhenAll(attachmentsForUploadTasks);
         }
 
-        _transactionRepository.Insert(transactionResult.Value);
+        _transactionRepository.Update(transactionResult.Value);
 
         await _unitOfWork.SaveAsync();
 
