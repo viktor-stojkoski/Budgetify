@@ -23,5 +23,5 @@ public class CreateTransactionRequest
 
     public string? Description { get; set; }
 
-    public IEnumerable<FileForUploadRequest> Files { get; set; } = new List<FileForUploadRequest>();
+    public IEnumerable<FileForUploadRequest> Attachments { get; set; } = new List<FileForUploadRequest>();
 }

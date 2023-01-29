@@ -56,7 +56,7 @@ export interface ICreateTransactionRequest {
   amount: number | null;
   date: Date | null;
   description: string | null;
-  files: IFileForUpload[];
+  attachments: IFileForUpload[];
 }
 
 export interface IUpdateTransactionRequest {

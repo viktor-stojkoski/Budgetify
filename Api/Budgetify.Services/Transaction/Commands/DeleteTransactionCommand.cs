@@ -63,7 +63,7 @@ public class DeleteTransactionCommandHandler : ICommandHandler<DeleteTransaction
 
         if (transactionResult.Value.Attachments.Any())
         {
-            await DeleteFilesFromStorageAsync(
+            await DeleteAttachmentsFromStorageAsync(
                 transactionResult.Value.Attachments
                     .Select(x => x.FilePath)
                         .Select(x => x.Value));
@@ -76,18 +76,18 @@ public class DeleteTransactionCommandHandler : ICommandHandler<DeleteTransaction
         return result.Build();
     }
 
-    private async Task DeleteFilesFromStorageAsync(IEnumerable<string> attachmentPaths)
+    private async Task DeleteAttachmentsFromStorageAsync(IEnumerable<string> attachmentPaths)
     {
-        List<Task> deleteFilesTasks = new();
+        List<Task> deleteAttachmentsTasks = new();
 
         foreach (string attachmentPath in attachmentPaths)
         {
-            deleteFilesTasks.Add(
+            deleteAttachmentsTasks.Add(
                 _storageService.DeleteFileAsync(
                     _storageSettings.ContainerName,
                     attachmentPath));
         }
 
-        await Task.WhenAll(deleteFilesTasks);
+        await Task.WhenAll(deleteAttachmentsTasks);
     }
 }
