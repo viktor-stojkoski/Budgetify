@@ -84,7 +84,7 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
           amount: this.transactionForm.controls.amount.value,
           date: this.transactionForm.controls.date.value,
           description: this.transactionForm.controls.description.value,
-          files: this.selectedFiles
+          attachments: this.selectedFiles
         })
         .pipe(take(1))
         .subscribe({

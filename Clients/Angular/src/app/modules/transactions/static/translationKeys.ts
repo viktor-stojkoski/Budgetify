@@ -28,6 +28,7 @@ export class TranslationKeys {
   public static readonly uploadFileInvalidSize = 'transactions.uploadFileInvalidSize';
 
   public static readonly detailsHeader = 'transactions.detailsHeader';
+  public static readonly detailsActionAddTransactionAttachments = 'transactions.detailsActionAddTransactionAttachments';
   public static readonly detailsAccountHeader = 'transactions.detailsAccountHeader';
   public static readonly detailsCategoryHeader = 'transactions.detailsCategoryHeader';
   public static readonly detailsCurrencyCodeHeader = 'transactions.detailsCurrencyCodeHeader';
@@ -52,4 +53,9 @@ export class TranslationKeys {
   public static readonly deleteTransactionAttachmentHeader = 'transactions.deleteTransactionAttachmentHeader';
   public static readonly deleteTransactionAttachmentContent = 'transactions.deleteTransactionAttachmentContent';
   public static readonly deleteTransactionAttachmentSuccessful = 'successMessages.transactions.attachments.delete';
+
+  public static readonly addTransactionAttachmentsHeader = 'transactions.addTransactionAttachmentsHeader';
+  public static readonly addTransactionAttachmentsInfo = 'transactions.addTransactionAttachmentsInfo';
+  public static readonly addTransactionAttachmentsDropZoneLabel = 'transactions.addTransactionAttachmentsDropZoneLabel';
+  public static readonly addTransactionAttachmentsSuccessful = 'successMessages.transactions.attachments.add';
 }

@@ -16,9 +16,11 @@ using Budgetify.Services.Common.Extensions;
 
 using VS.Commands;
 
-public record DeleteTransactionCommand(Guid TransactionUid) : ICommand;
+public record AddTransactionAttachmentsCommand(
+    Guid TransactionUid,
+    IEnumerable<FileForUploadRequest> Attachments) : ICommand;
 
-public class DeleteTransactionCommandHandler : ICommandHandler<DeleteTransactionCommand>
+public class AddTransactionAttachmentsCommandHandler : ICommandHandler<AddTransactionAttachmentsCommand>
 {
     private readonly ICurrentUser _currentUser;
     private readonly ITransactionRepository _transactionRepository;
@@ -26,7 +28,7 @@ public class DeleteTransactionCommandHandler : ICommandHandler<DeleteTransaction
     private readonly IStorageSettings _storageSettings;
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteTransactionCommandHandler(
+    public AddTransactionAttachmentsCommandHandler(
         ICurrentUser currentUser,
         ITransactionRepository transactionRepository,
         IStorageService storageService,
@@ -40,7 +42,7 @@ public class DeleteTransactionCommandHandler : ICommandHandler<DeleteTransaction
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<CommandResult<EmptyValue>> ExecuteAsync(DeleteTransactionCommand command)
+    public async Task<CommandResult<EmptyValue>> ExecuteAsync(AddTransactionAttachmentsCommand command)
     {
         CommandResultBuilder result = new();
 
@@ -54,40 +56,37 @@ public class DeleteTransactionCommandHandler : ICommandHandler<DeleteTransaction
             return result.FailWith(transactionResult);
         }
 
-        Result deleteResult = transactionResult.Value.Delete(DateTime.UtcNow);
-
-        if (deleteResult.IsFailureOrNull)
+        if (command.Attachments.Any())
         {
-            return result.FailWith(deleteResult);
+            List<Task<UploadedFileResponse>> attachmentsForUploadTasks = new();
+
+            foreach (FileForUploadRequest attachment in command.Attachments)
+            {
+                Result<TransactionAttachment> upsertTransactionAttachmentResult =
+                    transactionResult.Value.UpsertTransactionAttachment(
+                        createdOn: DateTime.UtcNow.ToLocalTime(),
+                        fileName: attachment.Name);
+
+                if (upsertTransactionAttachmentResult.IsFailureOrNull)
+                {
+                    return result.FailWith(upsertTransactionAttachmentResult);
+                }
+
+                attachmentsForUploadTasks.Add(
+                    _storageService.UploadAsync(
+                        containerName: _storageSettings.ContainerName,
+                        fileName: upsertTransactionAttachmentResult.Value.FilePath,
+                        content: attachment.Content,
+                        contentType: attachment.Type));
+            }
+
+            await Task.WhenAll(attachmentsForUploadTasks);
+
+            _transactionRepository.Update(transactionResult.Value);
+
+            await _unitOfWork.SaveAsync();
         }
-
-        if (transactionResult.Value.Attachments.Any())
-        {
-            await DeleteAttachmentsFromStorageAsync(
-                transactionResult.Value.Attachments
-                    .Select(x => x.FilePath)
-                        .Select(x => x.Value));
-        }
-
-        _transactionRepository.Update(transactionResult.Value);
-
-        await _unitOfWork.SaveAsync();
 
         return result.Build();
-    }
-
-    private async Task DeleteAttachmentsFromStorageAsync(IEnumerable<string> attachmentPaths)
-    {
-        List<Task> deleteAttachmentsTasks = new();
-
-        foreach (string attachmentPath in attachmentPaths)
-        {
-            deleteAttachmentsTasks.Add(
-                _storageService.DeleteFileAsync(
-                    _storageSettings.ContainerName,
-                    attachmentPath));
-        }
-
-        await Task.WhenAll(deleteAttachmentsTasks);
     }
 }

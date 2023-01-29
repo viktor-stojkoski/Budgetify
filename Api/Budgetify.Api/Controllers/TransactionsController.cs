@@ -50,7 +50,7 @@ public class TransactionsController : ExtendedApiController
                 Amount: request.Amount,
                 Date: request.Date,
                 Description: request.Description,
-                Files: request.Files)));
+                Attachments: request.Attachments)));
 
     [HttpPut("{transactionUid:Guid}")]
     public async Task<IActionResult> UpdateTransactionAsync(

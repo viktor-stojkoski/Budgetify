@@ -92,6 +92,7 @@
       "delete": "Transaction has been successfully deleted.",
 
       "attachments": {
+        "add": "Transaction attachments successfully added.",
         "delete": "Transaction attachment has been successfully deleted."
       }
     },
@@ -217,6 +218,7 @@
     "uploadFileInvalidSize": "Please upload files with less then 1MB.",
 
     "detailsHeader": "Transaction details",
+    "detailsActionAddTransactionAttachments": "Add attachments",
     "detailsAccountHeader": "Account",
     "detailsCategoryHeader": "Category",
     "detailsCurrencyCodeHeader": "Currency code",
@@ -236,7 +238,11 @@
     "deleteTransactionContent": "Are you sure you want to delete this transaction ?",
 
     "deleteTransactionAttachmentHeader": "Delete attachment",
-    "deleteTransactionAttachmentContent": "Are you sure you want to delete the attachment <strong>{{attachmentName}}</strong> ?"
+    "deleteTransactionAttachmentContent": "Are you sure you want to delete the attachment <strong>{{attachmentName}}</strong> ?",
+
+    "addTransactionAttachmentsHeader": "Add transaction attachments",
+    "addTransactionAttachmentsInfo": "Adding attachment with same name will override the existing one.",
+    "addTransactionAttachmentsDropZoneLabel": "Drop file(s) here"
   },
 
   "exchangeRates": {

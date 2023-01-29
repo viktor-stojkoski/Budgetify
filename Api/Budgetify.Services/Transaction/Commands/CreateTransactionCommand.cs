@@ -33,7 +33,7 @@ public record CreateTransactionCommand(
     decimal Amount,
     DateTime Date,
     string? Description,
-    IEnumerable<FileForUploadRequest> Files) : ICommand;
+    IEnumerable<FileForUploadRequest> Attachments) : ICommand;
 
 public class CreateTransactionCommandHandler : ICommandHandler<CreateTransactionCommand>
 {
@@ -130,31 +130,31 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
             return result.FailWith(transactionResult);
         }
 
-        if (command.Files.Any())
+        if (command.Attachments.Any())
         {
-            List<Task<UploadedFileResponse>> filesForUploadTasks = new();
+            List<Task<UploadedFileResponse>> attachmentsForUploadTasks = new();
 
-            foreach (FileForUploadRequest file in command.Files)
+            foreach (FileForUploadRequest attachments in command.Attachments)
             {
-                Result<TransactionAttachment> addTransactionAttachmentResult =
-                    transactionResult.Value.AddTransactionAttachment(
-                        createdOn: DateTime.UtcNow,
-                        fileName: file.Name);
+                Result<TransactionAttachment> upsertTransactionAttachmentResult =
+                    transactionResult.Value.UpsertTransactionAttachment(
+                        createdOn: DateTime.UtcNow.ToLocalTime(),
+                        fileName: attachments.Name);
 
-                if (addTransactionAttachmentResult.IsFailureOrNull)
+                if (upsertTransactionAttachmentResult.IsFailureOrNull)
                 {
-                    return result.FailWith(addTransactionAttachmentResult);
+                    return result.FailWith(upsertTransactionAttachmentResult);
                 }
 
-                filesForUploadTasks.Add(
+                attachmentsForUploadTasks.Add(
                     _storageService.UploadAsync(
                         containerName: _storageSettings.ContainerName,
-                        fileName: addTransactionAttachmentResult.Value.FilePath,
-                        content: file.Content,
-                        contentType: file.Type));
+                        fileName: upsertTransactionAttachmentResult.Value.FilePath,
+                        content: attachments.Content,
+                        contentType: attachments.Type));
             }
 
-            await Task.WhenAll(filesForUploadTasks);
+            await Task.WhenAll(attachmentsForUploadTasks);
         }
 
         _transactionRepository.Insert(transactionResult.Value);
