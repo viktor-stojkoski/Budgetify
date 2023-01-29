@@ -62,30 +62,30 @@ public class AddTransactionAttachmentsCommandHandler : ICommandHandler<AddTransa
 
             foreach (FileForUploadRequest attachment in command.Attachments)
             {
-                Result<TransactionAttachment> addTransactionAttachmentResult =
+                Result<TransactionAttachment> upsertTransactionAttachmentResult =
                     transactionResult.Value.UpsertTransactionAttachment(
                         createdOn: DateTime.UtcNow.ToLocalTime(),
                         fileName: attachment.Name);
 
-                if (addTransactionAttachmentResult.IsFailureOrNull)
+                if (upsertTransactionAttachmentResult.IsFailureOrNull)
                 {
-                    return result.FailWith(addTransactionAttachmentResult);
+                    return result.FailWith(upsertTransactionAttachmentResult);
                 }
 
                 attachmentsForUploadTasks.Add(
                     _storageService.UploadAsync(
                         containerName: _storageSettings.ContainerName,
-                        fileName: addTransactionAttachmentResult.Value.FilePath,
+                        fileName: upsertTransactionAttachmentResult.Value.FilePath,
                         content: attachment.Content,
                         contentType: attachment.Type));
             }
 
             await Task.WhenAll(attachmentsForUploadTasks);
+
+            _transactionRepository.Update(transactionResult.Value);
+
+            await _unitOfWork.SaveAsync();
         }
-
-        _transactionRepository.Update(transactionResult.Value);
-
-        await _unitOfWork.SaveAsync();
 
         return result.Build();
     }

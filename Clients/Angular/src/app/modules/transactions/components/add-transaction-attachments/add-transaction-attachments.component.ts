@@ -22,6 +22,7 @@ import { TranslationKeys } from '../../static/translationKeys';
 export class AddTransactionAttachmentsComponent extends DestroyBaseComponent {
   public readonly translationKeys = TranslationKeys;
   public readonly sharedTranslationKeys = SharedTranslationKeys;
+  public isAdding = false;
 
   public nonImages: File[] = [];
   public images: File[] = [];
@@ -72,15 +73,17 @@ export class AddTransactionAttachmentsComponent extends DestroyBaseComponent {
     }
   }
 
-  public removeFile(event: File) {
-    if (event.type.startsWith(fileStatics.imageFiles)) {
-      this.images.splice(this.images.indexOf(event), 1);
+  public removeFile(file: File) {
+    if (file.type.startsWith(fileStatics.imageFiles)) {
+      this.images.splice(this.images.indexOf(file), 1);
     } else {
-      this.nonImages.splice(this.images.indexOf(event), 1);
+      this.nonImages.splice(this.nonImages.indexOf(file), 1);
     }
+    this.selectedFiles = this.selectedFiles.filter((x) => x.name !== file.name);
   }
 
   public addTransactionAttachments(): void {
+    this.isAdding = true;
     this.transactionService
       .addTransactionAttachments(this.transactionUid, {
         attachments: this.selectedFiles

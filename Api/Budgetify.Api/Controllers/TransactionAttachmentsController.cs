@@ -24,7 +24,7 @@ public class TransactionAttachmentsController : ExtendedApiController
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddTransactionAttachmentAsync(
+    public async Task<IActionResult> AddTransactionAttachmentsAsync(
         [FromRoute] Guid transactionUid,
         [FromBody] AddTransactionAttachmentsRequest request) =>
         OkOrError(await _commandDispatcher.ExecuteAsync(
