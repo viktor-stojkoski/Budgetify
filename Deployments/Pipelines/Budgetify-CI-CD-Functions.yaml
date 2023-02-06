@@ -12,7 +12,7 @@ trigger:
 
   # paths:
   #   include:
-  #     - Api/Budgetify.Fuctions/*
+  #     - Api/Budgetify.Functions/*
 
 pr: none
 
@@ -51,7 +51,7 @@ stages:
           - name: githubNugetServiceConnection
             value: GithubNugetFeed
           - name: projects
-            value: 'Api/Budgetify.Fuctions/*.csproj'
+            value: 'Api/Budgetify.Functions/*.csproj'
           - name: archiveFile
             value: $(System.DefaultWorkingDirectory)/function_build$(Build.BuildId).zip
 
@@ -91,7 +91,7 @@ stages:
 
           - task: PublishBuildArtifacts@1
             inputs:
-              PathtoPublish: $(archiveFile)
+              PathToPublish: $(archiveFile)
               artifactName: drop
 
           - task: AzureFunctionApp@1
