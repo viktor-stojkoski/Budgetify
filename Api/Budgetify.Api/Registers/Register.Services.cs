@@ -1,10 +1,12 @@
 ﻿namespace Budgetify.Api.Registers;
 
+using Budgetify.Common.ScanReceipt;
 using Budgetify.Contracts.Account.Repositories;
 using Budgetify.Contracts.Category.Repositories;
 using Budgetify.Contracts.Currency.Repositories;
 using Budgetify.Contracts.ExchangeRate.Repositories;
 using Budgetify.Contracts.Merchant.Repositories;
+using Budgetify.Contracts.Settings;
 using Budgetify.Contracts.Transaction.Repositories;
 using Budgetify.Contracts.User.Repositories;
 using Budgetify.Storage.Account.Repositories;
@@ -28,6 +30,12 @@ public static partial class Register
         services.AddScoped<IMerchantRepository, MerchantRepository>();
         services.AddScoped<ITransactionRepository, TransactionRepository>();
         services.AddScoped<IExchangeRateRepository, ExchangeRateRepository>();
+        services.AddScoped<IScanReceiptService>(provider =>
+        {
+            IScanSettings scanSettings = provider.GetRequiredService<IScanSettings>();
+
+            return new ScanReceiptService(scanSettings.Endpoint, scanSettings.Key);
+        });
 
         return services;
     }

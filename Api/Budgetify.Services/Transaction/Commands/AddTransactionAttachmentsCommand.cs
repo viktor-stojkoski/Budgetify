@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Budgetify.Common.CurrentUser;
 using Budgetify.Common.Results;
+using Budgetify.Common.ScanReceipt;
 using Budgetify.Common.Storage;
 using Budgetify.Contracts.Infrastructure.Storage;
 using Budgetify.Contracts.Settings;
@@ -27,19 +28,22 @@ public class AddTransactionAttachmentsCommandHandler : ICommandHandler<AddTransa
     private readonly IStorageService _storageService;
     private readonly IStorageSettings _storageSettings;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IScanReceiptService _scanReceiptService;
 
     public AddTransactionAttachmentsCommandHandler(
         ICurrentUser currentUser,
         ITransactionRepository transactionRepository,
         IStorageService storageService,
         IStorageSettings storageSettings,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        IScanReceiptService scanReceiptService)
     {
         _currentUser = currentUser;
         _transactionRepository = transactionRepository;
         _storageService = storageService;
         _storageSettings = storageSettings;
         _unitOfWork = unitOfWork;
+        _scanReceiptService = scanReceiptService;
     }
 
     public async Task<CommandResult<EmptyValue>> ExecuteAsync(AddTransactionAttachmentsCommand command)
@@ -80,7 +84,9 @@ public class AddTransactionAttachmentsCommandHandler : ICommandHandler<AddTransa
                         contentType: attachment.Type));
             }
 
-            await Task.WhenAll(attachmentsForUploadTasks);
+            UploadedFileResponse[] response = await Task.WhenAll(attachmentsForUploadTasks);
+
+            _ = await _scanReceiptService.ScanReceiptAsync(response.First().FileUri);
 
             _transactionRepository.Update(transactionResult.Value);
 
