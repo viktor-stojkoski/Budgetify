@@ -110,7 +110,7 @@ stages:
               slotName: production
               # runtimeStack: DOTNET|6.0
               appName: budgetifytestingapp
-              package: $(System.ArtifactStagingDirectory)/**/*.zip
+              package: $(System.DefaultWorkingDirectory)/**/*.zip
 
       # - job: job_build_database
       #   displayName: Budgetify Build Database
