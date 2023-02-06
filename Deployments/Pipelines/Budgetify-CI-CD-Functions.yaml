@@ -104,8 +104,9 @@ stages:
             displayName: Deploy to Azure Function App
             inputs:
               azureSubscription: $(azureSubscriptionName)
-              resourceGroupName: testrg
-              appType: functionAppLinux
+              # resourceGroupName: testrg
+              appType: functionApp
+              # runtimeStack: DOTNET|6.0
               appName: budgetifytestingapp
               package: $(System.ArtifactStagingDirectory)/**/*.zip
 
