@@ -1,0 +1,110 @@
+###################################
+### Budgetify - CI-CD Functions ###
+###################################
+
+pool:
+  name: Azure Pipelines
+  demands: msbuild
+  vmImage: windows-2022
+
+trigger:
+  none
+
+  # paths:
+  #   include:
+  #     - Api/Budgetify.Fuctions/*
+
+pr: none
+
+stages:
+  - stage: BuildAndTest
+    displayName: Build and Test Functions
+
+    jobs:
+      - job: job_spell_check
+        displayName: Spell Check Solution
+
+        steps:
+          - task: Npm@1
+            displayName: Install CSpell
+            inputs:
+              command: custom
+              customCommand: install -g cspell
+
+          - task: PowerShell@2
+            displayName: Run CSpell on Solution
+            inputs:
+              pwsh: true
+              targetType: inline
+              script: cspell ** --gitignore
+
+      - job: job_build_test_functions
+        displayName: Budgetify Functions .NET Build & Test
+
+        variables:
+          - name: buildConfiguration
+            value: Release
+          - name: githubNugetServiceConnection
+            value: GithubNugetFeed
+          - name: projects
+            value: 'Api/Budgetify.Fuctions/*.csproj'
+          - name: archiveFile
+            value: $(System.DefaultWorkingDirectory)/function_build$(Build.BuildId).zip
+          - name: azureSubscriptionName
+            value: Azure Subscription
+
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: .NET Restore
+            inputs:
+              command: restore
+              feedsToUse: config
+              nugetConfigPath: NuGet/nuget.config
+              externalFeedCredentials: ${{ variables.githubNugetServiceConnection }}
+              noCache: true
+              projects: $(projects)
+              verbosityRestore: Quiet
+
+          - task: DotNetCoreCLI@2
+            displayName: .NET Build
+            inputs:
+              projects: $(projects)
+              arguments: --configuration $(buildConfiguration) --no-restore
+
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: publish
+              arguments: '--configuration $(buildConfiguration) --no-restore --no-build'
+              projects: $(projects)
+              publishWebProjects: false
+              modifyOutputPath: false
+              zipAfterPublish: false
+
+          - task: ArchiveFiles@2
+            displayName: Archive files
+            inputs:
+              rootFolderOrFile: $(System.DefaultWorkingDirectory)/publish_output
+              includeRootFolder: false
+              archiveFile: $(archiveFile)
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: $(archiveFile)
+              artifactName: drop
+
+          - task: AzureFunctionApp@1
+            inputs:
+              azureSubscription: $(azureSubscriptionName)
+              appType: functionAppLinux
+              appName: budgetifytestingapp
+              package: $(System.ArtifactsDirectory)/**/*.zip
+
+      - job: job_build_database
+        displayName: Budgetify Build Database
+        steps:
+          - task: MSBuild@1
+            displayName: Database Build
+            inputs:
+              solution: Databases/Budgetify.Database/Budgetify.Database.sqlproj
+              configuration: $(buildConfiguration)
+              clean: true
