@@ -16,6 +16,10 @@ trigger:
 
 pr: none
 
+variables:
+  - name: azureSubscriptionName
+    value: Azure Subscription
+
 stages:
   - stage: BuildAndTest
     displayName: Build and Test Functions
@@ -50,8 +54,6 @@ stages:
             value: 'Api/Budgetify.Fuctions/*.csproj'
           - name: archiveFile
             value: $(System.DefaultWorkingDirectory)/function_build$(Build.BuildId).zip
-          - name: azureSubscriptionName
-            value: Azure Subscription
 
         steps:
           - task: DotNetCoreCLI@2
