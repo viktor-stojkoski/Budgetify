@@ -51,7 +51,7 @@ stages:
           - name: githubNugetServiceConnection
             value: GithubNugetFeed
           - name: projects
-            value: 'Api/Budgetify.Functions/*.csproj'
+            value: '$(Build.SourcesDirectory)/Api/Budgetify.Functions/*.csproj'
           - name: archiveFile
             value: $(System.DefaultWorkingDirectory)/function_build$(Build.BuildId).zip
 
