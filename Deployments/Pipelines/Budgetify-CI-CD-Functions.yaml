@@ -74,9 +74,14 @@ stages:
               arguments: --configuration $(buildConfiguration) --no-restore
 
           - task: DotNetCoreCLI@2
+            displayName: .NET Publish
             inputs:
               command: publish
-              arguments: '--configuration $(buildConfiguration) --no-restore --no-build'
+              arguments: >-
+                --configuration $(buildConfiguration)
+                --no-restore
+                --no-build
+                --output $(Build.ArtifactStagingDirectory)/publish
               projects: $(projects)
               publishWebProjects: false
               modifyOutputPath: false
@@ -85,7 +90,7 @@ stages:
           - task: ArchiveFiles@2
             displayName: Archive files
             inputs:
-              rootFolderOrFile: $(System.DefaultWorkingDirectory)/publish_output
+              rootFolderOrFile: $(Build.ArtifactStagingDirectory)/publish
               includeRootFolder: false
               archiveFile: $(archiveFile)
 
@@ -99,7 +104,7 @@ stages:
               azureSubscription: $(azureSubscriptionName)
               appType: functionAppLinux
               appName: budgetifytestingapp
-              package: $(System.ArtifactsDirectory)/**/*.zip
+              package: $(System.ArtifactStagingDirectory)/**/*.zip
 
       - job: job_build_database
         displayName: Budgetify Build Database
