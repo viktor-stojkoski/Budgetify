@@ -95,13 +95,16 @@ stages:
               archiveFile: $(archiveFile)
 
           - task: PublishBuildArtifacts@1
+            displayName: Publish build artifacts
             inputs:
               PathToPublish: $(archiveFile)
               artifactName: drop
 
           - task: AzureFunctionApp@1
+            displayName: Deploy to Azure Function App
             inputs:
               azureSubscription: $(azureSubscriptionName)
+              resourceGroupName: testrg
               appType: functionAppLinux
               appName: budgetifytestingapp
               package: $(System.ArtifactStagingDirectory)/**/*.zip
