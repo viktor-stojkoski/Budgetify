@@ -6,56 +6,55 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Azure;
-using Azure.AI.FormRecognizer;
-using Azure.AI.FormRecognizer.Models;
+using Azure.AI.FormRecognizer.DocumentAnalysis;
 
 public class ScanReceiptService : IScanReceiptService
 {
-    private readonly FormRecognizerClient _formRecognizerClient;
+    private readonly DocumentAnalysisClient _formRecognizerClient;
+    private readonly string _modelId;
 
-    public ScanReceiptService(Uri endpoint, string key)
+    public ScanReceiptService(Uri endpoint, string key, string modelId)
     {
-        _formRecognizerClient = new FormRecognizerClient(
+        _formRecognizerClient = new DocumentAnalysisClient(
             endpoint: endpoint,
             credential: new AzureKeyCredential(key));
+        _modelId = modelId;
     }
 
     public async Task<ScanReceiptResponse> ScanReceiptAsync(Uri receiptUrl)
     {
         ScanReceiptResponse response = new();
 
-        Response<RecognizedFormCollection> recogizedForms =
-            await _formRecognizerClient.StartRecognizeReceiptsFromUriAsync(
-                receiptUri: receiptUrl,
-                recognizeReceiptsOptions: new RecognizeReceiptsOptions
-                {
-                    IncludeFieldElements = true
-                }).WaitForCompletionAsync();
+        AnalyzeDocumentOperation analyzedDocuments =
+            await _formRecognizerClient.AnalyzeDocumentFromUriAsync(
+                waitUntil: WaitUntil.Completed,
+                modelId: _modelId,
+                documentUri: receiptUrl);
 
-        foreach (RecognizedForm form in recogizedForms.Value)
+        foreach (AnalyzedDocument? form in analyzedDocuments.Value.Documents)
         {
-            response.AttachmentFields = GetAttachmentFields(form.Fields);
+            response.AttachmentFields = GetAttachmentFields(form);
         }
 
         return response;
     }
 
-    private static AttachmentFields GetAttachmentFields(IReadOnlyDictionary<string, FormField> formFields)
+    private static AttachmentFields GetAttachmentFields(AnalyzedDocument document)
     {
         AttachmentFields attachmentFields = new();
 
-        foreach (KeyValuePair<string, FormField> field in formFields.Where(x => x.Value is not null))
+        foreach (KeyValuePair<string, DocumentField> field in document.Fields.Where(x => x.Value is not null))
         {
             switch (field.Key)
             {
                 case "MerchantName":
-                    attachmentFields.MerchantName = field.Value.ValueData;
+                    attachmentFields.MerchantName = field.Value.Content;
                     break;
                 case "TotalAmount":
-                    attachmentFields.TotalAmount = decimal.Parse(field.Value.ValueData);
+                    attachmentFields.TotalAmount = decimal.Parse(field.Value.Content);
                     break;
                 case "Date":
-                    attachmentFields.Date = DateTime.Parse(field.Value.ValueData);
+                    attachmentFields.Date = DateTime.Parse(field.Value.Content);
                     break;
                 default:
                     break;

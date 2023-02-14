@@ -86,7 +86,10 @@ public class AddTransactionAttachmentsCommandHandler : ICommandHandler<AddTransa
 
             UploadedFileResponse[] response = await Task.WhenAll(attachmentsForUploadTasks);
 
-            _ = await _scanReceiptService.ScanReceiptAsync(response.First().FileUri);
+            SignedUrlResponse test =
+                await _storageService.GetSignedUrlAsync(_storageSettings.ContainerName, response.First().FileName, DateTime.UtcNow.AddHours(3));
+
+            _ = await _scanReceiptService.ScanReceiptAsync(test.Url);
 
             _transactionRepository.Update(transactionResult.Value);
 

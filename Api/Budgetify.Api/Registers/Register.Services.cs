@@ -34,7 +34,10 @@ public static partial class Register
         {
             IScanSettings scanSettings = provider.GetRequiredService<IScanSettings>();
 
-            return new ScanReceiptService(scanSettings.Endpoint, scanSettings.Key);
+            return new ScanReceiptService(
+                endpoint: scanSettings.Endpoint,
+                key: scanSettings.Key,
+                modelId: scanSettings.ModelId);
         });
 
         return services;

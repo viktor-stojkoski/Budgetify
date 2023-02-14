@@ -13,4 +13,9 @@ public interface IScanSettings
     /// Scan key.
     /// </summary>
     string Key { get; }
+
+    /// <summary>
+    /// Scan model ID.
+    /// </summary>
+    string ModelId { get; }
 }
