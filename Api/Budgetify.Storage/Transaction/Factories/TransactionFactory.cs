@@ -37,6 +37,7 @@ internal static class TransactionFactory
             amount: dbTransaction.Amount,
             date: dbTransaction.Date,
             description: dbTransaction.Description,
+            isVerified: dbTransaction.IsVerified,
             attachments: attachmentsResults.Select(x => x.Value));
     }
 
@@ -59,7 +60,8 @@ internal static class TransactionFactory
             type: transaction.Type,
             amount: transaction.Amount,
             date: transaction.Date,
-            description: transaction.Description);
+            description: transaction.Description,
+            isVerified: transaction.IsVerified);
     }
 
     /// <summary>

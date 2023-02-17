@@ -20,14 +20,15 @@ public partial class Transaction
         DateTime createdOn,
         DateTime? deletedOn,
         int userId,
-        int accountId,
-        int categoryId,
+        int? accountId,
+        int? categoryId,
         int currencyId,
         int? merchantId,
         string type,
         decimal amount,
-        DateTime date,
+        DateTime? date,
         string? description,
+        bool isVerified,
         IEnumerable<TransactionAttachment> attachments)
     {
         Result<TransactionType> typeValue = TransactionType.Create(type);
@@ -35,11 +36,6 @@ public partial class Transaction
         if (typeValue.IsFailureOrNull)
         {
             return Result.FromError<Transaction>(typeValue);
-        }
-
-        if (typeValue.Value != TransactionType.Income && merchantId is null)
-        {
-            return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
         }
 
         Transaction transaction = new(
@@ -51,7 +47,8 @@ public partial class Transaction
             type: typeValue.Value,
             amount: amount,
             date: date,
-            description: description)
+            description: description,
+            isVerified: isVerified)
         {
             Id = id,
             Uid = uid,
@@ -101,7 +98,8 @@ public partial class Transaction
             type: typeValue.Value,
             amount: amount,
             date: date,
-            description: description)
+            description: description,
+            isVerified: true)
         {
             Uid = Guid.NewGuid(),
             CreatedOn = createdOn,

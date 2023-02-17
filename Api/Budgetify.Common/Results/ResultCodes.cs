@@ -67,6 +67,7 @@ public static class ResultCodes
     public const string TransactionTypeInvalid = "TRANSACTION_TYPE_INVALID";
     public const string TransactionEmptyMerchantTypeInvalid = "TRANSACTION_EMPTY_MERCHANT_TYPE_INVALID";
     public const string TransactionNotFound = "TRANSACTION_NOT_FOUND";
+    public const string TransactionNotVerifiedCannotUpdateAccountBalance = "TRANSACTION_NOT_VERIFIED_CANNOT_UPDATE_ACCOUNT_BALANCE";
 
     #endregion
 

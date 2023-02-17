@@ -1,17 +1,18 @@
 import { IFileForUpload } from '@budgetify/shared';
 
 export interface ITransactionResponse {
-  accountUid: string;
-  accountName: string;
-  categoryUid: string;
-  categoryName: string;
+  accountUid?: string;
+  accountName?: string;
+  categoryUid?: string;
+  categoryName?: string;
   currencyCode: string;
   merchantUid?: string;
   merchantName?: string;
   type: string;
   amount: number;
-  date: Date;
+  date?: Date;
   description: string | null;
+  isVerified: boolean;
 }
 
 export interface ITransactionDetailsResponse extends ITransactionResponse {

@@ -52,8 +52,15 @@ public class UpdateAccountBalanceFromTransactionAmountCommandHandler
             return result.FailWith(transactionResult);
         }
 
+        if (!transactionResult.Value.IsVerified
+                || !transactionResult.Value.AccountId.HasValue
+                    || !transactionResult.Value.Date.HasValue)
+        {
+            return result.FailWith(Result.Invalid(ResultCodes.TransactionNotVerifiedCannotUpdateAccountBalance));
+        }
+
         Result<Account> accountResult =
-            await _accountRepository.GetAccountByIdAsync(command.UserId, transactionResult.Value.AccountId);
+            await _accountRepository.GetAccountByIdAsync(command.UserId, transactionResult.Value.AccountId.Value);
 
         if (accountResult.IsFailureOrNull)
         {
@@ -69,7 +76,7 @@ public class UpdateAccountBalanceFromTransactionAmountCommandHandler
                     userId: command.UserId,
                     fromCurrencyId: transactionResult.Value.CurrencyId,
                     toCurrencyId: accountResult.Value.CurrencyId,
-                    date: transactionResult.Value.Date);
+                    date: transactionResult.Value.Date.Value);
 
             if (exchangeRateResult.IsFailureOrNull)
             {

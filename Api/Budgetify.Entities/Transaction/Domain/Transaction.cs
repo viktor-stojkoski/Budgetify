@@ -11,14 +11,15 @@ public sealed partial class Transaction : AggregateRoot
 {
     private Transaction(
         int userId,
-        int accountId,
-        int categoryId,
+        int? accountId,
+        int? categoryId,
         int currencyId,
         int? merchantId,
         TransactionType type,
         decimal amount,
-        DateTime date,
-        string? description)
+        DateTime? date,
+        string? description,
+        bool isVerified)
     {
         State = EntityState.Unchanged;
 
@@ -31,6 +32,7 @@ public sealed partial class Transaction : AggregateRoot
         Amount = amount;
         Date = date;
         Description = description;
+        IsVerified = isVerified;
     }
 
     private readonly List<TransactionAttachment> _attachments = new();
@@ -48,12 +50,12 @@ public sealed partial class Transaction : AggregateRoot
     /// <summary>
     /// Transaction's account.
     /// </summary>
-    public int AccountId { get; private set; }
+    public int? AccountId { get; private set; }
 
     /// <summary>
     /// Transaction's category.
     /// </summary>
-    public int CategoryId { get; private set; }
+    public int? CategoryId { get; private set; }
 
     /// <summary>
     /// Transaction's currency.
@@ -78,10 +80,15 @@ public sealed partial class Transaction : AggregateRoot
     /// <summary>
     /// Transaction's date.
     /// </summary>
-    public DateTime Date { get; private set; }
+    public DateTime? Date { get; private set; }
 
     /// <summary>
     /// Transaction's description.
     /// </summary>
     public string? Description { get; private set; }
+
+    /// <summary>
+    /// Boolean indicating whether the transaction is verified or not.
+    /// </summary>
+    public bool IsVerified { get; private set; }
 }

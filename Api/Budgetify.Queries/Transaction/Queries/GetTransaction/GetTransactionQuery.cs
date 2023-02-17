@@ -72,10 +72,10 @@ public class GetTransactionQueryHandler : IQueryHandler<GetTransactionQuery, Tra
         SignedUrlResponse[] signedUrlResponses = await Task.WhenAll(attachmentsTasks);
 
         TransactionResponse transactionResponse = new(
-            accountUid: transaction.Account.Uid,
-            accountName: transaction.Account.Name,
-            categoryUid: transaction.Category.Uid,
-            categoryName: transaction.Category.Name,
+            accountUid: transaction.Account?.Uid,
+            accountName: transaction.Account?.Name,
+            categoryUid: transaction.Category?.Uid,
+            categoryName: transaction.Category?.Name,
             currencyCode: transaction.Currency.Code,
             merchantUid: transaction.Merchant?.Uid,
             merchantName: transaction.Merchant?.Name,
@@ -83,6 +83,7 @@ public class GetTransactionQueryHandler : IQueryHandler<GetTransactionQuery, Tra
             amount: transaction.Amount,
             date: transaction.Date,
             description: transaction.Description,
+            isVerified: transaction.IsVerified,
             transactionAttachments: transaction.TransactionAttachments.Select(
                 attachment => new TransactionAttachmentResponse(
                     uid: attachment.Uid,

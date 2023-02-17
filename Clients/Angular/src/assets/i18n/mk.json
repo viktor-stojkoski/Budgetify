@@ -199,6 +199,7 @@
     "tableAmountHeader": "Износ",
     "tableDateHeader": "Датум",
     "tableDescriptionHeader": "Опис",
+    "tableIsVerifiedHeader": "Потврден",
     "tableDeleteTransactionTooltip": "Избриши",
 
     "typeExpense": "Трошок",
@@ -227,6 +228,7 @@
     "detailsAmountHeader": "Износ",
     "detailsDateHeader": "Датум",
     "detailsDescriptionHeader": "Опис",
+    "detailsIsVerifiedHeader": "Потврден",
     "detailsAttachmentsHeader": "Прилози",
     "detailsAttachmentsTableNameHeader": "Име",
     "detailsAttachmentsTableCreatedOnHeader": "Креиран на",

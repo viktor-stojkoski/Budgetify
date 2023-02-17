@@ -6,17 +6,18 @@ using System.Collections.Generic;
 public class TransactionResponse
 {
     public TransactionResponse(
-        Guid accountUid,
-        string accountName,
-        Guid categoryUid,
-        string categoryName,
+        Guid? accountUid,
+        string? accountName,
+        Guid? categoryUid,
+        string? categoryName,
         string currencyCode,
         Guid? merchantUid,
         string? merchantName,
         string type,
         decimal amount,
-        DateTime date,
+        DateTime? date,
         string? description,
+        bool isVerified,
         IEnumerable<TransactionAttachmentResponse> transactionAttachments)
     {
         AccountUid = accountUid;
@@ -31,15 +32,16 @@ public class TransactionResponse
         Date = date;
         Description = description;
         TransactionAttachments = transactionAttachments;
+        IsVerified = isVerified;
     }
 
-    public Guid AccountUid { get; set; }
+    public Guid? AccountUid { get; set; }
 
-    public string AccountName { get; set; }
+    public string? AccountName { get; set; }
 
-    public Guid CategoryUid { get; set; }
+    public Guid? CategoryUid { get; set; }
 
-    public string CategoryName { get; set; }
+    public string? CategoryName { get; set; }
 
     public string CurrencyCode { get; set; }
 
@@ -51,9 +53,11 @@ public class TransactionResponse
 
     public decimal Amount { get; set; }
 
-    public DateTime Date { get; set; }
+    public DateTime? Date { get; set; }
 
     public string? Description { get; set; }
+
+    public bool IsVerified { get; set; }
 
     public IEnumerable<TransactionAttachmentResponse> TransactionAttachments { get; set; } = new List<TransactionAttachmentResponse>();
 }
