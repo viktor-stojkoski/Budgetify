@@ -35,6 +35,7 @@ export class TransactionsTableComponent extends DestroyBaseComponent implements 
     'currencyCode',
     'date',
     'description',
+    'isVerified',
     'actions'
   ];
   public isLoading = true;

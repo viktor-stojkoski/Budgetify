@@ -23,7 +23,7 @@
   <ng-container matColumnDef="accountName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableAccountHeader | translate }}</th>
     <td mat-cell *matCellDef="let transaction">
-      <span [matTooltip]="transaction.accountName" [matTooltipDisabled]="transaction.accountName.length < 30">
+      <span [matTooltip]="transaction.accountName" [matTooltipDisabled]="transaction.accountName?.length < 30">
         {{ transaction.accountName | truncate: 30 }}
       </span>
     </td>
@@ -32,7 +32,7 @@
   <ng-container matColumnDef="categoryName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableCategoryHeader | translate }}</th>
     <td mat-cell *matCellDef="let transaction">
-      <span [matTooltip]="transaction.categoryName" [matTooltipDisabled]="transaction.categoryName.length < 30">
+      <span [matTooltip]="transaction.categoryName" [matTooltipDisabled]="transaction.categoryName?.length < 30">
         {{ transaction.categoryName | truncate: 30 }}
       </span>
     </td>
@@ -73,6 +73,14 @@
       <span [matTooltip]="transaction.description" [matTooltipDisabled]="transaction.description?.length < 50">
         {{ transaction.description | truncate: 50 }}
       </span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="isVerified">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableIsVerifiedHeader | translate }}</th>
+    <td mat-cell *matCellDef="let transaction">
+      <mat-icon *ngIf="transaction.isVerified">check_circle_outline</mat-icon>
+      <mat-icon *ngIf="!transaction.isVerified">clear</mat-icon>
     </td>
   </ng-container>
 

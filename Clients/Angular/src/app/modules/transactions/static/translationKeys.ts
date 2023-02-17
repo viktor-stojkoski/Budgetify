@@ -12,6 +12,7 @@ export class TranslationKeys {
   public static readonly tableAmountHeader = 'transactions.tableAmountHeader';
   public static readonly tableDateHeader = 'transactions.tableDateHeader';
   public static readonly tableDescriptionHeader = 'transactions.tableDescriptionHeader';
+  public static readonly tableIsVerifiedHeader = 'transactions.tableIsVerifiedHeader';
   public static readonly tableDeleteTransactionTooltip = 'transactions.tableDeleteTransactionTooltip';
 
   public static readonly createFormHeader = 'transactions.createFormHeader';
@@ -37,6 +38,7 @@ export class TranslationKeys {
   public static readonly detailsAmountHeader = 'transactions.detailsAmountHeader';
   public static readonly detailsDateHeader = 'transactions.detailsDateHeader';
   public static readonly detailsDescriptionHeader = 'transactions.detailsDescriptionHeader';
+  public static readonly detailsIsVerifiedHeader = 'transactions.detailsIsVerifiedHeader';
   public static readonly updateTransactionSuccessful = 'successMessages.transactions.update';
   public static readonly detailsAttachmentsHeader = 'transactions.detailsAttachmentsHeader';
   public static readonly detailsAttachmentsTableNameHeader = 'transactions.detailsAttachmentsTableNameHeader';

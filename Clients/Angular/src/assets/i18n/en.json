@@ -199,6 +199,7 @@
     "tableAmountHeader": "Amount",
     "tableDateHeader": "Date",
     "tableDescriptionHeader": "Description",
+    "tableIsVerifiedHeader": "Is verified",
     "tableDeleteTransactionTooltip": "Delete",
 
     "typeExpense": "Expense",
@@ -227,6 +228,7 @@
     "detailsAmountHeader": "Amount",
     "detailsDateHeader": "Date",
     "detailsDescriptionHeader": "Description",
+    "detailsIsVerifiedHeader": "Is verified",
     "detailsAttachmentsHeader": "Attachments",
     "detailsAttachmentsTableNameHeader": "Name",
     "detailsAttachmentsTableCreatedOnHeader": "Created on",
