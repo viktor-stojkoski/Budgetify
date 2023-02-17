@@ -36,11 +36,11 @@ public partial class Transaction
 
         if (IsVerified)
         {
-        AddDomainEvent(
-            new TransactionUpdatedDomainEvent(
-                UserId: UserId,
-                TransactionUid: Uid,
-                DifferenceAmount: Amount > amount ? -Math.Abs(Amount - amount) : Math.Abs(Amount - amount)));
+            AddDomainEvent(
+                new TransactionUpdatedDomainEvent(
+                    UserId: UserId,
+                    TransactionUid: Uid,
+                    DifferenceAmount: Amount > amount ? -Math.Abs(Amount - amount) : Math.Abs(Amount - amount)));
         }
 
         AccountId = accountId;
