@@ -96,7 +96,7 @@ public class TransactionRepository : Repository<Entities.Transaction>, ITransact
                 .Where(x => x.UserId == userId
                     && (!fromDate.HasValue || fromDate.Value.Date <= x.Date)
                         && (!toDate.HasValue || toDate.Value.Date >= x.Date)
-                            && x.Account.CurrencyId != x.CurrencyId)
+                            && x.Account != null && x.Account.CurrencyId != x.CurrencyId)
                 .ToListAsync();
 
         IEnumerable<Result<Transaction>> dbTransactionsResults = dbTransactions.CreateTransactions();

@@ -33,21 +33,22 @@ public class GetTransactionsQueryHandler : IQueryHandler<GetTransactionsQuery, I
 
         IEnumerable<TransactionResponse> transactions =
             await _budgetifyReadonlyDbContext.AllNoTrackedOf<Transaction>()
-                .Include(x => x.Account)
-                .Include(x => x.Category)
+                .Include(x => x.Account).DefaultIfEmpty()
+                .Include(x => x.Category).DefaultIfEmpty()
                 .Include(x => x.Currency)
                 .Include(x => x.Merchant).DefaultIfEmpty()
                 .Where(x => x.UserId == _currentUser.Id)
                 .Select(x => new TransactionResponse(
                     x.Uid,
-                    x.Account.Name,
-                    x.Category.Name,
+                    x.Account == null ? null : x.Account.Name,
+                    x.Category == null ? null : x.Category.Name,
                     x.Currency.Code,
                     x.Merchant == null ? null : x.Merchant.Name,
                     x.Type,
                     x.Amount,
                     x.Date,
-                    x.Description))
+                    x.Description,
+                    x.IsVerified))
                 .ToListAsync();
 
         result.SetValue(transactions);

@@ -68,7 +68,10 @@ public class UpdateAccountsBalanceFromExchangeRateCommandHandler
         Result<IEnumerable<Account>> accountsResult =
             await _accountRepository.GetAccountsByIdsAsync(
                 userId: command.UserId,
-                accountIds: transactionsResult.Value.Select(x => x.AccountId).Distinct());
+                accountIds: transactionsResult.Value
+                    .Where(x => x.IsVerified)
+                    .Select(x => x.AccountId!.Value)
+                    .Distinct());
 
         if (accountsResult.IsFailureOrNull)
         {

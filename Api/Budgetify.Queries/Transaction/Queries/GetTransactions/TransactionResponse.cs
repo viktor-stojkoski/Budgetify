@@ -6,14 +6,15 @@ public class TransactionResponse
 {
     public TransactionResponse(
         Guid uid,
-        string accountName,
-        string categoryName,
+        string? accountName,
+        string? categoryName,
         string currencyCode,
         string? merchantName,
         string type,
         decimal amount,
-        DateTime date,
-        string? description)
+        DateTime? date,
+        string? description,
+        bool isVerified)
     {
         Uid = uid;
         AccountName = accountName;
@@ -24,13 +25,14 @@ public class TransactionResponse
         Amount = amount;
         Date = date;
         Description = description;
+        IsVerified = isVerified;
     }
 
     public Guid Uid { get; set; }
 
-    public string AccountName { get; set; }
+    public string? AccountName { get; set; }
 
-    public string CategoryName { get; set; }
+    public string? CategoryName { get; set; }
 
     public string CurrencyCode { get; set; }
 
@@ -40,7 +42,9 @@ public class TransactionResponse
 
     public decimal Amount { get; set; }
 
-    public DateTime Date { get; set; }
+    public DateTime? Date { get; set; }
 
     public string? Description { get; set; }
+
+    public bool IsVerified { get; set; }
 }
