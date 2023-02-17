@@ -10,7 +10,7 @@ export interface ITransactionResponse {
   merchantName?: string;
   type: string;
   amount: number;
-  date: Date;
+  date?: Date;
   description: string | null;
   isVerified: boolean;
 }
