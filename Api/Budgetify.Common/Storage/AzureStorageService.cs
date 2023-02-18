@@ -113,6 +113,44 @@ public class AzureStorageService : IStorageService
         return new(fileName, blob.GenerateSasUri(sasBuilder));
     }
 
+    public async Task<SignedUrlResponse> UploadAndGetSignedUrlAsync(string containerName, string fileName, byte[] content, string contentType, DateTime expiresOn)
+    {
+        CheckStringArgument(containerName, nameof(containerName));
+        CheckStringArgument(fileName, nameof(fileName));
+        CheckContentArgument(content, nameof(content));
+        CheckStringArgument(contentType, nameof(contentType));
+        CheckExpiresOnArgument(expiresOn, nameof(expiresOn));
+
+        BlobContainerClient container = await GetContainerAsync(containerName);
+
+        string fileId = RemoveUnsupportedCharacters(fileName);
+
+        BlobClient blob = container.GetBlobClient(fileId);
+
+        using Stream fileStream = new MemoryStream(content);
+
+        BlobHttpHeaders blobHttpHeader = GetBlobHttpHeaders(contentType);
+
+        await blob.UploadAsync(fileStream, blobHttpHeader);
+
+        if (!blob.CanGenerateSasUri)
+        {
+            throw new AccessViolationException(
+                $"BlobClient must be authorized with Shared Key credentials to create a service SAS.");
+        }
+
+        BlobSasBuilder sasBuilder = new()
+        {
+            BlobContainerName = blob.GetParentBlobContainerClient().Name,
+            BlobName = blob.Name,
+            ExpiresOn = expiresOn
+        };
+
+        sasBuilder.SetPermissions(BlobSasPermissions.Read);
+
+        return new(fileId, blob.GenerateSasUri(sasBuilder));
+    }
+
     public async Task<UploadedFileResponse> UploadAsync(string containerName, string fileName, byte[] content, string contentType)
     {
         CheckStringArgument(containerName, nameof(containerName));

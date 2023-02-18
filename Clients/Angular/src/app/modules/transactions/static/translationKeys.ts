@@ -1,6 +1,7 @@
 export class TranslationKeys {
   public static readonly toolbarName = 'transactions.toolbarName';
   public static readonly toolbarActionCreateTransaction = 'transactions.toolbarActionCreateTransaction';
+  public static readonly toolbarActionCreateTransactionByScan = 'transactions.toolbarActionCreateTransactionByScan';
 
   public static readonly tableFilterLabel = 'transactions.tableFilterLabel';
   public static readonly tableNoDataFound = 'transactions.tableNoDataFound';

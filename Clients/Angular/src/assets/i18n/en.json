@@ -188,6 +188,7 @@
   "transactions": {
     "toolbarName": "Transactions",
     "toolbarActionCreateTransaction": "Create transaction",
+    "toolbarActionCreateTransactionByScan": "Create transaction by scan",
 
     "tableFilterLabel": "Filter",
     "tableNoDataFound": "No data was found.",

@@ -188,6 +188,7 @@
   "transactions": {
     "toolbarName": "Трансакции",
     "toolbarActionCreateTransaction": "Креирај трансакција",
+    "toolbarActionCreateTransactionByScan": "Креирај трансакција со скенирање",
 
     "tableFilterLabel": "Филтер",
     "tableNoDataFound": "Не беа пронајдени податоци.",
