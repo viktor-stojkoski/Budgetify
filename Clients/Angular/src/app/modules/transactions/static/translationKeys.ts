@@ -61,4 +61,10 @@ export class TranslationKeys {
   public static readonly addTransactionAttachmentsInfo = 'transactions.addTransactionAttachmentsInfo';
   public static readonly addTransactionAttachmentsDropZoneLabel = 'transactions.addTransactionAttachmentsDropZoneLabel';
   public static readonly addTransactionAttachmentsSuccessful = 'successMessages.transactions.attachments.add';
+
+  public static readonly createTransactionByScanHeader = 'transactions.createTransactionByScanHeader';
+  public static readonly createTransactionByScanInfo = 'transactions.createTransactionByScanInfo';
+  public static readonly createTransactionByScanDropZoneLabel = 'transactions.createTransactionByScanDropZoneLabel';
+  public static readonly uploadSingleReceipt = 'transactions.uploadSingleReceipt';
+  public static readonly uploadImagesOnly = 'transactions.uploadImagesOnly';
 }
