@@ -32,6 +32,16 @@ module "storage_account" {
   source               = "../Modules/StorageAccount"
   resource_group_name  = module.resource_group.resource_group_name
   storage_account_name = local.storage_account_name
+  account_kind         = "BlockBlobStorage"
+  location             = var.location
+  container_name       = lower(var.application_name)
+  tags                 = merge(var.tags, local.tags)
+}
+
+module "storage_account" {
+  source               = "../Modules/StorageAccount"
+  resource_group_name  = module.resource_group.resource_group_name
+  storage_account_name = "test-budgetify"
   location             = var.location
   container_name       = lower(var.application_name)
   tags                 = merge(var.tags, local.tags)
