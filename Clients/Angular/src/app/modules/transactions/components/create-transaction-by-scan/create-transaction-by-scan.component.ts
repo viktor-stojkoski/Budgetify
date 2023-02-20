@@ -23,6 +23,7 @@ export class CreateTransactionByScanComponent extends DestroyBaseComponent {
   public readonly translationKeys = TranslationKeys;
   public readonly sharedTranslationKeys = SharedTranslationKeys;
   public isAdding = false;
+  public fileStatics = fileStatics;
 
   public file?: File;
   private selectedFile?: IFileForUpload;
@@ -40,14 +41,14 @@ export class CreateTransactionByScanComponent extends DestroyBaseComponent {
 
     if (files?.length) {
       if (files.length > 1) {
-        this.snackbarService.warning('Only one receipt can be scanned.');
+        this.snackbarService.warning(this.translationKeys.uploadSingleReceipt);
         return;
       }
 
       const file: File = files[0];
 
-      if (!file.type.startsWith(fileStatics.imageFiles)) {
-        this.snackbarService.warning('Only images can be scanned.');
+      if (!file.type.match(fileStatics.imageFiles)) {
+        this.snackbarService.warning(this.translationKeys.uploadImagesOnly);
         return;
       }
 

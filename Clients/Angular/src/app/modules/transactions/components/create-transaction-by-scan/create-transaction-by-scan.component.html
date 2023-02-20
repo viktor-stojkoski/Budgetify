@@ -1,8 +1,13 @@
-<h1 mat-dialog-title>Create transaction by scanning receipt</h1>
+<h1 mat-dialog-title>{{ translationKeys.createTransactionByScanHeader | translate }}</h1>
 
 <div mat-dialog-content [ngClass]="{ 'cursor-disabled': isAdding }">
-  <ngx-dropzone [multiple]="false" (change)="selectFile($event)">
-    <ngx-dropzone-label>Add receipt</ngx-dropzone-label>
+  <mat-toolbar-row class="info-box">
+    <mat-icon>info_outlined</mat-icon>
+    <span>{{ translationKeys.createTransactionByScanInfo | translate }}</span>
+  </mat-toolbar-row>
+
+  <ngx-dropzone [multiple]="false" (change)="selectFile($event)" [accept]="fileStatics.imageFiles">
+    <ngx-dropzone-label>{{ translationKeys.createTransactionByScanDropZoneLabel | translate }}</ngx-dropzone-label>
 
     <ngx-dropzone-image-preview
       ngProjectAs="ngx-dropzone-preview"

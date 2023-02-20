@@ -23,33 +23,33 @@ public record CreateTransactionByScanCommand(FileForUploadRequest Attachment) : 
 
 public class CreateTransactionByScanCommandHandler : ICommandHandler<CreateTransactionByScanCommand>
 {
-    private readonly ICurrentUser _currentUser;
     private readonly IStorageService _storageService;
     private readonly IStorageSettings _storageSettings;
+    private readonly IScanReceiptService _scanReceiptService;
     private readonly ICurrencyRepository _currencyRepository;
+    private readonly IMerchantRepository _merchantRepository;
+    private readonly ICurrentUser _currentUser;
     private readonly ITransactionRepository _transactionRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IScanReceiptService _scanReceiptService;
-    private readonly IMerchantRepository _merchantRepository;
 
     public CreateTransactionByScanCommandHandler(
-        ICurrentUser currentUser,
         IStorageService storageService,
         IStorageSettings storageSettings,
-        ITransactionRepository transactionRepository,
-        IUnitOfWork unitOfWork,
         IScanReceiptService scanReceiptService,
+        ICurrencyRepository currencyRepository,
         IMerchantRepository merchantRepository,
-        ICurrencyRepository currencyRepository)
+        ICurrentUser currentUser,
+        ITransactionRepository transactionRepository,
+        IUnitOfWork unitOfWork)
     {
-        _currentUser = currentUser;
         _storageService = storageService;
         _storageSettings = storageSettings;
+        _scanReceiptService = scanReceiptService;
+        _currencyRepository = currencyRepository;
+        _merchantRepository = merchantRepository;
+        _currentUser = currentUser;
         _transactionRepository = transactionRepository;
         _unitOfWork = unitOfWork;
-        _scanReceiptService = scanReceiptService;
-        _merchantRepository = merchantRepository;
-        _currencyRepository = currencyRepository;
     }
 
     public async Task<CommandResult<EmptyValue>> ExecuteAsync(CreateTransactionByScanCommand command)

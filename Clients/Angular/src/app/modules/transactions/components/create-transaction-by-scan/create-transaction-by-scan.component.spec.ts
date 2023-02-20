@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AppModule } from '../../../../app.module';
+import { TransactionsModule } from '../../transactions.module';
 
 import { CreateTransactionByScanComponent } from './create-transaction-by-scan.component';
 
@@ -8,9 +10,9 @@ describe('CreateTransactionByScanComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateTransactionByScanComponent ]
-    })
-    .compileComponents();
+      imports: [TransactionsModule, AppModule],
+      declarations: [CreateTransactionByScanComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CreateTransactionByScanComponent);
     component = fixture.componentInstance;
