@@ -88,6 +88,39 @@ public partial class Transaction
     }
 
     /// <summary>
+    /// Verifies transaction
+    /// </summary>
+    public Result Verify()
+    {
+        if (IsVerified)
+        {
+            return Result.Ok();
+        }
+
+        if (!AccountId.HasValue || !CategoryId.HasValue)
+        {
+            return Result.Invalid<Transaction>(ResultCodes.TransactionInvalidForVerification);
+        }
+
+        if (Type != TransactionType.Income && MerchantId is null)
+        {
+            return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
+        }
+
+        IsVerified = true;
+
+        MarkModify();
+
+        AddDomainEvent(
+            new TransactionCreatedDomainEvent(
+                UserId: UserId,
+                TransactionUid: Uid,
+                DifferenceAmount: Amount));
+
+        return Result.Ok();
+    }
+
+    /// <summary>
     /// Adds or updates transaction attachment.
     /// </summary>
     public Result<TransactionAttachment> UpsertTransactionAttachment(DateTime createdOn, string fileName)

@@ -57,6 +57,8 @@
     "TRANSACTION_TYPE_INVALID": "Типот на трансакцијата е невалиден.",
     "TRANSACTION_EMPTY_MERCHANT_TYPE_INVALID": "Не е возможно да искреирате трошок без трговец.",
     "TRANSACTION_NOT_FOUND": "Трансакцијата не е пронајдена.",
+    "TRANSACTION_NOT_VERIFIED_CANNOT_UPDATE_ACCOUNT_BALANCE": "Трансакцијата не е потврдена. Состојбата на сметката не може да се уреди.",
+    "TRANSACTION_INVALID_FOR_VERIFICATION": "Трансакцијата е невалидна за потврдување.",
 
     "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL": "Од валута и до валута на девизниот курс не можат да бидат еднакви.",
     "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Од датумот на девизниот курс не може да биде поголем од до датумот.",
@@ -90,6 +92,7 @@
       "create": "Трансакцијата е успешно искреирана.",
       "update": "Трансакцијата е успешно уредена.",
       "delete": "Трансакцијата е успешно избришана.",
+      "verify": "трансакцијата е успешно потврдена.",
 
       "attachments": {
         "add": "Прилозите на трансакцијата се успешно додадени.",
@@ -201,6 +204,7 @@
     "tableDateHeader": "Датум",
     "tableDescriptionHeader": "Опис",
     "tableIsVerifiedHeader": "Потврден",
+    "tableVerifyTransactionTooltip": "Потврди",
     "tableDeleteTransactionTooltip": "Избриши",
 
     "typeExpense": "Трошок",
@@ -221,6 +225,7 @@
 
     "detailsHeader": "Детали за трансакцијата",
     "detailsActionAddTransactionAttachments": "Додади прилози",
+    "detailsActionVerify": "Потврди",
     "detailsAccountHeader": "Сметка",
     "detailsCategoryHeader": "Категорија",
     "detailsCurrencyCodeHeader": "Валута",

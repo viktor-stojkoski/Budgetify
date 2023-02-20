@@ -116,6 +116,24 @@ export class TransactionsTableComponent extends DestroyBaseComponent implements 
       });
   }
 
+  public verifyTransaction(uid: string): void {
+    this.isLoading = true;
+    this.transactionService
+      .verifyTransaction(uid)
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          this.snackbarService.success(this.translationKeys.verifyTransactionSuccessful);
+          this.getTransactions();
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.snackbarService.showError(error);
+          this.isLoading = false;
+        }
+      });
+  }
+
   public openTransactionDetails(uid: string): void {
     this.router.navigateByUrl(`transactions/${uid}`);
   }
