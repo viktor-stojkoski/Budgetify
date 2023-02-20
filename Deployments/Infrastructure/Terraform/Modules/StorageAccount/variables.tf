@@ -22,13 +22,13 @@ variable "account_tier" {
 variable "account_kind" {
   type        = string
   description = "Storage account kind (StorageV2, BlockBlobStorage..)"
-  default     = "BlockBlobStorage"
+  default     = "StorageV2"
 }
 
 variable "tags" {
   type        = map(string)
   description = "Storage account tags"
-  default = {}
+  default     = {}
 }
 
 variable "container_name" {
