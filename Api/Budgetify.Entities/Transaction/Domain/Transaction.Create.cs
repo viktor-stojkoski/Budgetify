@@ -114,4 +114,34 @@ public partial class Transaction
 
         return Result.Ok(transaction);
     }
+
+    /// <summary>
+    /// Creates transaction by scan.
+    /// </summary>
+    public static Result<Transaction> CreateByScan(
+        DateTime createdOn,
+        int userId,
+        int? merchantId,
+        int currencyId,
+        decimal amount,
+        DateTime? date)
+    {
+        return Result.Ok(
+            new Transaction(
+                userId: userId,
+                accountId: null,
+                categoryId: null,
+                currencyId: currencyId,
+                merchantId: merchantId,
+                type: TransactionType.Expense,
+                amount: amount,
+                date: date,
+                description: null,
+                isVerified: false)
+            {
+                Uid = Guid.NewGuid(),
+                CreatedOn = createdOn,
+                State = EntityState.Added
+            });
+    }
 }

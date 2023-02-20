@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>{{ translationKeys.createTransactionByScanHeader | translate }}</h1>
+
+<div mat-dialog-content [ngClass]="{ 'cursor-disabled': isAdding }">
+  <mat-toolbar-row class="info-box">
+    <mat-icon>info_outlined</mat-icon>
+    <span>{{ translationKeys.createTransactionByScanInfo | translate }}</span>
+  </mat-toolbar-row>
+
+  <ngx-dropzone [multiple]="false" (change)="selectFile($event)" [accept]="fileStatics.imageFiles">
+    <ngx-dropzone-label>{{ translationKeys.createTransactionByScanDropZoneLabel | translate }}</ngx-dropzone-label>
+
+    <ngx-dropzone-image-preview
+      ngProjectAs="ngx-dropzone-preview"
+      *ngIf="file"
+      [file]="file"
+      [removable]="true"
+      (removed)="removeFile()"
+    >
+      <ngx-dropzone-label>{{ file.name }} ({{ file.type }})</ngx-dropzone-label>
+    </ngx-dropzone-image-preview>
+  </ngx-dropzone>
+</div>
+
+<div mat-dialog-actions align="end" [ngClass]="{ 'cursor-disabled': isAdding }">
+  <button mat-raised-button color="secondary" (click)="onCancelClick()">
+    {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="createTransaction()">
+    {{ sharedTranslationKeys.mainActionButtonOk | translate }}
+  </button>
+</div>

@@ -1,8 +1,9 @@
-﻿namespace Budgetify.Api.Controllers;
+namespace Budgetify.Api.Controllers;
 
 using System;
 using System.Threading.Tasks;
 
+using Budgetify.Common.Storage;
 using Budgetify.Contracts.Transaction.Requests;
 using Budgetify.Queries.Transaction.Queries.GetTransaction;
 using Budgetify.Queries.Transaction.Queries.GetTransactions;
@@ -51,6 +52,10 @@ public class TransactionsController : ExtendedApiController
                 Date: request.Date,
                 Description: request.Description,
                 Attachments: request.Attachments)));
+
+    [HttpPost("create-by-scan")]
+    public async Task<IActionResult> CreateTransactionByScanningAsync([FromBody] FileForUploadRequest request) =>
+        OkOrError(await _commandDispatcher.ExecuteAsync(new CreateTransactionByScanCommand(request)));
 
     [HttpPut("{transactionUid:Guid}")]
     public async Task<IActionResult> UpdateTransactionAsync(

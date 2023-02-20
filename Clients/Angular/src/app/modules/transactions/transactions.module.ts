@@ -25,6 +25,7 @@ import { CoreModule } from '@budgetify/core';
 import { DialogService, SharedModule } from '@budgetify/shared';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { AddTransactionAttachmentsComponent } from './components/add-transaction-attachments/add-transaction-attachments.component';
+import { CreateTransactionByScanComponent } from './components/create-transaction-by-scan/create-transaction-by-scan.component';
 import { CreateTransactionComponent } from './components/create-transaction/create-transaction.component';
 import { DeleteTransactionAttachmentComponent } from './components/delete-transaction-attachment/delete-transaction-attachment.component';
 import { DeleteTransactionComponent } from './components/delete-transaction/delete-transaction.component';
@@ -70,7 +71,8 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     TransactionDetailsComponent,
     DeleteTransactionComponent,
     DeleteTransactionAttachmentComponent,
-    AddTransactionAttachmentsComponent
+    AddTransactionAttachmentsComponent,
+    CreateTransactionByScanComponent
   ],
   providers: [
     DialogService,

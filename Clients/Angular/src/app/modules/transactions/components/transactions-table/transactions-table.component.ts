@@ -15,6 +15,7 @@ import { TransactionType } from '../../models/transaction.enum';
 import { IDeleteTransactionDialogData, ITransactionResponse } from '../../models/transaction.model';
 import { TransactionService } from '../../services/transaction.service';
 import { TranslationKeys } from '../../static/translationKeys';
+import { CreateTransactionByScanComponent } from '../create-transaction-by-scan/create-transaction-by-scan.component';
 import { CreateTransactionComponent } from '../create-transaction/create-transaction.component';
 import { DeleteTransactionComponent } from '../delete-transaction/delete-transaction.component';
 
@@ -72,6 +73,20 @@ export class TransactionsTableComponent extends DestroyBaseComponent implements 
   public openCreateTransactionDialog(): void {
     this.dialogService
       .open(CreateTransactionComponent)
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (response: IDialogResponseData) => {
+          if (response?.action === DialogActionButton.Ok) {
+            this.getTransactions();
+          }
+        }
+      });
+  }
+
+  public openCreateTransactionByScanDialog(): void {
+    this.dialogService
+      .open(CreateTransactionByScanComponent)
       .afterClosed()
       .pipe(takeUntil(this.destroyed$))
       .subscribe({

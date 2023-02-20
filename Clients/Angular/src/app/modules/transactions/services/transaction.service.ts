@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BaseApiService } from '@budgetify/core';
-import { IResult } from '@budgetify/shared';
+import { IFileForUpload, IResult } from '@budgetify/shared';
 import { Observable } from 'rxjs';
 import {
   IAccountResponse,
@@ -36,6 +36,10 @@ export class TransactionService {
 
   public createTransaction(request: ICreateTransactionRequest): Observable<void> {
     return this.baseApiService.post<void>(this.transactionsApiRoute, request);
+  }
+
+  public createTransactionByScan(request: IFileForUpload): Observable<void> {
+    return this.baseApiService.post<void>(`${this.transactionsApiRoute}/create-by-scan`, request);
   }
 
   public updateTransaction(uid: string | null, request: IUpdateTransactionRequest): Observable<void> {

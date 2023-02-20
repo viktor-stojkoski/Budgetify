@@ -139,8 +139,8 @@
         </mat-form-field>
       </div>
 
-      <div class="grid-item no-border">{{ translationKeys.detailsDescriptionHeader | translate }}</div>
-      <div *ngIf="!isEditing" class="grid-item no-border">
+      <div class="grid-item">{{ translationKeys.detailsDescriptionHeader | translate }}</div>
+      <div *ngIf="!isEditing" class="grid-item">
         <span
           [matTooltip]="transaction.description ?? ''"
           [matTooltipDisabled]="(transaction.description?.length ?? 0) < 50"
@@ -148,10 +148,16 @@
           {{ transaction.description ?? '' | truncate: 50 }}
         </span>
       </div>
-      <div *ngIf="isEditing" class="grid-item no-border">
+      <div *ngIf="isEditing" class="grid-item">
         <mat-form-field appearance="outline">
           <textarea matInput formControlName="description"></textarea>
         </mat-form-field>
+      </div>
+
+      <div class="grid-item no-border">{{ translationKeys.detailsIsVerifiedHeader | translate }}</div>
+      <div class="grid-item no-border">
+        <mat-icon *ngIf="transaction.isVerified">check_circle_outline</mat-icon>
+        <mat-icon *ngIf="!transaction.isVerified">clear</mat-icon>
       </div>
     </div>
   </mat-card-content>

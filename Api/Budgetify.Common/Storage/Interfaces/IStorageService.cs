@@ -31,8 +31,20 @@ public interface IStorageService
     /// <param name="containerName">Name of the storage container.</param>
     /// <param name="fileName">Name of the file.</param>
     /// <param name="expiresOn">DateTime after which the signed URL is no longer valid.</param>
-    /// <returns>Signed URL</returns>
+    /// <returns>Signed URL Response.</returns>
     Task<SignedUrlResponse> GetSignedUrlAsync(string containerName, string fileName, DateTime expiresOn);
+
+    /// <summary>
+    /// Uploads byte array to storage and tries to returns signed URL of the given file using SAS.
+    /// If the file is not found, it throws an exception.
+    /// </summary>
+    /// <param name="containerName">Name of the storage container.</param>
+    /// <param name="fileName">Name of the file.</param>
+    /// <param name="content">Byte array of the content.</param>
+    /// <param name="contentType">Type of the content.</param>
+    /// <param name="expiresOn">DateTime after which the signed URL is no longer valid.</param>
+    /// <returns>Signed URL Response.</returns>
+    Task<SignedUrlResponse> UploadAndGetSignedUrlAsync(string containerName, string fileName, byte[] content, string contentType, DateTime expiresOn);
 
     /// <summary>
     /// Deletes file from storage.

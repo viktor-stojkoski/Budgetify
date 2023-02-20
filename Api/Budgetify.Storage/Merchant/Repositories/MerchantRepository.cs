@@ -46,6 +46,19 @@ public class MerchantRepository : Repository<Entities.Merchant>, IMerchantReposi
         return dbMerchant.CreateMerchant();
     }
 
+    public async Task<Result<Merchant>> GetMerchantByNameAsync(int userId, string name)
+    {
+        Entities.Merchant? dbMerchant = await AllNoTrackedOf<Entities.Merchant>()
+            .SingleOrDefaultAsync(x => x.UserId == userId && x.Name.Contains(name));
+
+        if (dbMerchant is null)
+        {
+            return Result.NotFound<Merchant>(ResultCodes.MerchantNotFound);
+        }
+
+        return dbMerchant.CreateMerchant();
+    }
+
     public async Task<bool> DoesMerchantNameExistAsync(int userId, string? name)
     {
         return await AllNoTrackedOf<Entities.Merchant>()

@@ -188,6 +188,7 @@
   "transactions": {
     "toolbarName": "Transactions",
     "toolbarActionCreateTransaction": "Create transaction",
+    "toolbarActionCreateTransactionByScan": "Create transaction by scan",
 
     "tableFilterLabel": "Filter",
     "tableNoDataFound": "No data was found.",
@@ -244,7 +245,13 @@
 
     "addTransactionAttachmentsHeader": "Add transaction attachments",
     "addTransactionAttachmentsInfo": "Adding attachment with same name will override the existing one.",
-    "addTransactionAttachmentsDropZoneLabel": "Drop file(s) here"
+    "addTransactionAttachmentsDropZoneLabel": "Drop file(s) here",
+
+    "createTransactionByScanHeader": "Create transaction by scanning receipt",
+    "createTransactionByScanInfo": "Scanning only works with macedonian receipts.",
+    "createTransactionByScanDropZoneLabel": "Drop receipt here",
+    "uploadSingleReceipt": "Receipts have to be scanned one by one.",
+    "uploadImagesOnly": "Only images can be scanned."
   },
 
   "exchangeRates": {

@@ -54,7 +54,7 @@ export class AddTransactionAttachmentsComponent extends DestroyBaseComponent {
               const arrayBuffer: ArrayBuffer = readerEvent.target.result as ArrayBuffer;
               const uintArray: Uint8Array = new Uint8Array(arrayBuffer);
 
-              if (file.type.startsWith(fileStatics.imageFiles)) {
+              if (file.type.match(fileStatics.imageFiles)) {
                 this.images.push(file);
               } else {
                 this.nonImages.push(file);
@@ -74,7 +74,7 @@ export class AddTransactionAttachmentsComponent extends DestroyBaseComponent {
   }
 
   public removeFile(file: File) {
-    if (file.type.startsWith(fileStatics.imageFiles)) {
+    if (file.type.match(fileStatics.imageFiles)) {
       this.images.splice(this.images.indexOf(file), 1);
     } else {
       this.nonImages.splice(this.nonImages.indexOf(file), 1);

@@ -188,6 +188,7 @@
   "transactions": {
     "toolbarName": "Трансакции",
     "toolbarActionCreateTransaction": "Креирај трансакција",
+    "toolbarActionCreateTransactionByScan": "Креирај трансакција со скенирање",
 
     "tableFilterLabel": "Филтер",
     "tableNoDataFound": "Не беа пронајдени податоци.",
@@ -244,7 +245,13 @@
 
     "addTransactionAttachmentsHeader": "Додади прилози на трансакцијата",
     "addTransactionAttachmentsInfo": "Додавањето прилог со исто име ќе го пребрише постоечкиот.",
-    "addTransactionAttachmentsDropZoneLabel": "Прикачете датотека(и) тука."
+    "addTransactionAttachmentsDropZoneLabel": "Прикачете датотека(и) тука.",
+
+    "createTransactionByScanHeader": "Креирај трансакција со скенирање сметка",
+    "createTransactionByScanInfo": "Скенирањето работи само со македонски сметки.",
+    "createTransactionByScanDropZoneLabel": "Пушти ја сметката овде",
+    "uploadSingleReceipt": "Сметките мора да се скенираат една по една.",
+    "uploadImagesOnly": "Само слики може да се скенираат."
   },
 
   "exchangeRates": {
