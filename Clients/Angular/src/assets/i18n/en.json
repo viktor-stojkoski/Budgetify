@@ -57,6 +57,8 @@
     "TRANSACTION_TYPE_INVALID": "Transaction type invalid.",
     "TRANSACTION_EMPTY_MERCHANT_TYPE_INVALID": "Cannot create expense transaction without merchant.",
     "TRANSACTION_NOT_FOUND": "Transaction not found.",
+    "TRANSACTION_NOT_VERIFIED_CANNOT_UPDATE_ACCOUNT_BALANCE": "Transaction is not verified. Account balance cannot be updated.",
+    "TRANSACTION_INVALID_FOR_VERIFICATION": "Transaction invalid for verification.",
 
     "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL": "Exchange rate from and to currency cannot be equal.",
     "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Exchange rate from date cannot be greater than to date.",

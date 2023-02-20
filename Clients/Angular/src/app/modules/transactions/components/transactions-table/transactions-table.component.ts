@@ -123,6 +123,7 @@ export class TransactionsTableComponent extends DestroyBaseComponent implements 
       .pipe(take(1))
       .subscribe({
         next: () => {
+          this.snackbarService.success(this.translationKeys.verifyTransactionSuccessful);
           this.getTransactions();
           this.isLoading = false;
         },
