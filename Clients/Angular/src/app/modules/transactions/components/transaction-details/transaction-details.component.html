@@ -4,12 +4,15 @@
   <span class="toolbar-spacer"></span>
 
   <div class="toolbar-buttons">
-    <span *ngIf="!isEditing">
+    <span *ngIf="!isEditing && !isLoading">
       <button mat-raised-button color="primary" (click)="toggleEdit()">
         {{ sharedTranslationKeys.mainActionButtonEdit | translate }}
       </button>
       <button mat-raised-button color="primary" (click)="openAddTransactionAttachmentsDialog()">
         {{ translationKeys.detailsActionAddTransactionAttachments | translate }}
+      </button>
+      <button mat-raised-button color="primary" *ngIf="!this.transaction?.isVerified" (click)="verifyTransaction()">
+        {{ translationKeys.detailsActionVerify | translate }}
       </button>
       <button mat-raised-button color="warn" (click)="openDeleteTransactionDialog()">
         {{ sharedTranslationKeys.mainActionButtonDelete | translate }}

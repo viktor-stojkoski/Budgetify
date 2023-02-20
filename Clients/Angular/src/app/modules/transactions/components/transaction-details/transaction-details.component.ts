@@ -141,7 +141,28 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
             this.isLoading = false;
           }
         });
+    } else {
+      this.transactionForm.markAllAsTouched();
+      this.isLoading = false;
     }
+  }
+
+  public verifyTransaction(): void {
+    this.isLoading = true;
+    this.transactionService
+      .verifyTransaction(this.transactionUid)
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          this.transaction!.isVerified = true;
+          this.snackbarService.success(this.translationKeys.verifyTransactionSuccessful);
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.snackbarService.showError(error);
+          this.isLoading = false;
+        }
+      });
   }
 
   public openDeleteTransactionDialog(): void {

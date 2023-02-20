@@ -90,6 +90,7 @@
       "create": "Transaction has been successfully created.",
       "update": "Transaction has been successfully updated.",
       "delete": "Transaction has been successfully deleted.",
+      "verify": "Transaction has been successfully verified.",
 
       "attachments": {
         "add": "Transaction attachments successfully added.",
@@ -201,6 +202,7 @@
     "tableDateHeader": "Date",
     "tableDescriptionHeader": "Description",
     "tableIsVerifiedHeader": "Is verified",
+    "tableVerifyTransactionTooltip": "Verify",
     "tableDeleteTransactionTooltip": "Delete",
 
     "typeExpense": "Expense",
@@ -221,6 +223,7 @@
 
     "detailsHeader": "Transaction details",
     "detailsActionAddTransactionAttachments": "Add attachments",
+    "detailsActionVerify": "Verify",
     "detailsAccountHeader": "Account",
     "detailsCategoryHeader": "Category",
     "detailsCurrencyCodeHeader": "Currency code",

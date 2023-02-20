@@ -14,6 +14,7 @@ export class TranslationKeys {
   public static readonly tableDateHeader = 'transactions.tableDateHeader';
   public static readonly tableDescriptionHeader = 'transactions.tableDescriptionHeader';
   public static readonly tableIsVerifiedHeader = 'transactions.tableIsVerifiedHeader';
+  public static readonly tableVerifyTransactionTooltip = 'transactions.tableVerifyTransactionTooltip';
   public static readonly tableDeleteTransactionTooltip = 'transactions.tableDeleteTransactionTooltip';
 
   public static readonly createFormHeader = 'transactions.createFormHeader';
@@ -31,6 +32,7 @@ export class TranslationKeys {
 
   public static readonly detailsHeader = 'transactions.detailsHeader';
   public static readonly detailsActionAddTransactionAttachments = 'transactions.detailsActionAddTransactionAttachments';
+  public static readonly detailsActionVerify = 'transactions.detailsActionVerify';
   public static readonly detailsAccountHeader = 'transactions.detailsAccountHeader';
   public static readonly detailsCategoryHeader = 'transactions.detailsCategoryHeader';
   public static readonly detailsCurrencyCodeHeader = 'transactions.detailsCurrencyCodeHeader';
@@ -67,4 +69,6 @@ export class TranslationKeys {
   public static readonly createTransactionByScanDropZoneLabel = 'transactions.createTransactionByScanDropZoneLabel';
   public static readonly uploadSingleReceipt = 'transactions.uploadSingleReceipt';
   public static readonly uploadImagesOnly = 'transactions.uploadImagesOnly';
+
+  public static readonly verifyTransactionSuccessful = 'successMessages.transactions.verify';
 }

@@ -90,6 +90,7 @@
       "create": "Трансакцијата е успешно искреирана.",
       "update": "Трансакцијата е успешно уредена.",
       "delete": "Трансакцијата е успешно избришана.",
+      "verify": "трансакцијата е успешно потврдена.",
 
       "attachments": {
         "add": "Прилозите на трансакцијата се успешно додадени.",
@@ -201,6 +202,7 @@
     "tableDateHeader": "Датум",
     "tableDescriptionHeader": "Опис",
     "tableIsVerifiedHeader": "Потврден",
+    "tableVerifyTransactionTooltip": "Потврди",
     "tableDeleteTransactionTooltip": "Избриши",
 
     "typeExpense": "Трошок",
@@ -221,6 +223,7 @@
 
     "detailsHeader": "Детали за трансакцијата",
     "detailsActionAddTransactionAttachments": "Додади прилози",
+    "detailsActionVerify": "Потврди",
     "detailsAccountHeader": "Сметка",
     "detailsCategoryHeader": "Категорија",
     "detailsCurrencyCodeHeader": "Валута",

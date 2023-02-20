@@ -1,4 +1,4 @@
-namespace Budgetify.Api.Controllers;
+﻿namespace Budgetify.Api.Controllers;
 
 using System;
 using System.Threading.Tasks;
@@ -72,6 +72,10 @@ public class TransactionsController : ExtendedApiController
                 Amount: request.Amount,
                 Date: request.Date,
                 Description: request.Description)));
+
+    [HttpPatch("{transactionUid:Guid}/verify")]
+    public async Task<IActionResult> VerifyTransactionAsync(Guid transactionUid) =>
+        OkOrError(await _commandDispatcher.ExecuteAsync(new VerifyTransactionCommand(transactionUid)));
 
     [HttpDelete("{transactionUid:Guid}")]
     public async Task<IActionResult> DeleteTransactionAsync([FromRoute] Guid transactionUid) =>

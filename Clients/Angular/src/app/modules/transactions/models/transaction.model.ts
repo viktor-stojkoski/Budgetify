@@ -84,3 +84,7 @@ export interface IDeleteTransactionAttachmentDialogData {
   attachmentUid: string;
   name: string;
 }
+
+export interface IVerifyTransactionDialogData {
+  uid: string;
+}
