@@ -47,3 +47,11 @@ module "key_vault" {
     "storageAccountConnectionString" = module.storage_account.storage_account_connection_string
   }
 }
+
+module "cognitive_service_account" {
+  source                 = "../Modules/CognitiveService"
+  cognitive_service_name = local.cognitive_service_name
+  location               = var.location
+  resource_group_name    = module.resource_group.resource_group_name
+  tags                   = merge(var.tags, local.tags)
+}
