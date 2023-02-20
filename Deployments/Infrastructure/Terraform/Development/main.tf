@@ -38,7 +38,7 @@ module "storage_account" {
   tags                 = merge(var.tags, local.tags)
 }
 
-module "storage_account" {
+module "storage_account_test" {
   source               = "../Modules/StorageAccount"
   resource_group_name  = module.resource_group.resource_group_name
   storage_account_name = "test-budgetify"
