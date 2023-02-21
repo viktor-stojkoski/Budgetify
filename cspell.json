@@ -4,7 +4,8 @@
   "language": "en",
   "ignorePaths": [
     "*.drawio",
-    "Clients/Angular/src/assets/i18n/mk.json"
+    "Clients/Angular/src/assets/i18n/mk.json",
+    "Api/Budgetify.Api/appsettings.json"
   ],
   "words": [
     "Budgetify",
