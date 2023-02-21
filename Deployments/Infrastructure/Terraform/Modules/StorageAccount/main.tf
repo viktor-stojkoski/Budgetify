@@ -11,7 +11,6 @@ resource "azurerm_storage_account" "sa" {
   cross_tenant_replication_enabled = false
   is_hns_enabled                   = false
   nfsv3_enabled                    = false
-  public_network_access_enabled    = true
 
   blob_properties {
     delete_retention_policy {
