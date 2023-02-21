@@ -25,7 +25,7 @@ resource "azurerm_storage_account" "sa" {
       allowed_methods    = ["DELETE", "GET", "HEAD", "MERGE", "POST", "OPTIONS", "PUT", "PATCH"]
       allowed_origins    = ["*"]
       exposed_headers    = ["*"]
-      max_age_in_seconds = 300
+      max_age_in_seconds = 120
     }
   }
 
