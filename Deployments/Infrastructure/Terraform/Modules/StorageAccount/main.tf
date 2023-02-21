@@ -21,7 +21,7 @@ resource "azurerm_storage_account" "sa" {
     }
     versioning_enabled = false
     cors_rule {
-      allowed_headers    = ["*"]
+      allowed_headers    = ["DELETE", "GET", "HEAD", "MERGE", "POST", "OPTIONS", "PUT", "PATCH"]
       allowed_methods    = ["*"]
       allowed_origins    = ["*"]
       exposed_headers    = ["*"]
