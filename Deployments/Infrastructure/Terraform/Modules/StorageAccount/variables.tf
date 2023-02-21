@@ -31,7 +31,12 @@ variable "tags" {
   default     = {}
 }
 
-variable "container_name" {
+variable "application_container_name" {
   type        = string
-  description = "Container name"
+  description = "Application container name"
+}
+
+variable "form_recognizer_container_name" {
+  type        = string
+  description = "Form Recognizer (CognitiveService) container name"
 }

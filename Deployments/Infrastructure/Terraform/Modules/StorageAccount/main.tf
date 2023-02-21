@@ -30,8 +30,14 @@ resource "azurerm_storage_account" "sa" {
   infrastructure_encryption_enabled = false
 }
 
-resource "azurerm_storage_container" "container" {
-  name                  = var.container_name
+resource "azurerm_storage_container" "app_container" {
+  name                  = var.application_container_name
+  storage_account_name  = azurerm_storage_account.sa.name
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_container" "form_recognizer_container" {
+  name                  = var.form_recognizer_container_name
   storage_account_name  = azurerm_storage_account.sa.name
   container_access_type = "private"
 }

@@ -13,13 +13,13 @@ variable "resource_group_name" {
   description = "Resource group name"
 }
 
+variable "cognitive_service_kind" {
+  type = string
+  description = "Cognitive service account kind"
+}
+
 variable "tags" {
   type        = map(string)
   description = "Cognitive service account tags"
   default     = {}
 }
-
-# variable "storage_account_id" {
-#   type        = string
-#   description = "Storage account id"
-# }
