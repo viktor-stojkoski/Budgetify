@@ -29,12 +29,13 @@ module "resource_group" {
 }
 
 module "storage_account" {
-  source               = "../Modules/StorageAccount"
-  resource_group_name  = module.resource_group.resource_group_name
-  storage_account_name = local.storage_account_name
-  location             = var.location
-  container_name       = lower(var.application_name)
-  tags                 = merge(var.tags, local.tags)
+  source                         = "../Modules/StorageAccount"
+  resource_group_name            = module.resource_group.resource_group_name
+  storage_account_name           = local.storage_account_name
+  location                       = var.location
+  application_container_name     = lower(var.application_name)
+  form_recognizer_container_name = local.form_recognizer_container_name
+  tags                           = merge(var.tags, local.tags)
 }
 
 module "key_vault" {
@@ -46,4 +47,13 @@ module "key_vault" {
   secrets = {
     "storageAccountConnectionString" = module.storage_account.storage_account_connection_string
   }
+}
+
+module "form_recognizer" {
+  source                 = "../Modules/CognitiveService"
+  cognitive_service_name = local.form_recognizer_name
+  location               = var.location
+  resource_group_name    = module.resource_group.resource_group_name
+  cognitive_service_kind = "FormRecognizer"
+  tags                   = merge(var.tags, local.tags)
 }

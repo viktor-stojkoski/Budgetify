@@ -16,22 +16,27 @@ variable "location" {
 variable "account_tier" {
   type        = string
   description = "Storage account tier (Standard, Premium)"
-  default     = "Premium"
+  default     = "Standard"
 }
 
 variable "account_kind" {
   type        = string
   description = "Storage account kind (StorageV2, BlockBlobStorage..)"
-  default     = "BlockBlobStorage"
+  default     = "StorageV2"
 }
 
 variable "tags" {
   type        = map(string)
   description = "Storage account tags"
-  default = {}
+  default     = {}
 }
 
-variable "container_name" {
+variable "application_container_name" {
   type        = string
-  description = "Container name"
+  description = "Application container name"
+}
+
+variable "form_recognizer_container_name" {
+  type        = string
+  description = "Form Recognizer (CognitiveService) container name"
 }

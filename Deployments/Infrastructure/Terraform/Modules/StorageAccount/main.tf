@@ -20,18 +20,30 @@ resource "azurerm_storage_account" "sa" {
       days = 7
     }
     versioning_enabled = false
+    cors_rule {
+      allowed_headers    = ["*"]
+      allowed_methods    = ["DELETE", "GET", "HEAD", "MERGE", "POST", "OPTIONS", "PUT", "PATCH"]
+      allowed_origins    = ["*"]
+      exposed_headers    = ["*"]
+      max_age_in_seconds = 120
+    }
   }
 
   network_rules {
     default_action = "Allow"
   }
 
-  large_file_share_enabled          = false
   infrastructure_encryption_enabled = false
 }
 
-resource "azurerm_storage_container" "container" {
-  name                  = var.container_name
+resource "azurerm_storage_container" "app_container" {
+  name                  = var.application_container_name
+  storage_account_name  = azurerm_storage_account.sa.name
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_container" "form_recognizer_container" {
+  name                  = var.form_recognizer_container_name
   storage_account_name  = azurerm_storage_account.sa.name
   container_access_type = "private"
 }
