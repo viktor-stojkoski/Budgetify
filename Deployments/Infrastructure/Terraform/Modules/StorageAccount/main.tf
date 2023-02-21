@@ -20,6 +20,13 @@ resource "azurerm_storage_account" "sa" {
       days = 7
     }
     versioning_enabled = false
+    cors_rule {
+      allowed_headers    = ["*"]
+      allowed_methods    = ["*"]
+      allowed_origins    = ["*"]
+      exposed_headers    = ["*"]
+      max_age_in_seconds = 300
+    }
   }
 
   network_rules {
