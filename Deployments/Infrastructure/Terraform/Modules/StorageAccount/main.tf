@@ -33,7 +33,6 @@ resource "azurerm_storage_account" "sa" {
     default_action = "Allow"
   }
 
-  # large_file_share_enabled          = false
   infrastructure_encryption_enabled = false
 }
 
