@@ -16,7 +16,7 @@ variable "location" {
 variable "account_tier" {
   type        = string
   description = "Storage account tier (Standard, Premium)"
-  default     = "Premium"
+  default     = "Standard"
 }
 
 variable "account_kind" {
