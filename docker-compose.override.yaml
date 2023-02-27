@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  # Required services
+  mssql.db:
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Zoki123!
+      - MSSQL_PID=Developer
+    ports:
+      - 1433:1433
+    volumes:
+      - sql.data:/var/opt/mssql
+
+  # Budgetify services
+  budgetify.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - connectionStrings__sqlConnectionString=Server=mssql.db,1433;Initial Catalog=Budgetify;MultipleActiveResultSets=True;Application Name=EntityFramework;User=sa;Password=Zoki123!;
+      - connectionStrings__sqlConnectionReadonlyString=mssql.db,1433;Initial Catalog=Budgetify;MultipleActiveResultSets=True;Application Name=EntityFramework;User=sa;Password=Zoki123!;ApplicationIntent=READONLY;
+      - jobs__sqlConnectionString=Server=mssql.db,1433;Initial Catalog=Budgetify.Hangfire;User=sa;Password=Zoki123!;
+    ports:
+      - 55555:80
+
+volumes:
+  sql.data:

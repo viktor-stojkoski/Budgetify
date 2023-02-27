@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS base
 # Set the working directory to /app
 WORKDIR /app
 
-# Copy Budgetify API
+# Copy Budgetify projects
 COPY Api/ Api/
 
 # Private feed credentials
@@ -21,24 +21,26 @@ RUN dotnet nuget add source $PRIVATE_FEED \
 RUN dotnet publish Api/Budgetify.Api/Budgetify.Api.csproj \
   --configuration Release \
   --output /app/publish \
-  --os linux \
+  --runtime alpine-x64 \
   --self-contained
 
 # Get the alpine linux image
 FROM alpine:3.16 AS final
-# RUN apk add --no-cache \
-#   libstdc++ libintl icu tzdata krb5-libs libgcc libssl1.1 zlib
-# Change directory to /app
+
+# Install required packages
+RUN apk add --no-cache \
+  libstdc++ \
+  libgcc \
+  icu
+
+# Set the working directory to /app
 WORKDIR /app
 
 # Copy the published application
 COPY --from=base /app/publish ./
 
 # Change to non-root user
-# USER 1000:1000
-# RUN pwd
-# RUN ls
-# RUN ls
-EXPOSE 55555
+USER 1000:1000
+
 # Entrypoint
 ENTRYPOINT ["./Budgetify.Api"]
