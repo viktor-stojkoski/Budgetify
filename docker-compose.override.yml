@@ -23,5 +23,15 @@ services:
     ports:
       - 55555:80
 
+  budgetify.functions:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - AZURE_FUNCTIONS_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - connectionStrings__sqlConnectionString=Server=mssql.db,1433;Initial Catalog=Budgetify;MultipleActiveResultSets=True;Application Name=EntityFramework;User=sa;Password=Zoki123!;
+      - connectionStrings__sqlConnectionReadonlyString=Server=mssql.db,1433;Initial Catalog=Budgetify;MultipleActiveResultSets=True;Application Name=EntityFramework;User=sa;Password=Zoki123!;ApplicationIntent=READONLY;
+    ports:
+      - 7071:80
+
 volumes:
   sql.data:

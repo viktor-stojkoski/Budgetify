@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Kestrel": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "httpPort": 31631,
+      "useSSL": false
+    }
+  }
+}
