@@ -6,7 +6,8 @@
     <ProjectGuid>8d040656-171f-43b2-948a-d6105269988e</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/docs</DockerServiceUrl>
-    <DockerServiceName>budgetify.api</DockerServiceName>
+    <DockerServiceName></DockerServiceName>
+    <DockerComposeProjectName>budgetify</DockerComposeProjectName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">
