@@ -18,7 +18,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - connectionStrings__sqlConnectionString=Server=mssql.db,1433;Initial Catalog=Budgetify;MultipleActiveResultSets=True;Application Name=EntityFramework;User=sa;Password=Zoki123!;
-      - connectionStrings__sqlConnectionReadonlyString=mssql.db,1433;Initial Catalog=Budgetify;MultipleActiveResultSets=True;Application Name=EntityFramework;User=sa;Password=Zoki123!;ApplicationIntent=READONLY;
+      - connectionStrings__sqlConnectionReadonlyString=Server=mssql.db,1433;Initial Catalog=Budgetify;MultipleActiveResultSets=True;Application Name=EntityFramework;User=sa;Password=Zoki123!;ApplicationIntent=READONLY;
       - jobs__sqlConnectionString=Server=mssql.db,1433;Initial Catalog=Budgetify.Hangfire;User=sa;Password=Zoki123!;
     ports:
       - 55555:80
