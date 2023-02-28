@@ -28,3 +28,8 @@ services:
         - PRIVATE_FEED_TOKEN=${PRIVATE_FEED_TOKEN:?Create your .env file}
     depends_on:
       - mssql.db
+    # entrypoint:
+    #     - tail
+    # command:
+    #     - -f
+    #     - /dev/null

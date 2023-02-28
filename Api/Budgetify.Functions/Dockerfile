@@ -68,13 +68,24 @@ RUN dotnet publish Api/Budgetify.Functions/Budgetify.Functions.csproj \
 # Get the alpine linux image
 FROM mcr.microsoft.com/azure-functions/dotnet:4-slim AS final
 
+# Install required packages
+RUN apt install -y nodejs npm
+RUN npm install -g localtunnel
+
 # Set the working directory to /app
 WORKDIR /home/site/wwwroot
 
 # Copy the published application
 COPY --from=base /app/publish ./
+COPY Api/Budgetify.Functions/entrypoint.sh entrypoint.sh
+
+RUN chmod +x entrypoint.sh
 
 # Change to non-root user
 USER 1000:1000
 
+CMD [ "tail" "-f" "sh" "-c" "./entrypoint.sh" ]
+
 ENV AzureWebJobsScriptRoot=/home/site/wwwroot
+
+# RUN nohup bash -c "scripts/init.sh &" && sleep 4 
