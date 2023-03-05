@@ -32,6 +32,8 @@ public class Startup : FunctionsStartup
             .AddJsonFile(
                 path: Path.Combine(context.ApplicationRootPath, "appsettings.json"),
                 optional: false,
-                reloadOnChange: true);
+                reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .Build();
     }
 }

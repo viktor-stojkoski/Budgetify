@@ -8,6 +8,14 @@ services:
     container_name: mssql.db
     image: mcr.microsoft.com/mssql/server:2022-latest
 
+  lt:
+    container_name: localtunnel
+    build:
+      context: .
+      dockerfile: Api/Budgetify.Functions/Dockerfile.Localtunnel
+    depends_on:
+      - budgetify.functions
+
   # Budgetify Services
   budgetify.api:
     container_name: budgetify.api
@@ -28,8 +36,3 @@ services:
         - PRIVATE_FEED_TOKEN=${PRIVATE_FEED_TOKEN:?Create your .env file}
     depends_on:
       - mssql.db
-    # entrypoint:
-    #     - tail
-    # command:
-    #     - -f
-    #     - /dev/null
