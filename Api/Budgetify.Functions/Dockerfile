@@ -6,11 +6,11 @@ WORKDIR /app
 
 # Copy Budgetify Functions projects
 COPY Api/Budgetify.Functions Api/Budgetify.Functions
-COPY Api/Budgetify.Services Api/Budgetify.Services
 COPY Api/Budgetify.Common Api/Budgetify.Common
-COPY Api/Budgetify.Storage Api/Budgetify.Storage
 COPY Api/Budgetify.Contracts Api/Budgetify.Contracts
 COPY Api/Budgetify.Entities Api/Budgetify.Entities
+COPY Api/Budgetify.Services Api/Budgetify.Services
+COPY Api/Budgetify.Storage Api/Budgetify.Storage
 
 # Private feed credentials
 ARG PRIVATE_FEED_TOKEN
@@ -40,4 +40,5 @@ COPY --from=base /app/publish ./
 # Change to non-root user
 USER 1000:1000
 
+# Set required environment variable
 ENV AzureWebJobsScriptRoot=/home/site/wwwroot

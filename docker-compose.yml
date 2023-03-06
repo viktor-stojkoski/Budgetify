@@ -12,7 +12,7 @@ services:
     container_name: localtunnel
     build:
       context: .
-      dockerfile: Api/Budgetify.Functions/Dockerfile.Localtunnel
+      dockerfile: Tools/Localtunnel/Dockerfile
     depends_on:
       - budgetify.functions
 

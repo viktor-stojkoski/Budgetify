@@ -5,7 +5,13 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS base
 WORKDIR /app
 
 # Copy Budgetify projects
-COPY Api/ Api/
+COPY Api/Budgetify.Api Api/Budgetify.Api
+COPY Api/Budgetify.Common Api/Budgetify.Common
+COPY Api/Budgetify.Contracts Api/Budgetify.Contracts
+COPY Api/Budgetify.Entities Api/Budgetify.Entities
+COPY Api/Budgetify.Queries Api/Budgetify.Queries
+COPY Api/Budgetify.Services Api/Budgetify.Services
+COPY Api/Budgetify.Storage Api/Budgetify.Storage
 
 # Private feed credentials
 ARG PRIVATE_FEED_TOKEN
