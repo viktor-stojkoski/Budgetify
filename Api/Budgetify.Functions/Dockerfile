@@ -1,15 +1,14 @@
-# Set the .NET SDK 6.0 alpine image as base
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS base
+# Set the .NET 6 SDK image as base
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS base
 
 # Set the working directory to /app
 WORKDIR /app
 
-# Copy Budgetify projects
-COPY Api/Budgetify.Api Api/Budgetify.Api
+# Copy Budgetify Functions projects
+COPY Api/Budgetify.Functions Api/Budgetify.Functions
 COPY Api/Budgetify.Common Api/Budgetify.Common
 COPY Api/Budgetify.Contracts Api/Budgetify.Contracts
 COPY Api/Budgetify.Entities Api/Budgetify.Entities
-COPY Api/Budgetify.Queries Api/Budgetify.Queries
 COPY Api/Budgetify.Services Api/Budgetify.Services
 COPY Api/Budgetify.Storage Api/Budgetify.Storage
 
@@ -23,24 +22,17 @@ RUN dotnet nuget add source $PRIVATE_FEED \
   --store-password-in-clear-text \
   --valid-authentication-types "basic"
 
-# Publish .NET application to /app/publish
-RUN dotnet publish Api/Budgetify.Api/Budgetify.Api.csproj \
+# Publish functions to /app/publish
+RUN dotnet publish Api/Budgetify.Functions/Budgetify.Functions.csproj \
   --configuration Release \
   --output /app/publish \
-  --runtime alpine-x64 \
   --self-contained
 
-# Get the alpine linux image
-FROM alpine:3.16 AS final
+# Get the lightest dotnet-isolated image
+FROM mcr.microsoft.com/azure-functions/dotnet-isolated:4-dotnet-isolated6.0-slim AS final
 
-# Install required packages
-RUN apk add --no-cache \
-  libstdc++ \
-  libgcc \
-  icu
-
-# Set the working directory to /app
-WORKDIR /app
+# Set the working directory to /home/site/wwwroot
+WORKDIR /home/site/wwwroot
 
 # Copy the published application
 COPY --from=base /app/publish ./
@@ -48,5 +40,5 @@ COPY --from=base /app/publish ./
 # Change to non-root user
 USER 1000:1000
 
-# Entrypoint
-ENTRYPOINT ["./Budgetify.Api"]
+# Set required environment variable
+ENV AzureWebJobsScriptRoot=/home/site/wwwroot

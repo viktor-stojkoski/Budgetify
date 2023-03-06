@@ -19,7 +19,10 @@ public class Program
             .AddEnvironmentVariables()
             .Build();
 
-        Register.InitializeLogging(configuration);
+        bool isDevelopment =
+            Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+
+        Register.InitializeLogging(configuration, isDevelopment);
 
         try
         {

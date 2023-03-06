@@ -30,11 +30,11 @@ public static partial class Register
         return services.AddApplicationInsightsTelemetry();
     }
 
-    public static void InitializeLogging(IConfiguration configuration)
+    public static void InitializeLogging(IConfiguration configuration, bool isDevelopment)
     {
         LoggerSettings = new LoggerSettings(configuration);
 
-        Serilog.Core.Logger logger =
+        LoggerConfiguration loggerConfiguration =
             new LoggerConfiguration()
                 .MinimumLevel.Verbose()
                 .Enrich.FromLogContext()
@@ -48,15 +48,16 @@ public static partial class Register
                     fileSizeLimitBytes: 1000000,
                     shared: true,
                     flushToDiskInterval: TimeSpan.FromSeconds(1))
-                .WriteTo.ApplicationInsights(
-#if !DEBUG
-                    telemetryConfiguration: new() { ConnectionString = LoggerSettings.ApplicationInsightsKey },
-#endif
-                    telemetryConverter: TelemetryConverter.Traces)
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
+                .ReadFrom.Configuration(configuration);
 
-        Log.Logger = logger;
+        if (!isDevelopment)
+        {
+            loggerConfiguration.WriteTo.ApplicationInsights(
+                telemetryConfiguration: new() { ConnectionString = LoggerSettings.ApplicationInsightsKey },
+                telemetryConverter: TelemetryConverter.Traces);
+        }
+
+        Log.Logger = loggerConfiguration.CreateLogger();
     }
 
     public static void LogStartingApp<TStartupLocation>()

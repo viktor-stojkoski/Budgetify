@@ -374,3 +374,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 **/Terraform/**/backend.config
+
+# Env
+.env
