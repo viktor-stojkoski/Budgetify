@@ -1,4 +1,4 @@
-# Set the Azure Functions .NET SDK
+# Set the .NET 6 SDK image as base
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS base
 
 # Set the working directory to /app
