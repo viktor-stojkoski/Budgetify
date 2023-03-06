@@ -5,7 +5,7 @@ services:
   mssql.db:
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=Zoki123!
+      - MSSQL_SA_PASSWORD=MsSqlPassword123!
       - MSSQL_PID=Developer
     ports:
       - 1433:1433
@@ -20,9 +20,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - connectionStrings__sqlConnectionString=Server=mssql.db,1433;Initial Catalog=Budgetify;MultipleActiveResultSets=True;Application Name=EntityFramework;User=sa;Password=Zoki123!;
-      - connectionStrings__sqlConnectionReadonlyString=Server=mssql.db,1433;Initial Catalog=Budgetify;MultipleActiveResultSets=True;Application Name=EntityFramework;User=sa;Password=Zoki123!;ApplicationIntent=READONLY;
-      - jobs__sqlConnectionString=Server=mssql.db,1433;Initial Catalog=Budgetify.Hangfire;User=sa;Password=Zoki123!;
+      - connectionStrings__sqlConnectionString=Server=mssql.db,1433;Initial Catalog=Budgetify;MultipleActiveResultSets=True;Application Name=EntityFramework;User=sa;Password=MsSqlPassword123!;
+      - connectionStrings__sqlConnectionReadonlyString=Server=mssql.db,1433;Initial Catalog=Budgetify;MultipleActiveResultSets=True;Application Name=EntityFramework;User=sa;Password=MsSqlPassword123!;ApplicationIntent=READONLY;
+      - jobs__sqlConnectionString=Server=mssql.db,1433;Initial Catalog=Budgetify.Hangfire;User=sa;Password=MsSqlPassword123!;
     ports:
       - 55555:80
 
@@ -31,8 +31,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - AZURE_FUNCTIONS_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:7071
-      - connectionStrings__sqlConnectionString=Server=mssql.db,1433;Initial Catalog=Budgetify;MultipleActiveResultSets=True;Application Name=EntityFramework;User=sa;Password=Zoki123!;
-      - connectionStrings__sqlConnectionReadonlyString=Server=mssql.db,1433;Initial Catalog=Budgetify;MultipleActiveResultSets=True;Application Name=EntityFramework;User=sa;Password=Zoki123!;ApplicationIntent=READONLY;
+      - connectionStrings__sqlConnectionString=Server=mssql.db,1433;Initial Catalog=Budgetify;MultipleActiveResultSets=True;Application Name=EntityFramework;User=sa;Password=MsSqlPassword123!;
+      - connectionStrings__sqlConnectionReadonlyString=Server=mssql.db,1433;Initial Catalog=Budgetify;MultipleActiveResultSets=True;Application Name=EntityFramework;User=sa;Password=MsSqlPassword123!;ApplicationIntent=READONLY;
       - azureADB2CApiConnector__username=BudgetifyUser
       - azureADB2CApiConnector__password=(C0zT#5Q*6m6jHxG
       - AzureWebJobsStorage=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://host.docker.internal:10000/devstoreaccount1;TableEndpoint=http://host.docker.internal:10002/devstoreaccount1;QueueEndpoint=http://host.docker.internal:10001/devstoreaccount1
