@@ -43,7 +43,7 @@ RUN apk add --no-cache \
 WORKDIR /app
 
 # Copy the published application
-COPY --from=base /app/publish ./
+COPY --from=base /app/publish .
 
 # Change to non-root user
 USER 1000:1000
