@@ -35,7 +35,7 @@ FROM mcr.microsoft.com/azure-functions/dotnet-isolated:4-dotnet-isolated6.0-slim
 WORKDIR /home/site/wwwroot
 
 # Copy the published application
-COPY --from=base /app/publish ./
+COPY --from=base /app/publish .
 
 # Change to non-root user
 USER 1000:1000

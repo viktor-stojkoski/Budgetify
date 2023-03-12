@@ -84,6 +84,7 @@
     "wwwroot",
     "dcproj",
     "libstdc",
-    "libgcc"
+    "libgcc",
+    "nginxinc"
   ]
 }

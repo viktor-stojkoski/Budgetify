@@ -36,3 +36,11 @@ services:
         - PRIVATE_FEED_TOKEN=${PRIVATE_FEED_TOKEN:?Create your .env file}
     depends_on:
       - mssql.db
+
+  budgetify.angular:
+    container_name: budgetify.angular
+    build:
+      context: .
+      dockerfile: Clients/Angular/Dockerfile
+      args:
+        - CONFIGURATION=development
