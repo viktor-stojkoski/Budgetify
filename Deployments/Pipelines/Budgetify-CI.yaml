@@ -1,21 +1,26 @@
-#################################################
-### Budgetify - Pull Request Build Validation ###
-#################################################
+##########################################
+### Budgetify - Continuous Integration ###
+##########################################
 
 pool:
   name: Azure Pipelines
   demands: msbuild
   vmImage: ubuntu-22.04
 
-trigger: none
-
-pr:
+trigger:
   branches:
     include:
       - master
+  paths:
+    include:
+      - Api/*
+      - Clients/*
+      - Databases/*
+      - Deployments/Pipelines/Budgetify-CI.yaml
 
 variables:
-  containerRegistry: budgetifyacr.azurecr.io
+  containerRegistryName: budgetifyacr
+  containerRegistry: $(containerRegistryName).azurecr.io
   buildConfiguration: Release
   azureSubscriptionName: Azure Subscription
   dockerBuildContext: .
@@ -40,7 +45,6 @@ stages:
             inputs:
               pwsh: true
               targetType: inline
-              failOnStderr: true
               script: cspell ** --gitignore
 
       - job: job_build_test_backend
@@ -84,13 +88,23 @@ stages:
               projects: $(testProjects)
               arguments: --configuration $(buildConfiguration) --no-restore --no-build
 
-          - task: PowerShell@2
+          - task: AzureCLI@2
+            displayName: Docker login to ACR
+            inputs:
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: az acr login --name $(containerRegistryName)
+
+          - task: AzureCLI@2
             displayName: Docker build API image
             inputs:
-              pwsh: true
-              targetType: inline
-              failOnStderr: true
-              script: |
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: |
                 docker build `
                   --file $(Build.SourcesDirectory)/Api/Budgetify.Api/Dockerfile `
                   --tag $(apiImageName):latest `
@@ -98,19 +112,29 @@ stages:
                   --build-arg PRIVATE_FEED_TOKEN="${{ variables.privateFeedTokenVariable }}" `
                   $(dockerBuildContext)
 
-          - task: PowerShell@2
+          - task: AzureCLI@2
             displayName: Docker build Functions image
             inputs:
-              pwsh: true
-              targetType: inline
-              failOnStderr: true
-              script: |
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: |
                 docker build `
                   --file $(Build.SourcesDirectory)/Api/Budgetify.Functions/Dockerfile `
                   --tag $(functionsImageName):latest `
                   --tag $(functionsImageName):$(Build.BuildId) `
                   --build-arg PRIVATE_FEED_TOKEN="${{ variables.privateFeedTokenVariable }}" `
                   $(dockerBuildContext)
+
+          - task: AzureCLI@2
+            displayName: Docker push API and Functions images
+            inputs:
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: docker push --all-tags $(containerRegistry)
 
       - job: job_build_database
         displayName: Budgetify Build Database
@@ -163,15 +187,34 @@ stages:
               workingDir: $(workingDirectory)
               customCommand: run test-headless
 
-          - task: PowerShell@2
+          - task: AzureCLI@2
+            displayName: Docker login to ACR
+            inputs:
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: az acr login --name $(containerRegistryName)
+
+          - task: AzureCLI@2
             displayName: Docker build Angular image
             inputs:
-              pwsh: true
-              targetType: inline
-              failOnStderr: true
-              script: |
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: |
                 docker build `
                   --file $(Build.SourcesDirectory)/Clients/Angular/Dockerfile `
                   --tag $(angularImageName):latest `
                   --tag $(angularImageName):$(Build.BuildId) `
                   $(dockerBuildContext)
+
+          - task: AzureCLI@2
+            displayName: Docker push Angular images
+            inputs:
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: docker push --all-tags $(containerRegistry)
