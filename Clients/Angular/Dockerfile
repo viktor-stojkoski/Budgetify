@@ -8,7 +8,7 @@ WORKDIR /app
 ARG CONFIGURATION=development
 
 # Copy the packages
-COPY Clients/Angular/package*.json .
+COPY Clients/Angular/package*.json ./
 
 # Install the project dependencies
 RUN npm install
