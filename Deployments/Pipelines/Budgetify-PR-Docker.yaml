@@ -103,7 +103,7 @@ stages:
                   --file $(Build.SourcesDirectory)/Api/Budgetify.Api/Dockerfile `
                   --tag $(apiImageName):latest `
                   --tag $(apiImageName):$(Build.BuildId) `
-                  --build-arg PRIVATE_FEED_TOKEN=${{ variables.PrivateFeedToken }} `
+                  --build-arg PRIVATE_FEED_TOKEN="${{ variables.PrivateFeedToken }}" `
                   $(dockerBuildContext)
 
           - task: AzureCLI@2
@@ -118,7 +118,7 @@ stages:
                   --file $(Build.SourcesDirectory)/Api/Budgetify.Functions/Dockerfile `
                   --tag $(functionsImageName):latest `
                   --tag $(functionsImageName):$(Build.BuildId) `
-                  --build-arg PRIVATE_FEED_TOKEN=${{ variables.PrivateFeedToken }} `
+                  --build-arg PRIVATE_FEED_TOKEN="${{ variables.PrivateFeedToken }}" `
                   $(dockerBuildContext)
 
       - job: job_build_database
