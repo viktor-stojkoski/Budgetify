@@ -10,9 +10,10 @@ pool:
 trigger: none
 
 pr:
-  branches:
-    include:
-      - master
+  none
+  # branches:
+  #   include:
+  #     - master
 
 stages:
   - stage: BuildAndTest
