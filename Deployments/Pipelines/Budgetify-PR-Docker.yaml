@@ -40,7 +40,6 @@ stages:
             inputs:
               pwsh: true
               targetType: inline
-              failOnStderr: true
               script: cspell ** --gitignore
 
       - job: job_build_test_backend
