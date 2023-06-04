@@ -18,6 +18,8 @@ trigger:
       - Databases/*
       - Deployments/Pipelines/Budgetify-CI.yaml
 
+pr: none
+
 variables:
   containerRegistryName: budgetifyacr
   containerRegistry: $(containerRegistryName).azurecr.io
