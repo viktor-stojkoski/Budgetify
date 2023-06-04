@@ -136,7 +136,11 @@ stages:
               scriptType: pscore
               failOnStandardError: true
               scriptLocation: inlineScript
-              inlineScript: docker push --all-tags $(containerRegistry)
+              inlineScript: |
+                docker images
+                docker ps
+                az acr login --name $(containerRegistryName)
+                docker push --all-tags $(containerRegistry)
 
       - job: job_build_database
         displayName: Budgetify Build Database
