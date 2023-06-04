@@ -228,4 +228,4 @@ stages:
               scriptType: pscore
               failOnStandardError: true
               scriptLocation: inlineScript
-              inlineScript: docker push --all-tags $(containerRegistry)
+              inlineScript: docker push --all-tags $(angularImageName)
