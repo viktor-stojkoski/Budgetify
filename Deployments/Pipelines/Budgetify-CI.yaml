@@ -58,9 +58,9 @@ stages:
           - name: testProjects
             value: '**/*.Tests.csproj'
           - name: apiImageName
-            value: $(containerRegistry)/budgetify/api
+            value: $(containerRegistry)/budgetify.api
           - name: functionsImageName
-            value: $(containerRegistry)/budgetify/functions
+            value: $(containerRegistry)/budgetify.functions
           - group: Secrets
           - name: privateFeedTokenVariable
             value: $(PrivateFeedToken)
@@ -130,17 +130,22 @@ stages:
               inlineScript: az acr login --name $(containerRegistryName)
 
           - task: AzureCLI@2
-            displayName: Docker push API and Functions images
+            displayName: Docker push API image
             inputs:
               azureSubscription: $(azureSubscriptionName)
               scriptType: pscore
               failOnStandardError: true
               scriptLocation: inlineScript
-              inlineScript: |
-                docker images
-                docker ps
-                az acr login --name $(containerRegistryName)
-                docker push --all-tags $(containerRegistry)
+              inlineScript: docker push --all-tags $(apiImageName)
+
+          - task: AzureCLI@2
+            displayName: Docker push Functions image
+            inputs:
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: docker push --all-tags $(functionsImageName)
 
       - job: job_build_database
         displayName: Budgetify Build Database
@@ -163,7 +168,7 @@ stages:
 
         variables:
           workingDirectory: $(Build.SourcesDirectory)/Clients/Angular
-          angularImageName: $(containerRegistry)/budgetify/angular
+          angularImageName: $(containerRegistry)/budgetify.angular
 
         steps:
           - task: Npm@1
