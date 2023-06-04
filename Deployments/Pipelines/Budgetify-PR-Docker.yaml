@@ -56,9 +56,6 @@ stages:
           - name: functionsImageName
             value: $(containerRegistry)/budgetify.functions
           - group: Secrets
-          - name: privateFeedToken
-            value: $(PrivateFeedToken)
-            readonly: true
 
         steps:
           - task: DotNetCoreCLI@2
@@ -106,7 +103,7 @@ stages:
                   --file $(Build.SourcesDirectory)/Api/Budgetify.Api/Dockerfile `
                   --tag $(apiImageName):latest `
                   --tag $(apiImageName):$(Build.BuildId) `
-                  --build-arg PRIVATE_FEED_TOKEN=${{ variables.privateFeedToken }} `
+                  --build-arg PRIVATE_FEED_TOKEN=${{ variables.PrivateFeedToken }} `
                   $(dockerBuildContext)
 
           - task: AzureCLI@2
@@ -121,11 +118,16 @@ stages:
                   --file $(Build.SourcesDirectory)/Api/Budgetify.Functions/Dockerfile `
                   --tag $(functionsImageName):latest `
                   --tag $(functionsImageName):$(Build.BuildId) `
-                  --build-arg PRIVATE_FEED_TOKEN=${{ variables.privateFeedToken }} `
+                  --build-arg PRIVATE_FEED_TOKEN=${{ variables.PrivateFeedToken }} `
                   $(dockerBuildContext)
 
       - job: job_build_database
         displayName: Budgetify Build Database
+
+        pool:
+          name: Azure Pipelines
+          demands: msbuild
+          vmImage: windows-2022
 
         steps:
           - task: MSBuild@1
