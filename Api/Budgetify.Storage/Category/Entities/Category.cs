@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 
+using Budgetify.Storage.Budget.Entities;
 using Budgetify.Storage.Common.Entities;
 using Budgetify.Storage.Merchant.Entities;
 using Budgetify.Storage.Transaction.Entities;
@@ -35,4 +36,6 @@ public class Category : AggregateRoot
     public virtual ICollection<Merchant> Merchants { get; protected internal set; } = new List<Merchant>();
 
     public virtual ICollection<Transaction> Transactions { get; protected internal set; } = new List<Transaction>();
+
+    public virtual ICollection<Budget> Budgets { get; protected internal set; } = new List<Budget>();
 }
