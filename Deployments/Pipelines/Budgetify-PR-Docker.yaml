@@ -10,10 +10,9 @@ pool:
 trigger: none
 
 pr:
-  none
-  # branches:
-  #   include:
-  #     - master
+  branches:
+    include:
+      - master
 
 variables:
   containerRegistry: budgetifyacr.azurecr.io
