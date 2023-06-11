@@ -85,6 +85,8 @@
     "dcproj",
     "libstdc",
     "libgcc",
-    "nginxinc"
+    "nginxinc",
+    "budgetifyacr",
+    "azurecr"
   ]
 }

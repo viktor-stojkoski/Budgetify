@@ -57,3 +57,11 @@ module "form_recognizer" {
   cognitive_service_kind = "FormRecognizer"
   tags                   = merge(var.tags, local.tags)
 }
+
+module "container_registry" {
+  source                  = "../Modules/ContainerRegistry"
+  resource_group_name     = local.container_registry_resource_group_name
+  location                = var.location
+  container_registry_name = local.container_registry_name
+  tags                    = merge(var.tags, local.tags)
+}

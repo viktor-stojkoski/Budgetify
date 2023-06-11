@@ -5,15 +5,20 @@
 pool:
   name: Azure Pipelines
   demands: msbuild
-  vmImage: windows-2022
+  vmImage: ubuntu-22.04
 
 trigger: none
 
 pr:
-  none
-  # branches:
-  #   include:
-  #     - master
+  branches:
+    include:
+      - master
+
+variables:
+  containerRegistry: budgetifyacr.azurecr.io
+  buildConfiguration: Release
+  azureSubscriptionName: Azure Subscription
+  dockerBuildContext: .
 
 stages:
   - stage: BuildAndTest
@@ -41,40 +46,79 @@ stages:
         displayName: Budgetify .NET Build & Test
 
         variables:
-          - name: buildConfiguration
-            value: Release
           - name: githubNugetServiceConnection
             value: GithubNugetFeed
-          - name: projects
-            value: '**/*.csproj'
+          - name: testProjects
+            value: '**/*.Tests.csproj'
+          - name: apiImageName
+            value: $(containerRegistry)/budgetify.api
+          - name: functionsImageName
+            value: $(containerRegistry)/budgetify.functions
+          - group: Secrets
+          - name: privateFeedTokenVariable
+            value: $(PrivateFeedToken)
 
         steps:
           - task: DotNetCoreCLI@2
-            displayName: .NET Restore
+            displayName: .NET Restore Tests
             inputs:
               command: restore
               feedsToUse: config
               nugetConfigPath: NuGet/nuget.config
               externalFeedCredentials: ${{ variables.githubNugetServiceConnection }}
               noCache: true
-              projects: $(projects)
+              projects: $(testProjects)
               verbosityRestore: Quiet
 
           - task: DotNetCoreCLI@2
-            displayName: .NET Build
+            displayName: .NET Build Tests
             inputs:
-              projects: $(projects)
+              projects: $(testProjects)
               arguments: --configuration $(buildConfiguration) --no-restore
 
           - task: DotNetCoreCLI@2
             displayName: .NET Test
             inputs:
               command: test
-              projects: '**/*.Tests.csproj'
+              projects: $(testProjects)
               arguments: --configuration $(buildConfiguration) --no-restore --no-build
+
+          - task: PowerShell@2
+            displayName: Docker build API image
+            inputs:
+              pwsh: true
+              targetType: inline
+              failOnStderr: true
+              script: |
+                docker build `
+                  --file $(Build.SourcesDirectory)/Api/Budgetify.Api/Dockerfile `
+                  --tag $(apiImageName):latest `
+                  --tag $(apiImageName):$(Build.BuildId) `
+                  --build-arg PRIVATE_FEED_TOKEN="${{ variables.privateFeedTokenVariable }}" `
+                  $(dockerBuildContext)
+
+          - task: PowerShell@2
+            displayName: Docker build Functions image
+            inputs:
+              pwsh: true
+              targetType: inline
+              failOnStderr: true
+              script: |
+                docker build `
+                  --file $(Build.SourcesDirectory)/Api/Budgetify.Functions/Dockerfile `
+                  --tag $(functionsImageName):latest `
+                  --tag $(functionsImageName):$(Build.BuildId) `
+                  --build-arg PRIVATE_FEED_TOKEN="${{ variables.privateFeedTokenVariable }}" `
+                  $(dockerBuildContext)
 
       - job: job_build_database
         displayName: Budgetify Build Database
+
+        pool:
+          name: Azure Pipelines
+          demands: msbuild
+          vmImage: windows-2022
+
         steps:
           - task: MSBuild@1
             displayName: Database Build
@@ -87,8 +131,8 @@ stages:
         displayName: Budgetify Angular Build & Test
 
         variables:
-          - name: workingDirectory
-            value: $(Build.SourcesDirectory)/Clients/Angular
+          workingDirectory: $(Build.SourcesDirectory)/Clients/Angular
+          angularImageName: $(containerRegistry)/budgetify.angular
 
         steps:
           - task: Npm@1
@@ -112,15 +156,21 @@ stages:
               customCommand: run lint
 
           - task: Npm@1
-            displayName: Angular Build
-            inputs:
-              command: custom
-              workingDir: $(workingDirectory)
-              customCommand: run build-prod
-
-          - task: Npm@1
             displayName: Angular Test
             inputs:
               command: custom
               workingDir: $(workingDirectory)
               customCommand: run test-headless
+
+          - task: PowerShell@2
+            displayName: Docker build Angular image
+            inputs:
+              pwsh: true
+              targetType: inline
+              failOnStderr: true
+              script: |
+                docker build `
+                  --file $(Build.SourcesDirectory)/Clients/Angular/Dockerfile `
+                  --tag $(angularImageName):latest `
+                  --tag $(angularImageName):$(Build.BuildId) `
+                  $(dockerBuildContext)

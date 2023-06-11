@@ -1,0 +1,231 @@
+##########################################
+### Budgetify - Continuous Integration ###
+##########################################
+
+pool:
+  name: Azure Pipelines
+  demands: msbuild
+  vmImage: ubuntu-22.04
+
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - Api/*
+      - Clients/*
+      - Databases/*
+      - Deployments/Pipelines/Budgetify-CI.yaml
+
+pr: none
+
+variables:
+  containerRegistryName: budgetifyacr
+  containerRegistry: $(containerRegistryName).azurecr.io
+  buildConfiguration: Release
+  azureSubscriptionName: Azure Subscription
+  dockerBuildContext: .
+
+stages:
+  - stage: BuildAndTest
+    displayName: Build and Test Budgetify
+
+    jobs:
+      - job: job_spell_check
+        displayName: Spell Check Solution
+
+        steps:
+          - task: Npm@1
+            displayName: Install CSpell
+            inputs:
+              command: custom
+              customCommand: install -g cspell
+
+          - task: PowerShell@2
+            displayName: Run CSpell on Solution
+            inputs:
+              pwsh: true
+              targetType: inline
+              script: cspell ** --gitignore
+
+      - job: job_build_test_backend
+        displayName: Budgetify .NET Build & Test
+
+        variables:
+          - name: githubNugetServiceConnection
+            value: GithubNugetFeed
+          - name: testProjects
+            value: '**/*.Tests.csproj'
+          - name: apiImageName
+            value: $(containerRegistry)/budgetify.api
+          - name: functionsImageName
+            value: $(containerRegistry)/budgetify.functions
+          - group: Secrets
+          - name: privateFeedTokenVariable
+            value: $(PrivateFeedToken)
+
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: .NET Restore Tests
+            inputs:
+              command: restore
+              feedsToUse: config
+              nugetConfigPath: NuGet/nuget.config
+              externalFeedCredentials: ${{ variables.githubNugetServiceConnection }}
+              noCache: true
+              projects: $(testProjects)
+              verbosityRestore: Quiet
+
+          - task: DotNetCoreCLI@2
+            displayName: .NET Build Tests
+            inputs:
+              projects: $(testProjects)
+              arguments: --configuration $(buildConfiguration) --no-restore
+
+          - task: DotNetCoreCLI@2
+            displayName: .NET Test
+            inputs:
+              command: test
+              projects: $(testProjects)
+              arguments: --configuration $(buildConfiguration) --no-restore --no-build
+
+          - task: AzureCLI@2
+            displayName: Docker build API image
+            inputs:
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: |
+                docker build `
+                  --file $(Build.SourcesDirectory)/Api/Budgetify.Api/Dockerfile `
+                  --tag $(apiImageName):latest `
+                  --tag $(apiImageName):$(Build.BuildId) `
+                  --build-arg PRIVATE_FEED_TOKEN="${{ variables.privateFeedTokenVariable }}" `
+                  $(dockerBuildContext)
+
+          - task: AzureCLI@2
+            displayName: Docker build Functions image
+            inputs:
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: |
+                docker build `
+                  --file $(Build.SourcesDirectory)/Api/Budgetify.Functions/Dockerfile `
+                  --tag $(functionsImageName):latest `
+                  --tag $(functionsImageName):$(Build.BuildId) `
+                  --build-arg PRIVATE_FEED_TOKEN="${{ variables.privateFeedTokenVariable }}" `
+                  $(dockerBuildContext)
+
+          - task: AzureCLI@2
+            displayName: Docker login to ACR
+            inputs:
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: az acr login --name $(containerRegistryName)
+
+          - task: AzureCLI@2
+            displayName: Docker push API image
+            inputs:
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: docker push --all-tags $(apiImageName)
+
+          - task: AzureCLI@2
+            displayName: Docker push Functions image
+            inputs:
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: docker push --all-tags $(functionsImageName)
+
+      - job: job_build_database
+        displayName: Budgetify Build Database
+
+        pool:
+          name: Azure Pipelines
+          demands: msbuild
+          vmImage: windows-2022
+
+        steps:
+          - task: MSBuild@1
+            displayName: Database Build
+            inputs:
+              solution: Databases/Budgetify.Database/Budgetify.Database.sqlproj
+              configuration: $(buildConfiguration)
+              clean: true
+
+      - job: job_build_test_frontend
+        displayName: Budgetify Angular Build & Test
+
+        variables:
+          workingDirectory: $(Build.SourcesDirectory)/Clients/Angular
+          angularImageName: $(containerRegistry)/budgetify.angular
+
+        steps:
+          - task: Npm@1
+            displayName: Install packages
+            inputs:
+              command: ci
+              workingDir: $(workingDirectory)
+
+          - task: Npm@1
+            displayName: Install Angular CLI
+            inputs:
+              command: custom
+              workingDir: $(workingDirectory)
+              customCommand: install -g @angular/cli
+
+          - task: Npm@1
+            displayName: Angular Lint
+            inputs:
+              command: custom
+              workingDir: $(workingDirectory)
+              customCommand: run lint
+
+          - task: Npm@1
+            displayName: Angular Test
+            inputs:
+              command: custom
+              workingDir: $(workingDirectory)
+              customCommand: run test-headless
+
+          - task: AzureCLI@2
+            displayName: Docker login to ACR
+            inputs:
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: az acr login --name $(containerRegistryName)
+
+          - task: AzureCLI@2
+            displayName: Docker build Angular image
+            inputs:
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: |
+                docker build `
+                  --file $(Build.SourcesDirectory)/Clients/Angular/Dockerfile `
+                  --tag $(angularImageName):latest `
+                  --tag $(angularImageName):$(Build.BuildId) `
+                  $(dockerBuildContext)
+
+          - task: AzureCLI@2
+            displayName: Docker push Angular images
+            inputs:
+              azureSubscription: $(azureSubscriptionName)
+              scriptType: pscore
+              failOnStandardError: true
+              scriptLocation: inlineScript
+              inlineScript: docker push --all-tags $(angularImageName)
