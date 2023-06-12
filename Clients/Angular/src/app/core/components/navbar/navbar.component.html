@@ -22,6 +22,9 @@
       <a mat-button [routerLink]="'/transactions'" routerLinkActive="mat-accent">
         {{ translationKeys.navbarTransactionsMenu | translate }}
       </a>
+      <a mat-button [routerLink]="'/budgets'" routerLinkActive="mat-accent">
+        {{ translationKeys.navbarBudgetsMenu | translate }}
+      </a>
     </div>
 
     <span class="menu-spacer"></span>
@@ -63,6 +66,9 @@
         </a>
         <a [routerLink]="'/transactions'" routerLinkActive="mat-accent" mat-list-item (click)="sidenav.toggle()">
           {{ translationKeys.navbarTransactionsMenu | translate }}
+        </a>
+        <a [routerLink]="'/budgets'" routerLinkActive="mat-accent" mat-list-item (click)="sidenav.toggle()">
+          {{ translationKeys.navbarBudgetsMenu | translate }}
         </a>
 
         <mat-divider></mat-divider>
