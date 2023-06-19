@@ -32,6 +32,7 @@ public class BudgetsController : ExtendedApiController
     public async Task<IActionResult> GetBudgetsAsync() =>
         OkOrError(await _queryDispatcher.ExecuteAsync(new GetBudgetsQuery()));
 
+    [HttpPost]
     public async Task<IActionResult> CreateBudgetAsync([FromBody] CreateBudgetRequest request) =>
         OkOrError(await _commandDispatcher.ExecuteAsync(
             new CreateBudgetCommand(
