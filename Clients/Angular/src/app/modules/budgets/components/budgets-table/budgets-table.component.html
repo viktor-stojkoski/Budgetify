@@ -1,0 +1,63 @@
+<mat-toolbar>
+  <span>{{ translationKeys.toolbarName | translate }}</span>
+</mat-toolbar>
+
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<mat-form-field *ngIf="!isLoading" appearance="outline">
+  <mat-label>{{ translationKeys.tableFilterLabel | translate }}</mat-label>
+  <input [value]="filterValue" matInput (keyup)="applyFilter($event)" />
+</mat-form-field>
+
+<table mat-table *ngIf="!isLoading" [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableNameHeader | translate }}</th>
+    <td mat-cell *matCellDef="let budget">
+      <span [matTooltip]="budget.name" [matTooltipDisabled]="budget.name?.length < 30">
+        {{ budget.name | truncate: 30 }}
+      </span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="categoryName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableCategoryHeader | translate }}</th>
+    <td mat-cell *matCellDef="let budget">
+      <span [matTooltip]="budget.categoryName" [matTooltipDisabled]="budget.categoryName?.length < 30">
+        {{ budget.categoryName | truncate: 30 }}
+      </span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="startDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableStartDateHeader | translate }}</th>
+    <td mat-cell *matCellDef="let budget">{{ budget.startDate | date }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="endDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableEndDateHeader | translate }}</th>
+    <td mat-cell *matCellDef="let budget">{{ budget.endDate | date }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="amount">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableAmountHeader | translate }}</th>
+    <td mat-cell *matCellDef="let budget">{{ budget.amount }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="amountSpent">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableAmountSpentHeader | translate }}</th>
+    <td mat-cell *matCellDef="let budget">{{ budget.amountSpent }}</td>
+  </ng-container>
+
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+      {{ translationKeys.tableNoDataFound | translate }}
+    </td>
+  </tr>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<mat-paginator *ngIf="!isLoading" [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>

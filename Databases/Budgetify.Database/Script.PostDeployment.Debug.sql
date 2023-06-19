@@ -20,4 +20,5 @@ BEGIN
     :r .\Budgetify\Tables\Transaction\Transaction.Seed.sql
     :r .\Budgetify\Tables\ExchangeRate\ExchangeRate.Seed.sql
     :r .\Budgetify\Tables\TransactionAttachment\TransactionAttachment.Seed.sql
+    :r .\Budgetify\Tables\Budget\Budget.Seed.sql
 END

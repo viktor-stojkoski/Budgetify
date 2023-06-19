@@ -36,5 +36,10 @@ export const routes: Route[] = [
     path: 'exchange-rates',
     canActivateChild: [MsalGuard],
     loadChildren: () => import('./modules/exchange-rates/exchange-rates.module').then((m) => m.ExchangeRatesModule)
+  },
+  {
+    path: 'budgets',
+    canActivateChild: [MsalGuard],
+    loadChildren: () => import('./modules/budgets/budgets.module').then((m) => m.BudgetsModule)
   }
 ];

@@ -4,6 +4,7 @@
   "navbarExchangeRatesMenu": "Exchange rates",
   "navbarMerchantsMenu": "Merchants",
   "navbarTransactionsMenu": "Transactions",
+  "navbarBudgetsMenu": "Budgets",
   "navbarLoginOrRegister": "Log In Or Register",
   "navbarLogout": "Log out",
   "navbarLanguages": "Languages",
@@ -283,5 +284,18 @@
     "detailsFromDateHeader": "From date",
     "detailsToDateHeader": "To date",
     "detailsRateHeader": "Rate"
+  },
+
+  "budgets": {
+    "toolbarName": "Budgets",
+
+    "tableFilterLabel": "Filter",
+    "tableNoDataFound": "No data was found.",
+    "tableNameHeader": "Name",
+    "tableCategoryHeader": "Category",
+    "tableStartDateHeader": "Start date",
+    "tableEndDateHeader": "End date",
+    "tableAmountHeader": "Amount",
+    "tableAmountSpentHeader": "Amount spent"
   }
 }

@@ -90,4 +90,11 @@ public static class ResultCodes
     public const string TransactionAttachmentNotFound = "TRANSACTION_ATTACHMENT_NOT_FOUND";
 
     #endregion
+
+    #region
+
+    public const string BudgetNameInvalid = "BUDGET_NAME_INVALID";
+    public const string BudgetNameInvalidLength = "BUDGET_NAME_INVALID_LENGTH";
+
+    #endregion
 }

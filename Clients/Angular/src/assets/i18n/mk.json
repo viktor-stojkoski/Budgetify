@@ -283,5 +283,18 @@
     "detailsFromDateHeader": "Од датум",
     "detailsToDateHeader": "До датум",
     "detailsRateHeader": "Стапка"
+  },
+
+  "budgets": {
+    "toolbarName": "Буџети",
+
+    "tableFilterLabel": "Филтер",
+    "tableNoDataFound": "Не беа пронајдени податоци.",
+    "tableNameHeader": "Име",
+    "tableCategoryHeader": "Категорија",
+    "tableStartDateHeader": "Почетен датум",
+    "tableEndDateHeader": "Краен датум",
+    "tableAmountHeader": "Износ",
+    "tableAmountSpentHeader": "Потрошен износ"
   }
 }
