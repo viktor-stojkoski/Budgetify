@@ -9,6 +9,7 @@ import {
   MatDateFormats,
   NativeDateAdapter
 } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
@@ -45,7 +46,8 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     MatSortModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatInputModule
   ],
   declarations: [BudgetsTableComponent],
   providers: [

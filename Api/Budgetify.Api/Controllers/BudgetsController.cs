@@ -22,6 +22,6 @@ public class BudgetsController : ExtendedApiController
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetButgetsAsync() =>
+    public async Task<IActionResult> GetBudgetsAsync() =>
         OkOrError(await _queryDispatcher.ExecuteAsync(new GetBudgetsQuery()));
 }
