@@ -2,6 +2,7 @@
 
 using Budgetify.Common.ScanReceipt;
 using Budgetify.Contracts.Account.Repositories;
+using Budgetify.Contracts.Budget.Repositories;
 using Budgetify.Contracts.Category.Repositories;
 using Budgetify.Contracts.Currency.Repositories;
 using Budgetify.Contracts.ExchangeRate.Repositories;
@@ -10,6 +11,7 @@ using Budgetify.Contracts.Settings;
 using Budgetify.Contracts.Transaction.Repositories;
 using Budgetify.Contracts.User.Repositories;
 using Budgetify.Storage.Account.Repositories;
+using Budgetify.Storage.Budget.Repositories;
 using Budgetify.Storage.Category.Repositories;
 using Budgetify.Storage.Currency.Repositories;
 using Budgetify.Storage.ExchangeRate.Repositories;
@@ -30,6 +32,7 @@ public static partial class Register
         services.AddScoped<IMerchantRepository, MerchantRepository>();
         services.AddScoped<ITransactionRepository, TransactionRepository>();
         services.AddScoped<IExchangeRateRepository, ExchangeRateRepository>();
+        services.AddScoped<IBudgetRepository, BudgetRepository>();
         services.AddScoped<IScanReceiptService>(provider =>
         {
             IScanSettings scanSettings = provider.GetRequiredService<IScanSettings>();
