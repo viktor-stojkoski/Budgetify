@@ -4,9 +4,13 @@ using System;
 
 using Budgetify.Common.Results;
 using Budgetify.Entities.Budget.ValueObjects;
+using Budgetify.Entities.Common.Enumerations;
 
 public partial class Budget
 {
+    /// <summary>
+    /// Create budget DB to domain only.
+    /// </summary>
     public static Result<Budget> Create(
         int id,
         Guid uid,
@@ -21,10 +25,13 @@ public partial class Budget
         decimal amountSpent)
     {
         Result<BudgetNameValue> nameValue = BudgetNameValue.Create(name);
+        Result<BudgetDateRangeValue> dateRangeValue = BudgetDateRangeValue.Create(startDate, endDate);
 
-        if (nameValue.IsFailureOrNull)
+        Result okOrError = Result.FirstFailureOrOk(nameValue, dateRangeValue);
+
+        if (okOrError.IsFailureOrNull)
         {
-            return Result.FromError<Budget>(nameValue);
+            return Result.FromError<Budget>(okOrError);
         }
 
         return Result.Ok(
@@ -32,8 +39,7 @@ public partial class Budget
                 userId: userId,
                 name: nameValue.Value,
                 categoryId: categoryId,
-                startDate: startDate,
-                endDate: endDate,
+                dateRange: dateRangeValue.Value,
                 amount: amount,
                 amountSpent: amountSpent)
             {
@@ -41,6 +47,44 @@ public partial class Budget
                 Uid = uid,
                 CreatedOn = createdOn,
                 DeletedOn = deletedOn
+            });
+    }
+
+    /// <summary>
+    /// Creates budget.
+    /// </summary>
+    public static Result<Budget> Create(
+        DateTime createdOn,
+        int userId,
+        string? name,
+        int categoryId,
+        DateTime startDate,
+        DateTime endDate,
+        decimal amount,
+        decimal amountSpent)
+    {
+        Result<BudgetNameValue> nameValue = BudgetNameValue.Create(name);
+        Result<BudgetDateRangeValue> dateRangeValue = BudgetDateRangeValue.Create(startDate, endDate);
+
+        Result okOrError = Result.FirstFailureOrOk(nameValue, dateRangeValue);
+
+        if (okOrError.IsFailureOrNull)
+        {
+            return Result.FromError<Budget>(okOrError);
+        }
+
+        return Result.Ok(
+            new Budget(
+                userId: userId,
+                name: nameValue.Value,
+                categoryId: categoryId,
+                dateRange: dateRangeValue.Value,
+                amount: amount,
+                amountSpent: amountSpent)
+            {
+                Uid = Guid.NewGuid(),
+                CreatedOn = createdOn,
+                State = EntityState.Added
             });
     }
 }

@@ -1,7 +1,5 @@
 ﻿namespace Budgetify.Entities.Budget.Domain;
 
-using System;
-
 using Budgetify.Entities.Budget.ValueObjects;
 using Budgetify.Entities.Common.Entities;
 using Budgetify.Entities.Common.Enumerations;
@@ -12,8 +10,7 @@ public sealed partial class Budget : AggregateRoot
         int userId,
         BudgetNameValue name,
         int categoryId,
-        DateTime startDate,
-        DateTime endDate,
+        BudgetDateRangeValue dateRange,
         decimal amount,
         decimal amountSpent)
     {
@@ -22,8 +19,7 @@ public sealed partial class Budget : AggregateRoot
         UserId = userId;
         Name = name;
         CategoryId = categoryId;
-        StartDate = startDate;
-        EndDate = endDate;
+        DateRange = dateRange;
         Amount = amount;
         AmountSpent = amountSpent;
     }
@@ -44,14 +40,9 @@ public sealed partial class Budget : AggregateRoot
     public int CategoryId { get; private set; }
 
     /// <summary>
-    /// Budget's start date.
+    /// Budget's date range.
     /// </summary>
-    public DateTime StartDate { get; private set; }
-
-    /// <summary>
-    /// Budget's end date.
-    /// </summary>
-    public DateTime EndDate { get; private set; }
+    public BudgetDateRangeValue DateRange { get; private set; }
 
     /// <summary>
     /// Budget's amount.

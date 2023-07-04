@@ -1,0 +1,57 @@
+<h1 mat-dialog-title>{{ translationKeys.createFormHeader | translate }}</h1>
+
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div mat-dialog-content *ngIf="!isLoading">
+  <form [formGroup]="budgetForm">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormNameLabel | translate }}</mat-label>
+      <input type="text" matInput formControlName="name" cdkFocusInitial />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormCategoryLabel | translate }}</mat-label>
+      <input type="text" matInput formControlName="categoryUid" [matAutocomplete]="category" />
+      <mat-autocomplete #category="matAutocomplete" [displayWith]="displayCategory.bind(this)">
+        <mat-option *ngFor="let category of filteredCategories$ | async" [value]="category.uid">
+          {{ category.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormStartDateLabel | translate }}</mat-label>
+      <input matInput formControlName="startDate" [matDatepicker]="startDatePicker" />
+      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormEndDateLabel | translate }}</mat-label>
+      <input matInput formControlName="endDate" [matDatepicker]="endDatePicker" />
+      <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormAmountLabel | translate }}</mat-label>
+      <input type="number" matInput formControlName="amount" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translationKeys.createFormAmountSpentLabel | translate }}</mat-label>
+      <input type="number" matInput formControlName="amountSpent" />
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="secondary" (click)="onCancelClick()">
+    {{ sharedTranslationKeys.mainActionButtonCancel | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="createBudget()">
+    {{ sharedTranslationKeys.mainActionButtonOk | translate }}
+  </button>
+</div>

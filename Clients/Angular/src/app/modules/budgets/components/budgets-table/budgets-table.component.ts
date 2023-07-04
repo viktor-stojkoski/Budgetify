@@ -2,11 +2,18 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { DestroyBaseComponent, SnackbarService } from '@budgetify/shared';
-import { take } from 'rxjs';
+import {
+  DestroyBaseComponent,
+  DialogActionButton,
+  DialogService,
+  IDialogResponseData,
+  SnackbarService
+} from '@budgetify/shared';
+import { take, takeUntil } from 'rxjs';
 import { IBudgetResponse } from '../../models/budget.model';
 import { BudgetService } from '../../services/budget.service';
 import { TranslationKeys } from '../../static/translationKeys';
+import { CreateBudgetComponent } from '../create-budget/create-budget.component';
 
 @Component({
   selector: 'app-budgets-table',
@@ -34,7 +41,11 @@ export class BudgetsTableComponent extends DestroyBaseComponent implements OnIni
     }
   }
 
-  constructor(private budgetService: BudgetService, private snackbarService: SnackbarService) {
+  constructor(
+    private budgetService: BudgetService,
+    private snackbarService: SnackbarService,
+    private dialogService: DialogService
+  ) {
     super();
   }
 
@@ -45,6 +56,20 @@ export class BudgetsTableComponent extends DestroyBaseComponent implements OnIni
   public applyFilter(event: Event): void {
     this.filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = this.filterValue.trim().toLowerCase();
+  }
+
+  public openCreateBudgetDialog(): void {
+    this.dialogService
+      .open(CreateBudgetComponent)
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (response: IDialogResponseData) => {
+          if (response?.action === DialogActionButton.Ok) {
+            this.getBudgets();
+          }
+        }
+      });
   }
 
   private getBudgets(): void {

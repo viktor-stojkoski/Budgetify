@@ -2,17 +2,26 @@ import { Injectable } from '@angular/core';
 import { BaseApiService } from '@budgetify/core';
 import { IResult } from '@budgetify/shared';
 import { Observable } from 'rxjs';
-import { IBudgetResponse } from '../models/budget.model';
+import { IBudgetResponse, ICategoryResponse, ICreateBudgetRequest } from '../models/budget.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BudgetService {
   private budgetsApiRoute = 'budgets';
+  private categoriesApiRoute = 'categories';
 
   constructor(private baseApiService: BaseApiService) {}
 
   public getBudgets(): Observable<IResult<IBudgetResponse[]>> {
     return this.baseApiService.get<IResult<IBudgetResponse[]>>(this.budgetsApiRoute);
+  }
+
+  public createBudget(request: ICreateBudgetRequest): Observable<void> {
+    return this.baseApiService.post<void>(this.budgetsApiRoute, request);
+  }
+
+  public getCategories(): Observable<IResult<ICategoryResponse[]>> {
+    return this.baseApiService.get<IResult<ICategoryResponse[]>>(this.categoriesApiRoute);
   }
 }

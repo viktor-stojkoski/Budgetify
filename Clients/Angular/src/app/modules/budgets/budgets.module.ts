@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {
   DateAdapter,
   MAT_DATE_FORMATS,
@@ -9,6 +10,7 @@ import {
   MatDateFormats,
   NativeDateAdapter
 } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -20,6 +22,7 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from '@budgetify/core';
 import { DialogService, SharedModule } from '@budgetify/shared';
 import { BudgetsTableComponent } from './components/budgets-table/budgets-table.component';
+import { CreateBudgetComponent } from './components/create-budget/create-budget.component';
 import { routes } from './routes';
 
 export const MY_DATE_FORMATS: MatDateFormats = {
@@ -47,9 +50,11 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
-    MatInputModule
+    MatInputModule,
+    MatAutocompleteModule,
+    MatDatepickerModule
   ],
-  declarations: [BudgetsTableComponent],
+  declarations: [BudgetsTableComponent, CreateBudgetComponent],
   providers: [
     DialogService,
     { provide: DateAdapter, useClass: NativeDateAdapter, deps: [MAT_DATE_LOCALE] },

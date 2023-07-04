@@ -7,3 +7,18 @@ export interface IBudgetResponse {
   amount: number;
   amountSpent: number;
 }
+
+export interface ICreateBudgetRequest {
+  name: string | null;
+  categoryUid: string | null;
+  startDate: Date | null;
+  endDate: Date | null;
+  amount: number | null;
+  amountSpent: number | null;
+}
+
+export interface ICategoryResponse {
+  uid: string;
+  name: string;
+  type: string;
+}

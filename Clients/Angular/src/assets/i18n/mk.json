@@ -69,7 +69,12 @@
     "TRANSACTION_ATTACHMENT_FILE_PATH_INVALID": "Патеката на датотеката за прилог на трансакцијата е невалидна.",
     "TRANSACTION_ATTACHMENT_NAME_INVALID": "Името на прилогот на трансакцијата е невалидно.",
     "TRANSACTION_ATTACHMENT_NAME_INVALID_LENGTH": "Должина на името на прилогот на трансакцијата е невалидно.",
-    "TRANSACTION_ATTACHMENT_NOT_FOUND": "Прилогот на трансакцијата не е пронајден."
+    "TRANSACTION_ATTACHMENT_NOT_FOUND": "Прилогот на трансакцијата не е пронајден.",
+
+    "BUDGET_NAME_INVALID": "Името на буџетот е невалидно.",
+    "BUDGET_NAME_INVALID_LENGTH": "Должината на името на буџетот е невалидно",
+    "BUDGET_WITH_SAME_NAME_ALREADY_EXIST": "Буџет со исто име веќе постои.",
+    "BUDGET_START_DATE_CANNOT_BE_GREATER_THAN_END_DATE": "Почетниот датум на буџетот не може да биде поголем од крајниот датум."
   },
 
   "successMessages": {
@@ -102,6 +107,9 @@
     "exchangeRates": {
       "create": "Девизниот курс е успешно искреиран.",
       "update": "Девизниот курс е успешно уреден."
+    },
+    "budgets": {
+      "create": "Буџетот е успешно искреиран."
     }
   },
 
@@ -287,6 +295,7 @@
 
   "budgets": {
     "toolbarName": "Буџети",
+    "toolbarActionCreateBudget": "Креирај буџет",
 
     "tableFilterLabel": "Филтер",
     "tableNoDataFound": "Не беа пронајдени податоци.",
@@ -295,6 +304,14 @@
     "tableStartDateHeader": "Почетен датум",
     "tableEndDateHeader": "Краен датум",
     "tableAmountHeader": "Износ",
-    "tableAmountSpentHeader": "Потрошен износ"
+    "tableAmountSpentHeader": "Потрошен износ",
+
+    "createFormHeader": "Креирај буџет",
+    "createFormNameLabel": "Име",
+    "createFormCategoryLabel": "Категорија",
+    "createFormStartDateLabel": "Почетен датум",
+    "createFormEndDateLabel": "Краен датум",
+    "createFormAmountLabel": "Износ",
+    "createFormAmountSpentLabel": "Потрошен износ"
   }
 }
