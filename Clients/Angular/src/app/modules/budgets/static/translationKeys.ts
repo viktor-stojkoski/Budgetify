@@ -21,14 +21,14 @@ export class TranslationKeys {
   public static readonly createFormAmountSpentLabel = 'budgets.createFormAmountSpentLabel';
   public static readonly createBudgetSuccessful = 'successMessages.budgets.create';
 
-  // public static readonly detailsHeader = 'budgets.detailsHeader';
-  // public static readonly detailsNameHeader = 'budgets.detailsNameHeader';
-  // public static readonly detailsCategoryHeader = 'budgets.detailsCategoryHeader';
-  // public static readonly detailsStartDateHeader = 'budgets.detailsStartDateHeader';
-  // public static readonly detailsEndDateHeader = 'budgets.detailsEndDateHeader';
-  // public static readonly detailsAmountHeader = 'budgets.detailsAmountHeader';
-  // public static readonly detailsAmountSpentHeader = 'budgets.detailsAmountSpentHeader';
-  // public static readonly updateBudgetSuccessful = 'successMessages.budgets.update';
+  public static readonly detailsHeader = 'budgets.detailsHeader';
+  public static readonly detailsNameHeader = 'budgets.detailsNameHeader';
+  public static readonly detailsCategoryHeader = 'budgets.detailsCategoryHeader';
+  public static readonly detailsStartDateHeader = 'budgets.detailsStartDateHeader';
+  public static readonly detailsEndDateHeader = 'budgets.detailsEndDateHeader';
+  public static readonly detailsAmountHeader = 'budgets.detailsAmountHeader';
+  public static readonly detailsAmountSpentHeader = 'budgets.detailsAmountSpentHeader';
+  public static readonly updateBudgetSuccessful = 'successMessages.budgets.update';
 
   // public static readonly deleteBudgetHeader = 'budgets.deleteBudgetHeader';
   // public static readonly deleteBudgetContent = 'budgets.deleteBudgetContent';

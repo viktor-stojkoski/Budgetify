@@ -109,7 +109,8 @@
       "update": "Девизниот курс е успешно уреден."
     },
     "budgets": {
-      "create": "Буџетот е успешно искреиран."
+      "create": "Буџетот е успешно искреиран.",
+      "update": "Буџетот е успешно уреден."
     }
   },
 
@@ -312,6 +313,14 @@
     "createFormStartDateLabel": "Почетен датум",
     "createFormEndDateLabel": "Краен датум",
     "createFormAmountLabel": "Износ",
-    "createFormAmountSpentLabel": "Потрошен износ"
+    "createFormAmountSpentLabel": "Потрошен износ",
+
+    "detailsHeader": "Детали за буџетот",
+    "detailsNameHeader": "Име",
+    "detailsCategoryHeader": "Категорија",
+    "detailsStartDateHeader": "Почетен датум",
+    "detailsEndDateHeader": "Краен датум",
+    "detailsAmountHeader": "Износ",
+    "detailsAmountSpentHeader": "Потрошен износ"
   }
 }

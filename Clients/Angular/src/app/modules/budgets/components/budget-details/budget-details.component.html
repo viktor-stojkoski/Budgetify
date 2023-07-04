@@ -1,0 +1,33 @@
+<mat-toolbar *ngIf="!isLoading">
+  <span>{{ translationKeys.toolbarName | translate }} > {{ budget?.name ?? '' | truncate: 30 }} </span>
+</mat-toolbar>
+
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<mat-card *ngIf="!isLoading && budget" class="mat-elevation-z8">
+  <mat-card-title>{{ translationKeys.detailsHeader | translate }}</mat-card-title>
+
+  <mat-card-content>
+    <div class="grid-container">
+      <div class="grid-item">{{ translationKeys.detailsNameHeader | translate }}</div>
+      <div class="grid-item">{{ budget.name }}</div>
+
+      <div class="grid-item">{{ translationKeys.detailsCategoryHeader | translate }}</div>
+      <div class="grid-item">{{ budget.categoryName }}</div>
+
+      <div class="grid-item">{{ translationKeys.detailsStartDateHeader | translate }}</div>
+      <div class="grid-item">{{ budget.startDate | date }}</div>
+
+      <div class="grid-item">{{ translationKeys.detailsEndDateHeader | translate }}</div>
+      <div class="grid-item">{{ budget.endDate | date }}</div>
+
+      <div class="grid-item">{{ translationKeys.detailsAmountHeader | translate }}</div>
+      <div class="grid-item">{{ budget.amount }}</div>
+
+      <div class="grid-item no-border">{{ translationKeys.detailsAmountSpentHeader | translate }}</div>
+      <div class="grid-item no-border">{{ budget.amountSpent }}</div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -17,6 +17,10 @@ export class BudgetService {
     return this.baseApiService.get<IResult<IBudgetResponse[]>>(this.budgetsApiRoute);
   }
 
+  public getBudget(uid: string | null): Observable<IResult<IBudgetResponse>> {
+    return this.baseApiService.get<IResult<IBudgetResponse>>(`${this.budgetsApiRoute}/${uid}`);
+  }
+
   public createBudget(request: ICreateBudgetRequest): Observable<void> {
     return this.baseApiService.post<void>(this.budgetsApiRoute, request);
   }

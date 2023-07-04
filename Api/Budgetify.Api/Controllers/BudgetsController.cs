@@ -1,8 +1,10 @@
 ﻿namespace Budgetify.Api.Controllers;
 
+using System;
 using System.Threading.Tasks;
 
 using Budgetify.Contracts.Budget.Requests;
+using Budgetify.Queries.Budget.Queries.GetBudget;
 using Budgetify.Queries.Budget.Queries.GetBudgets;
 using Budgetify.Services.Budget.Commands;
 
@@ -31,6 +33,10 @@ public class BudgetsController : ExtendedApiController
     [HttpGet]
     public async Task<IActionResult> GetBudgetsAsync() =>
         OkOrError(await _queryDispatcher.ExecuteAsync(new GetBudgetsQuery()));
+
+    [HttpGet("{budgetUid:Guid}")]
+    public async Task<IActionResult> GetBudgetAsync([FromRoute] Guid budgetUid) =>
+        OkOrError(await _queryDispatcher.ExecuteAsync(new GetBudgetQuery(budgetUid)));
 
     [HttpPost]
     public async Task<IActionResult> CreateBudgetAsync([FromBody] CreateBudgetRequest request) =>
