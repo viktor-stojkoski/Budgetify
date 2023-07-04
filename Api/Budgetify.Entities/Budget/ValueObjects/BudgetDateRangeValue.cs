@@ -20,7 +20,7 @@ public sealed class BudgetDateRangeValue : ValueObject
 
     public static Result<BudgetDateRangeValue> Create(DateTime startDate, DateTime endDate)
     {
-        if (startDate >= endDate)
+        if (startDate > endDate)
         {
             return Result.Invalid<BudgetDateRangeValue>(ResultCodes.BudgetStartDateCannotBeGreaterThanEndDate);
         }
