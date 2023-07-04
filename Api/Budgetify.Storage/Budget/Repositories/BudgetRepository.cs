@@ -1,11 +1,15 @@
 ﻿namespace Budgetify.Storage.Budget.Repositories;
 
+using System.Threading.Tasks;
+
 using Budgetify.Contracts.Budget.Repositories;
 using Budgetify.Entities.Budget.Domain;
 using Budgetify.Storage.Budget.Factories;
 using Budgetify.Storage.Common.Extensions;
 using Budgetify.Storage.Common.Repositories;
 using Budgetify.Storage.Infrastructure.Context;
+
+using Microsoft.EntityFrameworkCore;
 
 public class BudgetRepository : Repository<Entities.Budget>, IBudgetRepository
 {
@@ -24,5 +28,11 @@ public class BudgetRepository : Repository<Entities.Budget>, IBudgetRepository
         Entities.Budget dbBudget = budget.CreateBudget();
 
         AttachOrUpdate(dbBudget, budget.State.GetState());
+    }
+
+    public async Task<bool> DoesBudgetNameExistAsync(int userId, string? name)
+    {
+        return await AllNoTrackedOf<Entities.Budget>()
+            .AnyAsync(x => x.UserId == userId && x.Name == name);
     }
 }

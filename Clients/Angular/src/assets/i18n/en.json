@@ -70,7 +70,11 @@
     "TRANSACTION_ATTACHMENT_FILE_PATH_INVALID": "Transaction attachment file path invalid.",
     "TRANSACTION_ATTACHMENT_NAME_INVALID": "Transaction attachment name invalid.",
     "TRANSACTION_ATTACHMENT_NAME_INVALID_LENGTH": "Transaction attachment name invalid length.",
-    "TRANSACTION_ATTACHMENT_NOT_FOUND": "Transaction attachment not found."
+    "TRANSACTION_ATTACHMENT_NOT_FOUND": "Transaction attachment not found.",
+
+    "BUDGET_NAME_INVALID": "Budget name invalid.",
+    "BUDGET_NAME_INVALID_LENGTH": "Budget name invalid length.",
+    "BUDGET_WITH_SAME_NAME_ALREADY_EXIST": "Budget with same name already exist."
   },
 
   "successMessages": {
@@ -103,6 +107,9 @@
     "exchangeRates": {
       "create": "Exchange rate has been successfully created.",
       "update": "Exchange rate has been successfully updated."
+    },
+    "budgets": {
+      "create": "Budget has been successfully created."
     }
   },
 
@@ -288,6 +295,7 @@
 
   "budgets": {
     "toolbarName": "Budgets",
+    "toolbarActionCreateBudget": "Create budget",
 
     "tableFilterLabel": "Filter",
     "tableNoDataFound": "No data was found.",
@@ -296,6 +304,14 @@
     "tableStartDateHeader": "Start date",
     "tableEndDateHeader": "End date",
     "tableAmountHeader": "Amount",
-    "tableAmountSpentHeader": "Amount spent"
+    "tableAmountSpentHeader": "Amount spent",
+
+    "createFormHeader": "Create budget",
+    "createFormNameLabel": "Name",
+    "createFormCategoryLabel": "Category",
+    "createFormStartDateLabel": "Start date",
+    "createFormEndDateLabel": "End date",
+    "createFormAmountLabel": "Amount",
+    "createFormAmountSpentLabel": "Amount spent"
   }
 }

@@ -95,6 +95,7 @@ public static class ResultCodes
 
     public const string BudgetNameInvalid = "BUDGET_NAME_INVALID";
     public const string BudgetNameInvalidLength = "BUDGET_NAME_INVALID_LENGTH";
+    public const string BudgetWithSameNameAlreadyExist = "BUDGET_WITH_SAME_NAME_ALREADY_EXIST";
 
     #endregion
 }

@@ -45,6 +45,11 @@ public class CreateBudgetCommandHandler : ICommandHandler<CreateBudgetCommand>
     {
         CommandResultBuilder result = new();
 
+        if (await _budgetRepository.DoesBudgetNameExistAsync(_currentUser.Id, command.Name))
+        {
+            return result.FailWith(Result.Conflicted(ResultCodes.BudgetWithSameNameAlreadyExist));
+        }
+
         Result<Category> categoryResult =
             await _categoryRepository.GetCategoryAsync(_currentUser.Id, command.CategoryUid);
 
@@ -59,8 +64,8 @@ public class CreateBudgetCommandHandler : ICommandHandler<CreateBudgetCommand>
                 userId: _currentUser.Id,
                 name: command.Name,
                 categoryId: categoryResult.Value.Id,
-                startDate: command.StartDate,
-                endDate: command.EndDate,
+                startDate: command.StartDate.ToLocalTime(),
+                endDate: command.EndDate.ToLocalTime(),
                 amount: command.Amount,
                 amountSpent: command.AmountSpent);
 
