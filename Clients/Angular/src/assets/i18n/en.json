@@ -74,7 +74,8 @@
 
     "BUDGET_NAME_INVALID": "Budget name invalid.",
     "BUDGET_NAME_INVALID_LENGTH": "Budget name invalid length.",
-    "BUDGET_WITH_SAME_NAME_ALREADY_EXIST": "Budget with same name already exist."
+    "BUDGET_WITH_SAME_NAME_ALREADY_EXIST": "Budget with same name already exist.",
+    "BUDGET_START_DATE_CANNOT_BE_GREATER_THAN_END_DATE": "Budget start date cannot be greater than end date."
   },
 
   "successMessages": {

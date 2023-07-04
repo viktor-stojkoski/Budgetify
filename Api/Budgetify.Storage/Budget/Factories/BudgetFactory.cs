@@ -37,8 +37,8 @@ internal static class BudgetFactory
             userId: budget.UserId,
             name: budget.Name,
             categoryId: budget.CategoryId,
-            startDate: budget.StartDate,
-            endDate: budget.EndDate,
+            startDate: budget.DateRange.StartDate,
+            endDate: budget.DateRange.EndDate,
             amount: budget.Amount,
             amountSpent: budget.AmountSpent);
     }

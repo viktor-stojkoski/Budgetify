@@ -25,10 +25,13 @@ public partial class Budget
         decimal amountSpent)
     {
         Result<BudgetNameValue> nameValue = BudgetNameValue.Create(name);
+        Result<BudgetDateRangeValue> dateRangeValue = BudgetDateRangeValue.Create(startDate, endDate);
 
-        if (nameValue.IsFailureOrNull)
+        Result okOrError = Result.FirstFailureOrOk(nameValue, dateRangeValue);
+
+        if (okOrError.IsFailureOrNull)
         {
-            return Result.FromError<Budget>(nameValue);
+            return Result.FromError<Budget>(okOrError);
         }
 
         return Result.Ok(
@@ -36,8 +39,7 @@ public partial class Budget
                 userId: userId,
                 name: nameValue.Value,
                 categoryId: categoryId,
-                startDate: startDate,
-                endDate: endDate,
+                dateRange: dateRangeValue.Value,
                 amount: amount,
                 amountSpent: amountSpent)
             {
@@ -62,10 +64,13 @@ public partial class Budget
         decimal amountSpent)
     {
         Result<BudgetNameValue> nameValue = BudgetNameValue.Create(name);
+        Result<BudgetDateRangeValue> dateRangeValue = BudgetDateRangeValue.Create(startDate, endDate);
 
-        if (nameValue.IsFailureOrNull)
+        Result okOrError = Result.FirstFailureOrOk(nameValue, dateRangeValue);
+
+        if (okOrError.IsFailureOrNull)
         {
-            return Result.FromError<Budget>(nameValue);
+            return Result.FromError<Budget>(okOrError);
         }
 
         return Result.Ok(
@@ -73,8 +78,7 @@ public partial class Budget
                 userId: userId,
                 name: nameValue.Value,
                 categoryId: categoryId,
-                startDate: startDate,
-                endDate: endDate,
+                dateRange: dateRangeValue.Value,
                 amount: amount,
                 amountSpent: amountSpent)
             {

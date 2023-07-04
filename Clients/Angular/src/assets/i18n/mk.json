@@ -73,7 +73,8 @@
 
     "BUDGET_NAME_INVALID": "Името на буџетот е невалидно.",
     "BUDGET_NAME_INVALID_LENGTH": "Должината на името на буџетот е невалидно",
-    "BUDGET_WITH_SAME_NAME_ALREADY_EXIST": "Буџет со исто име веќе постои."
+    "BUDGET_WITH_SAME_NAME_ALREADY_EXIST": "Буџет со исто име веќе постои.",
+    "BUDGET_START_DATE_CANNOT_BE_GREATER_THAN_END_DATE": "Почетниот датум на буџетот не може да биде поголем од крајниот датум."
   },
 
   "successMessages": {
