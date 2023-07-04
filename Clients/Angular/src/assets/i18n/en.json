@@ -110,7 +110,8 @@
       "update": "Exchange rate has been successfully updated."
     },
     "budgets": {
-      "create": "Budget has been successfully created."
+      "create": "Budget has been successfully created.",
+      "update": "Budget has been successfully updated."
     }
   },
 
@@ -313,6 +314,14 @@
     "createFormStartDateLabel": "Start date",
     "createFormEndDateLabel": "End date",
     "createFormAmountLabel": "Amount",
-    "createFormAmountSpentLabel": "Amount spent"
+    "createFormAmountSpentLabel": "Amount spent",
+
+    "detailsHeader": "Budget details",
+    "detailsNameHeader": "Name",
+    "detailsCategoryHeader": "Category",
+    "detailsStartDateHeader": "Start date",
+    "detailsEndDateHeader": "End date",
+    "detailsAmountHeader": "Amount",
+    "detailsAmountSpentHeader": "Amount spent"
   }
 }

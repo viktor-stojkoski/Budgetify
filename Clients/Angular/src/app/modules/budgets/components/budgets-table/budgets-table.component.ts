@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import {
   DestroyBaseComponent,
   DialogActionButton,
@@ -44,7 +45,8 @@ export class BudgetsTableComponent extends DestroyBaseComponent implements OnIni
   constructor(
     private budgetService: BudgetService,
     private snackbarService: SnackbarService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private router: Router
   ) {
     super();
   }
@@ -70,6 +72,10 @@ export class BudgetsTableComponent extends DestroyBaseComponent implements OnIni
           }
         }
       });
+  }
+
+  public openBudgetDetails(uid: string): void {
+    this.router.navigateByUrl(`budgets/${uid}`);
   }
 
   private getBudgets(): void {
