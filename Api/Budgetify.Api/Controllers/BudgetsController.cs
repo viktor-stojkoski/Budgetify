@@ -48,4 +48,14 @@ public class BudgetsController : ExtendedApiController
                 EndDate: request.EndDate,
                 Amount: request.Amount,
                 AmountSpent: request.AmountSpent)));
+
+    [HttpPut("{budgetUid:Guid}")]
+    public async Task<IActionResult> UpdateBudgetAsync(
+        [FromRoute] Guid budgetUid,
+        [FromBody] UpdateBudgetRequest request) =>
+        OkOrError(await _commandDispatcher.ExecuteAsync(
+            new UpdateBudgetCommand(
+                Uid: budgetUid,
+                Name: request.Name,
+                Amount: request.Amount)));
 }
