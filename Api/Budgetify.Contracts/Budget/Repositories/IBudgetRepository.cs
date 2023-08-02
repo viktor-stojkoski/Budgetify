@@ -1,7 +1,9 @@
 ﻿namespace Budgetify.Contracts.Budget.Repositories;
 
+using System;
 using System.Threading.Tasks;
 
+using Budgetify.Common.Results;
 using Budgetify.Entities.Budget.Domain;
 
 public interface IBudgetRepository
@@ -20,4 +22,9 @@ public interface IBudgetRepository
     /// Returns boolean indicating whether budget with the given userId and name exists.
     /// </summary>
     Task<bool> DoesBudgetNameExistAsync(int userId, string? name);
+
+    /// <summary>
+    /// Returns budget by given userId and budgetUid.
+    /// </summary>
+    Task<Result<Budget>> GetBudgetAsync(int userId, Guid budgetUid);
 }

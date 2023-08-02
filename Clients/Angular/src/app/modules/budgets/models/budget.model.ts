@@ -17,6 +17,11 @@ export interface ICreateBudgetRequest {
   amountSpent: number | null;
 }
 
+export interface IUpdateBudgetRequest {
+  name: string | null;
+  amount: number | null;
+}
+
 export interface ICategoryResponse {
   uid: string;
   name: string;

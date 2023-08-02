@@ -1,7 +1,9 @@
 ﻿namespace Budgetify.Storage.Budget.Repositories;
 
+using System;
 using System.Threading.Tasks;
 
+using Budgetify.Common.Results;
 using Budgetify.Contracts.Budget.Repositories;
 using Budgetify.Entities.Budget.Domain;
 using Budgetify.Storage.Budget.Factories;
@@ -34,5 +36,18 @@ public class BudgetRepository : Repository<Entities.Budget>, IBudgetRepository
     {
         return await AllNoTrackedOf<Entities.Budget>()
             .AnyAsync(x => x.UserId == userId && x.Name == name);
+    }
+
+    public async Task<Result<Budget>> GetBudgetAsync(int userId, Guid budgetUid)
+    {
+        Entities.Budget? dbBudget = await AllNoTrackedOf<Entities.Budget>()
+            .SingleOrDefaultAsync(x => x.UserId == userId && x.Uid == budgetUid);
+
+        if (dbBudget is null)
+        {
+            return Result.NotFound<Budget>(ResultCodes.BudgetNotFound);
+        }
+
+        return dbBudget.CreateBudget();
     }
 }
