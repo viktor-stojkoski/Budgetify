@@ -42,6 +42,11 @@ public class UpdateBudgetCommandHandler : ICommandHandler<UpdateBudgetCommand>
             return result.FailWith(budgetResult);
         }
 
+        if (await _budgetRepository.DoesBudgetNameExistAsync(_currentUser.Id, command.Name))
+        {
+            return result.FailWith(Result.Conflicted(ResultCodes.BudgetWithSameNameAlreadyExist));
+        }
+
         Result updateResult =
             budgetResult.Value.Update(
                 name: command.Name,
