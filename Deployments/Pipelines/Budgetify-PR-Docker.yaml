@@ -95,6 +95,7 @@ stages:
                   --tag $(apiImageName):latest `
                   --tag $(apiImageName):$(Build.BuildId) `
                   --build-arg PRIVATE_FEED_TOKEN="${{ variables.privateFeedTokenVariable }}" `
+                  --quiet `
                   $(dockerBuildContext)
 
           - task: PowerShell@2
@@ -109,6 +110,7 @@ stages:
                   --tag $(functionsImageName):latest `
                   --tag $(functionsImageName):$(Build.BuildId) `
                   --build-arg PRIVATE_FEED_TOKEN="${{ variables.privateFeedTokenVariable }}" `
+                  --quiet `
                   $(dockerBuildContext)
 
       - job: job_build_database
@@ -173,4 +175,5 @@ stages:
                   --file $(Build.SourcesDirectory)/Clients/Angular/Dockerfile `
                   --tag $(angularImageName):latest `
                   --tag $(angularImageName):$(Build.BuildId) `
+                  --quiet `
                   $(dockerBuildContext)
