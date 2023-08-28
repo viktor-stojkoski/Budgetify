@@ -44,6 +44,7 @@ public class BudgetsController : ExtendedApiController
             new CreateBudgetCommand(
                 Name: request.Name,
                 CategoryUid: request.CategoryUid,
+                CurrencyCode: request.CurrencyCode,
                 StartDate: request.StartDate,
                 EndDate: request.EndDate,
                 Amount: request.Amount,

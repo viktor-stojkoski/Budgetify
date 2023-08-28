@@ -17,6 +17,7 @@ internal class BudgetConfiguration : EntityTypeConfigurationBase<Budget>, IEntit
         builder.Property(x => x.UserId).HasColumnName("UserFk").HasColumnType("int").IsRequired();
         builder.Property(x => x.Name).HasColumnName("Name").HasColumnType("nvarchar(255)").IsRequired();
         builder.Property(x => x.CategoryId).HasColumnName("CategoryFk").HasColumnType("int").IsRequired();
+        builder.Property(x => x.CurrencyId).HasColumnName("CurrencyFk").HasColumnType("int").IsRequired();
         builder.Property(x => x.StartDate).HasColumnName("StartDate").HasColumnType("datetime2(0)").IsRequired();
         builder.Property(x => x.EndDate).HasColumnName("EndDate").HasColumnType("datetime2(0)").IsRequired();
         builder.Property(x => x.Amount).HasColumnName("Amount").HasColumnType("decimal(19,4)").IsRequired();
@@ -24,6 +25,7 @@ internal class BudgetConfiguration : EntityTypeConfigurationBase<Budget>, IEntit
 
         builder.HasOne(x => x.User).WithMany(x => x.Budgets).HasForeignKey(x => x.UserId);
         builder.HasOne(x => x.Category).WithMany(x => x.Budgets).HasForeignKey(x => x.CategoryId);
+        builder.HasOne(x => x.Currency).WithMany(x => x.Budgets).HasForeignKey(x => x.CurrencyId);
 
         builder.Ignore(x => x.DomainEvents);
     }

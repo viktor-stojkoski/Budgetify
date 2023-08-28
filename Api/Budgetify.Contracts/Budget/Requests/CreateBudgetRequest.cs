@@ -8,6 +8,8 @@ public class CreateBudgetRequest
 
     public Guid CategoryUid { get; set; }
 
+    public string? CurrencyCode { get; set; }
+
     public DateTime StartDate { get; set; }
 
     public DateTime EndDate { get; set; }

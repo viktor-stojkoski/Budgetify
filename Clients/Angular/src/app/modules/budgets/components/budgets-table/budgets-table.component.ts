@@ -25,7 +25,16 @@ import { DeleteBudgetComponent } from '../delete-budget/delete-budget.component'
 export class BudgetsTableComponent extends DestroyBaseComponent implements OnInit {
   public readonly translationKeys = TranslationKeys;
   public dataSource!: MatTableDataSource<IBudgetResponse>;
-  public displayedColumns = ['name', 'categoryName', 'startDate', 'endDate', 'amount', 'amountSpent', 'actions'];
+  public displayedColumns = [
+    'name',
+    'categoryName',
+    'startDate',
+    'endDate',
+    'amount',
+    'currencyCode',
+    'amountSpent',
+    'actions'
+  ];
   public isLoading = true;
   public filterValue = '';
 

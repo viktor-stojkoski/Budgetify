@@ -6,9 +6,9 @@ USING
     SELECT *
     FROM (
     VALUES
-        (1, N'a00f8acb-9ddd-4620-8015-fcf5dd00c970', CAST(N'2023-06-11 16:17:00' AS SMALLDATETIME), NULL, 1, N'Gas', 1, CAST(N'2023-06-11 16:17:00' AS DATETIME2(0)), CAST(N'2023-06-30 22:10:00' AS DATETIME2(0)), 5000, 3000),
-        (2, N'4f3c263f-763b-415e-b425-2011c060171f', CAST(N'2023-06-11 16:17:00' AS SMALLDATETIME), NULL, 1, N'Restaurants', 2, CAST(N'2023-06-11 16:17:00' AS DATETIME2(0)), CAST(N'2023-06-30 22:10:00' AS DATETIME2(0)), 10000, 2500)
-     ) AS temp ([Id], [Uid], [CreatedOn], [DeletedOn], [UserFk], [Name], [CategoryFk], [StartDate], [EndDate], [Amount], [AmountSpent])
+        (1, N'a00f8acb-9ddd-4620-8015-fcf5dd00c970', CAST(N'2023-06-11 16:17:00' AS SMALLDATETIME), NULL, 1, N'Gas', 1, 1, CAST(N'2023-06-11 16:17:00' AS DATETIME2(0)), CAST(N'2023-06-30 22:10:00' AS DATETIME2(0)), 5000, 3000),
+        (2, N'4f3c263f-763b-415e-b425-2011c060171f', CAST(N'2023-06-11 16:17:00' AS SMALLDATETIME), NULL, 1, N'Restaurants', 2, 1, CAST(N'2023-06-11 16:17:00' AS DATETIME2(0)), CAST(N'2023-06-30 22:10:00' AS DATETIME2(0)), 10000, 2500)
+     ) AS temp ([Id], [Uid], [CreatedOn], [DeletedOn], [UserFk], [Name], [CategoryFk], [CurrencyFk], [StartDate], [EndDate], [Amount], [AmountSpent])
 ) AS S
 ON T.Id=S.Id
 WHEN MATCHED THEN UPDATE SET
@@ -18,6 +18,7 @@ WHEN MATCHED THEN UPDATE SET
     T.[UserFk]      = S.[UserFk],
     T.[Name]        = S.[Name],
     T.[CategoryFk]  = S.[CategoryFk],
+    T.[CurrencyFk]  = S.[CurrencyFk],
     T.[StartDate]   = S.[StartDate],
     T.[EndDate]     = S.[EndDate],
     T.[Amount]      = S.[Amount],
@@ -31,6 +32,7 @@ INSERT
      [UserFk],
      [Name],
      [CategoryFk],
+     [CurrencyFk],
      [StartDate],
      [EndDate],
      [Amount],
@@ -43,6 +45,7 @@ VALUES
      S.[UserFk],
      S.[Name],
      S.[CategoryFk],
+     S.[CurrencyFk],
      S.[StartDate],
      S.[EndDate],
      S.[Amount],

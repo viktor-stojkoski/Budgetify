@@ -11,6 +11,7 @@ export class TranslationKeys {
   public static readonly tableAmountHeader = 'budgets.tableAmountHeader';
   public static readonly tableAmountSpentHeader = 'budgets.tableAmountSpentHeader';
   public static readonly tableDeleteBudgetTooltip = 'budgets.tableDeleteBudgetTooltip';
+  public static readonly tableCurrencyCodeHeader = 'accounts.tableCurrencyCodeHeader';
 
   public static readonly createFormHeader = 'budgets.createFormHeader';
   public static readonly createFormNameLabel = 'budgets.createFormNameLabel';
@@ -18,6 +19,7 @@ export class TranslationKeys {
   public static readonly createFormStartDateLabel = 'budgets.createFormStartDateLabel';
   public static readonly createFormEndDateLabel = 'budgets.createFormEndDateLabel';
   public static readonly createFormAmountLabel = 'budgets.createFormAmountLabel';
+  public static readonly createFormCurrencyCodeLabel = 'budgets.createFormCurrencyCodeLabel';
   public static readonly createFormAmountSpentLabel = 'budgets.createFormAmountSpentLabel';
   public static readonly createBudgetSuccessful = 'successMessages.budgets.create';
 
@@ -27,6 +29,7 @@ export class TranslationKeys {
   public static readonly detailsStartDateHeader = 'budgets.detailsStartDateHeader';
   public static readonly detailsEndDateHeader = 'budgets.detailsEndDateHeader';
   public static readonly detailsAmountHeader = 'budgets.detailsAmountHeader';
+  public static readonly detailsCurrencyCodeHeader = 'budgets.detailsCurrencyCodeHeader';
   public static readonly detailsAmountSpentHeader = 'budgets.detailsAmountSpentHeader';
   public static readonly updateBudgetSuccessful = 'successMessages.budgets.update';
 

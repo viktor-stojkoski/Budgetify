@@ -19,6 +19,7 @@ public partial class Budget
         int userId,
         string name,
         int categoryId,
+        int currencyId,
         DateTime startDate,
         DateTime endDate,
         decimal amount,
@@ -39,6 +40,7 @@ public partial class Budget
                 userId: userId,
                 name: nameValue.Value,
                 categoryId: categoryId,
+                currencyId: currencyId,
                 dateRange: dateRangeValue.Value,
                 amount: amount,
                 amountSpent: amountSpent)
@@ -58,6 +60,7 @@ public partial class Budget
         int userId,
         string? name,
         int categoryId,
+        int currencyId,
         DateTime startDate,
         DateTime endDate,
         decimal amount,
@@ -78,6 +81,7 @@ public partial class Budget
                 userId: userId,
                 name: nameValue.Value,
                 categoryId: categoryId,
+                currencyId: currencyId,
                 dateRange: dateRangeValue.Value,
                 amount: amount,
                 amountSpent: amountSpent)
