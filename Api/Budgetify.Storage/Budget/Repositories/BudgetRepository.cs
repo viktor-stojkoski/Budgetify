@@ -1,6 +1,8 @@
 ﻿namespace Budgetify.Storage.Budget.Repositories;
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Budgetify.Common.Results;
@@ -49,5 +51,23 @@ public class BudgetRepository : Repository<Entities.Budget>, IBudgetRepository
         }
 
         return dbBudget.CreateBudget();
+    }
+
+    public async Task<Result<IEnumerable<Budget>>> GetBudgetsByCategoryIdAsync(int userId, int categoryId)
+    {
+        IEnumerable<Entities.Budget> dbBudgets = await AllNoTrackedOf<Entities.Budget>()
+            .Where(x => x.UserId == userId && x.CategoryId == categoryId)
+            .ToListAsync();
+
+        IEnumerable<Result<Budget>> dbBudgetsResults = dbBudgets.CreateBudgets();
+
+        Result dbBudgetsResult = Result.FirstFailureNullOrOk(dbBudgetsResults);
+
+        if (dbBudgetsResult.IsFailureOrNull)
+        {
+            return Result.FromError<IEnumerable<Budget>>(dbBudgetsResult);
+        }
+
+        return Result.Ok(dbBudgetsResults.Select(x => x.Value));
     }
 }

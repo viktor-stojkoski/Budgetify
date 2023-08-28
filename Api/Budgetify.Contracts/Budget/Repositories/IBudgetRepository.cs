@@ -1,6 +1,7 @@
 ﻿namespace Budgetify.Contracts.Budget.Repositories;
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Budgetify.Common.Results;
@@ -27,4 +28,9 @@ public interface IBudgetRepository
     /// Returns budget by given userId and budgetUid.
     /// </summary>
     Task<Result<Budget>> GetBudgetAsync(int userId, Guid budgetUid);
+
+    /// <summary>
+    /// Returns the budgets by given categoryId.
+    /// </summary>
+    Task<Result<IEnumerable<Budget>>> GetBudgetsByCategoryIdAsync(int userId, int categoryId);
 }

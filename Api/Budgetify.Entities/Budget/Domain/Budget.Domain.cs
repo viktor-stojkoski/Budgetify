@@ -43,4 +43,16 @@ public partial class Budget
 
         return Result.Ok();
     }
+
+    /// <summary>
+    /// Deducts the given amount from amount spent.
+    /// </summary>
+    public Result UpdateAmountSpent(decimal amount)
+    {
+        AmountSpent += amount;
+
+        MarkModify();
+
+        return Result.Ok();
+    }
 }
