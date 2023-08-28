@@ -58,4 +58,8 @@ public class BudgetsController : ExtendedApiController
                 Uid: budgetUid,
                 Name: request.Name,
                 Amount: request.Amount)));
+
+    [HttpDelete("{budgetUid:Guid}")]
+    public async Task<IActionResult> DeleteBudgetAsync([FromRoute] Guid budgetUid) =>
+        OkOrError(await _commandDispatcher.ExecuteAsync(new DeleteBudgetCommand(budgetUid)));
 }

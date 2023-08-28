@@ -26,6 +26,7 @@ import { BudgetDetailsComponent } from './components/budget-details/budget-detai
 import { BudgetsTableComponent } from './components/budgets-table/budgets-table.component';
 import { CreateBudgetComponent } from './components/create-budget/create-budget.component';
 import { routes } from './routes';
+import { DeleteBudgetComponent } from './components/delete-budget/delete-budget.component';
 
 export const MY_DATE_FORMATS: MatDateFormats = {
   ...MAT_NATIVE_DATE_FORMATS,
@@ -57,7 +58,7 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     MatDatepickerModule,
     MatCardModule
   ],
-  declarations: [BudgetsTableComponent, CreateBudgetComponent, BudgetDetailsComponent],
+  declarations: [BudgetsTableComponent, CreateBudgetComponent, BudgetDetailsComponent, DeleteBudgetComponent],
   providers: [
     DialogService,
     { provide: DateAdapter, useClass: NativeDateAdapter, deps: [MAT_DATE_LOCALE] },

@@ -11,10 +11,11 @@ import {
   SnackbarService
 } from '@budgetify/shared';
 import { take, takeUntil } from 'rxjs';
-import { IBudgetResponse } from '../../models/budget.model';
+import { IBudgetResponse, IDeleteBudgetDialogData } from '../../models/budget.model';
 import { BudgetService } from '../../services/budget.service';
 import { TranslationKeys } from '../../static/translationKeys';
 import { CreateBudgetComponent } from '../create-budget/create-budget.component';
+import { DeleteBudgetComponent } from '../delete-budget/delete-budget.component';
 
 @Component({
   selector: 'app-budgets-table',
@@ -24,7 +25,7 @@ import { CreateBudgetComponent } from '../create-budget/create-budget.component'
 export class BudgetsTableComponent extends DestroyBaseComponent implements OnInit {
   public readonly translationKeys = TranslationKeys;
   public dataSource!: MatTableDataSource<IBudgetResponse>;
-  public displayedColumns = ['name', 'categoryName', 'startDate', 'endDate', 'amount', 'amountSpent'];
+  public displayedColumns = ['name', 'categoryName', 'startDate', 'endDate', 'amount', 'amountSpent', 'actions'];
   public isLoading = true;
   public filterValue = '';
 
@@ -76,6 +77,25 @@ export class BudgetsTableComponent extends DestroyBaseComponent implements OnIni
 
   public openBudgetDetails(uid: string): void {
     this.router.navigateByUrl(`budgets/${uid}`);
+  }
+
+  public openDeleteBudgetDialog(name: string, uid: string): void {
+    this.dialogService
+      .open(DeleteBudgetComponent, {
+        data: {
+          name: name,
+          uid: uid
+        } as IDeleteBudgetDialogData
+      })
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (response: IDialogResponseData) => {
+          if (response?.action === DialogActionButton.Ok) {
+            this.getBudgets();
+          }
+        }
+      });
   }
 
   private getBudgets(): void {

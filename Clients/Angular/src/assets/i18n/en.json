@@ -111,7 +111,8 @@
     },
     "budgets": {
       "create": "Budget has been successfully created.",
-      "update": "Budget has been successfully updated."
+      "update": "Budget has been successfully updated.",
+      "delete": "Budget has been successfully deleted."
     }
   },
 
@@ -307,6 +308,7 @@
     "tableEndDateHeader": "End date",
     "tableAmountHeader": "Amount",
     "tableAmountSpentHeader": "Amount spent",
+    "tableDeleteBudgetTooltip": "Delete",
 
     "createFormHeader": "Create budget",
     "createFormNameLabel": "Name",
@@ -322,6 +324,9 @@
     "detailsStartDateHeader": "Start date",
     "detailsEndDateHeader": "End date",
     "detailsAmountHeader": "Amount",
-    "detailsAmountSpentHeader": "Amount spent"
+    "detailsAmountSpentHeader": "Amount spent",
+
+    "deleteBudgetHeader": "Delete budget",
+    "deleteBudgetContent": "Are you sure you want to delete the budget <strong>{{budgetName}}</strong> ?"
   }
 }

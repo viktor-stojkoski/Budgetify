@@ -42,6 +42,11 @@ public class UpdateCategoryCommandHandler : ICommandHandler<UpdateCategoryComman
             return result.FailWith(categoryResult);
         }
 
+        if (await _categoryRepository.DoesCategoryNameExistAsync(_currentUser.Id, command.Name))
+        {
+            return result.FailWith(Result.Conflicted(ResultCodes.CategoryWithSameNameAlreadyExist));
+        }
+
         Result updateResult =
             categoryResult.Value.Update(
                 name: command.Name,

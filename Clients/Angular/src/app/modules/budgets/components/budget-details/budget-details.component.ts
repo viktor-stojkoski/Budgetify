@@ -1,11 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { DestroyBaseComponent, TranslationKeys as SharedTranslationKeys, SnackbarService } from '@budgetify/shared';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import {
+  DestroyBaseComponent,
+  DialogActionButton,
+  DialogService,
+  IDialogResponseData,
+  TranslationKeys as SharedTranslationKeys,
+  SnackbarService
+} from '@budgetify/shared';
 import { concatMap, take, takeUntil, tap } from 'rxjs';
-import { IBudgetResponse } from '../../models/budget.model';
+import { IBudgetResponse, IDeleteBudgetDialogData } from '../../models/budget.model';
 import { BudgetService } from '../../services/budget.service';
 import { TranslationKeys } from '../../static/translationKeys';
+import { DeleteBudgetComponent } from '../delete-budget/delete-budget.component';
 
 @Component({
   selector: 'app-budget-details',
@@ -29,7 +37,9 @@ export class BudgetDetailsComponent extends DestroyBaseComponent implements OnIn
     private budgetService: BudgetService,
     private activatedRoute: ActivatedRoute,
     private snackbarService: SnackbarService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dialogService: DialogService,
+    private router: Router
   ) {
     super();
   }
@@ -73,6 +83,25 @@ export class BudgetDetailsComponent extends DestroyBaseComponent implements OnIn
           }
         });
     }
+  }
+
+  public openDeleteBudgetDialog(): void {
+    this.dialogService
+      .open(DeleteBudgetComponent, {
+        data: {
+          name: this.budget?.name,
+          uid: this.budgetUid
+        } as IDeleteBudgetDialogData
+      })
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (response: IDialogResponseData) => {
+          if (response?.action === DialogActionButton.Ok) {
+            this.router.navigateByUrl('budgets');
+          }
+        }
+      });
   }
 
   private getBudget(): void {

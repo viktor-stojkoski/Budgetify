@@ -27,3 +27,8 @@ export interface ICategoryResponse {
   name: string;
   type: string;
 }
+
+export interface IDeleteBudgetDialogData {
+  uid: string;
+  name: string;
+}

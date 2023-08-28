@@ -53,6 +53,11 @@ public class UpdateAccountCommandHandler : ICommandHandler<UpdateAccountCommand>
             return result.FailWith(accountResult);
         }
 
+        if (await _accountRepository.DoesAccountNameExistAsync(_currentUser.Id, command.Name))
+        {
+            return result.FailWith(Result.Conflicted(ResultCodes.AccountWithSameNameAlreadyExist));
+        }
+
         Result<Currency> currencyResult =
             await _currencyRepository.GetCurrencyByCodeAsync(command.CurrencyCode);
 

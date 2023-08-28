@@ -29,6 +29,10 @@ export class BudgetService {
     return this.baseApiService.put<void>(`${this.budgetsApiRoute}/${uid}`, request);
   }
 
+  public deleteBudget(uid: string | null): Observable<void> {
+    return this.baseApiService.delete<void>(`${this.budgetsApiRoute}/${uid}`);
+  }
+
   public getCategories(): Observable<IResult<ICategoryResponse[]>> {
     return this.baseApiService.get<IResult<ICategoryResponse[]>>(this.categoriesApiRoute);
   }
