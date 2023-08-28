@@ -10,7 +10,7 @@ export class TranslationKeys {
   public static readonly tableEndDateHeader = 'budgets.tableEndDateHeader';
   public static readonly tableAmountHeader = 'budgets.tableAmountHeader';
   public static readonly tableAmountSpentHeader = 'budgets.tableAmountSpentHeader';
-  // public static readonly tableDeleteBudgetTooltip = 'budgets.tableDeleteBudgetTooltip';
+  public static readonly tableDeleteBudgetTooltip = 'budgets.tableDeleteBudgetTooltip';
 
   public static readonly createFormHeader = 'budgets.createFormHeader';
   public static readonly createFormNameLabel = 'budgets.createFormNameLabel';
@@ -30,7 +30,7 @@ export class TranslationKeys {
   public static readonly detailsAmountSpentHeader = 'budgets.detailsAmountSpentHeader';
   public static readonly updateBudgetSuccessful = 'successMessages.budgets.update';
 
-  // public static readonly deleteBudgetHeader = 'budgets.deleteBudgetHeader';
-  // public static readonly deleteBudgetContent = 'budgets.deleteBudgetContent';
-  // public static readonly deleteBudgetSuccessful = 'successMessages.budgets.delete';
+  public static readonly deleteBudgetHeader = 'budgets.deleteBudgetHeader';
+  public static readonly deleteBudgetContent = 'budgets.deleteBudgetContent';
+  public static readonly deleteBudgetSuccessful = 'successMessages.budgets.delete';
 }

@@ -110,7 +110,8 @@
     },
     "budgets": {
       "create": "Буџетот е успешно искреиран.",
-      "update": "Буџетот е успешно уреден."
+      "update": "Буџетот е успешно уреден.",
+      "delete": "Буџетот е успешно избришан."
     }
   },
 
@@ -306,6 +307,7 @@
     "tableEndDateHeader": "Краен датум",
     "tableAmountHeader": "Износ",
     "tableAmountSpentHeader": "Потрошен износ",
+    "tableDeleteBudgetTooltip": "Избриши",
 
     "createFormHeader": "Креирај буџет",
     "createFormNameLabel": "Име",
@@ -321,6 +323,9 @@
     "detailsStartDateHeader": "Почетен датум",
     "detailsEndDateHeader": "Краен датум",
     "detailsAmountHeader": "Износ",
-    "detailsAmountSpentHeader": "Потрошен износ"
+    "detailsAmountSpentHeader": "Потрошен износ",
+
+    "deleteBudgetHeader": "Избриши буџет",
+    "deleteBudgetContent": "Дали сте сигурни дека сакате да го избришете буџетот <strong>{{budgetName}}</strong> ?"
   }
 }
