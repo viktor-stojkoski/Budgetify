@@ -36,11 +36,20 @@ public partial class Transaction
 
         if (IsVerified)
         {
+            decimal differenceAmount = Amount > amount ? -Math.Abs(Amount - amount) : Math.Abs(Amount - amount);
+
             AddDomainEvent(
                 new TransactionUpdatedDomainEvent(
                     UserId: UserId,
                     TransactionUid: Uid,
-                    DifferenceAmount: Amount > amount ? -Math.Abs(Amount - amount) : Math.Abs(Amount - amount)));
+                    PreviousTransactionType: Type,
+                    TransactionType: typeValue.Value,
+                    PreviousAccountId: AccountId,
+                    PreviousAmount: Amount,
+                    PreviousCurrencyId: CurrencyId,
+                    DifferenceAmount: typeValue.Value == TransactionType.Expense
+                        ? differenceAmount
+                        : -differenceAmount));
         }
 
         AccountId = accountId;
@@ -78,11 +87,17 @@ public partial class Transaction
 
         MarkModify();
 
-        AddDomainEvent(
-            new TransactionDeletedDomainEvent(
-                UserId: UserId,
-                TransactionUid: Uid,
-                DifferenceAmount: -Amount));
+        if (IsVerified)
+        {
+            AddDomainEvent(
+                new TransactionDeletedDomainEvent(
+                    UserId: UserId,
+                    AccountId: AccountId!.Value,
+                    CurrencyId: CurrencyId,
+                    Amount: -Amount,
+                    Date: Date!.Value,
+                    TransactionType: Type));
+        }
 
         return Result.Ok();
     }
@@ -97,7 +112,7 @@ public partial class Transaction
             return Result.Ok();
         }
 
-        if (!AccountId.HasValue || !CategoryId.HasValue)
+        if (!AccountId.HasValue || !CategoryId.HasValue || !Date.HasValue)
         {
             return Result.Invalid<Transaction>(ResultCodes.TransactionInvalidForVerification);
         }

@@ -2,6 +2,14 @@
 
 using System;
 
+using Budgetify.Entities.Transaction.Enumerations;
+
 using VS.DomainEvents;
 
-public record TransactionDeletedDomainEvent(int UserId, Guid TransactionUid, decimal DifferenceAmount) : IDomainEvent;
+public record TransactionDeletedDomainEvent(
+    int UserId,
+    int AccountId,
+    int CurrencyId,
+    decimal Amount,
+    DateTime Date,
+    TransactionType TransactionType) : IDomainEvent;

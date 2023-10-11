@@ -29,7 +29,12 @@ public class TransactionCreatedDomainEventHandler : IDomainEventHandler<Transact
     {
         _jobService.Enqueue(() => _syncCommandDispatcher.Execute(
             new UpdateAccountBalanceFromTransactionAmountCommand(
-                @event.UserId, @event.TransactionUid, @event.DifferenceAmount)));
+                @event.UserId,
+                @event.TransactionUid,
+                null,
+                null,
+                null,
+                @event.DifferenceAmount)));
 
         if (@event.TransactionType == TransactionType.Expense)
         {

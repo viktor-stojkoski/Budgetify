@@ -18,6 +18,9 @@ using VS.Commands;
 public record UpdateAccountBalanceFromTransactionAmountCommand(
     int UserId,
     Guid TransactionUid,
+    int? PreviousAccountId,
+    decimal? PreviousAmount,
+    int? PreviousCurrencyId,
     decimal DifferenceAmount) : ICommand;
 
 public class UpdateAccountBalanceFromTransactionAmountCommandHandler
@@ -52,9 +55,7 @@ public class UpdateAccountBalanceFromTransactionAmountCommandHandler
             return result.FailWith(transactionResult);
         }
 
-        if (!transactionResult.Value.IsVerified
-                || !transactionResult.Value.AccountId.HasValue
-                    || !transactionResult.Value.Date.HasValue)
+        if (!transactionResult.Value.AccountId.HasValue || !transactionResult.Value.Date.HasValue)
         {
             return result.FailWith(Result.Invalid(ResultCodes.TransactionNotVerifiedCannotUpdateAccountBalance));
         }
@@ -67,37 +68,126 @@ public class UpdateAccountBalanceFromTransactionAmountCommandHandler
             return result.FailWith(accountResult);
         }
 
-        decimal amount = command.DifferenceAmount;
+        decimal previousAmount = command.PreviousAmount ?? transactionResult.Value.Amount;
 
-        if (transactionResult.Value.CurrencyId != accountResult.Value.CurrencyId)
+        if (command.PreviousCurrencyId.HasValue && accountResult.Value.CurrencyId != command.PreviousCurrencyId)
         {
-            Result<ExchangeRate> exchangeRateResult =
+            Result<ExchangeRate> previousAmountExchangeRateResult =
                 await _exchangeRateRepository.GetExchangeRateByDateAndCurrenciesAsync(
                     userId: command.UserId,
-                    fromCurrencyId: transactionResult.Value.CurrencyId,
+                    fromCurrencyId: command.PreviousCurrencyId.Value,
                     toCurrencyId: accountResult.Value.CurrencyId,
                     date: transactionResult.Value.Date.Value);
 
+            if (previousAmountExchangeRateResult.IsFailureOrNull)
+            {
+                return result.FailWith(previousAmountExchangeRateResult);
+            }
+
+            previousAmount *= previousAmountExchangeRateResult.Value.Rate;
+        }
+
+        if (command.PreviousAccountId.HasValue && command.PreviousAccountId != transactionResult.Value.AccountId)
+        {
+            Result previousAccountUpdateResult =
+                await UpdatePreviousAccountBalance(
+                    userId: command.UserId,
+                    previousAccountId: command.PreviousAccountId.Value,
+                    previousAccountAmount: previousAmount);
+
+            if (previousAccountUpdateResult.IsFailureOrNull)
+            {
+                return result.FailWith(previousAccountUpdateResult);
+            }
+        }
+
+        Result currentAccountUpdateResult =
+            await UpdateCurrentAccountBalance(
+                userId: command.UserId,
+                transaction: transactionResult.Value,
+                account: accountResult.Value,
+                previousAmount: previousAmount,
+                previousAccountId: command.PreviousAccountId);
+
+        if (currentAccountUpdateResult.IsFailureOrNull)
+        {
+            return result.FailWith(currentAccountUpdateResult);
+        }
+
+        await _unitOfWork.SaveAsync();
+
+        return result.Build();
+    }
+
+    private async Task<Result> UpdatePreviousAccountBalance(
+        int userId,
+        int previousAccountId,
+        decimal previousAccountAmount)
+    {
+        Result<Account> previousAccountResult =
+            await _accountRepository.GetAccountByIdAsync(userId, previousAccountId);
+
+        if (previousAccountResult.IsFailureOrNull)
+        {
+            return previousAccountResult;
+        }
+
+        Result previousAccountUpdateResult =
+            previousAccountResult.Value.DeductBalance(-previousAccountAmount);
+
+        if (previousAccountUpdateResult.IsFailureOrNull)
+        {
+            return previousAccountUpdateResult;
+        }
+
+        _accountRepository.Update(previousAccountResult.Value);
+
+        return Result.Ok();
+    }
+
+    private async Task<Result> UpdateCurrentAccountBalance(
+        int userId,
+        Transaction transaction,
+        Account account,
+        decimal? previousAmount,
+        decimal? previousAccountId)
+    {
+        decimal amount = transaction.Amount;
+
+        if (transaction.CurrencyId != account.CurrencyId)
+        {
+            Result<ExchangeRate> exchangeRateResult =
+                await _exchangeRateRepository.GetExchangeRateByDateAndCurrenciesAsync(
+                    userId: userId,
+                    fromCurrencyId: transaction.CurrencyId,
+                    toCurrencyId: account.CurrencyId,
+                    date: transaction.Date!.Value);
+
             if (exchangeRateResult.IsFailureOrNull)
             {
-                return result.FailWith(exchangeRateResult);
+                return exchangeRateResult;
             }
 
             amount *= exchangeRateResult.Value.Rate;
         }
 
-        Result updateResult =
-            accountResult.Value.DeductBalance(amount);
-
-        if (updateResult.IsFailureOrNull)
+        if (previousAmount.HasValue
+                && previousAccountId == transaction.AccountId)
         {
-            return result.FailWith(updateResult);
+            amount = previousAmount > amount
+                ? -Math.Abs(previousAmount.Value - amount)
+                : Math.Abs(previousAmount.Value - amount);
         }
 
-        _accountRepository.Update(accountResult.Value);
+        Result accountUpdateResult = account.DeductBalance(amount);
 
-        await _unitOfWork.SaveAsync();
+        if (accountUpdateResult.IsFailureOrNull)
+        {
+            return accountUpdateResult;
+        }
 
-        return result.Build();
+        _accountRepository.Update(account);
+
+        return Result.Ok();
     }
 }

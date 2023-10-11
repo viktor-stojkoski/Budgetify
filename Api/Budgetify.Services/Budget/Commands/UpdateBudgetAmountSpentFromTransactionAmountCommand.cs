@@ -57,9 +57,7 @@ public class UpdateBudgetAmountSpentFromTransactionAmountCommandHandler
             return result.FailWith(transactionResult);
         }
 
-        if (!transactionResult.Value.IsVerified
-                || !transactionResult.Value.CategoryId.HasValue
-                    || !transactionResult.Value.Date.HasValue)
+        if (!transactionResult.Value.CategoryId.HasValue || !transactionResult.Value.Date.HasValue)
         {
             return result.FailWith(Result.Invalid(ResultCodes.TransactionNotVerifiedCannotUpdateBudgetAmountSpent));
         }
