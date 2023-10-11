@@ -45,7 +45,7 @@ public partial class Budget
     }
 
     /// <summary>
-    /// Deducts the given amount from amount spent.
+    /// Updates the amount spent with the given amount.
     /// </summary>
     public Result UpdateAmountSpent(decimal amount)
     {

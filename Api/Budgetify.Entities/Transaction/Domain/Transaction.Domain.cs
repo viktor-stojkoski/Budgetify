@@ -36,20 +36,15 @@ public partial class Transaction
 
         if (IsVerified)
         {
-            decimal differenceAmount = Amount > amount ? -Math.Abs(Amount - amount) : Math.Abs(Amount - amount);
-
             AddDomainEvent(
                 new TransactionUpdatedDomainEvent(
                     UserId: UserId,
                     TransactionUid: Uid,
-                    PreviousTransactionType: Type,
                     TransactionType: typeValue.Value,
                     PreviousAccountId: AccountId,
                     PreviousAmount: Amount,
                     PreviousCurrencyId: CurrencyId,
-                    DifferenceAmount: typeValue.Value == TransactionType.Expense
-                        ? differenceAmount
-                        : -differenceAmount));
+                    PreviousCategoryId: CategoryId));
         }
 
         AccountId = accountId;

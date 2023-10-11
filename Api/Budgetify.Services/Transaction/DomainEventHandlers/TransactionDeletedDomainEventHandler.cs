@@ -1,6 +1,5 @@
 ﻿namespace Budgetify.Services.Transaction.DomainEventHandlers;
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,7 +7,6 @@ using Budgetify.Common.Jobs;
 using Budgetify.Entities.Transaction.DomainEvents;
 using Budgetify.Entities.Transaction.Enumerations;
 using Budgetify.Services.Account.Commands;
-using Budgetify.Services.Budget.Commands;
 
 using VS.Commands;
 using VS.DomainEvents;
@@ -38,9 +36,9 @@ public class TransactionDeletedDomainEventHandler : IDomainEventHandler<Transact
 
         if (@event.TransactionType == TransactionType.Expense)
         {
-            _jobService.Enqueue(() => _syncCommandDispatcher.Execute(
-                new UpdateBudgetAmountSpentFromTransactionAmountCommand(
-                    @event.UserId, Guid.NewGuid(), @event.Amount)));
+            //_jobService.Enqueue(() => _syncCommandDispatcher.Execute(
+            //    new UpdateBudgetAmountSpentFromTransactionAmountCommand(
+            //        @event.UserId, @event.Tra, @event.Amount)));
         }
 
         return Task.CompletedTask;

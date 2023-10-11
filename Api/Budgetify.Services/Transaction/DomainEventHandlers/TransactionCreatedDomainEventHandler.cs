@@ -40,7 +40,11 @@ public class TransactionCreatedDomainEventHandler : IDomainEventHandler<Transact
         {
             _jobService.Enqueue(() => _syncCommandDispatcher.Execute(
                 new UpdateBudgetAmountSpentFromTransactionAmountCommand(
-                    @event.UserId, @event.TransactionUid, @event.DifferenceAmount)));
+                    @event.UserId,
+                    @event.TransactionUid,
+                    null,
+                    null,
+                    null)));
         }
 
         return Task.CompletedTask;

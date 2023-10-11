@@ -171,8 +171,7 @@ public class UpdateAccountBalanceFromTransactionAmountCommandHandler
             amount *= exchangeRateResult.Value.Rate;
         }
 
-        if (previousAmount.HasValue
-                && previousAccountId == transaction.AccountId)
+        if (previousAmount.HasValue && previousAccountId == transaction.AccountId)
         {
             amount = previousAmount > amount
                 ? -Math.Abs(previousAmount.Value - amount)
