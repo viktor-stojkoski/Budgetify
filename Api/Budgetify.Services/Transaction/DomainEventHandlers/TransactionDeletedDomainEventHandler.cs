@@ -7,6 +7,7 @@ using Budgetify.Common.Jobs;
 using Budgetify.Entities.Transaction.DomainEvents;
 using Budgetify.Entities.Transaction.Enumerations;
 using Budgetify.Services.Account.Commands;
+using Budgetify.Services.Budget.Commands;
 
 using VS.Commands;
 using VS.DomainEvents;
@@ -36,9 +37,13 @@ public class TransactionDeletedDomainEventHandler : IDomainEventHandler<Transact
 
         if (@event.TransactionType == TransactionType.Expense)
         {
-            //_jobService.Enqueue(() => _syncCommandDispatcher.Execute(
-            //    new UpdateBudgetAmountSpentFromTransactionAmountCommand(
-            //        @event.UserId, @event.Tra, @event.Amount)));
+            _jobService.Enqueue(() => _syncCommandDispatcher.Execute(
+                new DeductBudgetAmountSpentCommand(
+                    @event.UserId,
+                    @event.CurrencyId,
+                    @event.CategoryId,
+                    @event.Amount,
+                    @event.Date)));
         }
 
         return Task.CompletedTask;

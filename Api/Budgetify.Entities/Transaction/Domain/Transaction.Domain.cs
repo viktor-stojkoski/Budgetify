@@ -89,6 +89,7 @@ public partial class Transaction
                     UserId: UserId,
                     AccountId: AccountId!.Value,
                     CurrencyId: CurrencyId,
+                    CategoryId: CategoryId!.Value,
                     Amount: -Amount,
                     Date: Date!.Value,
                     TransactionType: Type));

@@ -20,8 +20,7 @@ public record UpdateAccountBalanceFromTransactionAmountCommand(
     Guid TransactionUid,
     int? PreviousAccountId,
     decimal? PreviousAmount,
-    int? PreviousCurrencyId,
-    decimal DifferenceAmount) : ICommand;
+    int? PreviousCurrencyId) : ICommand;
 
 public class UpdateAccountBalanceFromTransactionAmountCommandHandler
     : ICommandHandler<UpdateAccountBalanceFromTransactionAmountCommand>

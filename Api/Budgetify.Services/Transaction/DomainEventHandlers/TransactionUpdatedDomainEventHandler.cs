@@ -33,8 +33,7 @@ public class TransactionUpdatedDomainEventHandler : IDomainEventHandler<Transact
                 @event.TransactionUid,
                 @event.PreviousAccountId,
                 @event.PreviousAmount,
-                @event.PreviousCurrencyId,
-                decimal.Zero)));
+                @event.PreviousCurrencyId)));
 
         if (@event.TransactionType == TransactionType.Expense)
         {
