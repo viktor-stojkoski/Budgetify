@@ -110,10 +110,7 @@ public partial class Transaction
             new TransactionCreatedDomainEvent(
                 UserId: transaction.UserId,
                 TransactionUid: transaction.Uid,
-                TransactionType: transaction.Type,
-                DifferenceAmount: transaction.Type == TransactionType.Expense
-                    ? transaction.Amount
-                    : -transaction.Amount));
+                TransactionType: transaction.Type));
 
         return Result.Ok(transaction);
     }

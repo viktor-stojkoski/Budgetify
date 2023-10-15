@@ -30,7 +30,7 @@ public interface IBudgetRepository
     Task<Result<Budget>> GetBudgetAsync(int userId, Guid budgetUid);
 
     /// <summary>
-    /// Returns the budgets by given categoryId.
+    /// Returns the budgets by given userId and categoryId.
     /// </summary>
     Task<Result<IEnumerable<Budget>>> GetBudgetsByCategoryIdAsync(int userId, int categoryId);
 }

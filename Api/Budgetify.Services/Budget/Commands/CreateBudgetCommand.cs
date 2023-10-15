@@ -67,6 +67,11 @@ public class CreateBudgetCommandHandler : ICommandHandler<CreateBudgetCommand>
         Result<Currency> currencyResult =
             await _currencyRepository.GetCurrencyByCodeAsync(command.CurrencyCode);
 
+        if (currencyResult.IsFailureOrNull)
+        {
+            return result.FailWith(currencyResult);
+        }
+
         Result<Budget> budgetResult =
             Budget.Create(
                 createdOn: DateTime.UtcNow,
