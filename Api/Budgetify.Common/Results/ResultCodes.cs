@@ -92,7 +92,7 @@ public static class ResultCodes
 
     #endregion
 
-    #region
+    #region Budget
 
     public const string BudgetNameInvalid = "BUDGET_NAME_INVALID";
     public const string BudgetNameInvalidLength = "BUDGET_NAME_INVALID_LENGTH";
