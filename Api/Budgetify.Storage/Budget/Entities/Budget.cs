@@ -4,6 +4,7 @@ using System;
 
 using Budgetify.Storage.Category.Entities;
 using Budgetify.Storage.Common.Entities;
+using Budgetify.Storage.Currency.Entities;
 using Budgetify.Storage.User.Entities;
 
 public class Budget : AggregateRoot
@@ -16,6 +17,7 @@ public class Budget : AggregateRoot
         int userId,
         string name,
         int categoryId,
+        int currencyId,
         DateTime startDate,
         DateTime endDate,
         decimal amount,
@@ -24,6 +26,7 @@ public class Budget : AggregateRoot
         UserId = userId;
         Name = name;
         CategoryId = categoryId;
+        CurrencyId = currencyId;
         StartDate = startDate;
         EndDate = endDate;
         Amount = amount;
@@ -36,6 +39,8 @@ public class Budget : AggregateRoot
 
     public int CategoryId { get; protected internal set; }
 
+    public int CurrencyId { get; protected internal set; }
+
     public DateTime StartDate { get; protected internal set; }
 
     public DateTime EndDate { get; protected internal set; }
@@ -47,4 +52,6 @@ public class Budget : AggregateRoot
     public virtual User User { get; protected internal set; } = null!;
 
     public virtual Category Category { get; protected internal set; } = null!;
+
+    public virtual Currency Currency { get; protected internal set; } = null!;
 }

@@ -36,10 +36,12 @@ public class GetBudgetQueryHandler : IQueryHandler<GetBudgetQuery, BudgetRespons
         BudgetResponse? budget =
             await _budgetifyReadonlyDbContext.AllNoTrackedOf<Budget>()
                 .Include(x => x.Category)
+                .Include(x => x.Currency)
                 .Where(x => x.UserId == _currentUser.Id && x.Uid == query.BudgetUid)
                 .Select(x => new BudgetResponse(
                     x.Name,
                     x.Category.Name,
+                    x.Currency.Code,
                     x.StartDate,
                     x.EndDate,
                     x.Amount,

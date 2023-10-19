@@ -1,5 +1,8 @@
 ﻿namespace Budgetify.Storage.Budget.Factories;
 
+using System.Collections.Generic;
+using System.Linq;
+
 using Budgetify.Common.Results;
 using Budgetify.Entities.Budget.Domain;
 
@@ -18,6 +21,7 @@ internal static class BudgetFactory
             userId: dbBudget.UserId,
             name: dbBudget.Name,
             categoryId: dbBudget.CategoryId,
+            currencyId: dbBudget.CurrencyId,
             startDate: dbBudget.StartDate,
             endDate: dbBudget.EndDate,
             amount: dbBudget.Amount,
@@ -37,9 +41,18 @@ internal static class BudgetFactory
             userId: budget.UserId,
             name: budget.Name,
             categoryId: budget.CategoryId,
+            currencyId: budget.CurrencyId,
             startDate: budget.DateRange.StartDate,
             endDate: budget.DateRange.EndDate,
             amount: budget.Amount,
             amountSpent: budget.AmountSpent);
+    }
+
+    /// <summary>
+    /// Creates list of <see cref="Budget"/> domain entities for a given <see cref="Entities.Budget"/> storage entity list.
+    /// </summary>
+    internal static IEnumerable<Result<Budget>> CreateBudgets(this IEnumerable<Entities.Budget> dbBudgets)
+    {
+        return dbBudgets?.Select(CreateBudget) ?? Enumerable.Empty<Result<Budget>>();
     }
 }

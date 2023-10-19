@@ -8,6 +8,7 @@ public class BudgetResponse
         Guid uid,
         string name,
         string categoryName,
+        string currencyCode,
         DateTime startDate,
         DateTime endDate,
         decimal amount,
@@ -16,6 +17,7 @@ public class BudgetResponse
         Uid = uid;
         Name = name;
         CategoryName = categoryName;
+        CurrencyCode = currencyCode;
         StartDate = startDate;
         EndDate = endDate;
         Amount = amount;
@@ -27,6 +29,8 @@ public class BudgetResponse
     public string Name { get; set; }
 
     public string CategoryName { get; set; }
+
+    public string CurrencyCode { get; set; }
 
     public DateTime StartDate { get; set; }
 

@@ -2,6 +2,7 @@ export interface IBudgetResponse {
   uid: string;
   name: string;
   categoryName: string;
+  currencyCode: string;
   startDate: Date;
   endDate: Date;
   amount: number;
@@ -11,10 +12,17 @@ export interface IBudgetResponse {
 export interface ICreateBudgetRequest {
   name: string | null;
   categoryUid: string | null;
+  currencyCode: string | null;
   startDate: Date | null;
   endDate: Date | null;
   amount: number | null;
   amountSpent: number | null;
+}
+
+export interface ICurrencyResponse {
+  name: string;
+  code: string;
+  symbol?: string;
 }
 
 export interface IUpdateBudgetRequest {

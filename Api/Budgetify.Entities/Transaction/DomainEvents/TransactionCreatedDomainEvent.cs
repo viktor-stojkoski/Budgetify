@@ -2,6 +2,11 @@
 
 using System;
 
+using Budgetify.Entities.Transaction.Enumerations;
+
 using VS.DomainEvents;
 
-public record TransactionCreatedDomainEvent(int UserId, Guid TransactionUid, decimal DifferenceAmount) : IDomainEvent;
+public record TransactionCreatedDomainEvent(
+    int UserId,
+    Guid TransactionUid,
+    TransactionType TransactionType) : IDomainEvent;

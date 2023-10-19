@@ -68,6 +68,7 @@ public static class ResultCodes
     public const string TransactionEmptyMerchantTypeInvalid = "TRANSACTION_EMPTY_MERCHANT_TYPE_INVALID";
     public const string TransactionNotFound = "TRANSACTION_NOT_FOUND";
     public const string TransactionNotVerifiedCannotUpdateAccountBalance = "TRANSACTION_NOT_VERIFIED_CANNOT_UPDATE_ACCOUNT_BALANCE";
+    public const string TransactionNotVerifiedCannotUpdateBudgetAmountSpent = "TRANSACTION_NOT_VERIFIED_CANNOT_UPDATE_BUDGET_AMOUNT_SPENT";
     public const string TransactionInvalidForVerification = "TRANSACTION_INVALID_FOR_VERIFICATION";
 
     #endregion
@@ -91,7 +92,7 @@ public static class ResultCodes
 
     #endregion
 
-    #region
+    #region Budget
 
     public const string BudgetNameInvalid = "BUDGET_NAME_INVALID";
     public const string BudgetNameInvalidLength = "BUDGET_NAME_INVALID_LENGTH";

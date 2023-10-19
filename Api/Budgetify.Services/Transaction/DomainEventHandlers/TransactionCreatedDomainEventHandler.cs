@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 using Budgetify.Common.Jobs;
 using Budgetify.Entities.Transaction.DomainEvents;
+using Budgetify.Entities.Transaction.Enumerations;
 using Budgetify.Services.Account.Commands;
+using Budgetify.Services.Budget.Commands;
 
 using VS.Commands;
 using VS.DomainEvents;
@@ -27,7 +29,22 @@ public class TransactionCreatedDomainEventHandler : IDomainEventHandler<Transact
     {
         _jobService.Enqueue(() => _syncCommandDispatcher.Execute(
             new UpdateAccountBalanceFromTransactionAmountCommand(
-                @event.UserId, @event.TransactionUid, @event.DifferenceAmount)));
+                @event.UserId,
+                @event.TransactionUid,
+                null,
+                null,
+                null)));
+
+        if (@event.TransactionType == TransactionType.Expense)
+        {
+            _jobService.Enqueue(() => _syncCommandDispatcher.Execute(
+                new UpdateBudgetAmountSpentFromTransactionAmountCommand(
+                    @event.UserId,
+                    @event.TransactionUid,
+                    null,
+                    null,
+                    null)));
+        }
 
         return Task.CompletedTask;
     }

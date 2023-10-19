@@ -9,7 +9,7 @@ import {
   SnackbarService
 } from '@budgetify/shared';
 import { Observable, distinctUntilChanged, map, startWith, take, takeUntil } from 'rxjs';
-import { ICategoryResponse } from '../../models/budget.model';
+import { ICategoryResponse, ICurrencyResponse } from '../../models/budget.model';
 import { BudgetService } from '../../services/budget.service';
 import { TranslationKeys } from '../../static/translationKeys';
 
@@ -22,12 +22,15 @@ export class CreateBudgetComponent extends DestroyBaseComponent implements OnIni
   public readonly translationKeys = TranslationKeys;
   public readonly sharedTranslationKeys = SharedTranslationKeys;
   public categories?: ICategoryResponse[];
+  public currencies?: ICurrencyResponse[];
   public filteredCategories$?: Observable<ICategoryResponse[] | undefined>;
+  public filteredCurrencies$?: Observable<ICurrencyResponse[] | undefined>;
   public isLoading = true;
 
   public budgetForm = this.formBuilder.group({
     name: ['', Validators.required],
     categoryUid: ['', Validators.required],
+    currencyCode: ['', Validators.required],
     startDate: [new Date(), Validators.required],
     endDate: [new Date(), Validators.required],
     amount: [0, Validators.required],
@@ -45,6 +48,7 @@ export class CreateBudgetComponent extends DestroyBaseComponent implements OnIni
 
   public ngOnInit(): void {
     this.getCategories();
+    this.getCurrencies();
   }
 
   public createBudget(): void {
@@ -53,6 +57,7 @@ export class CreateBudgetComponent extends DestroyBaseComponent implements OnIni
         .createBudget({
           name: this.budgetForm.controls.name.value,
           categoryUid: this.budgetForm.controls.categoryUid.value,
+          currencyCode: this.budgetForm.controls.currencyCode.value,
           startDate: this.budgetForm.controls.startDate.value,
           endDate: this.budgetForm.controls.endDate.value,
           amount: this.budgetForm.controls.amount.value,
@@ -77,6 +82,10 @@ export class CreateBudgetComponent extends DestroyBaseComponent implements OnIni
 
   public displayCategory(uid: string): string {
     return this.categories?.find((x) => x.uid === uid)?.name || '';
+  }
+
+  public displayCurrency(code: string): string {
+    return this.currencies?.find((x) => x.code === code)?.name || '';
   }
 
   private getCategories(): void {
@@ -109,5 +118,39 @@ export class CreateBudgetComponent extends DestroyBaseComponent implements OnIni
     const filterValue = value.toLowerCase();
 
     return this.categories?.filter((option) => option.name.toLowerCase().includes(filterValue));
+  }
+
+  private getCurrencies(): void {
+    this.budgetService
+      .getCurrencies()
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.currencies = result.value;
+          this.isLoading = false;
+          this.filterCurrencies();
+        },
+        error: (error) => {
+          this.snackbarService.showError(error);
+          this.isLoading = false;
+        }
+      });
+  }
+
+  private filterCurrencies(): void {
+    this.filteredCurrencies$ = this.budgetForm.controls.currencyCode.valueChanges.pipe(
+      startWith(''),
+      distinctUntilChanged(),
+      takeUntil(this.destroyed$),
+      map((value) => this.filterCurrency(value || ''))
+    );
+  }
+
+  private filterCurrency(value: string): ICurrencyResponse[] | undefined {
+    const filterValue = value.toLowerCase();
+
+    return this.currencies?.filter(
+      (option) => option.name.toLowerCase().includes(filterValue) || option.code.toLowerCase().includes(filterValue)
+    );
   }
 }

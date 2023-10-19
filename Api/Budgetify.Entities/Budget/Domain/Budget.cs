@@ -10,6 +10,7 @@ public sealed partial class Budget : AggregateRoot
         int userId,
         BudgetNameValue name,
         int categoryId,
+        int currencyId,
         BudgetDateRangeValue dateRange,
         decimal amount,
         decimal amountSpent)
@@ -19,6 +20,7 @@ public sealed partial class Budget : AggregateRoot
         UserId = userId;
         Name = name;
         CategoryId = categoryId;
+        CurrencyId = currencyId;
         DateRange = dateRange;
         Amount = amount;
         AmountSpent = amountSpent;
@@ -38,6 +40,11 @@ public sealed partial class Budget : AggregateRoot
     /// Budget's category.
     /// </summary>
     public int CategoryId { get; private set; }
+
+    /// <summary>
+    /// Budget's currency.
+    /// </summary>
+    public int CurrencyId { get; private set; }
 
     /// <summary>
     /// Budget's date range.
