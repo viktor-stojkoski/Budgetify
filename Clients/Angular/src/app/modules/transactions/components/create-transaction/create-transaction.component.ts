@@ -5,13 +5,13 @@ import { MatDialogRef } from '@angular/material/dialog';
 import {
   DestroyBaseComponent,
   DialogActionButton,
-  enumToTranslationEnum,
   IDialogResponseData,
   IFileForUpload,
+  TranslationKeys as SharedTranslationKeys,
   SnackbarService,
-  TranslationKeys as SharedTranslationKeys
+  enumToTranslationEnum
 } from '@budgetify/shared';
-import { distinctUntilChanged, map, Observable, startWith, take, takeUntil } from 'rxjs';
+import { Observable, distinctUntilChanged, map, startWith, take, takeUntil } from 'rxjs';
 import { TransactionType } from '../../models/transaction.enum';
 import {
   IAccountResponse,
@@ -69,6 +69,7 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
     this.getAccounts();
     this.getCategories();
     this.getMerchants();
+    this.filterCategoriesByType();
   }
 
   public createTransaction(): void {
@@ -157,6 +158,20 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
     this.selectedFiles = this.selectedFiles.filter((x) => x.name !== fileName);
   }
 
+  private filterCategoriesByType(): void {
+    this.transactionForm.controls.type.valueChanges.subscribe({
+      next: () => {
+        if (
+          this.categories?.find((option) => option.uid === this.transactionForm.controls.categoryUid.value)?.type !==
+          this.transactionForm.controls.type.value
+        ) {
+          this.transactionForm.controls.categoryUid.reset();
+        }
+        this.filterCategories();
+      }
+    });
+  }
+
   private getMerchants(): void {
     this.transactionService
       .getMerchants()
@@ -218,7 +233,11 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
   private filterCategory(value: string): ICategoryResponse[] | undefined {
     const filterValue = value.toLowerCase();
 
-    return this.categories?.filter((option) => option.name.toLowerCase().includes(filterValue));
+    return this.categories?.filter(
+      (option) =>
+        !this.transactionForm.controls.type.value ||
+        (option.name.toLowerCase().includes(filterValue) && option.type === this.transactionForm.controls.type.value)
+    );
   }
 
   private getAccounts(): void {
