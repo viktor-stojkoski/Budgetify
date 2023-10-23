@@ -9,7 +9,8 @@ import {
   IFileForUpload,
   TranslationKeys as SharedTranslationKeys,
   SnackbarService,
-  enumToTranslationEnum
+  enumToTranslationEnum,
+  getEnumKeyFromValue
 } from '@budgetify/shared';
 import { Observable, distinctUntilChanged, map, startWith, take, takeUntil } from 'rxjs';
 import { TransactionType } from '../../models/transaction.enum';
@@ -32,6 +33,7 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
   public readonly translationKeys = TranslationKeys;
   public readonly sharedTranslationKeys = SharedTranslationKeys;
   public types = enumToTranslationEnum(TransactionType);
+  public transactionTypeExpense = getEnumKeyFromValue(TransactionType, TransactionType.EXPENSE);
   public accounts?: IAccountResponse[];
   public categories?: ICategoryResponse[];
   public currencies?: ICurrencyResponse[];
@@ -49,7 +51,7 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
     categoryUid: ['', Validators.required],
     currencyCode: ['', Validators.required],
     merchantUid: [null],
-    type: ['', Validators.required],
+    type: [this.transactionTypeExpense, Validators.required],
     amount: [0, Validators.required],
     date: [new Date(), Validators.required],
     description: ['']
@@ -168,6 +170,9 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
         ) {
           this.transactionForm.controls.categoryUid.reset();
         }
+        this.transactionForm.controls.accountUid.reset();
+        this.transactionForm.controls.categoryUid.reset();
+        this.transactionForm.controls.merchantUid.reset();
         this.filterCategories();
       }
     });

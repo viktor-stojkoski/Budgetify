@@ -6,6 +6,14 @@
 
 <div mat-dialog-content *ngIf="!isLoading" [ngClass]="{ 'cursor-disabled': isCreating }">
   <form [formGroup]="transactionForm">
+    <div class="type-button-toggle mat-form-field-wrapper">
+      <mat-button-toggle-group formControlName="type" class="type-button-toggle">
+        <mat-button-toggle *ngFor="let type of types" [value]="type.value" class="type-button-toggle">
+          {{ type.translationKey | translate }}
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
     <mat-form-field appearance="outline">
       <mat-label>{{ translationKeys.createFormAccountLabel | translate }}</mat-label>
       <input type="text" matInput formControlName="accountUid" [matAutocomplete]="account" />
@@ -36,7 +44,7 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" *ngIf="transactionForm.controls.type.value === transactionTypeExpense">
       <mat-label>{{ translationKeys.createFormMerchantLabel | translate }}</mat-label>
       <input type="text" matInput formControlName="merchantUid" [matAutocomplete]="merchant" />
       <mat-autocomplete #merchant="matAutocomplete" [displayWith]="displayMerchant.bind(this)">
@@ -44,15 +52,6 @@
           {{ merchant.name }}
         </mat-option>
       </mat-autocomplete>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>{{ translationKeys.createFormTypeLabel | translate }}</mat-label>
-      <mat-select formControlName="type">
-        <mat-option *ngFor="let type of types" [value]="type.value">
-          {{ type.translationKey | translate }}
-        </mat-option>
-      </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="outline">

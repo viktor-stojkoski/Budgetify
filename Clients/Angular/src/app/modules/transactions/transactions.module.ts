@@ -2,14 +2,15 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import {
   DateAdapter,
-  MatDateFormats,
-  MatNativeDateModule,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
   MAT_NATIVE_DATE_FORMATS,
+  MatDateFormats,
+  MatNativeDateModule,
   NativeDateAdapter
 } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -63,7 +64,8 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     MatDatepickerModule,
     MatNativeDateModule,
     MatCardModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    MatButtonToggleModule
   ],
   declarations: [
     TransactionsTableComponent,
