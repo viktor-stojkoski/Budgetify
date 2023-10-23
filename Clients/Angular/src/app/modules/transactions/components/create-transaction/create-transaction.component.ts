@@ -34,11 +34,13 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
   public readonly sharedTranslationKeys = SharedTranslationKeys;
   public types = enumToTranslationEnum(TransactionType);
   public transactionTypeExpense = getEnumKeyFromValue(TransactionType, TransactionType.EXPENSE);
+  public transactionTypeTransfer = getEnumKeyFromValue(TransactionType, TransactionType.TRANSFER);
   public accounts?: IAccountResponse[];
   public categories?: ICategoryResponse[];
   public currencies?: ICurrencyResponse[];
   public merchants?: IMerchantResponse[];
   public filteredAccounts$?: Observable<IAccountResponse[] | undefined>;
+  public filteredFromAccounts$?: Observable<IAccountResponse[] | undefined>;
   public filteredCategories$?: Observable<ICategoryResponse[] | undefined>;
   public filteredCurrencies$?: Observable<ICurrencyResponse[] | undefined>;
   public filteredMerchants$?: Observable<IMerchantResponse[] | undefined>;
@@ -48,7 +50,8 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
 
   public transactionForm = this.formBuilder.group({
     accountUid: ['', Validators.required],
-    categoryUid: ['', Validators.required],
+    fromAccountUid: [null],
+    categoryUid: [null],
     currencyCode: ['', Validators.required],
     merchantUid: [null],
     type: [this.transactionTypeExpense, Validators.required],
@@ -81,6 +84,7 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
       this.transactionService
         .createTransaction({
           accountUid: this.transactionForm.controls.accountUid.value,
+          fromAccountUid: this.transactionForm.controls.fromAccountUid.value,
           categoryUid: this.transactionForm.controls.categoryUid.value,
           currencyCode: this.transactionForm.controls.currencyCode.value,
           merchantUid: this.transactionForm.controls.merchantUid.value || null,
@@ -285,6 +289,13 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
 
   private filterAccounts(): void {
     this.filteredAccounts$ = this.transactionForm.controls.accountUid.valueChanges.pipe(
+      startWith(''),
+      distinctUntilChanged(),
+      takeUntil(this.destroyed$),
+      map((value) => this.filterAccount(value || ''))
+    );
+
+    this.filteredFromAccounts$ = this.transactionForm.controls.fromAccountUid.valueChanges.pipe(
       startWith(''),
       distinctUntilChanged(),
       takeUntil(this.destroyed$),

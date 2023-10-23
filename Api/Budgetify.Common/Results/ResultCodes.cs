@@ -70,6 +70,10 @@ public static class ResultCodes
     public const string TransactionNotVerifiedCannotUpdateAccountBalance = "TRANSACTION_NOT_VERIFIED_CANNOT_UPDATE_ACCOUNT_BALANCE";
     public const string TransactionNotVerifiedCannotUpdateBudgetAmountSpent = "TRANSACTION_NOT_VERIFIED_CANNOT_UPDATE_BUDGET_AMOUNT_SPENT";
     public const string TransactionInvalidForVerification = "TRANSACTION_INVALID_FOR_VERIFICATION";
+    public const string TransactionTypeAndCategoryMismatch = "TRANSACTION_TYPE_AND_CATEGORY_MISMATCH";
+    public const string TransactionTypeNotCompatibleWithMerchant = "TRANSACTION_TYPE_NOT_COMPATIBLE_WITH_MERCHANT";
+    public const string TransactionTypeTransferMissingAccounts = "TRANSACTION_TYPE_TRANSFER_MISSING_ACCOUNTS";
+    public const string TransactionCategoryMissing = "TRANSACTION_CATEGORY_MISSING";
 
     #endregion
 

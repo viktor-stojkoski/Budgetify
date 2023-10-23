@@ -51,6 +51,7 @@ export interface IMerchantResponse {
 
 export interface ICreateTransactionRequest {
   accountUid: string | null;
+  fromAccountUid: string | null;
   categoryUid: string | null;
   currencyCode: string | null;
   merchantUid: string | null;
