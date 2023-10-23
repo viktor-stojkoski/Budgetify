@@ -70,6 +70,7 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
     this.getCategories();
     this.getMerchants();
     this.filterCategoriesByType();
+    this.filterMerchantsByCategoryType();
   }
 
   public createTransaction(): void {
@@ -172,6 +173,20 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
     });
   }
 
+  private filterMerchantsByCategoryType(): void {
+    this.transactionForm.controls.categoryUid.valueChanges.subscribe({
+      next: () => {
+        if (
+          this.categories?.find((option) => option.uid === this.transactionForm.controls.categoryUid.value)?.name !==
+          this.merchants?.find((option) => option.uid === this.transactionForm.controls.merchantUid.value)?.categoryName
+        ) {
+          this.transactionForm.controls.merchantUid.reset();
+        }
+        this.filterMerchants();
+      }
+    });
+  }
+
   private getMerchants(): void {
     this.transactionService
       .getMerchants()
@@ -201,7 +216,13 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
   private filterMerchant(value: string): IMerchantResponse[] | undefined {
     const filterValue = value.toLowerCase();
 
-    return this.merchants?.filter((option) => option.name.toLowerCase().includes(filterValue));
+    return this.merchants?.filter(
+      (option) =>
+        !this.transactionForm.controls.categoryUid.value ||
+        (option.name.toLowerCase().includes(filterValue) &&
+          option.categoryName ===
+            this.categories?.find((category) => category.uid === this.transactionForm.controls.categoryUid.value)?.name)
+    );
   }
 
   private getCategories(): void {

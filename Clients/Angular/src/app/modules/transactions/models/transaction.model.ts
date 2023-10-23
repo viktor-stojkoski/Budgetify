@@ -46,6 +46,7 @@ export interface ICategoryResponse {
 export interface IMerchantResponse {
   uid: string;
   name: string;
+  categoryName: string;
 }
 
 export interface ICreateTransactionRequest {
