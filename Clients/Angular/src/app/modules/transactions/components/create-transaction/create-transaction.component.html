@@ -15,7 +15,7 @@
     </div>
 
     <mat-form-field appearance="outline" *ngIf="transactionForm.controls.type.value === transactionTypeTransfer">
-      <mat-label>{{ 'translationKeys.createFormFromAccountLabel' | translate }}</mat-label>
+      <mat-label>{{ translationKeys.createFormFromAccountLabel | translate }}</mat-label>
       <input type="text" matInput formControlName="fromAccountUid" [matAutocomplete]="fromAccount" />
       <mat-autocomplete #fromAccount="matAutocomplete" [displayWith]="displayAccount.bind(this)">
         <mat-option *ngFor="let account of filteredFromAccounts$ | async" [value]="account.uid">

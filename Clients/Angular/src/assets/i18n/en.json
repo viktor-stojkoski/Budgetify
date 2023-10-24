@@ -61,6 +61,10 @@
     "TRANSACTION_NOT_VERIFIED_CANNOT_UPDATE_ACCOUNT_BALANCE": "Transaction is not verified. Account balance cannot be updated.",
     "TRANSACTION_NOT_VERIFIED_CANNOT_UPDATE_BUDGET_AMOUNT_SPENT": "Transaction is not verified. Budget amount spent cannot be updated",
     "TRANSACTION_INVALID_FOR_VERIFICATION": "Transaction invalid for verification.",
+    "TRANSACTION_TYPE_AND_CATEGORY_MISMATCH": "Transaction type and category mismatch.",
+    "TRANSACTION_TYPE_NOT_COMPATIBLE_WITH_MERCHANT": "Transaction type not compatible with merchant.",
+    "TRANSACTION_TYPE_TRANSFER_MISSING_ACCOUNTS": "Transaction type transfer is missing accounts.",
+    "TRANSACTION_CATEGORY_MISSING": "Transaction category is missing.",
 
     "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL": "Exchange rate from and to currency cannot be equal.",
     "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Exchange rate from date cannot be greater than to date.",
@@ -226,6 +230,8 @@
 
     "createFormHeader": "Create transaction",
     "createFormAccountLabel": "Account",
+    "createFormFromAccountLabel": "From account",
+    "createFormToAccountLabel": "To account",
     "createFormCategoryLabel": "Category",
     "createFormCurrencyCodeLabel": "Currency code",
     "createFormMerchantLabel": "Merchant",

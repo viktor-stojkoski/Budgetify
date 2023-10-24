@@ -85,17 +85,17 @@ public partial class Transaction
             return Result.FromError<Transaction>(typeValue);
         }
 
-        if (typeValue.Value != TransactionType.Income && merchantId is null)
+        if (!isTransfer && typeValue.Value != TransactionType.Income && merchantId is null)
         {
             return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
         }
 
-        if (!isTransfer && typeValue.Value != TransactionType.Expense && merchantId is not null)
+        if (typeValue.Value != TransactionType.Expense && merchantId is not null)
         {
             return Result.Invalid<Transaction>(ResultCodes.TransactionTypeNotCompatibleWithMerchant);
         }
 
-        if (typeValue.Value != TransactionType.Transfer && categoryId is null)
+        if ((!isTransfer || typeValue.Value != TransactionType.Transfer) && categoryId is null)
         {
             return Result.Invalid<Transaction>(ResultCodes.TransactionCategoryMissing);
         }

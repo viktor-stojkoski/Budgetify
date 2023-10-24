@@ -126,11 +126,6 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
             merchantId = merchantResult.Value.Id;
         }
 
-        if (command.Type != TransactionType.Expense.Name && merchantId.HasValue)
-        {
-            return result.FailWith(Result.Invalid(ResultCodes.TransactionTypeNotCompatibleWithMerchant));
-        }
-
         if (command.Type == TransactionType.Transfer.Name && !command.FromAccountUid.HasValue)
         {
             return result.FailWith(Result.Invalid(ResultCodes.TransactionTypeTransferMissingAccounts));
