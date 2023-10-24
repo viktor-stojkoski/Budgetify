@@ -8,12 +8,13 @@ import {
   DestroyBaseComponent,
   DialogActionButton,
   DialogService,
-  enumToTranslationEnum,
   IDialogResponseData,
+  TranslationKeys as SharedTranslationKeys,
   SnackbarService,
-  TranslationKeys as SharedTranslationKeys
+  enumToTranslationEnum,
+  getEnumKeyFromValue
 } from '@budgetify/shared';
-import { concatMap, distinctUntilChanged, map, Observable, startWith, take, takeUntil, tap } from 'rxjs';
+import { Observable, concatMap, distinctUntilChanged, map, startWith, take, takeUntil, tap } from 'rxjs';
 import { TransactionType } from '../../models/transaction.enum';
 import {
   IAccountResponse,
@@ -44,6 +45,7 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
   public transaction?: ITransactionDetailsResponse;
   public isLoading = false;
   public isEditing = false;
+  public transactionTypeExpense = getEnumKeyFromValue(TransactionType, TransactionType.EXPENSE);
   public type = TransactionType;
   public types = enumToTranslationEnum(TransactionType);
   public accounts?: IAccountResponse[];
@@ -62,7 +64,6 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
     categoryUid: ['', Validators.required],
     currencyCode: ['', Validators.required],
     merchantUid: [''],
-    type: ['', Validators.required],
     amount: [0, Validators.required],
     date: [new Date(), Validators.required],
     description: ['']
@@ -99,6 +100,7 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
     this.getCategories();
     this.getCurrencies();
     this.getMerchants();
+    this.filterMerchantsByCategoryType();
   }
 
   public toggleEdit(): void {
@@ -117,7 +119,6 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
           categoryUid: this.transactionForm.controls.categoryUid.value,
           currencyCode: this.transactionForm.controls.currencyCode.value,
           merchantUid: this.transactionForm.controls.merchantUid.value || null,
-          type: this.transactionForm.controls.type.value,
           amount: this.transactionForm.controls.amount.value,
           date: this.transactionForm.controls.date.value,
           description: this.transactionForm.controls.description.value
@@ -128,6 +129,7 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
             this.transaction = {
               ...(this.transaction?.transactionAttachments ?? []),
               ...(this.transactionForm.value as ITransactionResponse),
+              type: this.transaction!.type,
               accountName: this.displayAccount(this.transactionForm.controls.accountUid.value as string),
               categoryName: this.displayCategory(this.transactionForm.controls.categoryUid.value as string),
               merchantName: this.displayMerchant(this.transactionForm.controls.merchantUid.value as string)
@@ -294,7 +296,29 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
   private filterMerchant(value: string): IMerchantResponse[] | undefined {
     const filterValue = value.toLowerCase();
 
-    return this.merchants?.filter((option) => option.name.toLowerCase().includes(filterValue));
+    let merchants = this.merchants?.filter(
+      (option) =>
+        !this.transactionForm.controls.categoryUid.value ||
+        (option.name.toLowerCase().includes(filterValue) &&
+          option.categoryName ===
+            this.categories?.find((category) => category.uid === this.transactionForm.controls.categoryUid.value)?.name)
+    );
+    console.log('merchants', merchants);
+    return merchants;
+  }
+
+  private filterMerchantsByCategoryType(): void {
+    this.transactionForm.controls.categoryUid.valueChanges.subscribe({
+      next: () => {
+        if (
+          this.categories?.find((option) => option.uid === this.transactionForm.controls.categoryUid.value)?.name !==
+          this.merchants?.find((option) => option.uid === this.transactionForm.controls.merchantUid.value)?.categoryName
+        ) {
+          this.transactionForm.controls.merchantUid.reset();
+        }
+        this.filterMerchants();
+      }
+    });
   }
 
   private getCategories(): void {
@@ -326,7 +350,11 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
   private filterCategory(value: string): ICategoryResponse[] | undefined {
     const filterValue = value.toLowerCase();
 
-    return this.categories?.filter((option) => option.name.toLowerCase().includes(filterValue));
+    return this.categories?.filter(
+      (option) =>
+        !this.transaction?.type ||
+        (option.name.toLowerCase().includes(filterValue) && option.type === this.transaction.type)
+    );
   }
 
   private getAccounts(): void {

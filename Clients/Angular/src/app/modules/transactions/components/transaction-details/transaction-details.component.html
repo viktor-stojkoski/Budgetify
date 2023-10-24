@@ -92,8 +92,10 @@
         </mat-form-field>
       </div>
 
-      <div class="grid-item">{{ translationKeys.detailsMerchantHeader | translate }}</div>
-      <div *ngIf="!isEditing" class="grid-item">
+      <div *ngIf="transaction.type === transactionTypeExpense" class="grid-item">
+        {{ translationKeys.detailsMerchantHeader | translate }}
+      </div>
+      <div *ngIf="!isEditing && transaction.type === transactionTypeExpense" class="grid-item">
         <span
           [matTooltip]="transaction.merchantName ?? ''"
           [matTooltipDisabled]="(transaction.merchantName?.length ?? 0) < 30"
@@ -101,7 +103,7 @@
           {{ transaction.merchantName ?? '' | truncate: 30 }}
         </span>
       </div>
-      <div *ngIf="isEditing" class="grid-item">
+      <div *ngIf="isEditing && transaction.type === transactionTypeExpense" class="grid-item">
         <mat-form-field appearance="outline">
           <input type="text" matInput formControlName="merchantUid" [matAutocomplete]="merchant" />
           <mat-autocomplete #merchant="matAutocomplete" [displayWith]="displayMerchant.bind(this)">
@@ -113,16 +115,7 @@
       </div>
 
       <div class="grid-item">{{ translationKeys.detailsTypeHeader | translate }}</div>
-      <div *ngIf="!isEditing" class="grid-item">{{ transaction.type | translateEnum: type }}</div>
-      <div *ngIf="isEditing" class="grid-item">
-        <mat-form-field appearance="outline">
-          <mat-select formControlName="type">
-            <mat-option *ngFor="let type of types" [value]="type.value">
-              {{ type.translationKey | translate }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+      <div class="grid-item">{{ transaction.type | translateEnum: type }}</div>
 
       <div class="grid-item">{{ translationKeys.detailsAmountHeader | translate }}</div>
       <div *ngIf="!isEditing" class="grid-item">{{ transaction.amount }}</div>
