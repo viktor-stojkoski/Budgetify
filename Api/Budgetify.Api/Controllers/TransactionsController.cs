@@ -69,7 +69,6 @@ public class TransactionsController : ExtendedApiController
                 CategoryUid: request.CategoryUid,
                 CurrencyCode: request.CurrencyCode,
                 MerchantUid: request.MerchantUid,
-                Type: request.Type,
                 Amount: request.Amount,
                 Date: request.Date,
                 Description: request.Description)));

@@ -67,7 +67,6 @@ export interface IUpdateTransactionRequest {
   categoryUid: string | null;
   currencyCode: string | null;
   merchantUid: string | null;
-  type: string | null;
   amount: number | null;
   date: Date | null;
   description: string | null;

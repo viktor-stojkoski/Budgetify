@@ -26,7 +26,6 @@ public record UpdateTransactionCommand(
     Guid CategoryUid,
     string? CurrencyCode,
     Guid? MerchantUid,
-    string? Type,
     decimal Amount,
     DateTime Date,
     string? Description) : ICommand;
@@ -116,7 +115,6 @@ public class UpdateTransactionCommandHandler : ICommandHandler<UpdateTransaction
                 categoryId: categoryResult.Value.Id,
                 currencyId: currencyResult.Value.Id,
                 merchantId: merchantId,
-                type: command.Type,
                 amount: command.Amount,
                 date: command.Date.ToLocalTime(),
                 description: command.Description);

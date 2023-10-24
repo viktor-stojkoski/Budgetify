@@ -17,19 +17,11 @@ public partial class Transaction
         int categoryId,
         int currencyId,
         int? merchantId,
-        string? type,
         decimal amount,
         DateTime date,
         string? description)
     {
-        Result<TransactionType> typeValue = TransactionType.Create(type);
-
-        if (typeValue.IsFailureOrNull)
-        {
-            return Result.FromError<Transaction>(typeValue);
-        }
-
-        if (typeValue.Value != TransactionType.Income && merchantId is null)
+        if (Type != TransactionType.Income && merchantId is null)
         {
             return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
         }
@@ -40,7 +32,7 @@ public partial class Transaction
                 new TransactionUpdatedDomainEvent(
                     UserId: UserId,
                     TransactionUid: Uid,
-                    TransactionType: typeValue.Value,
+                    TransactionType: Type,
                     PreviousAccountId: AccountId,
                     PreviousAmount: Amount,
                     PreviousCurrencyId: CurrencyId,
@@ -51,7 +43,6 @@ public partial class Transaction
         CategoryId = categoryId;
         CurrencyId = currencyId;
         MerchantId = merchantId;
-        Type = typeValue.Value;
         Amount = amount;
         Date = date;
         Description = description;

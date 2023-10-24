@@ -8,12 +8,12 @@ import {
   DestroyBaseComponent,
   DialogActionButton,
   DialogService,
-  enumToTranslationEnum,
   IDialogResponseData,
+  TranslationKeys as SharedTranslationKeys,
   SnackbarService,
-  TranslationKeys as SharedTranslationKeys
+  enumToTranslationEnum
 } from '@budgetify/shared';
-import { concatMap, distinctUntilChanged, map, Observable, startWith, take, takeUntil, tap } from 'rxjs';
+import { Observable, concatMap, distinctUntilChanged, map, startWith, take, takeUntil, tap } from 'rxjs';
 import { TransactionType } from '../../models/transaction.enum';
 import {
   IAccountResponse,
@@ -62,7 +62,6 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
     categoryUid: ['', Validators.required],
     currencyCode: ['', Validators.required],
     merchantUid: [''],
-    type: ['', Validators.required],
     amount: [0, Validators.required],
     date: [new Date(), Validators.required],
     description: ['']
@@ -117,7 +116,6 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
           categoryUid: this.transactionForm.controls.categoryUid.value,
           currencyCode: this.transactionForm.controls.currencyCode.value,
           merchantUid: this.transactionForm.controls.merchantUid.value || null,
-          type: this.transactionForm.controls.type.value,
           amount: this.transactionForm.controls.amount.value,
           date: this.transactionForm.controls.date.value,
           description: this.transactionForm.controls.description.value

@@ -113,16 +113,7 @@
       </div>
 
       <div class="grid-item">{{ translationKeys.detailsTypeHeader | translate }}</div>
-      <div *ngIf="!isEditing" class="grid-item">{{ transaction.type | translateEnum: type }}</div>
-      <div *ngIf="isEditing" class="grid-item">
-        <mat-form-field appearance="outline">
-          <mat-select formControlName="type">
-            <mat-option *ngFor="let type of types" [value]="type.value">
-              {{ type.translationKey | translate }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+      <div class="grid-item">{{ transaction.type | translateEnum: type }}</div>
 
       <div class="grid-item">{{ translationKeys.detailsAmountHeader | translate }}</div>
       <div *ngIf="!isEditing" class="grid-item">{{ transaction.amount }}</div>
