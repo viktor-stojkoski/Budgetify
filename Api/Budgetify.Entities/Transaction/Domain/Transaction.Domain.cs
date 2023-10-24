@@ -14,7 +14,7 @@ public partial class Transaction
     /// </summary>
     public Result Update(
         int accountId,
-        int categoryId,
+        int? categoryId,
         int currencyId,
         int? merchantId,
         decimal amount,
@@ -24,6 +24,16 @@ public partial class Transaction
         if (Type != TransactionType.Income && merchantId is null)
         {
             return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
+        }
+
+        if (Type != TransactionType.Expense && merchantId is not null)
+        {
+            return Result.Invalid<Transaction>(ResultCodes.TransactionTypeNotCompatibleWithMerchant);
+        }
+
+        if (Type != TransactionType.Transfer && categoryId is null)
+        {
+            return Result.Invalid<Transaction>(ResultCodes.TransactionCategoryMissing);
         }
 
         if (IsVerified)
