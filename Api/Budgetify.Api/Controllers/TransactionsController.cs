@@ -44,6 +44,7 @@ public class TransactionsController : ExtendedApiController
         OkOrError(await _commandDispatcher.ExecuteAsync(
             new CreateTransactionCommand(
                 AccountUid: request.AccountUid,
+                FromAccountUid: request.FromAccountUid,
                 CategoryUid: request.CategoryUid,
                 CurrencyCode: request.CurrencyCode,
                 MerchantUid: request.MerchantUid,

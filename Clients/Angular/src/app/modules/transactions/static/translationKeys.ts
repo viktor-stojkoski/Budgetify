@@ -19,6 +19,8 @@ export class TranslationKeys {
 
   public static readonly createFormHeader = 'transactions.createFormHeader';
   public static readonly createFormAccountLabel = 'transactions.createFormAccountLabel';
+  public static readonly createFormFromAccountLabel = 'transactions.createFormFromAccountLabel';
+  public static readonly createFormToAccountLabel = 'transactions.createFormToAccountLabel';
   public static readonly createFormCategoryLabel = 'transactions.createFormCategoryLabel';
   public static readonly createFormCurrencyCodeLabel = 'transactions.createFormCurrencyCodeLabel';
   public static readonly createFormMerchantLabel = 'transactions.createFormMerchantLabel';

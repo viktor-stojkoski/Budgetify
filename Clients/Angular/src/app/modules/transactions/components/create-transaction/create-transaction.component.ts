@@ -5,13 +5,14 @@ import { MatDialogRef } from '@angular/material/dialog';
 import {
   DestroyBaseComponent,
   DialogActionButton,
-  enumToTranslationEnum,
   IDialogResponseData,
   IFileForUpload,
+  TranslationKeys as SharedTranslationKeys,
   SnackbarService,
-  TranslationKeys as SharedTranslationKeys
+  enumToTranslationEnum,
+  getEnumKeyFromValue
 } from '@budgetify/shared';
-import { distinctUntilChanged, map, Observable, startWith, take, takeUntil } from 'rxjs';
+import { Observable, distinctUntilChanged, map, startWith, take, takeUntil } from 'rxjs';
 import { TransactionType } from '../../models/transaction.enum';
 import {
   IAccountResponse,
@@ -32,11 +33,14 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
   public readonly translationKeys = TranslationKeys;
   public readonly sharedTranslationKeys = SharedTranslationKeys;
   public types = enumToTranslationEnum(TransactionType);
+  public transactionTypeExpense = getEnumKeyFromValue(TransactionType, TransactionType.EXPENSE);
+  public transactionTypeTransfer = getEnumKeyFromValue(TransactionType, TransactionType.TRANSFER);
   public accounts?: IAccountResponse[];
   public categories?: ICategoryResponse[];
   public currencies?: ICurrencyResponse[];
   public merchants?: IMerchantResponse[];
   public filteredAccounts$?: Observable<IAccountResponse[] | undefined>;
+  public filteredFromAccounts$?: Observable<IAccountResponse[] | undefined>;
   public filteredCategories$?: Observable<ICategoryResponse[] | undefined>;
   public filteredCurrencies$?: Observable<ICurrencyResponse[] | undefined>;
   public filteredMerchants$?: Observable<IMerchantResponse[] | undefined>;
@@ -46,10 +50,11 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
 
   public transactionForm = this.formBuilder.group({
     accountUid: ['', Validators.required],
-    categoryUid: ['', Validators.required],
+    fromAccountUid: [null],
+    categoryUid: [null],
     currencyCode: ['', Validators.required],
     merchantUid: [null],
-    type: ['', Validators.required],
+    type: [this.transactionTypeExpense, Validators.required],
     amount: [0, Validators.required],
     date: [new Date(), Validators.required],
     description: ['']
@@ -69,6 +74,8 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
     this.getAccounts();
     this.getCategories();
     this.getMerchants();
+    this.filterCategoriesByType();
+    this.filterMerchantsByCategoryType();
   }
 
   public createTransaction(): void {
@@ -77,6 +84,7 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
       this.transactionService
         .createTransaction({
           accountUid: this.transactionForm.controls.accountUid.value,
+          fromAccountUid: this.transactionForm.controls.fromAccountUid.value,
           categoryUid: this.transactionForm.controls.categoryUid.value,
           currencyCode: this.transactionForm.controls.currencyCode.value,
           merchantUid: this.transactionForm.controls.merchantUid.value || null,
@@ -157,6 +165,37 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
     this.selectedFiles = this.selectedFiles.filter((x) => x.name !== fileName);
   }
 
+  private filterCategoriesByType(): void {
+    this.transactionForm.controls.type.valueChanges.subscribe({
+      next: () => {
+        if (
+          this.categories?.find((option) => option.uid === this.transactionForm.controls.categoryUid.value)?.type !==
+          this.transactionForm.controls.type.value
+        ) {
+          this.transactionForm.controls.categoryUid.reset();
+        }
+        this.transactionForm.controls.accountUid.reset();
+        this.transactionForm.controls.categoryUid.reset();
+        this.transactionForm.controls.merchantUid.reset();
+        this.filterCategories();
+      }
+    });
+  }
+
+  private filterMerchantsByCategoryType(): void {
+    this.transactionForm.controls.categoryUid.valueChanges.subscribe({
+      next: () => {
+        if (
+          this.categories?.find((option) => option.uid === this.transactionForm.controls.categoryUid.value)?.name !==
+          this.merchants?.find((option) => option.uid === this.transactionForm.controls.merchantUid.value)?.categoryName
+        ) {
+          this.transactionForm.controls.merchantUid.reset();
+        }
+        this.filterMerchants();
+      }
+    });
+  }
+
   private getMerchants(): void {
     this.transactionService
       .getMerchants()
@@ -186,7 +225,13 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
   private filterMerchant(value: string): IMerchantResponse[] | undefined {
     const filterValue = value.toLowerCase();
 
-    return this.merchants?.filter((option) => option.name.toLowerCase().includes(filterValue));
+    return this.merchants?.filter(
+      (option) =>
+        !this.transactionForm.controls.categoryUid.value ||
+        (option.name.toLowerCase().includes(filterValue) &&
+          option.categoryName ===
+            this.categories?.find((category) => category.uid === this.transactionForm.controls.categoryUid.value)?.name)
+    );
   }
 
   private getCategories(): void {
@@ -218,7 +263,11 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
   private filterCategory(value: string): ICategoryResponse[] | undefined {
     const filterValue = value.toLowerCase();
 
-    return this.categories?.filter((option) => option.name.toLowerCase().includes(filterValue));
+    return this.categories?.filter(
+      (option) =>
+        !this.transactionForm.controls.type.value ||
+        (option.name.toLowerCase().includes(filterValue) && option.type === this.transactionForm.controls.type.value)
+    );
   }
 
   private getAccounts(): void {
@@ -240,6 +289,13 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
 
   private filterAccounts(): void {
     this.filteredAccounts$ = this.transactionForm.controls.accountUid.valueChanges.pipe(
+      startWith(''),
+      distinctUntilChanged(),
+      takeUntil(this.destroyed$),
+      map((value) => this.filterAccount(value || ''))
+    );
+
+    this.filteredFromAccounts$ = this.transactionForm.controls.fromAccountUid.valueChanges.pipe(
       startWith(''),
       distinctUntilChanged(),
       takeUntil(this.destroyed$),

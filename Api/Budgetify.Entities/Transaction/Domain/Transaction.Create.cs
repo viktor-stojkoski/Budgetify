@@ -69,13 +69,14 @@ public partial class Transaction
         DateTime createdOn,
         int userId,
         int accountId,
-        int categoryId,
+        int? categoryId,
         int currencyId,
         int? merchantId,
         string? type,
         decimal amount,
         DateTime date,
-        string? description)
+        string? description,
+        bool isTransfer)
     {
         Result<TransactionType> typeValue = TransactionType.Create(type);
 
@@ -84,9 +85,19 @@ public partial class Transaction
             return Result.FromError<Transaction>(typeValue);
         }
 
-        if (typeValue.Value != TransactionType.Income && merchantId is null)
+        if (!isTransfer && typeValue.Value != TransactionType.Income && merchantId is null)
         {
             return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
+        }
+
+        if (typeValue.Value != TransactionType.Expense && merchantId is not null)
+        {
+            return Result.Invalid<Transaction>(ResultCodes.TransactionTypeNotCompatibleWithMerchant);
+        }
+
+        if ((!isTransfer || typeValue.Value != TransactionType.Transfer) && categoryId is null)
+        {
+            return Result.Invalid<Transaction>(ResultCodes.TransactionCategoryMissing);
         }
 
         Transaction transaction = new(

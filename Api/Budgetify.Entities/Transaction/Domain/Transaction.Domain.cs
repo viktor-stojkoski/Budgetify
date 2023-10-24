@@ -118,6 +118,16 @@ public partial class Transaction
             return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
         }
 
+        if (Type != TransactionType.Expense && MerchantId is not null)
+        {
+            return Result.Invalid<Transaction>(ResultCodes.TransactionTypeNotCompatibleWithMerchant);
+        }
+
+        if (Type != TransactionType.Transfer && CategoryId is null)
+        {
+            return Result.Invalid<Transaction>(ResultCodes.TransactionCategoryMissing);
+        }
+
         IsVerified = true;
 
         MarkModify();

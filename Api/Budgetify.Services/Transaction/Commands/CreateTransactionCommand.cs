@@ -20,13 +20,15 @@ using Budgetify.Entities.Category.Domain;
 using Budgetify.Entities.Currency.Domain;
 using Budgetify.Entities.Merchant.Domain;
 using Budgetify.Entities.Transaction.Domain;
+using Budgetify.Entities.Transaction.Enumerations;
 using Budgetify.Services.Common.Extensions;
 
 using VS.Commands;
 
 public record CreateTransactionCommand(
     Guid AccountUid,
-    Guid CategoryUid,
+    Guid? FromAccountUid,
+    Guid? CategoryUid,
     string? CurrencyCode,
     Guid? MerchantUid,
     string? Type,
@@ -81,20 +83,32 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
             return result.FailWith(accountResult);
         }
 
-        Result<Category> categoryResult =
-            await _categoryRepository.GetCategoryAsync(_currentUser.Id, command.CategoryUid);
-
-        if (categoryResult.IsFailureOrNull)
-        {
-            return result.FailWith(categoryResult);
-        }
-
         Result<Currency> currencyResult =
             await _currencyRepository.GetCurrencyByCodeAsync(command.CurrencyCode);
 
         if (currencyResult.IsFailureOrNull)
         {
             return result.FailWith(currencyResult);
+        }
+
+        int? categoryId = null;
+
+        if (command.CategoryUid.HasValue)
+        {
+            Result<Category> categoryResult =
+                await _categoryRepository.GetCategoryAsync(_currentUser.Id, command.CategoryUid.Value);
+
+            if (categoryResult.IsFailureOrNull)
+            {
+                return result.FailWith(categoryResult);
+            }
+
+            categoryId = categoryResult.Value.Id;
+
+            if (categoryResult.Value.Type != command.Type)
+            {
+                return result.FailWith(Result.Invalid(ResultCodes.TransactionTypeAndCategoryMismatch));
+            }
         }
 
         int? merchantId = null;
@@ -112,18 +126,67 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
             merchantId = merchantResult.Value.Id;
         }
 
+        if (command.Type == TransactionType.Transfer.Name && !command.FromAccountUid.HasValue)
+        {
+            return result.FailWith(Result.Invalid(ResultCodes.TransactionTypeTransferMissingAccounts));
+        }
+
+        if (command.Type == TransactionType.Transfer.Name && command.FromAccountUid.HasValue)
+        {
+            Result<Account> fromAccountResult =
+                await _accountRepository.GetAccountAsync(_currentUser.Id, command.FromAccountUid.Value);
+
+            if (fromAccountResult.IsFailureOrNull)
+            {
+                return result.FailWith(fromAccountResult);
+            }
+
+            Result<Transaction> expenseResult =
+                Transaction.Create(
+                    createdOn: DateTime.UtcNow,
+                    userId: _currentUser.Id,
+                    accountId: fromAccountResult.Value.Id,
+                    categoryId: categoryId,
+                    currencyId: currencyResult.Value.Id,
+                    merchantId: merchantId,
+                    type: TransactionType.Expense,
+                    amount: command.Amount,
+                    date: command.Date.ToLocalTime(),
+                    description: command.Description,
+                    isTransfer: true);
+
+            if (expenseResult.IsFailureOrNull)
+            {
+                return result.FailWith(expenseResult);
+            }
+
+            if (command.Attachments.Any())
+            {
+                Result expenseAttachmentsResult =
+                    await UploadTransactionAttachments(expenseResult.Value, command.Attachments);
+
+                if (expenseAttachmentsResult.IsFailureOrNull)
+                {
+                    return result.FailWith(expenseAttachmentsResult);
+                }
+            }
+
+            _transactionRepository.Insert(expenseResult.Value);
+        }
+
         Result<Transaction> transactionResult =
             Transaction.Create(
                 createdOn: DateTime.UtcNow,
                 userId: _currentUser.Id,
                 accountId: accountResult.Value.Id,
-                categoryId: categoryResult.Value.Id,
+                categoryId: categoryId,
                 currencyId: currencyResult.Value.Id,
                 merchantId: merchantId,
-                type: command.Type,
+                type: command.Type == TransactionType.Transfer.Name ? TransactionType.Income : command.Type,
                 amount: command.Amount,
                 date: command.Date.ToLocalTime(),
-                description: command.Description);
+                description: command.Description,
+                isTransfer: command.Type == TransactionType.Transfer.Name);
 
         if (transactionResult.IsFailureOrNull)
         {
@@ -132,29 +195,13 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
 
         if (command.Attachments.Any())
         {
-            List<Task<UploadedFileResponse>> attachmentsForUploadTasks = new();
+            Result transactionAttachmentsResult =
+                await UploadTransactionAttachments(transactionResult.Value, command.Attachments);
 
-            foreach (FileForUploadRequest attachments in command.Attachments)
+            if (transactionAttachmentsResult.IsFailureOrNull)
             {
-                Result<TransactionAttachment> upsertTransactionAttachmentResult =
-                    transactionResult.Value.UpsertTransactionAttachment(
-                        createdOn: DateTime.UtcNow.ToLocalTime(),
-                        fileName: attachments.Name);
-
-                if (upsertTransactionAttachmentResult.IsFailureOrNull)
-                {
-                    return result.FailWith(upsertTransactionAttachmentResult);
-                }
-
-                attachmentsForUploadTasks.Add(
-                    _storageService.UploadAsync(
-                        containerName: _storageSettings.ContainerName,
-                        fileName: upsertTransactionAttachmentResult.Value.FilePath,
-                        content: attachments.Content,
-                        contentType: attachments.Type));
+                return result.FailWith(transactionAttachmentsResult);
             }
-
-            await Task.WhenAll(attachmentsForUploadTasks);
         }
 
         _transactionRepository.Insert(transactionResult.Value);
@@ -162,5 +209,36 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
         await _unitOfWork.SaveAsync();
 
         return result.Build();
+    }
+
+    private async Task<Result> UploadTransactionAttachments(
+        Transaction transaction,
+        IEnumerable<FileForUploadRequest> attachments)
+    {
+        List<Task<UploadedFileResponse>> attachmentsForUploadTasks = new();
+
+        foreach (FileForUploadRequest attachment in attachments)
+        {
+            Result<TransactionAttachment> upsertTransactionAttachmentResult =
+                transaction.UpsertTransactionAttachment(
+                    createdOn: DateTime.UtcNow.ToLocalTime(),
+                    fileName: attachment.Name);
+
+            if (upsertTransactionAttachmentResult.IsFailureOrNull)
+            {
+                return upsertTransactionAttachmentResult;
+            }
+
+            attachmentsForUploadTasks.Add(
+                _storageService.UploadAsync(
+                    containerName: _storageSettings.ContainerName,
+                    fileName: upsertTransactionAttachmentResult.Value.FilePath,
+                    content: attachment.Content,
+                    contentType: attachment.Type));
+        }
+
+        await Task.WhenAll(attachmentsForUploadTasks);
+
+        return Result.Ok();
     }
 }

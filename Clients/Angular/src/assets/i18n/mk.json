@@ -60,6 +60,10 @@
     "TRANSACTION_NOT_VERIFIED_CANNOT_UPDATE_ACCOUNT_BALANCE": "Трансакцијата не е потврдена. Состојбата на сметката не може да се уреди.",
     "TRANSACTION_NOT_VERIFIED_CANNOT_UPDATE_BUDGET_AMOUNT_SPENT": "Трансакцијата не е потврдена. Потрошениот износ на буџетот не може да се уреди.",
     "TRANSACTION_INVALID_FOR_VERIFICATION": "Трансакцијата е невалидна за потврдување.",
+    "TRANSACTION_TYPE_AND_CATEGORY_MISMATCH": "Типот на трансакцијата и категоријата се неусогласени.",
+    "TRANSACTION_TYPE_NOT_COMPATIBLE_WITH_MERCHANT": "Типот на трансакцијата не е компатибилен со трговецот.",
+    "TRANSACTION_TYPE_TRANSFER_MISSING_ACCOUNTS": "На трансферот му недостасуваат сметки.",
+    "TRANSACTION_CATEGORY_MISSING": "Недостасува категорија на трансакцијата.",
 
     "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL": "Од валута и до валута на девизниот курс не можат да бидат еднакви.",
     "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Од датумот на девизниот курс не може да биде поголем од до датумот.",
@@ -225,6 +229,8 @@
 
     "createFormHeader": "Креирај трансакција",
     "createFormAccountLabel": "Сметка",
+    "createFormFromAccountLabel": "Од сметка",
+    "createFormToAccountLabel": "Кон сметка",
     "createFormCategoryLabel": "Категорија",
     "createFormCurrencyCodeLabel": "Валута",
     "createFormMerchantLabel": "Трговец",

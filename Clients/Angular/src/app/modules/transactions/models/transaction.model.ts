@@ -46,10 +46,12 @@ export interface ICategoryResponse {
 export interface IMerchantResponse {
   uid: string;
   name: string;
+  categoryName: string;
 }
 
 export interface ICreateTransactionRequest {
   accountUid: string | null;
+  fromAccountUid: string | null;
   categoryUid: string | null;
   currencyCode: string | null;
   merchantUid: string | null;
