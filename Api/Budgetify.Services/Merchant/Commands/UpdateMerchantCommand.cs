@@ -9,6 +9,7 @@ using Budgetify.Contracts.Category.Repositories;
 using Budgetify.Contracts.Infrastructure.Storage;
 using Budgetify.Contracts.Merchant.Repositories;
 using Budgetify.Entities.Category.Domain;
+using Budgetify.Entities.Category.Enumerations;
 using Budgetify.Entities.Merchant.Domain;
 using Budgetify.Services.Common.Extensions;
 
@@ -58,6 +59,11 @@ public class UpdateMerchantCommandHandler : ICommandHandler<UpdateMerchantComman
         if (categoryResult.IsFailureOrNull)
         {
             return result.FailWith(categoryResult);
+        }
+
+        if (categoryResult.Value.Type != CategoryType.Expense)
+        {
+            return result.FailWith(Result.Invalid(ResultCodes.MerchantCategoryTypeInvalid));
         }
 
         Result updateResult =

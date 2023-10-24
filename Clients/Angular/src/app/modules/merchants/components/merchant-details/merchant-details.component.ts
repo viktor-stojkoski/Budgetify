@@ -6,10 +6,12 @@ import {
   DialogActionButton,
   DialogService,
   IDialogResponseData,
+  TranslationKeys as SharedTranslationKeys,
   SnackbarService,
-  TranslationKeys as SharedTranslationKeys
+  getEnumKeyFromValue
 } from '@budgetify/shared';
-import { concatMap, distinctUntilChanged, map, Observable, startWith, take, takeUntil, tap } from 'rxjs';
+import { Observable, concatMap, distinctUntilChanged, map, startWith, take, takeUntil, tap } from 'rxjs';
+import { CategoryType } from '../../models/merchant.enum';
 import { ICategoryResponse, IDeleteMerchantDialogData, IMerchantResponse } from '../../models/merchant.model';
 import { MerchantService } from '../../services/merchant.service';
 import { TranslationKeys } from '../../static/translationKeys';
@@ -115,7 +117,9 @@ export class MerchantDetailsComponent extends DestroyBaseComponent implements On
       .pipe(take(1))
       .subscribe({
         next: (result) => {
-          this.categories = result.value;
+          this.categories = result.value?.filter(
+            (x) => x.type === getEnumKeyFromValue(CategoryType, CategoryType.EXPENSE)
+          );
           this.isLoading = false;
           this.filterCategories();
         },
