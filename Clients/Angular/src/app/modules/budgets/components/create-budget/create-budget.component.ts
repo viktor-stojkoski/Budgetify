@@ -6,9 +6,11 @@ import {
   DialogActionButton,
   IDialogResponseData,
   TranslationKeys as SharedTranslationKeys,
-  SnackbarService
+  SnackbarService,
+  getEnumKeyFromValue
 } from '@budgetify/shared';
 import { Observable, distinctUntilChanged, map, startWith, take, takeUntil } from 'rxjs';
+import { CategoryType } from '../../models/budget.enum';
 import { ICategoryResponse, ICurrencyResponse } from '../../models/budget.model';
 import { BudgetService } from '../../services/budget.service';
 import { TranslationKeys } from '../../static/translationKeys';
@@ -94,7 +96,9 @@ export class CreateBudgetComponent extends DestroyBaseComponent implements OnIni
       .pipe(take(1))
       .subscribe({
         next: (result) => {
-          this.categories = result.value;
+          this.categories = result.value?.filter(
+            (x) => x.type === getEnumKeyFromValue(CategoryType, CategoryType.EXPENSE)
+          );
           this.isLoading = false;
           this.filterCategories();
         },
