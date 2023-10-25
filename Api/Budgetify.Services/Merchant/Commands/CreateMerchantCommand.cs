@@ -40,7 +40,7 @@ public class CreateMerchantCommandHandler : ICommandHandler<CreateMerchantComman
     {
         CommandResultBuilder result = new();
 
-        if (await _merchantRepository.DoesMerchantNameExistAsync(_currentUser.Id, command.Name))
+        if (await _merchantRepository.DoesMerchantNameExistAsync(_currentUser.Id, Guid.Empty, command.Name))
         {
             return result.FailWith(Result.Conflicted(ResultCodes.MerchantWithSameNameAlreadyExist));
         }

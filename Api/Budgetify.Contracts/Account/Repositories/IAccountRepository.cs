@@ -32,7 +32,7 @@ public interface IAccountRepository
     /// <summary>
     /// Returns boolean indicating whether account with the given userId and name exists.
     /// </summary>
-    Task<bool> DoesAccountNameExistAsync(int userId, string? name);
+    Task<bool> DoesAccountNameExistAsync(int userId, Guid accountUid, string? name);
 
     /// <summary>
     /// Returns boolean indicating whether account with the given userId and accountUid is valid for deletion.

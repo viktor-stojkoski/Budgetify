@@ -53,7 +53,7 @@ public class UpdateAccountCommandHandler : ICommandHandler<UpdateAccountCommand>
             return result.FailWith(accountResult);
         }
 
-        if (await _accountRepository.DoesAccountNameExistAsync(_currentUser.Id, command.Name))
+        if (await _accountRepository.DoesAccountNameExistAsync(_currentUser.Id, accountResult.Value.Uid, command.Name))
         {
             return result.FailWith(Result.Conflicted(ResultCodes.AccountWithSameNameAlreadyExist));
         }

@@ -22,7 +22,7 @@ public interface IBudgetRepository
     /// <summary>
     /// Returns boolean indicating whether budget with the given userId and name exists.
     /// </summary>
-    Task<bool> DoesBudgetNameExistAsync(int userId, string? name);
+    Task<bool> DoesBudgetNameExistAsync(int userId, Guid budgetUid, string? name);
 
     /// <summary>
     /// Returns budget by given userId and budgetUid.

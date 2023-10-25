@@ -46,10 +46,10 @@ public class CategoryRepository : Repository<Entities.Category>, ICategoryReposi
         return dbCategory.CreateCategory();
     }
 
-    public async Task<bool> DoesCategoryNameExistAsync(int userId, string? name)
+    public async Task<bool> DoesCategoryNameExistAsync(int userId, Guid categoryUid, string? name)
     {
         return await AllNoTrackedOf<Entities.Category>()
-            .AnyAsync(x => x.UserId == userId && x.Name == name);
+            .AnyAsync(x => x.UserId == userId && x.Uid != categoryUid && x.Name == name);
     }
 
     public async Task<bool> IsCategoryValidForDeletionAsync(int userId, Guid categoryUid)

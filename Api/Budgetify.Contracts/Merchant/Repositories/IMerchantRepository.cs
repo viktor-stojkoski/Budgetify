@@ -31,7 +31,7 @@ public interface IMerchantRepository
     /// <summary>
     /// Returns boolean indicating whether merchant with the given userId and name exists.
     /// </summary>
-    Task<bool> DoesMerchantNameExistAsync(int userId, string? name);
+    Task<bool> DoesMerchantNameExistAsync(int userId, Guid merchantUid, string? name);
 
     /// <summary>
     /// Returns boolean indicating whether merchant with the given userId and merchantUid is valid for deletion.

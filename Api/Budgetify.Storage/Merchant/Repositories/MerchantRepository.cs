@@ -59,10 +59,10 @@ public class MerchantRepository : Repository<Entities.Merchant>, IMerchantReposi
         return dbMerchant.CreateMerchant();
     }
 
-    public async Task<bool> DoesMerchantNameExistAsync(int userId, string? name)
+    public async Task<bool> DoesMerchantNameExistAsync(int userId, Guid merchantUid, string? name)
     {
         return await AllNoTrackedOf<Entities.Merchant>()
-            .AnyAsync(x => x.UserId == userId && x.Name == name);
+            .AnyAsync(x => x.UserId == userId && x.Uid != merchantUid && x.Name == name);
     }
 
     public async Task<bool> IsMerchantValidForDeletionAsync(int userId, Guid merchantUid)
