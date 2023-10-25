@@ -60,10 +60,10 @@ public class AccountRepository : Repository<Entities.Account>, IAccountRepositor
         return dbAccount.CreateAccount();
     }
 
-    public async Task<bool> DoesAccountNameExistAsync(int userId, string? name)
+    public async Task<bool> DoesAccountNameExistAsync(int userId, Guid accountUid, string? name)
     {
         return await AllNoTrackedOf<Entities.Account>()
-            .AnyAsync(x => x.UserId == userId && x.Name == name);
+            .AnyAsync(x => x.UserId == userId && x.Uid != accountUid && x.Name == name);
     }
 
     public async Task<bool> IsAccountValidForDeletionAsync(int userId, Guid accountUid)

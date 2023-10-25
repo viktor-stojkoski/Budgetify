@@ -48,7 +48,7 @@ public class UpdateMerchantCommandHandler : ICommandHandler<UpdateMerchantComman
             return result.FailWith(merchantResult);
         }
 
-        if (await _merchantRepository.DoesMerchantNameExistAsync(_currentUser.Id, command.Name))
+        if (await _merchantRepository.DoesMerchantNameExistAsync(_currentUser.Id, merchantResult.Value.Uid, command.Name))
         {
             return result.FailWith(Result.Conflicted(ResultCodes.MerchantWithSameNameAlreadyExist));
         }

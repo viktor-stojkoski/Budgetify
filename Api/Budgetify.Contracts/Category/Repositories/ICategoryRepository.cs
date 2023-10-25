@@ -26,7 +26,7 @@ public interface ICategoryRepository
     /// <summary>
     /// Returns boolean indicating whether category with the given userId and name exists.
     /// </summary>
-    Task<bool> DoesCategoryNameExistAsync(int userId, string? name);
+    Task<bool> DoesCategoryNameExistAsync(int userId, Guid categoryUid, string? name);
 
     /// <summary>
     /// Returns boolean indicating whether category with the given userId and categoryUid is valid for deletion.

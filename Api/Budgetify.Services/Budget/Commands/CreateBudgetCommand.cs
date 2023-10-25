@@ -51,7 +51,7 @@ public class CreateBudgetCommandHandler : ICommandHandler<CreateBudgetCommand>
     {
         CommandResultBuilder result = new();
 
-        if (await _budgetRepository.DoesBudgetNameExistAsync(_currentUser.Id, command.Name))
+        if (await _budgetRepository.DoesBudgetNameExistAsync(_currentUser.Id, Guid.Empty, command.Name))
         {
             return result.FailWith(Result.Conflicted(ResultCodes.BudgetWithSameNameAlreadyExist));
         }

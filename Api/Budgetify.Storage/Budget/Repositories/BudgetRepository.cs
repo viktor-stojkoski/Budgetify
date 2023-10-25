@@ -34,10 +34,10 @@ public class BudgetRepository : Repository<Entities.Budget>, IBudgetRepository
         AttachOrUpdate(dbBudget, budget.State.GetState());
     }
 
-    public async Task<bool> DoesBudgetNameExistAsync(int userId, string? name)
+    public async Task<bool> DoesBudgetNameExistAsync(int userId, Guid budgetUid, string? name)
     {
         return await AllNoTrackedOf<Entities.Budget>()
-            .AnyAsync(x => x.UserId == userId && x.Name == name);
+            .AnyAsync(x => x.UserId == userId && x.Uid != budgetUid && x.Name == name);
     }
 
     public async Task<Result<Budget>> GetBudgetAsync(int userId, Guid budgetUid)

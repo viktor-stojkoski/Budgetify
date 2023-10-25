@@ -44,7 +44,7 @@ public class CreateAccountCommandHandler : ICommandHandler<CreateAccountCommand>
     {
         CommandResultBuilder result = new();
 
-        if (await _accountRepository.DoesAccountNameExistAsync(_currentUser.Id, command.Name))
+        if (await _accountRepository.DoesAccountNameExistAsync(_currentUser.Id, Guid.Empty, command.Name))
         {
             return result.FailWith(Result.Conflicted(ResultCodes.AccountWithSameNameAlreadyExist));
         }
