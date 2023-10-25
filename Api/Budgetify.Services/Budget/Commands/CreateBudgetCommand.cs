@@ -11,6 +11,7 @@ using Budgetify.Contracts.Currency.Repositories;
 using Budgetify.Contracts.Infrastructure.Storage;
 using Budgetify.Entities.Budget.Domain;
 using Budgetify.Entities.Category.Domain;
+using Budgetify.Entities.Category.Enumerations;
 using Budgetify.Entities.Currency.Domain;
 using Budgetify.Services.Common.Extensions;
 
@@ -62,6 +63,11 @@ public class CreateBudgetCommandHandler : ICommandHandler<CreateBudgetCommand>
         if (categoryResult.IsFailureOrNull)
         {
             return result.FailWith(categoryResult);
+        }
+
+        if (categoryResult.Value.Type != CategoryType.Expense)
+        {
+            return result.FailWith(Result.Invalid(ResultCodes.BudgetCategoryTypeInvalid));
         }
 
         Result<Currency> currencyResult =

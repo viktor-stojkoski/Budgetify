@@ -104,6 +104,7 @@ public static class ResultCodes
     public const string BudgetWithSameNameAlreadyExist = "BUDGET_WITH_SAME_NAME_ALREADY_EXIST";
     public const string BudgetStartDateCannotBeGreaterThanEndDate = "BUDGET_START_DATE_CANNOT_BE_GREATER_THAN_END_DATE";
     public const string BudgetNotFound = "BUDGET_NOT_FOUND";
+    public const string BudgetCategoryTypeInvalid = "BUDGET_CATEGORY_TYPE_INVALID";
 
     #endregion
 }
