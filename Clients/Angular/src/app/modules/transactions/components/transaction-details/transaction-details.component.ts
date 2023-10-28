@@ -130,6 +130,7 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
               ...(this.transaction?.transactionAttachments ?? []),
               ...(this.transactionForm.value as ITransactionResponse),
               type: this.transaction!.type,
+              isVerified: this.transaction!.isVerified,
               accountName: this.displayAccount(this.transactionForm.controls.accountUid.value as string),
               categoryName: this.displayCategory(this.transactionForm.controls.categoryUid.value as string),
               merchantName: this.displayMerchant(this.transactionForm.controls.merchantUid.value as string)
