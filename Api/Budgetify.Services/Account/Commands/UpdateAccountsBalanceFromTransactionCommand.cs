@@ -11,26 +11,27 @@ using Budgetify.Contracts.Transaction.Repositories;
 using Budgetify.Entities.Account.Domain;
 using Budgetify.Entities.ExchangeRate.Domain;
 using Budgetify.Entities.Transaction.Domain;
+using Budgetify.Entities.Transaction.Enumerations;
 using Budgetify.Services.Common.Extensions;
 
 using VS.Commands;
 
-public record UpdateAccountBalanceFromTransactionAmountCommand(
+public record UpdateAccountsBalanceFromTransactionCommand(
     int UserId,
     Guid TransactionUid,
     int? PreviousAccountId,
     decimal? PreviousAmount,
     int? PreviousCurrencyId) : ICommand;
 
-public class UpdateAccountBalanceFromTransactionAmountCommandHandler
-    : ICommandHandler<UpdateAccountBalanceFromTransactionAmountCommand>
+public class UpdateAccountsBalanceFromTransactionCommandHandler
+    : ICommandHandler<UpdateAccountsBalanceFromTransactionCommand>
 {
     private readonly ITransactionRepository _transactionRepository;
     private readonly IAccountRepository _accountRepository;
     private readonly IExchangeRateRepository _exchangeRateRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateAccountBalanceFromTransactionAmountCommandHandler(
+    public UpdateAccountsBalanceFromTransactionCommandHandler(
         ITransactionRepository transactionRepository,
         IAccountRepository accountRepository,
         IExchangeRateRepository exchangeRateRepository,
@@ -42,7 +43,7 @@ public class UpdateAccountBalanceFromTransactionAmountCommandHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<CommandResult<EmptyValue>> ExecuteAsync(UpdateAccountBalanceFromTransactionAmountCommand command)
+    public async Task<CommandResult<EmptyValue>> ExecuteAsync(UpdateAccountsBalanceFromTransactionCommand command)
     {
         CommandResultBuilder result = new();
 
@@ -92,7 +93,8 @@ public class UpdateAccountBalanceFromTransactionAmountCommandHandler
                 await UpdatePreviousAccountBalance(
                     userId: command.UserId,
                     previousAccountId: command.PreviousAccountId.Value,
-                    previousAccountAmount: previousAmount);
+                    previousAccountAmount: previousAmount,
+                    type: transactionResult.Value.Type);
 
             if (previousAccountUpdateResult.IsFailureOrNull)
             {
@@ -121,7 +123,8 @@ public class UpdateAccountBalanceFromTransactionAmountCommandHandler
     private async Task<Result> UpdatePreviousAccountBalance(
         int userId,
         int previousAccountId,
-        decimal previousAccountAmount)
+        decimal previousAccountAmount,
+        TransactionType type)
     {
         Result<Account> previousAccountResult =
             await _accountRepository.GetAccountByIdAsync(userId, previousAccountId);
@@ -129,6 +132,11 @@ public class UpdateAccountBalanceFromTransactionAmountCommandHandler
         if (previousAccountResult.IsFailureOrNull)
         {
             return previousAccountResult;
+        }
+
+        if (type == TransactionType.Income)
+        {
+            previousAccountAmount = -previousAccountAmount;
         }
 
         Result previousAccountUpdateResult =
@@ -175,6 +183,11 @@ public class UpdateAccountBalanceFromTransactionAmountCommandHandler
             amount = previousAmount > amount
                 ? -Math.Abs(previousAmount.Value - amount)
                 : Math.Abs(previousAmount.Value - amount);
+        }
+
+        if (transaction.Type == TransactionType.Income)
+        {
+            amount = -amount;
         }
 
         Result accountUpdateResult = account.DeductBalance(amount);

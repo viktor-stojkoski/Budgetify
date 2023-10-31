@@ -28,7 +28,7 @@ public class TransactionCreatedDomainEventHandler : IDomainEventHandler<Transact
     public Task HandleAsync(TransactionCreatedDomainEvent @event, CancellationToken cancellationToken)
     {
         _jobService.Enqueue(() => _syncCommandDispatcher.Execute(
-            new UpdateAccountBalanceFromTransactionAmountCommand(
+            new UpdateAccountsBalanceFromTransactionCommand(
                 @event.UserId,
                 @event.TransactionUid,
                 null,

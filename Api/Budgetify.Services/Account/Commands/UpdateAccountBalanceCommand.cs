@@ -13,20 +13,21 @@ using Budgetify.Services.Common.Extensions;
 
 using VS.Commands;
 
-public record DeductAccountBalanceCommand(
+public record UpdateAccountBalanceCommand(
     int UserId,
     int AccountId,
     int CurrencyId,
     decimal Amount,
-    DateTime Date) : ICommand;
+    DateTime Date,
+    bool IsDeduction) : ICommand;
 
-public class DeductAccountBalanceCommandHandler : ICommandHandler<DeductAccountBalanceCommand>
+public class UpdateAccountBalanceCommandHandler : ICommandHandler<UpdateAccountBalanceCommand>
 {
     private readonly IAccountRepository _accountRepository;
     private readonly IExchangeRateRepository _exchangeRateRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeductAccountBalanceCommandHandler(
+    public UpdateAccountBalanceCommandHandler(
         IAccountRepository accountRepository,
         IExchangeRateRepository exchangeRateRepository,
         IUnitOfWork unitOfWork)
@@ -36,7 +37,7 @@ public class DeductAccountBalanceCommandHandler : ICommandHandler<DeductAccountB
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<CommandResult<EmptyValue>> ExecuteAsync(DeductAccountBalanceCommand command)
+    public async Task<CommandResult<EmptyValue>> ExecuteAsync(UpdateAccountBalanceCommand command)
     {
         CommandResultBuilder result = new();
 
@@ -67,7 +68,7 @@ public class DeductAccountBalanceCommandHandler : ICommandHandler<DeductAccountB
             amount *= exchangeRateResult.Value.Rate;
         }
 
-        Result accountUpdateResult = accountResult.Value.DeductBalance(amount);
+        Result accountUpdateResult = accountResult.Value.DeductBalance(command.IsDeduction ? amount : -amount);
 
         if (accountUpdateResult.IsFailureOrNull)
         {
