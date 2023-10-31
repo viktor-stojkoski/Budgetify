@@ -28,12 +28,13 @@ public class TransactionDeletedDomainEventHandler : IDomainEventHandler<Transact
     public Task HandleAsync(TransactionDeletedDomainEvent @event, CancellationToken cancellationToken)
     {
         _jobService.Enqueue(() => _syncCommandDispatcher.Execute(
-            new DeductAccountBalanceCommand(
+            new UpdateAccountBalanceCommand(
                 @event.UserId,
                 @event.AccountId,
                 @event.CurrencyId,
                 @event.Amount,
-                @event.Date)));
+                @event.Date,
+                @event.TransactionType == TransactionType.Expense)));
 
         if (@event.TransactionType == TransactionType.Expense)
         {
