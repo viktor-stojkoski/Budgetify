@@ -23,6 +23,7 @@ using VS.Commands;
 public record UpdateTransactionCommand(
     Guid TransactionUid,
     Guid AccountUid,
+    Guid? FromAccountUid,
     Guid CategoryUid,
     string? CurrencyCode,
     Guid? MerchantUid,
@@ -109,9 +110,25 @@ public class UpdateTransactionCommandHandler : ICommandHandler<UpdateTransaction
             merchantId = merchantResult.Value.Id;
         }
 
+        int? fromAccountId = null;
+
+        if (command.FromAccountUid.HasValue)
+        {
+            Result<Account> fromAccountResult =
+                await _accountRepository.GetAccountAsync(_currentUser.Id, command.FromAccountUid.Value);
+
+            if (fromAccountResult.IsFailureOrNull)
+            {
+                return result.FailWith(fromAccountResult);
+            }
+
+            fromAccountId = fromAccountResult.Value.Id;
+        }
+
         Result updateResult =
             transactionResult.Value.Update(
                 accountId: accountResult.Value.Id,
+                fromAccountId: fromAccountId,
                 categoryId: categoryResult.Value.Id,
                 currencyId: currencyResult.Value.Id,
                 merchantId: merchantId,

@@ -66,6 +66,7 @@ public class TransactionsController : ExtendedApiController
             new UpdateTransactionCommand(
                 TransactionUid: transactionUid,
                 AccountUid: request.AccountUid,
+                FromAccountUid: request.FromAccountUid,
                 CategoryUid: request.CategoryUid,
                 CurrencyCode: request.CurrencyCode,
                 MerchantUid: request.MerchantUid,

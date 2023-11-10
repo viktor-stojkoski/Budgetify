@@ -21,6 +21,7 @@ public partial class Transaction
         DateTime? deletedOn,
         int userId,
         int? accountId,
+        int? fromAccountId,
         int? categoryId,
         int currencyId,
         int? merchantId,
@@ -41,6 +42,7 @@ public partial class Transaction
         Transaction transaction = new(
             userId: userId,
             accountId: accountId,
+            fromAccountId: fromAccountId,
             categoryId: categoryId,
             currencyId: currencyId,
             merchantId: merchantId,
@@ -69,14 +71,14 @@ public partial class Transaction
         DateTime createdOn,
         int userId,
         int accountId,
+        int? fromAccountId,
         int? categoryId,
         int currencyId,
         int? merchantId,
         string? type,
         decimal amount,
         DateTime date,
-        string? description,
-        bool isTransfer)
+        string? description)
     {
         Result<TransactionType> typeValue = TransactionType.Create(type);
 
@@ -85,7 +87,7 @@ public partial class Transaction
             return Result.FromError<Transaction>(typeValue);
         }
 
-        if (!isTransfer && typeValue.Value != TransactionType.Income && merchantId is null)
+        if (typeValue.Value != TransactionType.Income && merchantId is null)
         {
             return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
         }
@@ -95,7 +97,7 @@ public partial class Transaction
             return Result.Invalid<Transaction>(ResultCodes.TransactionTypeNotCompatibleWithMerchant);
         }
 
-        if ((!isTransfer || typeValue.Value != TransactionType.Transfer) && categoryId is null)
+        if (typeValue.Value != TransactionType.Transfer && categoryId is null)
         {
             return Result.Invalid<Transaction>(ResultCodes.TransactionCategoryMissing);
         }
@@ -103,6 +105,7 @@ public partial class Transaction
         Transaction transaction = new(
             userId: userId,
             accountId: accountId,
+            fromAccountId: fromAccountId,
             categoryId: categoryId,
             currencyId: currencyId,
             merchantId: merchantId,
@@ -141,6 +144,7 @@ public partial class Transaction
             new Transaction(
                 userId: userId,
                 accountId: null,
+                fromAccountId: null,
                 categoryId: null,
                 currencyId: currencyId,
                 merchantId: merchantId,

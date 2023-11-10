@@ -6,6 +6,8 @@ public class UpdateTransactionRequest
 {
     public Guid AccountUid { get; set; }
 
+    public Guid? FromAccountUid { get; set; }
+
     public Guid CategoryUid { get; set; }
 
     public string? CurrencyCode { get; set; }

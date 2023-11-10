@@ -12,6 +12,7 @@ public sealed partial class Transaction : AggregateRoot
     private Transaction(
         int userId,
         int? accountId,
+        int? fromAccountId,
         int? categoryId,
         int currencyId,
         int? merchantId,
@@ -25,6 +26,7 @@ public sealed partial class Transaction : AggregateRoot
 
         UserId = userId;
         AccountId = accountId;
+        FromAccountId = fromAccountId;
         CategoryId = categoryId;
         CurrencyId = currencyId;
         MerchantId = merchantId;
@@ -51,6 +53,11 @@ public sealed partial class Transaction : AggregateRoot
     /// Transaction's account.
     /// </summary>
     public int? AccountId { get; private set; }
+
+    /// <summary>
+    /// Transaction's from account (Used only in transfer).
+    /// </summary>
+    public int? FromAccountId { get; private set; }
 
     /// <summary>
     /// Transaction's category.

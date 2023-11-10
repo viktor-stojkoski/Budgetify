@@ -42,4 +42,6 @@ public class Account : Entity
     public virtual Currency Currency { get; protected internal set; } = null!;
 
     public virtual ICollection<Transaction> Transactions { get; protected internal set; } = new List<Transaction>();
+
+    public virtual ICollection<Transaction> FromTransactions { get; protected internal set; } = new List<Transaction>();
 }

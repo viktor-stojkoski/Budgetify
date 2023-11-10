@@ -14,6 +14,7 @@ public partial class Transaction
     /// </summary>
     public Result Update(
         int accountId,
+        int? fromAccountId,
         int? categoryId,
         int currencyId,
         int? merchantId,
@@ -50,6 +51,7 @@ public partial class Transaction
         }
 
         AccountId = accountId;
+        FromAccountId = accountId;
         CategoryId = categoryId;
         CurrencyId = currencyId;
         MerchantId = merchantId;

@@ -45,6 +45,7 @@ public class GetTransactionQueryHandler : IQueryHandler<GetTransactionQuery, Tra
         Transaction? transaction =
             await _budgetifyReadonlyDbContext.AllNoTrackedOf<Transaction>()
                 .Include(x => x.Account)
+                .Include(x => x.FromAccount)
                 .Include(x => x.Category)
                 .Include(x => x.Currency)
                 .Include(x => x.Merchant).DefaultIfEmpty()
@@ -74,6 +75,8 @@ public class GetTransactionQueryHandler : IQueryHandler<GetTransactionQuery, Tra
         TransactionResponse transactionResponse = new(
             accountUid: transaction.Account?.Uid,
             accountName: transaction.Account?.Name,
+            fromAccountUid: transaction.FromAccount?.Uid,
+            fromAccountName: transaction.FromAccount?.Name,
             categoryUid: transaction.Category?.Uid,
             categoryName: transaction.Category?.Name,
             currencyCode: transaction.Currency.Code,
