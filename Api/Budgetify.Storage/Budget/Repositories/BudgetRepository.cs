@@ -53,7 +53,7 @@ public class BudgetRepository : Repository<Entities.Budget>, IBudgetRepository
         return dbBudget.CreateBudget();
     }
 
-    public async Task<Result<IEnumerable<Budget>>> GetBudgetsByCategoryIdAsync(int userId, int categoryId)
+    public async Task<Result<IEnumerable<Budget>>> GetBudgetsByCategoryIdAsync(int userId, int? categoryId)
     {
         IEnumerable<Entities.Budget> dbBudgets = await AllNoTrackedOf<Entities.Budget>()
             .Where(x => x.UserId == userId && x.CategoryId == categoryId)

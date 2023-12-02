@@ -87,7 +87,7 @@ public partial class Transaction
             return Result.FromError<Transaction>(typeValue);
         }
 
-        if (typeValue.Value != TransactionType.Income && merchantId is null)
+        if (typeValue.Value == TransactionType.Expense && merchantId is null)
         {
             return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
         }

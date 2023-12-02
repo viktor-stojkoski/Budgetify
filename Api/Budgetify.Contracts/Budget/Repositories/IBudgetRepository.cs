@@ -32,5 +32,5 @@ public interface IBudgetRepository
     /// <summary>
     /// Returns the budgets by given userId and categoryId.
     /// </summary>
-    Task<Result<IEnumerable<Budget>>> GetBudgetsByCategoryIdAsync(int userId, int categoryId);
+    Task<Result<IEnumerable<Budget>>> GetBudgetsByCategoryIdAsync(int userId, int? categoryId);
 }

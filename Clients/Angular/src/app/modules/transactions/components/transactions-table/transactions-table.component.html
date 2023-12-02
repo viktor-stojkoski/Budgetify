@@ -30,8 +30,26 @@
   <ng-container matColumnDef="accountName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ translationKeys.tableAccountHeader | translate }}</th>
     <td mat-cell *matCellDef="let transaction">
-      <span [matTooltip]="transaction.accountName" [matTooltipDisabled]="transaction.accountName?.length < 30">
+      <span
+        *ngIf="transaction.type !== transactionTypeTransfer"
+        [matTooltip]="transaction.accountName"
+        [matTooltipDisabled]="transaction.accountName?.length < 30"
+      >
         {{ transaction.accountName | truncate: 30 }}
+      </span>
+      <span
+        *ngIf="transaction.type === transactionTypeTransfer"
+        [matTooltip]="transaction.fromAccountName"
+        [matTooltipDisabled]="transaction.fromAccountName?.length < 10"
+      >
+        {{ transaction.fromAccountName | truncate: 10 }} →
+      </span>
+      <span
+        *ngIf="transaction.type === transactionTypeTransfer"
+        [matTooltip]="transaction.fromAccountName"
+        [matTooltipDisabled]="transaction.accountName?.length < 10"
+      >
+        {{ transaction.accountName | truncate: 10 }}
       </span>
     </td>
   </ng-container>

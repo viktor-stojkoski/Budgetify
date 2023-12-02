@@ -16,6 +16,7 @@ using Budgetify.Entities.Category.Domain;
 using Budgetify.Entities.Currency.Domain;
 using Budgetify.Entities.Merchant.Domain;
 using Budgetify.Entities.Transaction.Domain;
+using Budgetify.Entities.Transaction.Enumerations;
 using Budgetify.Services.Common.Extensions;
 
 using VS.Commands;
@@ -24,7 +25,7 @@ public record UpdateTransactionCommand(
     Guid TransactionUid,
     Guid AccountUid,
     Guid? FromAccountUid,
-    Guid CategoryUid,
+    Guid? CategoryUid,
     string? CurrencyCode,
     Guid? MerchantUid,
     decimal Amount,
@@ -79,12 +80,19 @@ public class UpdateTransactionCommandHandler : ICommandHandler<UpdateTransaction
             return result.FailWith(accountResult);
         }
 
-        Result<Category> categoryResult =
-            await _categoryRepository.GetCategoryAsync(_currentUser.Id, command.CategoryUid);
+        int? categoryId = null;
 
-        if (categoryResult.IsFailureOrNull)
+        if (transactionResult.Value.Type != TransactionType.Transfer && command.CategoryUid.HasValue)
         {
-            return result.FailWith(categoryResult);
+            Result<Category> categoryResult =
+                await _categoryRepository.GetCategoryAsync(_currentUser.Id, command.CategoryUid.Value);
+
+            if (categoryResult.IsFailureOrNull)
+            {
+                return result.FailWith(categoryResult);
+            }
+
+            categoryId = categoryResult.Value.Id;
         }
 
         Result<Currency> currencyResult =
@@ -129,7 +137,7 @@ public class UpdateTransactionCommandHandler : ICommandHandler<UpdateTransaction
             transactionResult.Value.Update(
                 accountId: accountResult.Value.Id,
                 fromAccountId: fromAccountId,
-                categoryId: categoryResult.Value.Id,
+                categoryId: categoryId,
                 currencyId: currencyResult.Value.Id,
                 merchantId: merchantId,
                 amount: command.Amount,

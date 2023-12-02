@@ -47,6 +47,18 @@ public class TransactionDeletedDomainEventHandler : IDomainEventHandler<Transact
                     @event.Date)));
         }
 
+        if (@event.TransactionType == TransactionType.Transfer && @event.FromAccountId.HasValue)
+        {
+            _jobService.Enqueue(() => _syncCommandDispatcher.Execute(
+                new UpdateAccountBalanceCommand(
+                    @event.UserId,
+                    @event.FromAccountId.Value,
+                    @event.CurrencyId,
+                    @event.Amount,
+                    @event.Date,
+                    true)));
+        }
+
         return Task.CompletedTask;
     }
 }

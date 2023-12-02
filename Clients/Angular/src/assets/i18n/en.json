@@ -248,6 +248,8 @@
     "detailsActionAddTransactionAttachments": "Add attachments",
     "detailsActionVerify": "Verify",
     "detailsAccountHeader": "Account",
+    "detailsFromAccountHeader": "From account",
+    "detailsToAccountHeader": "To account",
     "detailsCategoryHeader": "Category",
     "detailsCurrencyCodeHeader": "Currency code",
     "detailsMerchantHeader": "Merchant",

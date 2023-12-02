@@ -22,7 +22,7 @@ public partial class Transaction
         DateTime date,
         string? description)
     {
-        if (Type != TransactionType.Income && merchantId is null)
+        if (Type == TransactionType.Expense && merchantId is null)
         {
             return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
         }
@@ -45,13 +45,14 @@ public partial class Transaction
                     TransactionUid: Uid,
                     TransactionType: Type,
                     PreviousAccountId: AccountId,
+                    PreviousFromAccountId: FromAccountId,
                     PreviousAmount: Amount,
                     PreviousCurrencyId: CurrencyId,
                     PreviousCategoryId: CategoryId));
         }
 
         AccountId = accountId;
-        FromAccountId = accountId;
+        FromAccountId = fromAccountId;
         CategoryId = categoryId;
         CurrencyId = currencyId;
         MerchantId = merchantId;
@@ -91,8 +92,9 @@ public partial class Transaction
                 new TransactionDeletedDomainEvent(
                     UserId: UserId,
                     AccountId: AccountId!.Value,
+                    FromAccountId: FromAccountId,
                     CurrencyId: CurrencyId,
-                    CategoryId: CategoryId!.Value,
+                    CategoryId: CategoryId,
                     Amount: -Amount,
                     Date: Date!.Value,
                     TransactionType: Type));

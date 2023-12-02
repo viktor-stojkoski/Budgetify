@@ -247,6 +247,8 @@
     "detailsActionAddTransactionAttachments": "Додади прилози",
     "detailsActionVerify": "Потврди",
     "detailsAccountHeader": "Сметка",
+    "detailsFromAccountHeader": "Од сметка",
+    "detailsToAccountHeader": "Кон сметка",
     "detailsCategoryHeader": "Категорија",
     "detailsCurrencyCodeHeader": "Валута",
     "detailsMerchantHeader": "Трговец",

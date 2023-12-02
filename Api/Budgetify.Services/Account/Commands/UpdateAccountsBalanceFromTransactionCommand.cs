@@ -20,6 +20,7 @@ public record UpdateAccountsBalanceFromTransactionCommand(
     int UserId,
     Guid TransactionUid,
     int? PreviousAccountId,
+    int? PreviousFromAccountId,
     decimal? PreviousAmount,
     int? PreviousCurrencyId) : ICommand;
 
@@ -87,18 +88,69 @@ public class UpdateAccountsBalanceFromTransactionCommandHandler
             previousAmount *= previousAmountExchangeRateResult.Value.Rate;
         }
 
+        //Result<Account>? previousFromAccountResult = null;
+        //Result<Account>? previousAccountResult = null;
+
+        if (transactionResult.Value.Type == TransactionType.Transfer
+                && command.PreviousFromAccountId.HasValue
+                    && command.PreviousFromAccountId != transactionResult.Value.FromAccountId)
+        {
+            //if (command.PreviousFromAccountId != transactionResult.Value.FromAccountId)
+            //{
+            //    previousAmount *= 2;
+            //}
+
+            Result<Account> previousFromAccountResult =
+                await UpdatePreviousAccountBalance(
+                    userId: command.UserId,
+                    previousAccountId: command.PreviousFromAccountId.Value,
+                    previousAccountAmount: previousAmount,
+                    type: transactionResult.Value.Type,
+                    isDeduct: false);
+
+            if (previousFromAccountResult.IsFailureOrNull)
+            {
+                return result.FailWith(previousFromAccountResult);
+            }
+        }
+
         if (command.PreviousAccountId.HasValue && command.PreviousAccountId != transactionResult.Value.AccountId)
         {
-            Result previousAccountUpdateResult =
+            Result<Account> previousAccountResult =
                 await UpdatePreviousAccountBalance(
                     userId: command.UserId,
                     previousAccountId: command.PreviousAccountId.Value,
                     previousAccountAmount: previousAmount,
-                    type: transactionResult.Value.Type);
+                    type: transactionResult.Value.Type,
+                    accountResult: accountResult);
 
-            if (previousAccountUpdateResult.IsFailureOrNull)
+            if (previousAccountResult.IsFailureOrNull)
             {
-                return result.FailWith(previousAccountUpdateResult);
+                return result.FailWith(previousAccountResult);
+            }
+        }
+
+        if (transactionResult.Value.Type == TransactionType.Transfer && transactionResult.Value.FromAccountId.HasValue)
+        {
+            Result<Account> fromAccountResult =
+                await _accountRepository.GetAccountByIdAsync(command.UserId, transactionResult.Value.FromAccountId.Value);
+
+            if (fromAccountResult.IsFailureOrNull)
+            {
+                return result.FailWith(fromAccountResult);
+            }
+
+            Result currentFromAccountUpdateResult =
+                await UpdateCurrentAccountBalance(
+                    userId: command.UserId,
+                    transaction: transactionResult.Value,
+                    account: fromAccountResult.Value,
+                    previousAmount: previousAmount,
+                    previousAccountId: command.PreviousAccountId);
+
+            if (currentFromAccountUpdateResult.IsFailureOrNull)
+            {
+                return result.FailWith(currentFromAccountUpdateResult);
             }
         }
 
@@ -108,7 +160,8 @@ public class UpdateAccountsBalanceFromTransactionCommandHandler
                 transaction: transactionResult.Value,
                 account: accountResult.Value,
                 previousAmount: previousAmount,
-                previousAccountId: command.PreviousAccountId);
+                previousAccountId: command.PreviousAccountId,
+                isDeduct: transactionResult.Value.Type == TransactionType.Transfer);
 
         if (currentAccountUpdateResult.IsFailureOrNull)
         {
@@ -120,13 +173,15 @@ public class UpdateAccountsBalanceFromTransactionCommandHandler
         return result.Build();
     }
 
-    private async Task<Result> UpdatePreviousAccountBalance(
+    private async Task<Result<Account>> UpdatePreviousAccountBalance(
         int userId,
         int previousAccountId,
         decimal previousAccountAmount,
-        TransactionType type)
+        TransactionType type,
+        bool isDeduct = false,
+        Result<Account>? accountResult = null)
     {
-        Result<Account> previousAccountResult =
+        Result<Account> previousAccountResult = accountResult ??
             await _accountRepository.GetAccountByIdAsync(userId, previousAccountId);
 
         if (previousAccountResult.IsFailureOrNull)
@@ -134,7 +189,7 @@ public class UpdateAccountsBalanceFromTransactionCommandHandler
             return previousAccountResult;
         }
 
-        if (type == TransactionType.Income)
+        if (type == TransactionType.Income || isDeduct)
         {
             previousAccountAmount = -previousAccountAmount;
         }
@@ -144,12 +199,12 @@ public class UpdateAccountsBalanceFromTransactionCommandHandler
 
         if (previousAccountUpdateResult.IsFailureOrNull)
         {
-            return previousAccountUpdateResult;
+            return Result.FromError<Account>(previousAccountUpdateResult);
         }
 
         _accountRepository.Update(previousAccountResult.Value);
 
-        return Result.Ok();
+        return previousAccountResult;
     }
 
     private async Task<Result> UpdateCurrentAccountBalance(
@@ -157,7 +212,8 @@ public class UpdateAccountsBalanceFromTransactionCommandHandler
         Transaction transaction,
         Account account,
         decimal? previousAmount,
-        decimal? previousAccountId)
+        decimal? previousAccountId,
+        bool isDeduct = false)
     {
         decimal amount = transaction.Amount;
 
@@ -185,7 +241,7 @@ public class UpdateAccountsBalanceFromTransactionCommandHandler
                 : Math.Abs(previousAmount.Value - amount);
         }
 
-        if (transaction.Type == TransactionType.Income)
+        if (transaction.Type == TransactionType.Income || isDeduct)
         {
             amount = -amount;
         }
