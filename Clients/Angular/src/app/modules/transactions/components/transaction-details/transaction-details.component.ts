@@ -46,6 +46,7 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
   public isLoading = false;
   public isEditing = false;
   public transactionTypeExpense = getEnumKeyFromValue(TransactionType, TransactionType.EXPENSE);
+  public transactionTypeTransfer = getEnumKeyFromValue(TransactionType, TransactionType.TRANSFER);
   public type = TransactionType;
   public types = enumToTranslationEnum(TransactionType);
   public accounts?: IAccountResponse[];
@@ -53,6 +54,7 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
   public currencies?: ICurrencyResponse[];
   public merchants?: IMerchantResponse[];
   public filteredAccounts$?: Observable<IAccountResponse[] | undefined>;
+  public filteredFromAccounts$?: Observable<IAccountResponse[] | undefined>;
   public filteredCategories$?: Observable<ICategoryResponse[] | undefined>;
   public filteredCurrencies$?: Observable<ICurrencyResponse[] | undefined>;
   public filteredMerchants$?: Observable<IMerchantResponse[] | undefined>;
@@ -60,8 +62,9 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
   public displayedColumns = ['name', 'createdOn', 'actions'];
 
   public transactionForm = this.formBuilder.group({
+    fromAccountUid: [''],
     accountUid: ['', Validators.required],
-    categoryUid: ['', Validators.required],
+    categoryUid: [''],
     currencyCode: ['', Validators.required],
     merchantUid: [''],
     amount: [0, Validators.required],
@@ -116,6 +119,7 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
       this.transactionService
         .updateTransaction(this.transactionUid, {
           accountUid: this.transactionForm.controls.accountUid.value,
+          fromAccountUid: this.transactionForm.controls.fromAccountUid.value,
           categoryUid: this.transactionForm.controls.categoryUid.value,
           currencyCode: this.transactionForm.controls.currencyCode.value,
           merchantUid: this.transactionForm.controls.merchantUid.value || null,
@@ -132,6 +136,7 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
               type: this.transaction!.type,
               isVerified: this.transaction!.isVerified,
               accountName: this.displayAccount(this.transactionForm.controls.accountUid.value as string),
+              fromAccountName: this.displayAccount(this.transactionForm.controls.fromAccountUid.value as string),
               categoryName: this.displayCategory(this.transactionForm.controls.categoryUid.value as string),
               merchantName: this.displayMerchant(this.transactionForm.controls.merchantUid.value as string)
             };
@@ -258,6 +263,7 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
             this.dataSource = new MatTableDataSource(this.transaction.transactionAttachments);
             this.dataSource.sort = this.sort!;
             this.dataSource.paginator = this.paginator!;
+            this.updateFormValidators();
           }
           this.isLoading = false;
         },
@@ -382,6 +388,13 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
       takeUntil(this.destroyed$),
       map((value) => this.filterAccount(value || ''))
     );
+
+    this.filteredFromAccounts$ = this.transactionForm.controls.fromAccountUid.valueChanges.pipe(
+      startWith(''),
+      distinctUntilChanged(),
+      takeUntil(this.destroyed$),
+      map((value) => this.filterAccount(value || ''))
+    );
   }
 
   private filterAccount(value: string): IAccountResponse[] | undefined {
@@ -422,5 +435,17 @@ export class TransactionDetailsComponent extends DestroyBaseComponent implements
     return this.currencies?.filter(
       (option) => option.name.toLowerCase().includes(filterValue) || option.code.toLowerCase().includes(filterValue)
     );
+  }
+
+  private updateFormValidators(): void {
+    if (this.transaction?.type === this.transactionTypeTransfer) {
+      this.transactionForm.controls.fromAccountUid.addValidators(Validators.required);
+    } else {
+      this.transactionForm.controls.categoryUid.addValidators(Validators.required);
+    }
+
+    if (this.transaction?.type === this.transactionTypeExpense) {
+      this.transactionForm.controls.merchantUid.addValidators(Validators.required);
+    }
   }
 }

@@ -11,6 +11,7 @@ public record TransactionUpdatedDomainEvent(
     Guid TransactionUid,
     TransactionType TransactionType,
     int? PreviousAccountId,
+    int? PreviousFromAccountId,
     decimal? PreviousAmount,
     int? PreviousCurrencyId,
     int? PreviousCategoryId) : IDomainEvent;

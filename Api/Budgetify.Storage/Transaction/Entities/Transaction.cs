@@ -24,6 +24,7 @@ public class Transaction : AggregateRoot
         IEnumerable<IDomainEvent> domainEvents,
         int userId,
         int? accountId,
+        int? fromAccountId,
         int? categoryId,
         int currencyId,
         int? merchantId,
@@ -35,6 +36,7 @@ public class Transaction : AggregateRoot
     {
         UserId = userId;
         AccountId = accountId;
+        FromAccountId = fromAccountId;
         CategoryId = categoryId;
         CurrencyId = currencyId;
         MerchantId = merchantId;
@@ -48,6 +50,8 @@ public class Transaction : AggregateRoot
     public int UserId { get; protected internal set; }
 
     public int? AccountId { get; protected internal set; }
+
+    public int? FromAccountId { get; protected internal set; }
 
     public int? CategoryId { get; protected internal set; }
 
@@ -68,6 +72,8 @@ public class Transaction : AggregateRoot
     public virtual User User { get; protected internal set; } = null!;
 
     public virtual Account? Account { get; protected internal set; } = null;
+
+    public virtual Account? FromAccount { get; protected internal set; } = null;
 
     public virtual Category? Category { get; protected internal set; } = null;
 

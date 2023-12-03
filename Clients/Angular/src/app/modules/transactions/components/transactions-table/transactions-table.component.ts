@@ -8,7 +8,8 @@ import {
   DialogActionButton,
   DialogService,
   IDialogResponseData,
-  SnackbarService
+  SnackbarService,
+  getEnumKeyFromValue
 } from '@budgetify/shared';
 import { take, takeUntil } from 'rxjs';
 import { TransactionType } from '../../models/transaction.enum';
@@ -42,6 +43,7 @@ export class TransactionsTableComponent extends DestroyBaseComponent implements 
   public isLoading = true;
   public type = TransactionType;
   public filterValue = '';
+  public transactionTypeTransfer = getEnumKeyFromValue(TransactionType, TransactionType.TRANSFER);
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;

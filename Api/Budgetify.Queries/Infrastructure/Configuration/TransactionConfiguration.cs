@@ -16,6 +16,7 @@ internal class TransactionConfiguration : EntityTypeConfigurationBase<Transactio
 
         builder.Property(x => x.UserId).HasColumnName("UserFk").HasColumnType("int").IsRequired();
         builder.Property(x => x.AccountId).HasColumnName("AccountFk").HasColumnType("int");
+        builder.Property(x => x.FromAccountId).HasColumnName("FromAccountFk").HasColumnType("int");
         builder.Property(x => x.CategoryId).HasColumnName("CategoryFk").HasColumnType("int");
         builder.Property(x => x.CurrencyId).HasColumnName("CurrencyFk").HasColumnType("int").IsRequired();
         builder.Property(x => x.MerchantId).HasColumnName("MerchantFk").HasColumnType("int");
@@ -30,5 +31,6 @@ internal class TransactionConfiguration : EntityTypeConfigurationBase<Transactio
         builder.HasOne(x => x.Category).WithMany(x => x.Transactions).HasForeignKey(x => x.CategoryId);
         builder.HasOne(x => x.Currency).WithMany(x => x.Transactions).HasForeignKey(x => x.CurrencyId);
         builder.HasOne(x => x.Merchant).WithMany(x => x.Transactions).HasForeignKey(x => x.MerchantId);
+        builder.HasOne(x => x.FromAccount).WithMany(x => x.FromTransactions).HasForeignKey(x => x.FromAccountId);
     }
 }

@@ -17,7 +17,7 @@ using VS.Commands;
 public record DeductBudgetAmountSpentCommand(
     int UserId,
     int CurrencyId,
-    int CategoryId,
+    int? CategoryId,
     decimal Amount,
     DateTime Date) : ICommand;
 

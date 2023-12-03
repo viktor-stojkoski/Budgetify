@@ -33,6 +33,7 @@ public class TransactionCreatedDomainEventHandler : IDomainEventHandler<Transact
                 @event.TransactionUid,
                 null,
                 null,
+                null,
                 null)));
 
         if (@event.TransactionType == TransactionType.Expense)

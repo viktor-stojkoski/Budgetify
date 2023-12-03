@@ -15,6 +15,7 @@ public class Transaction : Entity
     public Transaction(
         int userId,
         int? accountId,
+        int? fromAccountId,
         int? categoryId,
         int currencyId,
         int? merchantId,
@@ -26,6 +27,7 @@ public class Transaction : Entity
     {
         UserId = userId;
         AccountId = accountId;
+        FromAccountId = fromAccountId;
         CategoryId = categoryId;
         CurrencyId = currencyId;
         MerchantId = merchantId;
@@ -39,6 +41,8 @@ public class Transaction : Entity
     public int UserId { get; protected internal set; }
 
     public int? AccountId { get; protected internal set; }
+
+    public int? FromAccountId { get; protected internal set; }
 
     public int? CategoryId { get; protected internal set; }
 
@@ -59,6 +63,8 @@ public class Transaction : Entity
     public virtual User User { get; protected internal set; } = null!;
 
     public virtual Account? Account { get; protected internal set; } = null;
+
+    public virtual Account? FromAccount { get; protected internal set; } = null;
 
     public virtual Category? Category { get; protected internal set; } = null;
 

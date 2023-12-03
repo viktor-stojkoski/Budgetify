@@ -3,6 +3,8 @@ import { IFileForUpload } from '@budgetify/shared';
 export interface ITransactionResponse {
   accountUid?: string;
   accountName?: string;
+  fromAccountUid?: string;
+  fromAccountName?: string;
   categoryUid?: string;
   categoryName?: string;
   currencyCode: string;
@@ -64,6 +66,7 @@ export interface ICreateTransactionRequest {
 
 export interface IUpdateTransactionRequest {
   accountUid: string | null;
+  fromAccountUid: string | null;
   categoryUid: string | null;
   currencyCode: string | null;
   merchantUid: string | null;

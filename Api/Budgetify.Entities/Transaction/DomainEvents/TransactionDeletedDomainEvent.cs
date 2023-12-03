@@ -9,8 +9,9 @@ using VS.DomainEvents;
 public record TransactionDeletedDomainEvent(
     int UserId,
     int AccountId,
+    int? FromAccountId,
     int CurrencyId,
-    int CategoryId,
+    int? CategoryId,
     decimal Amount,
     DateTime Date,
     TransactionType TransactionType) : IDomainEvent;

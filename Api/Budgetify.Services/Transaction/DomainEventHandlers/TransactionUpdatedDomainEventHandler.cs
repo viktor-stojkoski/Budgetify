@@ -32,6 +32,7 @@ public class TransactionUpdatedDomainEventHandler : IDomainEventHandler<Transact
                 @event.UserId,
                 @event.TransactionUid,
                 @event.PreviousAccountId,
+                @event.PreviousFromAccountId,
                 @event.PreviousAmount,
                 @event.PreviousCurrencyId)));
 

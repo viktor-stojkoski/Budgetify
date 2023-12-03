@@ -75,6 +75,11 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
     {
         CommandResultBuilder result = new();
 
+        if (command.Type == TransactionType.Transfer.Name && !command.FromAccountUid.HasValue)
+        {
+            return result.FailWith(Result.Invalid(ResultCodes.TransactionTypeTransferMissingAccounts));
+        }
+
         Result<Account> accountResult =
             await _accountRepository.GetAccountAsync(_currentUser.Id, command.AccountUid);
 
@@ -126,10 +131,7 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
             merchantId = merchantResult.Value.Id;
         }
 
-        if (command.Type == TransactionType.Transfer.Name && !command.FromAccountUid.HasValue)
-        {
-            return result.FailWith(Result.Invalid(ResultCodes.TransactionTypeTransferMissingAccounts));
-        }
+        int? fromAccountId = null;
 
         if (command.Type == TransactionType.Transfer.Name && command.FromAccountUid.HasValue)
         {
@@ -141,37 +143,7 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
                 return result.FailWith(fromAccountResult);
             }
 
-            Result<Transaction> expenseResult =
-                Transaction.Create(
-                    createdOn: DateTime.UtcNow,
-                    userId: _currentUser.Id,
-                    accountId: fromAccountResult.Value.Id,
-                    categoryId: categoryId,
-                    currencyId: currencyResult.Value.Id,
-                    merchantId: merchantId,
-                    type: TransactionType.Expense,
-                    amount: command.Amount,
-                    date: command.Date.ToLocalTime(),
-                    description: command.Description,
-                    isTransfer: true);
-
-            if (expenseResult.IsFailureOrNull)
-            {
-                return result.FailWith(expenseResult);
-            }
-
-            if (command.Attachments.Any())
-            {
-                Result expenseAttachmentsResult =
-                    await UploadTransactionAttachments(expenseResult.Value, command.Attachments);
-
-                if (expenseAttachmentsResult.IsFailureOrNull)
-                {
-                    return result.FailWith(expenseAttachmentsResult);
-                }
-            }
-
-            _transactionRepository.Insert(expenseResult.Value);
+            fromAccountId = fromAccountResult.Value.Id;
         }
 
         Result<Transaction> transactionResult =
@@ -179,14 +151,14 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
                 createdOn: DateTime.UtcNow,
                 userId: _currentUser.Id,
                 accountId: accountResult.Value.Id,
+                fromAccountId: fromAccountId,
                 categoryId: categoryId,
                 currencyId: currencyResult.Value.Id,
                 merchantId: merchantId,
-                type: command.Type == TransactionType.Transfer.Name ? TransactionType.Income : command.Type,
+                type: command.Type,
                 amount: command.Amount,
                 date: command.Date.ToLocalTime(),
-                description: command.Description,
-                isTransfer: command.Type == TransactionType.Transfer.Name);
+                description: command.Description);
 
         if (transactionResult.IsFailureOrNull)
         {

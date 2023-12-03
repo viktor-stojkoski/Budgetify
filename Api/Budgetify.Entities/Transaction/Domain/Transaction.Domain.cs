@@ -14,6 +14,7 @@ public partial class Transaction
     /// </summary>
     public Result Update(
         int accountId,
+        int? fromAccountId,
         int? categoryId,
         int currencyId,
         int? merchantId,
@@ -21,7 +22,7 @@ public partial class Transaction
         DateTime date,
         string? description)
     {
-        if (Type != TransactionType.Income && merchantId is null)
+        if (Type == TransactionType.Expense && merchantId is null)
         {
             return Result.Invalid<Transaction>(ResultCodes.TransactionEmptyMerchantTypeInvalid);
         }
@@ -36,6 +37,11 @@ public partial class Transaction
             return Result.Invalid<Transaction>(ResultCodes.TransactionCategoryMissing);
         }
 
+        if (Type == TransactionType.Transfer && categoryId is not null)
+        {
+            return Result.Invalid<Transaction>(ResultCodes.TransactionTypeTransferCannotHaveCategory);
+        }
+
         if (IsVerified)
         {
             AddDomainEvent(
@@ -44,12 +50,14 @@ public partial class Transaction
                     TransactionUid: Uid,
                     TransactionType: Type,
                     PreviousAccountId: AccountId,
+                    PreviousFromAccountId: FromAccountId,
                     PreviousAmount: Amount,
                     PreviousCurrencyId: CurrencyId,
                     PreviousCategoryId: CategoryId));
         }
 
         AccountId = accountId;
+        FromAccountId = fromAccountId;
         CategoryId = categoryId;
         CurrencyId = currencyId;
         MerchantId = merchantId;
@@ -89,8 +97,9 @@ public partial class Transaction
                 new TransactionDeletedDomainEvent(
                     UserId: UserId,
                     AccountId: AccountId!.Value,
+                    FromAccountId: FromAccountId,
                     CurrencyId: CurrencyId,
-                    CategoryId: CategoryId!.Value,
+                    CategoryId: CategoryId,
                     Amount: -Amount,
                     Date: Date!.Value,
                     TransactionType: Type));

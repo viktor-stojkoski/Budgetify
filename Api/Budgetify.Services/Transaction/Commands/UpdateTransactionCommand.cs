@@ -23,7 +23,8 @@ using VS.Commands;
 public record UpdateTransactionCommand(
     Guid TransactionUid,
     Guid AccountUid,
-    Guid CategoryUid,
+    Guid? FromAccountUid,
+    Guid? CategoryUid,
     string? CurrencyCode,
     Guid? MerchantUid,
     decimal Amount,
@@ -78,12 +79,19 @@ public class UpdateTransactionCommandHandler : ICommandHandler<UpdateTransaction
             return result.FailWith(accountResult);
         }
 
-        Result<Category> categoryResult =
-            await _categoryRepository.GetCategoryAsync(_currentUser.Id, command.CategoryUid);
+        int? categoryId = null;
 
-        if (categoryResult.IsFailureOrNull)
+        if (command.CategoryUid.HasValue)
         {
-            return result.FailWith(categoryResult);
+            Result<Category> categoryResult =
+                await _categoryRepository.GetCategoryAsync(_currentUser.Id, command.CategoryUid.Value);
+
+            if (categoryResult.IsFailureOrNull)
+            {
+                return result.FailWith(categoryResult);
+            }
+
+            categoryId = categoryResult.Value.Id;
         }
 
         Result<Currency> currencyResult =
@@ -109,10 +117,26 @@ public class UpdateTransactionCommandHandler : ICommandHandler<UpdateTransaction
             merchantId = merchantResult.Value.Id;
         }
 
+        int? fromAccountId = null;
+
+        if (command.FromAccountUid.HasValue)
+        {
+            Result<Account> fromAccountResult =
+                await _accountRepository.GetAccountAsync(_currentUser.Id, command.FromAccountUid.Value);
+
+            if (fromAccountResult.IsFailureOrNull)
+            {
+                return result.FailWith(fromAccountResult);
+            }
+
+            fromAccountId = fromAccountResult.Value.Id;
+        }
+
         Result updateResult =
             transactionResult.Value.Update(
                 accountId: accountResult.Value.Id,
-                categoryId: categoryResult.Value.Id,
+                fromAccountId: fromAccountId,
+                categoryId: categoryId,
                 currencyId: currencyResult.Value.Id,
                 merchantId: merchantId,
                 amount: command.Amount,

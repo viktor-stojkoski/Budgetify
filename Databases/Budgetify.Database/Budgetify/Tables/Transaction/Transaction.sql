@@ -6,6 +6,7 @@
     [DeletedOn]     SMALLDATETIME           NULL,
     [UserFk]        INT                 NOT NULL,
     [AccountFk]     INT                     NULL,
+    [FromAccountFk] INT                     NULL,
     [CategoryFk]    INT                     NULL,
     [CurrencyFk]    INT                 NOT NULL,
     [MerchantFk]    INT                     NULL,
@@ -14,9 +15,10 @@
     [Date]          DATETIME2(0)            NULL,
     [Description]   NVARCHAR(MAX)           NULL,
     [IsVerified]    BIT                 NOT NULL,
-    CONSTRAINT [FK_Transaction_User]     FOREIGN KEY ([UserFk])     REFERENCES [Budgetify].[User]([Id]),
-    CONSTRAINT [FK_Transaction_Account]  FOREIGN KEY ([AccountFk])  REFERENCES [Budgetify].[Account]([Id]),
-    CONSTRAINT [FK_Transaction_Category] FOREIGN KEY ([CategoryFk]) REFERENCES [Budgetify].[Category]([Id]),
-    CONSTRAINT [FK_Transaction_Currency] FOREIGN KEY ([CurrencyFk]) REFERENCES [Budgetify].[Currency]([Id]),
-    CONSTRAINT [FK_Transaction_Merchant] FOREIGN KEY ([MerchantFk]) REFERENCES [Budgetify].[Merchant]([Id])
+    CONSTRAINT [FK_Transaction_User]        FOREIGN KEY ([UserFk])        REFERENCES [Budgetify].[User]([Id]),
+    CONSTRAINT [FK_Transaction_Account]     FOREIGN KEY ([AccountFk])     REFERENCES [Budgetify].[Account]([Id]),
+    CONSTRAINT [FK_Transaction_FromAccount] FOREIGN KEY ([FromAccountFk]) REFERENCES [Budgetify].[Account]([Id]),
+    CONSTRAINT [FK_Transaction_Category]    FOREIGN KEY ([CategoryFk])    REFERENCES [Budgetify].[Category]([Id]),
+    CONSTRAINT [FK_Transaction_Currency]    FOREIGN KEY ([CurrencyFk])    REFERENCES [Budgetify].[Currency]([Id]),
+    CONSTRAINT [FK_Transaction_Merchant]    FOREIGN KEY ([MerchantFk])    REFERENCES [Budgetify].[Merchant]([Id])
 )

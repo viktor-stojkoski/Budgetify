@@ -39,7 +39,36 @@
 
   <mat-card-content>
     <div [formGroup]="transactionForm" class="grid-container">
-      <div class="grid-item">{{ translationKeys.detailsAccountHeader | translate }}</div>
+      <div *ngIf="transaction.type === transactionTypeTransfer" class="grid-item">
+        {{ translationKeys.detailsFromAccountHeader | translate }}
+      </div>
+      <div *ngIf="!isEditing && transaction.type === transactionTypeTransfer" class="grid-item">
+        <span
+          [matTooltip]="transaction.fromAccountName ?? ''"
+          [matTooltipDisabled]="(transaction.fromAccountName?.length ?? 0) < 30"
+        >
+          {{ transaction.fromAccountName | truncate: 30 }}
+        </span>
+      </div>
+      <div *ngIf="isEditing && transaction.type === transactionTypeTransfer" class="grid-item">
+        <mat-form-field appearance="outline">
+          <input type="text" matInput formControlName="fromAccountUid" [matAutocomplete]="fromAccount" />
+          <mat-autocomplete #fromAccount="matAutocomplete" [displayWith]="displayAccount.bind(this)">
+            <mat-option *ngFor="let account of filteredFromAccounts$ | async" [value]="account.uid">
+              {{ account.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item">
+        {{
+          (transaction.type === transactionTypeTransfer
+            ? translationKeys.detailsToAccountHeader
+            : translationKeys.detailsAccountHeader
+          ) | translate
+        }}
+      </div>
       <div *ngIf="!isEditing" class="grid-item">
         <span
           [matTooltip]="transaction.accountName ?? ''"
@@ -59,8 +88,10 @@
         </mat-form-field>
       </div>
 
-      <div class="grid-item">{{ translationKeys.detailsCategoryHeader | translate }}</div>
-      <div *ngIf="!isEditing" class="grid-item">
+      <div *ngIf="transaction.type !== transactionTypeTransfer" class="grid-item">
+        {{ translationKeys.detailsCategoryHeader | translate }}
+      </div>
+      <div *ngIf="!isEditing && transaction.type !== transactionTypeTransfer" class="grid-item">
         <span
           [matTooltip]="transaction.categoryName ?? ''"
           [matTooltipDisabled]="(transaction.categoryName?.length ?? 0) < 30"
@@ -68,7 +99,7 @@
           {{ transaction.categoryName | truncate: 30 }}
         </span>
       </div>
-      <div *ngIf="isEditing" class="grid-item">
+      <div *ngIf="isEditing && transaction.type !== transactionTypeTransfer" class="grid-item">
         <mat-form-field appearance="outline">
           <input type="text" matInput formControlName="categoryUid" [matAutocomplete]="category" />
           <mat-autocomplete #category="matAutocomplete" [displayWith]="displayCategory.bind(this)">

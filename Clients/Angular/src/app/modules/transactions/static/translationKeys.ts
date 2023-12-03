@@ -36,6 +36,8 @@ export class TranslationKeys {
   public static readonly detailsActionAddTransactionAttachments = 'transactions.detailsActionAddTransactionAttachments';
   public static readonly detailsActionVerify = 'transactions.detailsActionVerify';
   public static readonly detailsAccountHeader = 'transactions.detailsAccountHeader';
+  public static readonly detailsFromAccountHeader = 'transactions.detailsFromAccountHeader';
+  public static readonly detailsToAccountHeader = 'transactions.detailsToAccountHeader';
   public static readonly detailsCategoryHeader = 'transactions.detailsCategoryHeader';
   public static readonly detailsCurrencyCodeHeader = 'transactions.detailsCurrencyCodeHeader';
   public static readonly detailsMerchantHeader = 'transactions.detailsMerchantHeader';

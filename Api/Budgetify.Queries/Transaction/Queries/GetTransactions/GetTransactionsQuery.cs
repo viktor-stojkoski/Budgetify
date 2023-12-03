@@ -34,6 +34,7 @@ public class GetTransactionsQueryHandler : IQueryHandler<GetTransactionsQuery, I
         IEnumerable<TransactionResponse> transactions =
             await _budgetifyReadonlyDbContext.AllNoTrackedOf<Transaction>()
                 .Include(x => x.Account).DefaultIfEmpty()
+                .Include(x => x.FromAccount).DefaultIfEmpty()
                 .Include(x => x.Category).DefaultIfEmpty()
                 .Include(x => x.Currency)
                 .Include(x => x.Merchant).DefaultIfEmpty()
@@ -41,6 +42,7 @@ public class GetTransactionsQueryHandler : IQueryHandler<GetTransactionsQuery, I
                 .Select(x => new TransactionResponse(
                     x.Uid,
                     x.Account == null ? null : x.Account.Name,
+                    x.FromAccount == null ? null : x.FromAccount.Name,
                     x.Category == null ? null : x.Category.Name,
                     x.Currency.Code,
                     x.Merchant == null ? null : x.Merchant.Name,

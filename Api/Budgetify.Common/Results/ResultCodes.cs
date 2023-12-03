@@ -75,6 +75,7 @@ public static class ResultCodes
     public const string TransactionTypeNotCompatibleWithMerchant = "TRANSACTION_TYPE_NOT_COMPATIBLE_WITH_MERCHANT";
     public const string TransactionTypeTransferMissingAccounts = "TRANSACTION_TYPE_TRANSFER_MISSING_ACCOUNTS";
     public const string TransactionCategoryMissing = "TRANSACTION_CATEGORY_MISSING";
+    public const string TransactionTypeTransferCannotHaveCategory = "TRANSACTION_TYPE_TRANSFER_CANNOT_HAVE_CATEGORY";
 
     #endregion
 

@@ -7,6 +7,7 @@ public class TransactionResponse
     public TransactionResponse(
         Guid uid,
         string? accountName,
+        string? fromAccountName,
         string? categoryName,
         string currencyCode,
         string? merchantName,
@@ -18,6 +19,7 @@ public class TransactionResponse
     {
         Uid = uid;
         AccountName = accountName;
+        FromAccountName = fromAccountName;
         CategoryName = categoryName;
         CurrencyCode = currencyCode;
         MerchantName = merchantName;
@@ -31,6 +33,8 @@ public class TransactionResponse
     public Guid Uid { get; set; }
 
     public string? AccountName { get; set; }
+
+    public string? FromAccountName { get; set; }
 
     public string? CategoryName { get; set; }
 
