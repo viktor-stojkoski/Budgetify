@@ -46,7 +46,7 @@
       </span>
       <span
         *ngIf="transaction.type === transactionTypeTransfer"
-        [matTooltip]="transaction.fromAccountName"
+        [matTooltip]="transaction.accountName"
         [matTooltipDisabled]="transaction.accountName?.length < 10"
       >
         {{ transaction.accountName | truncate: 10 }}

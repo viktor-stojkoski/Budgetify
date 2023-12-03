@@ -37,6 +37,11 @@ public partial class Transaction
             return Result.Invalid<Transaction>(ResultCodes.TransactionCategoryMissing);
         }
 
+        if (Type == TransactionType.Transfer && categoryId is not null)
+        {
+            return Result.Invalid<Transaction>(ResultCodes.TransactionTypeTransferCannotHaveCategory);
+        }
+
         if (IsVerified)
         {
             AddDomainEvent(

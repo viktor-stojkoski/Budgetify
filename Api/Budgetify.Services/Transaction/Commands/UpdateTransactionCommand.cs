@@ -16,7 +16,6 @@ using Budgetify.Entities.Category.Domain;
 using Budgetify.Entities.Currency.Domain;
 using Budgetify.Entities.Merchant.Domain;
 using Budgetify.Entities.Transaction.Domain;
-using Budgetify.Entities.Transaction.Enumerations;
 using Budgetify.Services.Common.Extensions;
 
 using VS.Commands;
@@ -82,7 +81,7 @@ public class UpdateTransactionCommandHandler : ICommandHandler<UpdateTransaction
 
         int? categoryId = null;
 
-        if (transactionResult.Value.Type != TransactionType.Transfer && command.CategoryUid.HasValue)
+        if (command.CategoryUid.HasValue)
         {
             Result<Category> categoryResult =
                 await _categoryRepository.GetCategoryAsync(_currentUser.Id, command.CategoryUid.Value);

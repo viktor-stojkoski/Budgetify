@@ -75,6 +75,11 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
     {
         CommandResultBuilder result = new();
 
+        if (command.Type == TransactionType.Transfer.Name && !command.FromAccountUid.HasValue)
+        {
+            return result.FailWith(Result.Invalid(ResultCodes.TransactionTypeTransferMissingAccounts));
+        }
+
         Result<Account> accountResult =
             await _accountRepository.GetAccountAsync(_currentUser.Id, command.AccountUid);
 
@@ -124,11 +129,6 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
             }
 
             merchantId = merchantResult.Value.Id;
-        }
-
-        if (command.Type == TransactionType.Transfer.Name && !command.FromAccountUid.HasValue)
-        {
-            return result.FailWith(Result.Invalid(ResultCodes.TransactionTypeTransferMissingAccounts));
         }
 
         int? fromAccountId = null;
