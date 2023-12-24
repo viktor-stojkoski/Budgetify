@@ -76,6 +76,7 @@ public static class ResultCodes
     public const string TransactionTypeTransferMissingAccounts = "TRANSACTION_TYPE_TRANSFER_MISSING_ACCOUNTS";
     public const string TransactionCategoryMissing = "TRANSACTION_CATEGORY_MISSING";
     public const string TransactionTypeTransferCannotHaveCategory = "TRANSACTION_TYPE_TRANSFER_CANNOT_HAVE_CATEGORY";
+    public const string TransactionTypeTransferCannotHaveEqualAccounts = "TRANSACTION_TYPE_TRANSFER_CANNOT_HAVE_EQUAL_ACCOUNTS";
 
     #endregion
 
