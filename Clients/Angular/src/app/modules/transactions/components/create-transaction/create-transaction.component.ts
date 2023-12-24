@@ -76,6 +76,7 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
     this.getMerchants();
     this.filterCategoriesByType();
     this.filterMerchantsByCategoryType();
+    this.filterAccountsFromTransactionTypeTransfer();
   }
 
   public createTransaction(): void {
@@ -287,26 +288,49 @@ export class CreateTransactionComponent extends DestroyBaseComponent implements 
       });
   }
 
-  private filterAccounts(): void {
+  private filterAccountsFromTransactionTypeTransfer(): void {
+    this.transactionForm.controls.accountUid.valueChanges.subscribe({
+      next: () => {
+        if (this.transactionForm.controls.fromAccountUid === this.transactionForm.controls.accountUid) {
+          this.transactionForm.controls.accountUid.reset();
+        }
+        this.filterAccounts(this.transactionForm.controls.accountUid.value);
+      }
+    });
+
+    this.transactionForm.controls.fromAccountUid.valueChanges.subscribe({
+      next: () => {
+        if (this.transactionForm.controls.fromAccountUid === this.transactionForm.controls.accountUid) {
+          this.transactionForm.controls.fromAccountUid.reset();
+        }
+        this.filterAccounts(this.transactionForm.controls.fromAccountUid.value);
+      }
+    });
+  }
+
+  private filterAccounts(filterAccountUid?: string | null): void {
     this.filteredAccounts$ = this.transactionForm.controls.accountUid.valueChanges.pipe(
       startWith(''),
       distinctUntilChanged(),
       takeUntil(this.destroyed$),
-      map((value) => this.filterAccount(value || ''))
+      map((value) => this.filterAccount(value || '', filterAccountUid))
     );
 
     this.filteredFromAccounts$ = this.transactionForm.controls.fromAccountUid.valueChanges.pipe(
       startWith(''),
       distinctUntilChanged(),
       takeUntil(this.destroyed$),
-      map((value) => this.filterAccount(value || ''))
+      map((value) => this.filterAccount(value || '', filterAccountUid))
     );
   }
 
-  private filterAccount(value: string): IAccountResponse[] | undefined {
+  private filterAccount(value: string, filterAccountUid?: string | null): IAccountResponse[] | undefined {
     const filterValue = value.toLowerCase();
 
-    return this.accounts?.filter((option) => option.name.toLowerCase().includes(filterValue));
+    return this.accounts?.filter(
+      (option) =>
+        !filterAccountUid || (option.name.toLowerCase().includes(filterValue) && option.uid !== filterAccountUid)
+    );
   }
 
   private getCurrencies(): void {

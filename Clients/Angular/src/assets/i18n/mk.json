@@ -66,6 +66,7 @@
     "TRANSACTION_TYPE_TRANSFER_MISSING_ACCOUNTS": "На трансферот му недостасуваат сметки.",
     "TRANSACTION_CATEGORY_MISSING": "Недостасува категорија на трансакцијата.",
     "TRANSACTION_TYPE_TRANSFER_CANNOT_HAVE_CATEGORY": "Трансакција со тип трансфер не може да има категорија.",
+    "TRANSACTION_TYPE_TRANSFER_CANNOT_HAVE_EQUAL_ACCOUNTS": "Трансакција со тип трансфер не може да има исти сметки.",
 
     "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL": "Од валута и до валута на девизниот курс не можат да бидат еднакви.",
     "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Од датумот на девизниот курс не може да биде поголем од до датумот.",

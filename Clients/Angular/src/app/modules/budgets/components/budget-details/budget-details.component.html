@@ -33,8 +33,8 @@
 
   <mat-card-content>
     <div [formGroup]="budgetForm" class="grid-container">
-      <div *ngIf="!isEditing" class="grid-item">{{ translationKeys.detailsNameHeader | translate }}</div>
-      <div class="grid-item">
+      <div class="grid-item">{{ translationKeys.detailsNameHeader | translate }}</div>
+      <div *ngIf="!isEditing" class="grid-item">
         <span [matTooltip]="budget.name" [matTooltipDisabled]="budget.name.length < 30">
           {{ budget.name | truncate: 30 }}
         </span>
@@ -46,7 +46,11 @@
       </div>
 
       <div class="grid-item">{{ translationKeys.detailsCategoryHeader | translate }}</div>
-      <div class="grid-item">{{ budget.categoryName }}</div>
+      <div class="grid-item">
+        <span [matTooltip]="budget.categoryName" [matTooltipDisabled]="budget.categoryName.length < 30">
+          {{ budget.categoryName | truncate: 30 }}
+        </span>
+      </div>
 
       <div class="grid-item">{{ translationKeys.detailsStartDateHeader | translate }}</div>
       <div class="grid-item">{{ budget.startDate | date }}</div>
