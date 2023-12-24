@@ -80,6 +80,11 @@ public class CreateTransactionCommandHandler : ICommandHandler<CreateTransaction
             return result.FailWith(Result.Invalid(ResultCodes.TransactionTypeTransferMissingAccounts));
         }
 
+        if (command.FromAccountUid == command.AccountUid)
+        {
+            return result.FailWith(Result.Invalid(ResultCodes.TransactionTypeTransferCannotHaveEqualAccounts));
+        }
+
         Result<Account> accountResult =
             await _accountRepository.GetAccountAsync(_currentUser.Id, command.AccountUid);
 
