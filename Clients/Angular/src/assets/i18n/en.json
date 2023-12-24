@@ -67,7 +67,6 @@
     "TRANSACTION_TYPE_TRANSFER_MISSING_ACCOUNTS": "Transaction type transfer is missing accounts.",
     "TRANSACTION_CATEGORY_MISSING": "Transaction category is missing.",
     "TRANSACTION_TYPE_TRANSFER_CANNOT_HAVE_CATEGORY": "Transaction type transfer cannot have category.",
-    "TRANSACTION_TYPE_TRANSFER_CANNOT_HAVE_EQUAL_ACCOUNTS": "Transaction type transfer cannot have equal accounts.",
 
     "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL": "Exchange rate from and to currency cannot be equal.",
     "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Exchange rate from date cannot be greater than to date.",
