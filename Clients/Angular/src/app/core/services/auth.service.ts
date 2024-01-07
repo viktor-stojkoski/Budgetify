@@ -76,10 +76,12 @@ export class AuthService implements OnDestroy {
                   ((account.idTokenClaims as IdTokenClaimsWithPolicyId).acr === b2cPolicies.names.signUpSignIn ||
                     (account.idTokenClaims as IdTokenClaimsWithPolicyId).tfp === b2cPolicies.names.signUpSignIn)
               );
+
             let signUpSignInFlowRequest: SsoSilentRequest = {
               authority: b2cPolicies.authorities.signUpSignIn,
               account: originalSignInAccount
             };
+
             this.msalService.ssoSilent(signUpSignInFlowRequest);
           }
 
