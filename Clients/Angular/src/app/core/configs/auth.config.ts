@@ -2,8 +2,8 @@ import { MsalGuardConfiguration, MsalInterceptorConfiguration } from '@azure/msa
 import {
   BrowserCacheLocation,
   Configuration,
-  InteractionType,
   IPublicClientApplication,
+  InteractionType,
   LogLevel,
   PublicClientApplication
 } from '@azure/msal-browser';
@@ -13,7 +13,7 @@ export const b2cPolicies = {
   names: {
     signUpSignIn: environment.azureADB2C.policies.signUpSignIn,
     editProfile: environment.azureADB2C.policies.editProfile,
-    resetpassword: environment.azureADB2C.policies.resetPassword
+    resetPassword: environment.azureADB2C.policies.resetPassword
   },
   authorities: {
     signUpSignIn: `https://${environment.azureADB2C.tenantName}.b2clogin.com/${environment.azureADB2C.tenantName}.onmicrosoft.com/${environment.azureADB2C.policies.signUpSignIn}`,

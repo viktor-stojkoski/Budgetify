@@ -33,7 +33,7 @@
       <a mat-button *ngIf="!isAuthenticated" (click)="login()">
         {{ translationKeys.navbarLoginOrRegister | translate }}
       </a>
-      <a mat-button [routerLink]="'/profile'" routerLinkActive="mat-accent" *ngIf="isAuthenticated">
+      <a mat-button (click)="editProfile()" routerLinkActive="mat-accent" *ngIf="isAuthenticated">
         <mat-icon>perm_identity</mat-icon> {{ currentUser?.firstName }} {{ currentUser?.lastName }}
       </a>
       <a mat-button *ngIf="isAuthenticated" (click)="logout()"> {{ translationKeys.navbarLogout | translate }} </a>
@@ -73,7 +73,7 @@
 
         <mat-divider></mat-divider>
 
-        <a [routerLink]="'/profile'" routerLinkActive="mat-accent" mat-list-item>
+        <a (click)="editProfile()" routerLinkActive="mat-accent" mat-list-item>
           {{ currentUser?.firstName }} {{ currentUser?.lastName }}
         </a>
         <a mat-list-item (click)="logout()" (click)="sidenav.toggle()">

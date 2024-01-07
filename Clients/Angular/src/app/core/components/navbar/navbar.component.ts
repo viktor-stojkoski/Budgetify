@@ -54,4 +54,8 @@ export class NavbarComponent extends DestroyBaseComponent implements OnInit {
   public changeLanguage() {
     this.translateService.use(this.selectedLanguage);
   }
+
+  public editProfile() {
+    this.authService.editProfile();
+  }
 }
