@@ -25,4 +25,9 @@
     <ProjectReference Include="..\..\..\Api\Budgetify.Entities\Budgetify.Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Account\Domain\Account\Delete\" />
+    <Folder Include="Account\Domain\Account\DeductBalance\" />
+  </ItemGroup>
+
 </Project>
