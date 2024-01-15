@@ -9,7 +9,7 @@ internal class AccountBuilder
     private readonly int _id = 1;
     private readonly Guid _uid = Guid.NewGuid();
     private readonly DateTime _createdOn = new(2024, 1, 13);
-    private readonly DateTime? _deletedOn = null;
+    private DateTime? _deletedOn = null;
     private readonly int _userId = 2;
     private readonly string _name = "Name";
     private readonly string _type = "CASH";
@@ -30,5 +30,11 @@ internal class AccountBuilder
             balance: _balance,
             currencyId: _currencyId,
             description: _description).Value;
+    }
+
+    internal AccountBuilder WithDeletedOn(DateTime deletedOn)
+    {
+        _deletedOn = deletedOn;
+        return this;
     }
 }

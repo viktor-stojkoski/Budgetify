@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Account\Domain\Account\Delete\" />
     <Folder Include="Account\Domain\Account\DeductBalance\" />
   </ItemGroup>
 
