@@ -14,7 +14,7 @@ using NUnit.Framework;
 public class DeleteShould
 {
     [Test]
-    public void WhenAlreadyDeleted_WillReturnOk()
+    public void WhenAlreadyDeleted_WontOverrideDeletedOn()
     {
         // Arrange
         DateTime deletedOn = new(2024, 1, 13);
@@ -34,7 +34,7 @@ public class DeleteShould
     }
 
     [Test]
-    public void WhenNotDeleted_WillReturnOk()
+    public void WhenNotDeleted_WillSetDeletedOn()
     {
         // Arrange
         DateTime deletedOn = new(2024, 1, 13);
