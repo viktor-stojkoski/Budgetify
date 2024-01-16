@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <Folder Include="Account\Domain\Account\DeductBalance\" />
-    <Folder Include="Budget\Domain\Budget\UpdateAmountSpent\" />
     <Folder Include="Budget\ValueObjects\BudgetDateRangeValue\Create\" />
     <Folder Include="Budget\ValueObjects\BudgetDateRangeValue\Equals\" />
     <Folder Include="Budget\ValueObjects\BudgetNameValue\Create\" />
