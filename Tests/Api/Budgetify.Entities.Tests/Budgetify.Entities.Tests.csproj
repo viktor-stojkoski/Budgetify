@@ -25,12 +25,5 @@
     <ProjectReference Include="..\..\..\Api\Budgetify.Entities\Budgetify.Entities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Account\Domain\Account\DeductBalance\" />
-    <Folder Include="Budget\ValueObjects\BudgetDateRangeValue\Create\" />
-    <Folder Include="Budget\ValueObjects\BudgetDateRangeValue\Equals\" />
-    <Folder Include="Budget\ValueObjects\BudgetNameValue\Create\" />
-    <Folder Include="Budget\ValueObjects\BudgetNameValue\Equals\" />
-  </ItemGroup>
 
 </Project>
