@@ -9,7 +9,7 @@ internal class BudgetBuilder
     private readonly int _id = 1;
     private readonly Guid _uid = Guid.NewGuid();
     private readonly DateTime _createdOn = new(2024, 1, 16);
-    private readonly DateTime? _deletedOn = null;
+    private DateTime? _deletedOn = null;
     private readonly int _userId = 2;
     private readonly string _name = "Name";
     private readonly int _categoryId = 3;
@@ -34,5 +34,11 @@ internal class BudgetBuilder
             endDate: _endDate,
             amount: _amount,
             amountSpent: _amountSpent).Value;
+    }
+
+    internal BudgetBuilder WithDeletedOn(DateTime deletedOn)
+    {
+        _deletedOn = deletedOn;
+        return this;
     }
 }
