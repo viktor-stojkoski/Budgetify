@@ -72,7 +72,7 @@ public class CreateShould
     }
 
     [Test]
-    public void WhenArgumentsCorrect_WillCreateAccountFromStorage()
+    public void WhenArgumentsCorrect_WillCreateAccount()
     {
         // Arrange
         DateTime createdOn = new(2022, 9, 9);
