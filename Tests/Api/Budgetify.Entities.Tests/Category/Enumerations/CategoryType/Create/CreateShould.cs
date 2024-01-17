@@ -1,4 +1,4 @@
-﻿namespace Budgetify.Entities.Tests.Category.Enumerations;
+﻿namespace Budgetify.Entities.Tests.Category.Enumerations.CategoryType;
 
 using Budgetify.Common.Results;
 using Budgetify.Entities.Category.Enumerations;
