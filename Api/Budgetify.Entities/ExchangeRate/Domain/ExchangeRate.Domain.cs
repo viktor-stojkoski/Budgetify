@@ -41,6 +41,11 @@ public partial class ExchangeRate
     /// </summary>
     public Result Close(DateTime closedOn)
     {
+        if (DateRange.ToDate.HasValue)
+        {
+            return Result.Ok();
+        }
+
         Result<ExchangeRateDateRangeValue> dateRangeResult =
             ExchangeRateDateRangeValue.Create(DateRange.FromDate, closedOn);
 
