@@ -96,8 +96,8 @@ public class CreateTransactionByScanCommandHandler : ICommandHandler<CreateTrans
             Transaction.CreateByScan(
                 createdOn: DateTime.UtcNow,
                 userId: _currentUser.Id,
-                merchantId: merchantId,
                 currencyId: currencyResult.Value.Id,
+                merchantId: merchantId,
                 amount: scanReceiptResult.AttachmentFields?.TotalAmount ?? decimal.Zero,
                 date: scanReceiptResult.AttachmentFields?.Date);
 

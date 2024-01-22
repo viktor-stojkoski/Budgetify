@@ -135,8 +135,8 @@ public partial class Transaction
     public static Result<Transaction> CreateByScan(
         DateTime createdOn,
         int userId,
-        int? merchantId,
         int currencyId,
+        int? merchantId,
         decimal amount,
         DateTime? date)
     {
