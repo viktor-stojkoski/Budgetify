@@ -65,7 +65,7 @@ public class CreateFromStorageShould
                 categoryId: categoryId);
 
         // Assert
-        result.IsFailure.Should().BeFalse();
+        result.IsSuccess.Should().BeTrue();
 
         result.Value.State.Should().Be(EntityState.Unchanged);
         result.Value.Id.Should().Be(id);

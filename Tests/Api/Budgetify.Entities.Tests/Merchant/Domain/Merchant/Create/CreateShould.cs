@@ -38,7 +38,7 @@ public class CreateShould
     }
 
     [Test]
-    public void WhenArgumentsCorrect_WillCreateMerchantFromStorage()
+    public void WhenArgumentsCorrect_WillCreateMerchant()
     {
         // Arrange
         DateTime createdOn = new(2024, 1, 22);
@@ -55,7 +55,7 @@ public class CreateShould
                 categoryId: categoryId);
 
         // Assert
-        result.IsFailure.Should().BeFalse();
+        result.IsSuccess.Should().BeTrue();
 
         result.Value.State.Should().Be(EntityState.Added);
         result.Value.CreatedOn.Should().Be(createdOn);
