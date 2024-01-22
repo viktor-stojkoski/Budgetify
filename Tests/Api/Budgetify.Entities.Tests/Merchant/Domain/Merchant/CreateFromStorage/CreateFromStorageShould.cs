@@ -1,10 +1,10 @@
-﻿namespace Budgetify.Entities.Tests.Category.Domain.Category;
+﻿namespace Budgetify.Entities.Tests.Merchant.Domain.Merchant;
 
 using System;
 
 using Budgetify.Common.Results;
-using Budgetify.Entities.Category.Domain;
 using Budgetify.Entities.Common.Enumerations;
+using Budgetify.Entities.Merchant.Domain;
 
 using FluentAssertions;
 
@@ -21,78 +21,51 @@ public class CreateFromStorageShould
         // Arrange
         int id = RandomId();
         Guid uid = Guid.NewGuid();
-        DateTime createdOn = new(2024, 1, 17);
+        DateTime createdOn = new(2024, 1, 22);
         int userId = RandomId();
         string name = RandomString(256);
-        string type = "EXPENSE";
+        int categoryId = RandomId();
 
         // Act
-        Result<Category> result =
-            Category.Create(
+        Result<Merchant> result =
+            Merchant.Create(
                 id: id,
                 uid: uid,
                 createdOn: createdOn,
                 deletedOn: null,
                 userId: userId,
                 name: name,
-                type: type);
+                categoryId: categoryId);
 
         // Assert
         result.IsFailure.Should().BeTrue();
-        result.Message.Should().Be(ResultCodes.CategoryNameInvalidLength);
+        result.Message.Should().Be(ResultCodes.MerchantNameInvalidLength);
     }
 
     [Test]
-    public void WhenTypeInvalid_WillReturnErrorResult()
+    public void WhenArgumentsCorrect_WillCreateMerchantFromStorage()
     {
         // Arrange
         int id = RandomId();
         Guid uid = Guid.NewGuid();
-        DateTime createdOn = new(2024, 1, 17);
+        DateTime createdOn = new(2024, 1, 22);
         int userId = RandomId();
-        string name = "Name";
-        string type = "INVALID";
+        string name = "Test merchant name";
+        int categoryId = RandomId();
 
         // Act
-        Result<Category> result =
-            Category.Create(
+        Result<Merchant> result =
+            Merchant.Create(
                 id: id,
                 uid: uid,
                 createdOn: createdOn,
                 deletedOn: null,
                 userId: userId,
                 name: name,
-                type: type);
+                categoryId: categoryId);
 
         // Assert
-        result.IsFailure.Should().BeTrue();
-        result.Message.Should().Be(ResultCodes.CategoryTypeInvalid);
-    }
-
-    [Test]
-    public void WhenArgumentsCorrect_WillCreateCategoryFromStorage()
-    {
-        // Arrange
-        int id = RandomId();
-        Guid uid = Guid.NewGuid();
-        DateTime createdOn = new(2024, 1, 17);
-        int userId = RandomId();
-        string name = "Name";
-        string type = "EXPENSE";
-
-        // Act
-        Result<Category> result =
-            Category.Create(
-                id: id,
-                uid: uid,
-                createdOn: createdOn,
-                deletedOn: null,
-                userId: userId,
-                name: name,
-                type: type);
-
-        // Assert
-        result.IsSuccess.Should().BeTrue();
+        result.IsFailure.Should().BeFalse();
 
         result.Value.State.Should().Be(EntityState.Unchanged);
         result.Value.Id.Should().Be(id);
@@ -101,6 +74,6 @@ public class CreateFromStorageShould
         result.Value.DeletedOn.Should().BeNull();
         result.Value.UserId.Should().Be(userId);
         result.Value.Name.Value.Should().Be(name);
-        result.Value.Type.Name.Should().Be(type);
+        result.Value.CategoryId.Should().Be(categoryId);
     }
 }
