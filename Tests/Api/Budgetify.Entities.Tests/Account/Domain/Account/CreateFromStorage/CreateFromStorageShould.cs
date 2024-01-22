@@ -117,6 +117,7 @@ public class CreateFromStorageShould
         result.Value.Uid.Should().Be(uid);
         result.Value.CreatedOn.Should().Be(createdOn);
         result.Value.DeletedOn.Should().BeNull();
+        result.Value.UserId.Should().Be(userId);
         result.Value.Name.Value.Should().Be(name);
         result.Value.Type.Name.Should().Be(type);
         result.Value.Balance.Should().Be(balance);
