@@ -25,5 +25,11 @@
     <ProjectReference Include="..\..\..\Api\Budgetify.Entities\Budgetify.Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Transaction\Enumerations\TransactionType\" />
+    <Folder Include="Transaction\ValueObjects\FilePathValue\" />
+    <Folder Include="Transaction\ValueObjects\TransactionAttachmentNameValue\" />
+  </ItemGroup>
+
 
 </Project>
