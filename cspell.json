@@ -89,6 +89,7 @@
     "nginxinc",
     "budgetifyacr",
     "azurecr",
-    "turbopack"
+    "turbopack",
+    "nextjs"
   ]
 }
