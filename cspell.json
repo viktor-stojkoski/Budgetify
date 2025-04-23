@@ -5,7 +5,8 @@
   "ignorePaths": [
     "*.drawio",
     "Clients/Angular/src/assets/i18n/mk.json",
-    "Api/Budgetify.Api/appsettings.json"
+    "Api/Budgetify.Api/appsettings.json",
+    "*.svg"
   ],
   "words": [
     "Budgetify",
@@ -87,6 +88,7 @@
     "libgcc",
     "nginxinc",
     "budgetifyacr",
-    "azurecr"
+    "azurecr",
+    "turbopack"
   ]
 }
