@@ -1,0 +1,68 @@
+########################################################
+### Budgetify - Pull Request NextJS Build Validation ###
+########################################################
+
+pool:
+  name: Azure Pipelines
+  demands: msbuild
+  vmImage: ubuntu-22.04
+
+trigger: none
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - Clients/next
+      - Deployments/Pipelines/Budgetify-Nextjs-PR.yaml
+
+stages:
+  - stage: BuildAndTest
+    displayName: Build and Test NextJS Application
+
+    jobs:
+      - job: job_spell_check
+        displayName: Spell Check
+
+        steps:
+          - task: Npm@1
+            displayName: Install CSpell
+            inputs:
+              command: custom
+              customCommand: install -g cspell
+
+          - task: PowerShell@2
+            displayName: Run CSpell on Solution
+            inputs:
+              pwsh: true
+              targetType: inline
+              script: cspell Clients/next --gitignore
+
+      - job: job_build_test_frontend
+        displayName: NextJS Build & Test
+
+        variables:
+          workingDirectory: $(Build.SourcesDirectory)/Clients/next
+
+        steps:
+          - task: Npm@1
+            displayName: Install packages
+            inputs:
+              command: ci
+              workingDir: $(workingDirectory)
+
+          - task: Npm@1
+            displayName: Run ESLint
+            inputs:
+              command: custom
+              workingDir: $(workingDirectory)
+              customCommand: run lint
+
+          - task: Npm@1
+            displayName: Run Build
+            inputs:
+              command: custom
+              workingDir: $(workingDirectory)
+              customCommand: run build

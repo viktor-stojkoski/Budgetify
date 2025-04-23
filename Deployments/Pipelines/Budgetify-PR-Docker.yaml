@@ -13,6 +13,10 @@ pr:
   branches:
     include:
       - master
+  paths:
+    exclude:
+      - Clients/next
+      - Deployments/Pipelines/Budgetify-Nextjs-PR.yaml
 
 variables:
   containerRegistry: budgetifyacr.azurecr.io
@@ -49,7 +53,7 @@ stages:
           - name: githubNugetServiceConnection
             value: GithubNugetFeed
           - name: testProjects
-            value: '**/*.Tests.csproj'
+            value: "**/*.Tests.csproj"
           - name: apiImageName
             value: $(containerRegistry)/budgetify.api
           - name: functionsImageName
