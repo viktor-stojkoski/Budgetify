@@ -1,0 +1,348 @@
+{
+  "navbarCategoriesMenu": "Категории",
+  "navbarAccountsMenu": "Сметки",
+  "navbarExchangeRatesMenu": "Девизни курсеви",
+  "navbarMerchantsMenu": "Трговци",
+  "navbarTransactionsMenu": "Трансакции",
+  "navbarLoginOrRegister": "Најави се или креирај сметка",
+  "navbarLogout": "Одјави се",
+  "navbarLanguages": "Јазици",
+  "navbarLanguageEnglish": "Англиски",
+  "navbarLanguageMacedonian": "Македонски",
+
+  "mainActionButtonOk": "Ок",
+  "mainActionButtonSave": "Зачувај",
+  "mainActionButtonEdit": "Уреди",
+  "mainActionButtonDelete": "Избриши",
+  "mainActionButtonCancel": "Откажи",
+
+  "errorCodes": {
+    "INTERNAL_SERVER_ERROR": "Серверска грешка.",
+    "EMAIL_INVALID": "Е-маилот е невалиден.",
+    "EMAIL_INVALID_LENGTH": "Должината на е-маилот е невалидна.",
+
+    "USER_NAME_INVALID": "Корисничкото име е невалидно.",
+    "USER_NAME_INVALID_LENGTH": "Корисничкото име има невалидна должина.",
+    "USER_NOT_FOUND": "Корисникот не е пронајден.",
+    "CITY_INVALID": "Градот е невалиден.",
+    "CITY_INVALID_LENGTH": "Должината на градот е невалидна.",
+    "USER_ALREADY_EXISTS": "Корисникот веќе постои.",
+
+    "CURRENCY_NAME_INVALID": "Името на валутата е невалидно.",
+    "CURRENCY_NAME_INVALID_LENGTH": "Должината на валутата е невалидна.",
+    "CURRENCY_CODE_INVALID": "Кодот на валутата е невалиден.",
+    "CURRENCY_SYMBOL_INVALID_LENGTH": "Симболот на валутата е невалиден.",
+    "CURRENCY_NOT_FOUND": "Валутата не е пронајдена.",
+
+    "ACCOUNT_NAME_INVALID": "Името на сметката е невалидно.",
+    "ACCOUNT_NAME_INVALID_LENGTH": "Должината на името на сметката е невалидно.",
+    "ACCOUNT_TYPE_INVALID": "Типот на сметката е невалиден.",
+    "ACCOUNT_NOT_FOUND": "Сметката не е пронајдена.",
+    "ACCOUNT_WITH_SAME_NAME_ALREADY_EXIST": "Сметка со исто име веќе постои.",
+    "ACCOUNT_INVALID_FOR_DELETION": "Сметката е искористена во трансакции и не може да се избрише.",
+
+    "CATEGORY_NAME_INVALID": "Името на категоријата е невалидно.",
+    "CATEGORY_NAME_INVALID_LENGTH": "Должината на името на категоријата е невалидно.",
+    "CATEGORY_TYPE_INVALID": "Типот на категоријата е невалиден.",
+    "CATEGORY_NOT_FOUND": "Категоријата не е пронајдена.",
+    "CATEGORY_WITH_SAME_NAME_ALREADY_EXIST": "Категорија со исто име веќе постои.",
+    "CATEGORY_INVALID_FOR_DELETION": "Категоријата е искористена во трговци и/или трансакции и не може да се избрише.",
+
+    "MERCHANT_NAME_INVALID": "Името на трговецот е невалидно.",
+    "MERCHANT_NAME_INVALID_LENGTH": "Должината на името на трговецот е невалидно.",
+    "MERCHANT_NOT_FOUND": "Трговецот не е пронајден.",
+    "MERCHANT_WITH_SAME_NAME_ALREADY_EXIST": "Трговец со исто име веќе постои.",
+    "MERCHANT_INVALID_FOR_DELETION": "Трговецот е искористен во трансакции и не може да се избрише.",
+    "MERCHANT_CATEGORY_TYPE_INVALID": "Категоријата на трговецот е невалидна.",
+
+    "TRANSACTION_TYPE_INVALID": "Типот на трансакцијата е невалиден.",
+    "TRANSACTION_EMPTY_MERCHANT_TYPE_INVALID": "Не е возможно да искреирате трошок без трговец.",
+    "TRANSACTION_NOT_FOUND": "Трансакцијата не е пронајдена.",
+    "TRANSACTION_NOT_VERIFIED_CANNOT_UPDATE_ACCOUNT_BALANCE": "Трансакцијата не е потврдена. Состојбата на сметката не може да се уреди.",
+    "TRANSACTION_NOT_VERIFIED_CANNOT_UPDATE_BUDGET_AMOUNT_SPENT": "Трансакцијата не е потврдена. Потрошениот износ на буџетот не може да се уреди.",
+    "TRANSACTION_INVALID_FOR_VERIFICATION": "Трансакцијата е невалидна за потврдување.",
+    "TRANSACTION_TYPE_AND_CATEGORY_MISMATCH": "Типот на трансакцијата и категоријата се неусогласени.",
+    "TRANSACTION_TYPE_NOT_COMPATIBLE_WITH_MERCHANT": "Типот на трансакцијата не е компатибилен со трговецот.",
+    "TRANSACTION_TYPE_TRANSFER_MISSING_ACCOUNTS": "На трансферот му недостасуваат сметки.",
+    "TRANSACTION_CATEGORY_MISSING": "Недостасува категорија на трансакцијата.",
+    "TRANSACTION_TYPE_TRANSFER_CANNOT_HAVE_CATEGORY": "Трансакција со тип трансфер не може да има категорија.",
+    "TRANSACTION_TYPE_TRANSFER_CANNOT_HAVE_EQUAL_ACCOUNTS": "Трансакција со тип трансфер не може да има исти сметки.",
+
+    "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL": "Од валута и до валута на девизниот курс не можат да бидат еднакви.",
+    "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Од датумот на девизниот курс не може да биде поголем од до датумот.",
+    "EXCHANGE_RATE_NOT_FOUND": "Девизниот курс не е пронајден.",
+    "EXCHANGE_RATE_EXISTS_FROM_DATE_CANNOT_BE_EMPTY": "Девизниот курс постои, за новиот девизен курс од датумот не може да остане празен.",
+    "EXCHANGE_RATE_CLOSED": "Девизниот курс е затворен. Модификации не се дозволени.",
+
+    "TRANSACTION_ATTACHMENT_FILE_PATH_INVALID": "Патеката на датотеката за прилог на трансакцијата е невалидна.",
+    "TRANSACTION_ATTACHMENT_NAME_INVALID": "Името на прилогот на трансакцијата е невалидно.",
+    "TRANSACTION_ATTACHMENT_NAME_INVALID_LENGTH": "Должина на името на прилогот на трансакцијата е невалидно.",
+    "TRANSACTION_ATTACHMENT_NOT_FOUND": "Прилогот на трансакцијата не е пронајден.",
+
+    "BUDGET_NAME_INVALID": "Името на буџетот е невалидно.",
+    "BUDGET_NAME_INVALID_LENGTH": "Должината на името на буџетот е невалидно",
+    "BUDGET_WITH_SAME_NAME_ALREADY_EXIST": "Буџет со исто име веќе постои.",
+    "BUDGET_START_DATE_CANNOT_BE_GREATER_THAN_END_DATE": "Почетниот датум на буџетот не може да биде поголем од крајниот датум.",
+    "BUDGET_NOT_FOUND": "Буџетот не е пронајден.",
+    "BUDGET_CATEGORY_TYPE_INVALID": "Категоријата на буџетот е невалидна."
+  },
+
+  "successMessages": {
+    "accounts": {
+      "create": "Сметката е успешно искреирана.",
+      "update": "Сметката е успешно уредена.",
+      "delete": "Сметката е успешно избришана."
+    },
+    "categories": {
+      "create": "Категоријата е успешно искреирана.",
+      "update": "Категоријата е успешно уредена.",
+      "delete": "Категоријата е успешно избришана."
+    },
+    "merchants": {
+      "create": "Трговецот е успешно искреиран.",
+      "update": "Трговецот е успешно уреден.",
+      "delete": "Трговецот е успешно избришан."
+    },
+    "transactions": {
+      "create": "Трансакцијата е успешно искреирана.",
+      "update": "Трансакцијата е успешно уредена.",
+      "delete": "Трансакцијата е успешно избришана.",
+      "verify": "трансакцијата е успешно потврдена.",
+
+      "attachments": {
+        "add": "Прилозите на трансакцијата се успешно додадени.",
+        "delete": "Прилогот на трансакцијата е успешно избришан."
+      }
+    },
+    "exchangeRates": {
+      "create": "Девизниот курс е успешно искреиран.",
+      "update": "Девизниот курс е успешно уреден."
+    },
+    "budgets": {
+      "create": "Буџетот е успешно искреиран.",
+      "update": "Буџетот е успешно уреден.",
+      "delete": "Буџетот е успешно избришан."
+    }
+  },
+
+  "accounts": {
+    "toolbarName": "Сметки",
+    "toolbarActionCreateAccount": "Креирај сметка",
+
+    "tableFilterLabel": "Филтер",
+    "tableNoDataFound": "Не беа пронајдени податоци.",
+    "tableNameHeader": "Име",
+    "tableTypeHeader": "Тип",
+    "tableBalanceHeader": "Состојба",
+    "tableCurrencyCodeHeader": "Валута",
+    "tableDescriptionHeader": "Опис",
+    "tableDeleteAccountTooltip": "Избриши",
+
+    "createFormHeader": "Креирај сметка",
+    "createFormNameLabel": "Име",
+    "createFormTypeLabel": "Тип",
+    "createFormBalanceLabel": "Состојба",
+    "createFormCurrencyLabel": "Валута",
+    "createFormDescriptionLabel": "Опис",
+
+    "typeCash": "Кеш",
+    "typeDebit": "Дебитна",
+    "typeCredit": "Кредитна",
+    "typeSavings": "Штедна",
+
+    "detailsHeader": "Детали за сметка",
+    "detailsNameHeader": "Име",
+    "detailsTypeHeader": "Тип",
+    "detailsBalanceHeader": "Состојба",
+    "detailsCurrencyHeader": "Валута",
+    "detailsDescriptionHeader": "Опис",
+
+    "deleteAccountHeader": "Избриши сметка",
+    "deleteAccountContent": "Дали сте сигурни дека сакате да ја избришете сметката <strong>{{accountName}}</strong> ?"
+  },
+
+  "categories": {
+    "toolbarName": "Категории",
+    "toolbarActionCreateCategory": "Креирај категорија",
+
+    "tableFilterLabel": "Филтер",
+    "tableNoDataFound": "Не беа пронајдени податоци.",
+    "tableNameHeader": "Име",
+    "tableTypeHeader": "Тип",
+    "tableDeleteCategoryTooltip": "Избриши",
+
+    "typeExpense": "Трошок",
+    "typeIncome": "Приход",
+
+    "createFormHeader": "Креирај категорија",
+    "createFormNameLabel": "Име",
+    "createFormTypeLabel": "Тип",
+
+    "detailsHeader": "Детали за категорија",
+    "detailsNameHeader": "Име",
+    "detailsTypeHeader": "Тип",
+
+    "deleteCategoryHeader": "Избриши категорија",
+    "deleteCategoryContent": "Дали сте сигурни дека сакате да ја избришете категоријата <strong>{{categoryName}}</strong> ?"
+  },
+
+  "merchants": {
+    "toolbarName": "Трговци",
+    "toolbarActionCreateMerchant": "Креирај трговец",
+
+    "tableFilterLabel": "Филтер",
+    "tableNoDataFound": "Не беа пронајдени податоци.",
+    "tableNameHeader": "Име",
+    "tableCategoryHeader": "Категорија",
+    "tableDeleteMerchantTooltip": "Избриши",
+
+    "createFormHeader": "Креирај трговец",
+    "createFormNameLabel": "Име",
+    "createFormCategoryLabel": "Категорија",
+
+    "detailsHeader": "Детали за трговецот",
+    "detailsNameHeader": "Име",
+    "detailsCategoryHeader": "Категорија",
+
+    "deleteMerchantHeader": "Избриши трговец",
+    "deleteMerchantContent": "Дали сте сигурни дека сакате да го избришете трговецот <strong>{{merchantName}}</strong> ?"
+  },
+
+  "transactions": {
+    "toolbarName": "Трансакции",
+    "toolbarActionCreateTransaction": "Креирај трансакција",
+    "toolbarActionCreateTransactionByScan": "Креирај трансакција со скенирање",
+
+    "tableFilterLabel": "Филтер",
+    "tableNoDataFound": "Не беа пронајдени податоци.",
+    "tableAccountHeader": "Сметка",
+    "tableCategoryHeader": "Категорија",
+    "tableCurrencyCodeHeader": "Валута",
+    "tableMerchantHeader": "Трговец",
+    "tableTypeHeader": "Тип",
+    "tableAmountHeader": "Износ",
+    "tableDateHeader": "Датум",
+    "tableDescriptionHeader": "Опис",
+    "tableIsVerifiedHeader": "Потврден",
+    "tableVerifyTransactionTooltip": "Потврди",
+    "tableDeleteTransactionTooltip": "Избриши",
+
+    "typeExpense": "Трошок",
+    "typeIncome": "Приход",
+    "typeTransfer": "Трансфер",
+
+    "createFormHeader": "Креирај трансакција",
+    "createFormAccountLabel": "Сметка",
+    "createFormFromAccountLabel": "Од сметка",
+    "createFormToAccountLabel": "Кон сметка",
+    "createFormCategoryLabel": "Категорија",
+    "createFormCurrencyCodeLabel": "Валута",
+    "createFormMerchantLabel": "Трговец",
+    "createFormTypeLabel": "Тип",
+    "createFormAmountLabel": "Износ",
+    "createFormDateLabel": "Датум",
+    "createFormChooseFilesLabel": "Избери датотека(и)",
+    "createFormDescriptionLabel": "Опис",
+    "uploadFileInvalidSize": "Ве молиме прикачете датотеки со помалку од 1MB.",
+
+    "detailsHeader": "Детали за трансакцијата",
+    "detailsActionAddTransactionAttachments": "Додади прилози",
+    "detailsActionVerify": "Потврди",
+    "detailsAccountHeader": "Сметка",
+    "detailsFromAccountHeader": "Од сметка",
+    "detailsToAccountHeader": "Кон сметка",
+    "detailsCategoryHeader": "Категорија",
+    "detailsCurrencyCodeHeader": "Валута",
+    "detailsMerchantHeader": "Трговец",
+    "detailsTypeHeader": "Тип",
+    "detailsAmountHeader": "Износ",
+    "detailsDateHeader": "Датум",
+    "detailsDescriptionHeader": "Опис",
+    "detailsIsVerifiedHeader": "Потврден",
+    "detailsAttachmentsHeader": "Прилози",
+    "detailsAttachmentsTableNameHeader": "Име",
+    "detailsAttachmentsTableCreatedOnHeader": "Креиран на",
+    "detailsDownloadAttachmentTooltip": "Преземи",
+    "detailsAttachmentsTableNoDataFound": "Не беа пронајдени податоци.",
+    "detailsAttachmentsTableDeleteAttachmentTooltip": "Избриши",
+
+    "deleteTransactionHeader": "Избриши трансакција",
+    "deleteTransactionContent": "Дали сте сигурни дека сакате да ја избришете оваа трансакција ?",
+
+    "deleteTransactionAttachmentHeader": "Избриши прилог",
+    "deleteTransactionAttachmentContent": "Дали сте сигурни дека сакате да ги избришете прилогот <strong>{{attachmentName}}</strong> ?",
+
+    "addTransactionAttachmentsHeader": "Додади прилози на трансакцијата",
+    "addTransactionAttachmentsInfo": "Додавањето прилог со исто име ќе го пребрише постоечкиот.",
+    "addTransactionAttachmentsDropZoneLabel": "Прикачете датотека(и) тука.",
+
+    "createTransactionByScanHeader": "Креирај трансакција со скенирање сметка",
+    "createTransactionByScanInfo": "Скенирањето работи само со македонски сметки.",
+    "createTransactionByScanDropZoneLabel": "Пушти ја сметката овде",
+    "uploadSingleReceipt": "Сметките мора да се скенираат една по една.",
+    "uploadImagesOnly": "Само слики може да се скенираат."
+  },
+
+  "exchangeRates": {
+    "toolbarName": "Девизни курсеви",
+    "toolbarActionCreateExchangeRate": "Креирај девизен курс",
+
+    "tableFilterLabel": "Филтер",
+    "tableNoDataFound": "Не беа пронајдени податоци.",
+    "tableFromCurrencyCodeHeader": "Од валута",
+    "tableToCurrencyCodeHeader": "До валута",
+    "tableFromDateHeader": "Од датум",
+    "tableToDateHeader": "До датум",
+    "tableRateHeader": "Стапка",
+
+    "createFormHeader": "Креирај девизен курс",
+    "createFormFromCurrencyCodeLabel": "Од валута",
+    "createFormToCurrencyCodeLabel": "До валута",
+    "createFormFromDateLabel": "Од датум",
+    "createFormRateLabel": "Стапка",
+
+    "detailsHeader": "Детали за девизниот курс",
+    "detailsFromCurrencyCodeHeader": "Од валута",
+    "detailsToCurrencyCodeHeader": "До валута",
+    "detailsFromDateHeader": "Од датум",
+    "detailsToDateHeader": "До датум",
+    "detailsRateHeader": "Стапка"
+  },
+
+  "budgets": {
+    "toolbarName": "Буџети",
+    "toolbarActionCreateBudget": "Креирај буџет",
+
+    "tableFilterLabel": "Филтер",
+    "tableNoDataFound": "Не беа пронајдени податоци.",
+    "tableNameHeader": "Име",
+    "tableCategoryHeader": "Категорија",
+    "tableCurrencyCodeHeader": "Валута",
+    "tableStartDateHeader": "Почетен датум",
+    "tableEndDateHeader": "Краен датум",
+    "tableAmountHeader": "Износ",
+    "tableAmountSpentHeader": "Потрошен износ",
+    "tableDeleteBudgetTooltip": "Избриши",
+
+    "createFormHeader": "Креирај буџет",
+    "createFormNameLabel": "Име",
+    "createFormCategoryLabel": "Категорија",
+    "createFormCurrencyCodeLabel": "Валута",
+    "createFormStartDateLabel": "Почетен датум",
+    "createFormEndDateLabel": "Краен датум",
+    "createFormAmountLabel": "Износ",
+    "createFormAmountSpentLabel": "Потрошен износ",
+
+    "detailsHeader": "Детали за буџетот",
+    "detailsNameHeader": "Име",
+    "detailsCategoryHeader": "Категорија",
+    "detailsCurrencyCodeHeader": "Валута",
+    "detailsStartDateHeader": "Почетен датум",
+    "detailsEndDateHeader": "Краен датум",
+    "detailsAmountHeader": "Износ",
+    "detailsAmountSpentHeader": "Потрошен износ",
+
+    "deleteBudgetHeader": "Избриши буџет",
+    "deleteBudgetContent": "Дали сте сигурни дека сакате да го избришете буџетот <strong>{{budgetName}}</strong> ?"
+  }
+}
