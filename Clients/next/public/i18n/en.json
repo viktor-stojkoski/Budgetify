@@ -1,0 +1,349 @@
+{
+  "navbarCategoriesMenu": "Categories",
+  "navbarAccountsMenu": "Accounts",
+  "navbarExchangeRatesMenu": "Exchange rates",
+  "navbarMerchantsMenu": "Merchants",
+  "navbarTransactionsMenu": "Transactions",
+  "navbarBudgetsMenu": "Budgets",
+  "navbarLoginOrRegister": "Log In Or Register",
+  "navbarLogout": "Log out",
+  "navbarLanguages": "Languages",
+  "navbarLanguageEnglish": "English",
+  "navbarLanguageMacedonian": "Macedonian",
+
+  "mainActionButtonOk": "Ok",
+  "mainActionButtonSave": "Save",
+  "mainActionButtonEdit": "Edit",
+  "mainActionButtonDelete": "Delete",
+  "mainActionButtonCancel": "Cancel",
+
+  "errorCodes": {
+    "INTERNAL_SERVER_ERROR": "Internal server error.",
+    "EMAIL_INVALID": "Email invalid.",
+    "EMAIL_INVALID_LENGTH": "Email invalid length.",
+
+    "USER_NAME_INVALID": "User name invalid.",
+    "USER_NAME_INVALID_LENGTH": "User name invalid length.",
+    "USER_NOT_FOUND": "User not found.",
+    "CITY_INVALID": "City invalid.",
+    "CITY_INVALID_LENGTH": "City invalid length.",
+    "USER_ALREADY_EXISTS": "User already exists.",
+
+    "CURRENCY_NAME_INVALID": "Currency name invalid.",
+    "CURRENCY_NAME_INVALID_LENGTH": "Currency name invalid length.",
+    "CURRENCY_CODE_INVALID": "Currency code invalid.",
+    "CURRENCY_SYMBOL_INVALID_LENGTH": "Currency symbol invalid length.",
+    "CURRENCY_NOT_FOUND": "Currency not found.",
+
+    "ACCOUNT_NAME_INVALID": "Account name invalid.",
+    "ACCOUNT_NAME_INVALID_LENGTH": "Account name invalid length.",
+    "ACCOUNT_TYPE_INVALID": "Account type invalid.",
+    "ACCOUNT_NOT_FOUND": "Account not found.",
+    "ACCOUNT_WITH_SAME_NAME_ALREADY_EXIST": "Account with same name already exist.",
+    "ACCOUNT_INVALID_FOR_DELETION": "Account is used in transactions and cannot be deleted.",
+
+    "CATEGORY_NAME_INVALID": "Category name invalid.",
+    "CATEGORY_NAME_INVALID_LENGTH": "Category name invalid length.",
+    "CATEGORY_TYPE_INVALID": "Category type invalid.",
+    "CATEGORY_NOT_FOUND": "Category not found.",
+    "CATEGORY_WITH_SAME_NAME_ALREADY_EXIST": "Category with same name already exist.",
+    "CATEGORY_INVALID_FOR_DELETION": "Category is used in merchants and/or transactions and cannot be deleted.",
+
+    "MERCHANT_NAME_INVALID": "Merchant name invalid.",
+    "MERCHANT_NAME_INVALID_LENGTH": "Merchant name invalid length.",
+    "MERCHANT_NOT_FOUND": "Merchant not found.",
+    "MERCHANT_WITH_SAME_NAME_ALREADY_EXIST": "Merchant with same name already exist.",
+    "MERCHANT_INVALID_FOR_DELETION": "Merchant is used in transactions and cannot be deleted.",
+    "MERCHANT_CATEGORY_TYPE_INVALID": "Merchant category type is invalid.",
+
+    "TRANSACTION_TYPE_INVALID": "Transaction type invalid.",
+    "TRANSACTION_EMPTY_MERCHANT_TYPE_INVALID": "Cannot create expense transaction without merchant.",
+    "TRANSACTION_NOT_FOUND": "Transaction not found.",
+    "TRANSACTION_NOT_VERIFIED_CANNOT_UPDATE_ACCOUNT_BALANCE": "Transaction is not verified. Account balance cannot be updated.",
+    "TRANSACTION_NOT_VERIFIED_CANNOT_UPDATE_BUDGET_AMOUNT_SPENT": "Transaction is not verified. Budget amount spent cannot be updated",
+    "TRANSACTION_INVALID_FOR_VERIFICATION": "Transaction invalid for verification.",
+    "TRANSACTION_TYPE_AND_CATEGORY_MISMATCH": "Transaction type and category mismatch.",
+    "TRANSACTION_TYPE_NOT_COMPATIBLE_WITH_MERCHANT": "Transaction type not compatible with merchant.",
+    "TRANSACTION_TYPE_TRANSFER_MISSING_ACCOUNTS": "Transaction type transfer is missing accounts.",
+    "TRANSACTION_CATEGORY_MISSING": "Transaction category is missing.",
+    "TRANSACTION_TYPE_TRANSFER_CANNOT_HAVE_CATEGORY": "Transaction type transfer cannot have category.",
+    "TRANSACTION_TYPE_TRANSFER_CANNOT_HAVE_EQUAL_ACCOUNTS": "Transaction type transfer cannot have equal accounts.",
+
+    "EXCHANGE_RATE_FROM_AND_TO_CURRENCY_CANNOT_BE_EQUAL": "Exchange rate from and to currency cannot be equal.",
+    "EXCHANGE_RATE_FROM_DATE_CANNOT_BE_GREATER_THAN_TO_DATE": "Exchange rate from date cannot be greater than to date.",
+    "EXCHANGE_RATE_NOT_FOUND": "Exchange rate not found.",
+    "EXCHANGE_RATE_EXISTS_FROM_DATE_CANNOT_BE_EMPTY": "Exchange rate exists and for the new exchange rate from date cannot be empty.",
+    "EXCHANGE_RATE_CLOSED": "Exchange rate closed. Modifications are not allowed.",
+
+    "TRANSACTION_ATTACHMENT_FILE_PATH_INVALID": "Transaction attachment file path invalid.",
+    "TRANSACTION_ATTACHMENT_NAME_INVALID": "Transaction attachment name invalid.",
+    "TRANSACTION_ATTACHMENT_NAME_INVALID_LENGTH": "Transaction attachment name invalid length.",
+    "TRANSACTION_ATTACHMENT_NOT_FOUND": "Transaction attachment not found.",
+
+    "BUDGET_NAME_INVALID": "Budget name invalid.",
+    "BUDGET_NAME_INVALID_LENGTH": "Budget name invalid length.",
+    "BUDGET_WITH_SAME_NAME_ALREADY_EXIST": "Budget with same name already exist.",
+    "BUDGET_START_DATE_CANNOT_BE_GREATER_THAN_END_DATE": "Budget start date cannot be greater than end date.",
+    "BUDGET_NOT_FOUND": "Budget not found.",
+    "BUDGET_CATEGORY_TYPE_INVALID": "Budget category type is invalid."
+  },
+
+  "successMessages": {
+    "accounts": {
+      "create": "Account has been successfully created.",
+      "update": "Account has been successfully updated.",
+      "delete": "Account has been successfully deleted."
+    },
+    "categories": {
+      "create": "Category has been successfully created.",
+      "update": "Category has been successfully updated.",
+      "delete": "Category has been successfully deleted."
+    },
+    "merchants": {
+      "create": "Merchant has been successfully created.",
+      "update": "Merchant has been successfully updated.",
+      "delete": "Merchant has been successfully deleted."
+    },
+    "transactions": {
+      "create": "Transaction has been successfully created.",
+      "update": "Transaction has been successfully updated.",
+      "delete": "Transaction has been successfully deleted.",
+      "verify": "Transaction has been successfully verified.",
+
+      "attachments": {
+        "add": "Transaction attachments successfully added.",
+        "delete": "Transaction attachment has been successfully deleted."
+      }
+    },
+    "exchangeRates": {
+      "create": "Exchange rate has been successfully created.",
+      "update": "Exchange rate has been successfully updated."
+    },
+    "budgets": {
+      "create": "Budget has been successfully created.",
+      "update": "Budget has been successfully updated.",
+      "delete": "Budget has been successfully deleted."
+    }
+  },
+
+  "accounts": {
+    "toolbarName": "Accounts",
+    "toolbarActionCreateAccount": "Create account",
+
+    "tableFilterLabel": "Filter",
+    "tableNoDataFound": "No data was found.",
+    "tableNameHeader": "Name",
+    "tableTypeHeader": "Type",
+    "tableBalanceHeader": "Balance",
+    "tableCurrencyCodeHeader": "Currency code",
+    "tableDescriptionHeader": "Description",
+    "tableDeleteAccountTooltip": "Delete",
+
+    "createFormHeader": "Create account",
+    "createFormNameLabel": "Name",
+    "createFormTypeLabel": "Type",
+    "createFormBalanceLabel": "Balance",
+    "createFormCurrencyLabel": "Currency",
+    "createFormDescriptionLabel": "Description",
+
+    "typeCash": "Cash",
+    "typeDebit": "Debit",
+    "typeCredit": "Credit",
+    "typeSavings": "Savings",
+
+    "detailsHeader": "Account details",
+    "detailsNameHeader": "Name",
+    "detailsTypeHeader": "Type",
+    "detailsBalanceHeader": "Balance",
+    "detailsCurrencyHeader": "Currency",
+    "detailsDescriptionHeader": "Description",
+
+    "deleteAccountHeader": "Delete account",
+    "deleteAccountContent": "Are you sure you want to delete the account <strong>{{accountName}}</strong> ?"
+  },
+
+  "categories": {
+    "toolbarName": "Categories",
+    "toolbarActionCreateCategory": "Create category",
+
+    "tableFilterLabel": "Filter",
+    "tableNoDataFound": "No data was found.",
+    "tableNameHeader": "Name",
+    "tableTypeHeader": "Type",
+    "tableDeleteCategoryTooltip": "Delete",
+
+    "typeExpense": "Expense",
+    "typeIncome": "Income",
+
+    "createFormHeader": "Create category",
+    "createFormNameLabel": "Name",
+    "createFormTypeLabel": "Type",
+
+    "detailsHeader": "Category details",
+    "detailsNameHeader": "Name",
+    "detailsTypeHeader": "Type",
+
+    "deleteCategoryHeader": "Delete category",
+    "deleteCategoryContent": "Are you sure you want to delete the category <strong>{{categoryName}}</strong> ?"
+  },
+
+  "merchants": {
+    "toolbarName": "Merchants",
+    "toolbarActionCreateMerchant": "Create merchant",
+
+    "tableFilterLabel": "Filter",
+    "tableNoDataFound": "No data was found.",
+    "tableNameHeader": "Name",
+    "tableCategoryHeader": "Category",
+    "tableDeleteMerchantTooltip": "Delete",
+
+    "createFormHeader": "Create merchant",
+    "createFormNameLabel": "Name",
+    "createFormCategoryLabel": "Category",
+
+    "detailsHeader": "Merchant details",
+    "detailsNameHeader": "Name",
+    "detailsCategoryHeader": "Category",
+
+    "deleteMerchantHeader": "Delete merchant",
+    "deleteMerchantContent": "Are you sure you want to delete the merchant <strong>{{merchantName}}</strong> ?"
+  },
+
+  "transactions": {
+    "toolbarName": "Transactions",
+    "toolbarActionCreateTransaction": "Create transaction",
+    "toolbarActionCreateTransactionByScan": "Create transaction by scan",
+
+    "tableFilterLabel": "Filter",
+    "tableNoDataFound": "No data was found.",
+    "tableAccountHeader": "Account",
+    "tableCategoryHeader": "Category",
+    "tableCurrencyCodeHeader": "Currency code",
+    "tableMerchantHeader": "Merchant",
+    "tableTypeHeader": "Type",
+    "tableAmountHeader": "Amount",
+    "tableDateHeader": "Date",
+    "tableDescriptionHeader": "Description",
+    "tableIsVerifiedHeader": "Is verified",
+    "tableVerifyTransactionTooltip": "Verify",
+    "tableDeleteTransactionTooltip": "Delete",
+
+    "typeExpense": "Expense",
+    "typeIncome": "Income",
+    "typeTransfer": "Transfer",
+
+    "createFormHeader": "Create transaction",
+    "createFormAccountLabel": "Account",
+    "createFormFromAccountLabel": "From account",
+    "createFormToAccountLabel": "To account",
+    "createFormCategoryLabel": "Category",
+    "createFormCurrencyCodeLabel": "Currency code",
+    "createFormMerchantLabel": "Merchant",
+    "createFormTypeLabel": "Type",
+    "createFormAmountLabel": "Amount",
+    "createFormDateLabel": "Date",
+    "createFormChooseFilesLabel": "Choose file(s)",
+    "createFormDescriptionLabel": "Description",
+    "uploadFileInvalidSize": "Please upload files with less then 1MB.",
+
+    "detailsHeader": "Transaction details",
+    "detailsActionAddTransactionAttachments": "Add attachments",
+    "detailsActionVerify": "Verify",
+    "detailsAccountHeader": "Account",
+    "detailsFromAccountHeader": "From account",
+    "detailsToAccountHeader": "To account",
+    "detailsCategoryHeader": "Category",
+    "detailsCurrencyCodeHeader": "Currency code",
+    "detailsMerchantHeader": "Merchant",
+    "detailsTypeHeader": "Type",
+    "detailsAmountHeader": "Amount",
+    "detailsDateHeader": "Date",
+    "detailsDescriptionHeader": "Description",
+    "detailsIsVerifiedHeader": "Is verified",
+    "detailsAttachmentsHeader": "Attachments",
+    "detailsAttachmentsTableNameHeader": "Name",
+    "detailsAttachmentsTableCreatedOnHeader": "Created on",
+    "detailsDownloadAttachmentTooltip": "Download",
+    "detailsAttachmentsTableNoDataFound": "No data was found.",
+    "detailsAttachmentsTableDeleteAttachmentTooltip": "Delete",
+
+    "deleteTransactionHeader": "Delete transaction",
+    "deleteTransactionContent": "Are you sure you want to delete this transaction ?",
+
+    "deleteTransactionAttachmentHeader": "Delete attachment",
+    "deleteTransactionAttachmentContent": "Are you sure you want to delete the attachment <strong>{{attachmentName}}</strong> ?",
+
+    "addTransactionAttachmentsHeader": "Add transaction attachments",
+    "addTransactionAttachmentsInfo": "Adding attachment with same name will override the existing one.",
+    "addTransactionAttachmentsDropZoneLabel": "Drop file(s) here",
+
+    "createTransactionByScanHeader": "Create transaction by scanning receipt",
+    "createTransactionByScanInfo": "Scanning only works with macedonian receipts.",
+    "createTransactionByScanDropZoneLabel": "Drop receipt here",
+    "uploadSingleReceipt": "Receipts have to be scanned one by one.",
+    "uploadImagesOnly": "Only images can be scanned."
+  },
+
+  "exchangeRates": {
+    "toolbarName": "Exchange rates",
+    "toolbarActionCreateExchangeRate": "Create exchange rate",
+
+    "tableFilterLabel": "Filter",
+    "tableNoDataFound": "No data was found.",
+    "tableFromCurrencyCodeHeader": "From currency code",
+    "tableToCurrencyCodeHeader": "To currency code",
+    "tableFromDateHeader": "From date",
+    "tableToDateHeader": "To date",
+    "tableRateHeader": "Rate",
+
+    "createFormHeader": "Create exchange rate",
+    "createFormFromCurrencyCodeLabel": "From currency code",
+    "createFormToCurrencyCodeLabel": "To currency code",
+    "createFormFromDateLabel": "From date",
+    "createFormRateLabel": "Rate",
+
+    "detailsHeader": "Exchange rate details",
+    "detailsFromCurrencyCodeHeader": "From currency code",
+    "detailsToCurrencyCodeHeader": "To currency code",
+    "detailsFromDateHeader": "From date",
+    "detailsToDateHeader": "To date",
+    "detailsRateHeader": "Rate"
+  },
+
+  "budgets": {
+    "toolbarName": "Budgets",
+    "toolbarActionCreateBudget": "Create budget",
+
+    "tableFilterLabel": "Filter",
+    "tableNoDataFound": "No data was found.",
+    "tableNameHeader": "Name",
+    "tableCategoryHeader": "Category",
+    "tableCurrencyCodeHeader": "Currency code",
+    "tableStartDateHeader": "Start date",
+    "tableEndDateHeader": "End date",
+    "tableAmountHeader": "Amount",
+    "tableAmountSpentHeader": "Amount spent",
+    "tableDeleteBudgetTooltip": "Delete",
+
+    "createFormHeader": "Create budget",
+    "createFormNameLabel": "Name",
+    "createFormCategoryLabel": "Category",
+    "createFormCurrencyCodeLabel": "Currency code",
+    "createFormStartDateLabel": "Start date",
+    "createFormEndDateLabel": "End date",
+    "createFormAmountLabel": "Amount",
+    "createFormAmountSpentLabel": "Amount spent",
+
+    "detailsHeader": "Budget details",
+    "detailsNameHeader": "Name",
+    "detailsCategoryHeader": "Category",
+    "detailsCurrencyCodeHeader": "Currency code",
+    "detailsStartDateHeader": "Start date",
+    "detailsEndDateHeader": "End date",
+    "detailsAmountHeader": "Amount",
+    "detailsAmountSpentHeader": "Amount spent",
+
+    "deleteBudgetHeader": "Delete budget",
+    "deleteBudgetContent": "Are you sure you want to delete the budget <strong>{{budgetName}}</strong> ?"
+  }
+}
