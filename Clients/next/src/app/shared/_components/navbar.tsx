@@ -7,6 +7,7 @@ import {
 import { TranslationKeys } from "../_static/translationKeys";
 import { useTranslations } from "next-intl";
 import NavbarAuth from "./navbar-auth";
+import LocaleSwitcher from "./locale-switcher";
 
 const Navbar = () => {
   const t = useTranslations();
@@ -59,6 +60,7 @@ const Navbar = () => {
           )}
         </NavigationMenu>
         <NavbarAuth isAuthenticated={isAuthenticated} />
+        <LocaleSwitcher />
       </div>
     </div>
   );
